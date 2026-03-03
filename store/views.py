@@ -132,6 +132,8 @@ def get_cart_count(request):
 
 def order_create(request):
     cart = request.session.get('cart', {})
+    if not cart:
+        return redirect('store:product_list')
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():

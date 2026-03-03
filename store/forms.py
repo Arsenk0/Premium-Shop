@@ -71,9 +71,14 @@ class OrderCreateForm(forms.ModelForm):
         handle = cleaned_data.get('social_handle')
 
         if method in ['Telegram', 'Instagram'] and handle:
-            if not handle.startswith('@') and not handle.startswith('https://'):
+            handle = handle.strip().rstrip('/')
+            if handle.startswith('https://'):
+                # Extract handle from link if possible
+                handle = '@' + handle.split('/')[-1]
+            elif not handle.startswith('@'):
                 if handle.replace('.', '').replace('_', '').isalnum():
-                    cleaned_data['social_handle'] = '@' + handle
+                    handle = '@' + handle
                 else:
                     raise forms.ValidationError({'social_handle': f"Для {method} нікнейм зазвичай починається з @"})
+            cleaned_data['social_handle'] = handle
         return cleaned_data
