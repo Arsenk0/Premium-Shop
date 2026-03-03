@@ -56,9 +56,5 @@ To enable **Nova Poshta API**, add your API key in `store/services.py`:
 API_KEY = "your_nova_poshta_api_key_here"
 ```
 
-## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
 ---
 *Created with ❤️ by Arsen Khomiak*
