@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Ласкаво просимо | PREMIUM SHOP{% endblock %}
+
+{% block content %}
+<div class="welcome-container fade-in">
+    <div class="welcome-overlay"></div>
+    <div class="welcome-content">
+        <div class="welcome-logo">
+            PREMIUM<span>SHOP</span>
+        </div>
+        <h1 class="welcome-title">Твій стиль починається тут</h1>
+        <p class="welcome-subtitle">Ексклюзивні колекції преміального одягу та взуття від провідних брендів світу.</p>
+
+        <div class="welcome-actions">
+            <a href="{% url 'login' %}" class="btn welcome-btn btn-white">
+                Увійти до кабінету <i class="fas fa-sign-in-alt"></i>
+            </a>
+            <a href="{% url 'store:signup' %}" class="btn welcome-btn btn-outline">
+                Зареєструватися <i class="fas fa-user-plus"></i>
+            </a>
+        </div>
+
+        <div class="welcome-features">
+            <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Тільки оригінал</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-shipping-fast"></i>
+                <span>Швидка доставка</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-star"></i>
+                <span>Програма лояльності</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .welcome-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+        overflow: hidden;
+        z-index: 1001;
+        /* Above navbar if needed, but usually we don't want nav on splash */
+    }
+
+    .welcome-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 100%),
+            url('https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.6;
+        animation: ken-burns 20s infinite alternate;
+    }
+
+    @keyframes ken-burns {
+        from {
+            transform: scale(1);
+        }
+
+        to {
+            transform: scale(1.1);
+        }
+    }
+
+    .welcome-content {
+        position: relative;
+        text-align: center;
+        color: white;
+        padding: 2rem;
+        max-width: 800px;
+        z-index: 2;
+    }
+
+    .welcome-logo {
+        font-size: 4rem;
+        font-weight: 900;
+        letter-spacing: -2px;
+        margin-bottom: 2rem;
+    }
+
+    .welcome-logo span {
+        color: var(--primary);
+        font-weight: 400;
+    }
+
+    .welcome-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        letter-spacing: -1px;
+    }
+
+    .welcome-subtitle {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 3rem;
+        line-height: 1.6;
+    }
+
+    .welcome-actions {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        margin-bottom: 4rem;
+    }
+
+    .welcome-btn {
+        min-width: 220px;
+        height: 60px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        border-radius: 50px;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .welcome-btn.btn-white {
+        background: #fff;
+        color: #000;
+        border: none;
+    }
+
+    .welcome-btn.btn-white:hover {
+        background: #f0f0f0;
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .welcome-btn.btn-outline {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        color: white;
+    }
+
+    .welcome-btn.btn-outline:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: #fff;
+        transform: translateY(-5px);
+    }
+
+    .welcome-features {
+        display: flex;
+        gap: 3rem;
+        justify-content: center;
+        opacity: 0.9;
+        margin-top: 2rem;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .feature-item i {
+        color: #fff;
+        font-size: 1.2rem;
+    }
+
+    /* Hide navbar on welcome screen */
+    .navbar {
+        display: none !important;
+    }
+
+    footer {
+        display: none !important;
+    }
+
+    body {
+        padding-top: 0 !important;
+    }
+</style>
+{% endblock %}

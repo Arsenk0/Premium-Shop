@@ -19,6 +19,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        window.isUserAuthenticated = ("{{ user.is_authenticated|yesno:'true,false' }}" === "true");
+    </script>
 </head>
 
 <body>
@@ -33,6 +36,17 @@
                 <input type="text" name="q" placeholder="Пошук..." value="{{ request.GET.q }}">
                 <button type="submit" style="background:none; border:none; cursor:pointer;">🔍</button>
             </form>
+            {% if user.is_authenticated %}
+            <a href="{% url 'store:profile' %}" class="nav-auth-link"><i class="fas fa-user"></i> Кабінет</a>
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="nav-auth-link"
+                    style="background: none; border: none; font-family: inherit; font-size: inherit; color: inherit; cursor: pointer; padding: 0;">Вийти</button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}" class="nav-auth-link">Вхід</a>
+            <a href="{% url 'store:signup' %}" class="nav-auth-link">Реєстрація</a>
+            {% endif %}
             <a href="{% url 'store:cart_detail' %}" class="cart-link">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count" class="cart-badge">{{ cart_count }}</span>
@@ -76,6 +90,74 @@
             &copy; 2026 Premium Shop. Всі права захищені.
         </div>
     </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content fade-in">
+            <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Бажаєте додати в кошик? 😉</h2>
+                <p style="color: var(--text-muted);">Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в
+                    особистому кабінеті та ви отримували бонуси!</p>
+            </div>
+            <div style="display: grid; gap: 1rem;">
+                <a href="{% url 'login' %}" class="btn btn-primary" style="width: 100%; height: 50px;">Увійти</a>
+                <a href="{% url 'store:signup' %}" class="btn"
+                    style="width: 100%; height: 50px; border: 2px solid #eee;">Зареєструватися</a>
+                <button onclick="closeLoginModal()"
+                    style="background: none; border: none; color: grey; text-decoration: underline; cursor: pointer; margin-top: 1rem;">Продовжити
+                    як гість</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: #f5f5f5;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: #eee;
+            transform: rotate(90deg);
+        }
+    </style>
 
     <script src="{% static 'js/main.js' %}"></script>
 </body>

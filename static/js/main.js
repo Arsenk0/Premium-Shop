@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             let url = btn.getAttribute('href');
 
+            // Check for authentication
+            if (window.isUserAuthenticated === false) {
+                showLoginModal();
+                return;
+            }
+
             // Check for size selection
             const sizeInput = document.querySelector('input[name="size"]:checked');
             if (sizeInput) {
@@ -125,4 +131,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
 
     fadeElems.forEach(elem => observer.observe(elem));
+
+    // Global Modal Functions
+    window.showLoginModal = function () {
+        const modal = document.getElementById('login-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    };
+
+    window.closeLoginModal = function () {
+        const modal = document.getElementById('login-modal');
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    };
+
+    // Close modal on click outside
+    window.onclick = function (event) {
+        const modal = document.getElementById('login-modal');
+        if (event.target == modal) {
+            closeLoginModal();
+        }
+    };
 });

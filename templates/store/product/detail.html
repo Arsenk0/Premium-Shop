@@ -1,29 +1,45 @@
 {% extends "base.html" %}
 {% load static %}
 
+<script>
+    function updateMainImage(container, src) {
+        const mainImg = document.getElementById('main-product-img');
+        mainImg.style.opacity = '0';
+        setTimeout(() => {
+            mainImg.src = src;
+            mainImg.style.opacity = '1';
+        }, 200);
+        document.querySelectorAll('.thumb-container').forEach(t => t.classList.remove('active'));
+        container.classList.add('active');
+    }
+</script>
+
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-<div class="container fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding-top: 2rem;">
+<div class="container fade-in" style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 1.5rem; padding-top: 1rem;">
     <div class="product-gallery">
         <div class="main-image" style="margin-bottom: 1rem;">
             {% if product.image %}
             <img id="main-product-img" src="{{ product.image.url }}" alt="{{ product.name }}"
-                style="width: 100%; border-radius: 12px; box-shadow: var(--shadow); height: 600px; object-fit: cover;">
+                style="width: 100%; border-radius: 12px; box-shadow: var(--shadow); height: 550px; object-fit: cover;">
             {% else %}
             <img src="https://via.placeholder.com/600x800" alt="No image" style="width: 100%; border-radius: 12px;">
             {% endif %}
         </div>
 
         {% if product.images.all %}
-        <div class="thumbnails" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
-            <img class="thumb active" src="{{ product.image.url }}"
-                onclick="document.getElementById('main-product-img').src=this.src; document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active')); this.classList.add('active')"
-                style="width: 100%; height: 100px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid var(--accent);">
+        <div class="thumbnails"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; margin-top: 1rem;">
+            <div class="thumb-container active" onclick="updateMainImage(this, '{{ product.image.url }}')">
+                <img src="{{ product.image.url }}"
+                    style="width: 100%; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer;">
+            </div>
             {% for extra_img in product.images.all %}
-            <img class="thumb" src="{{ extra_img.image.url }}"
-                onclick="document.getElementById('main-product-img').src=this.src; document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active')); this.classList.add('active')"
-                style="width: 100%; height: 100px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+            <div class="thumb-container" onclick="updateMainImage(this, '{{ extra_img.image.url }}')">
+                <img src="{{ extra_img.image.url }}"
+                    style="width: 100%; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer;">
+            </div>
             {% endfor %}
         </div>
         {% endif %}
@@ -31,8 +47,8 @@
 
     <div class="product-details">
         <span class="product-category">{{ product.category.name }}</span>
-        <h1 style="font-size: 3rem; margin: 1rem 0; font-weight: 800;">{{ product.name }}</h1>
-        <p style="color: grey; margin-bottom: 2rem; font-size: 1rem;">Артикул: {{ product.article }}</p>
+        <h1 style="font-size: 2.5rem; margin: 0.5rem 0; font-weight: 800;">{{ product.name }}</h1>
+        <p style="color: grey; margin-bottom: 0.5rem; font-size: 0.9rem;">Артикул: {{ product.article }}</p>
         <p class="detail-price">{{ product.price }} грн</p>
 
         {% if product.sizes.all %}
@@ -49,14 +65,15 @@
         </div>
         {% endif %}
 
-        <div style="margin-bottom: 1.5rem;">
-            <h3 style="margin-bottom: 0.5rem;">Опис</h3>
-            <p style="color: var(--text-muted); line-height: 1.8;">{{ product.description }}</p>
+        <div style="margin-bottom: 1rem;">
+            <h3 style="font-size: 1rem; margin-bottom: 0.2rem;">Опис</h3>
+            <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">{{ product.description }}</p>
         </div>
 
         <div style="margin-bottom: 1.5rem;">
-            <h3 style="margin-bottom: 0.5rem;">Наявність</h3>
-            <p style="font-weight: 600;">{% if product.available %}✅ В наявності ({{ product.stock }} шт.){% else %}❌
+            <h3 style="font-size: 1rem; margin-bottom: 0.2rem;">Наявність</h3>
+            <p style="font-weight: 600; font-size: 0.9rem;">{% if product.available %}✅ В наявності ({{ product.stock }}
+                шт.){% else %}❌
                 Немає в наявності{% endif %}</p>
         </div>
 
@@ -69,10 +86,33 @@
 
 <style>
     .detail-price {
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: 900;
-        margin-bottom: 2.5rem;
+        margin-bottom: 1rem;
         color: var(--primary);
+    }
+
+    #main-product-img {
+        transition: opacity 0.3s ease;
+    }
+
+    .thumb-container {
+        border: 2px solid transparent;
+        border-radius: 10px;
+        padding: 2px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .thumb-container.active {
+        border-color: var(--accent);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .thumb-container:hover {
+        transform: translateY(-2px);
     }
 
     .size-label {
@@ -93,10 +133,6 @@
         background: var(--primary);
         color: white;
         transform: translateY(-3px);
-    }
-
-    .thumb.active {
-        border-color: var(--accent) !important;
     }
 </style>
 {% endblock %}
