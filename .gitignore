@@ -49,3 +49,6 @@ staticfiles/
 .Trashes
 ehthumbs.db
 Thumbs.db
+populate_expansion.py
+populate_v11.py
+updates/
