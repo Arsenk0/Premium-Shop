@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Вхід{% endblock %}
+
+{% block content %}
+<div class="container fade-in" style="max-width: 500px; margin-top: 4rem;">
+    <div style="background: white; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow);">
+        <h1 style="text-align: center; margin-bottom: 2rem;">Вхід у кабінет</h1>
+
+        <form method="post" class="premium-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="error-banner">
+                {% for error in form.non_field_errors %}
+                <p><i class="fas fa-exclamation-circle"></i> {{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_username">Логін або Email</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                <div class="error-msg">{{ form.username.errors|striptags }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_password">Пароль</label>
+                <div class="password-wrapper" style="position: relative;">
+                    {{ form.password }}
+                    <span class="toggle-password"
+                        style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+                {% if form.password.errors %}
+                <div class="error-msg">{{ form.password.errors|striptags }}</div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Увійти</button>
+        </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.toggle-password').forEach(function (el) {
+                    el.addEventListener('click', function () {
+                        const input = this.parentElement.querySelector('input');
+                        if (input.type === 'password') {
+                            input.type = 'text';
+                            this.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                        } else {
+                            input.type = 'password';
+                            this.innerHTML = '<i class="fas fa-eye"></i>';
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <div style="text-align: center; margin-top: 2rem; color: #666;">
+            Немає аккаунту? <a href="{% url 'store:signup' %}"
+                style="color: var(--primary); font-weight: 600;">Зареєструватися</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

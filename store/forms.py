@@ -1,6 +1,15 @@
 from django import forms
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from .models import Order
+
+class UserSignupForm(UserCreationForm):
+    email = forms.EmailField(required=True, help_text='Вкажіть вашу пошту (для відновлення пароля)')
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields + ('email',)
 
 class OrderCreateForm(forms.ModelForm):
     phone = forms.CharField(
@@ -17,8 +26,8 @@ class OrderCreateForm(forms.ModelForm):
     warehouse_ref = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     contact_method = forms.ChoiceField(
-        choices=[('Telegram', 'Telegram'), ('Instagram', 'Instagram'), ('WhatsApp', 'WhatsApp')],
-        initial='Telegram',
+        choices=[('TELEGRAM', 'Telegram'), ('INSTAGRAM', 'Instagram'), ('PHONE', 'Дзвінок по телефону')],
+        initial='TELEGRAM',
         widget=forms.RadioSelect()
     )
 
@@ -28,9 +37,12 @@ class OrderCreateForm(forms.ModelForm):
         widgets = {
             'first_name': forms.TextInput(attrs={'placeholder': 'Олександр'}),
             'last_name': forms.TextInput(attrs={'placeholder': 'Шевченко'}),
-            'social_handle': forms.TextInput(attrs={'placeholder': '@o_shevchenko'}),
+            'social_handle': forms.TextInput(attrs={'placeholder': '@username або посилання'}),
             'city': forms.TextInput(attrs={'placeholder': 'Почніть вводити місто...', 'autocomplete': 'off'}),
             'warehouse': forms.Select(attrs={'disabled': 'disabled'}),
+        }
+        help_texts = {
+            'social_handle': 'Вкажіть ваш Instagram або Telegram. Якщо ви обрали "Дзвінок", це поле можна залишити порожнім.',
         }
 
     def clean_first_name(self):
@@ -70,7 +82,7 @@ class OrderCreateForm(forms.ModelForm):
         method = cleaned_data.get('contact_method')
         handle = cleaned_data.get('social_handle')
 
-        if method in ['Telegram', 'Instagram'] and handle:
+        if method in ['TELEGRAM', 'INSTAGRAM'] and handle:
             handle = handle.strip().rstrip('/')
             if handle.startswith('https://'):
                 # Extract handle from link if possible
@@ -81,4 +93,6 @@ class OrderCreateForm(forms.ModelForm):
                 else:
                     raise forms.ValidationError({'social_handle': f"Для {method} нікнейм зазвичай починається з @"})
             cleaned_data['social_handle'] = handle
+        elif method == 'PHONE':
+            cleaned_data['social_handle'] = cleaned_data.get('phone')
         return cleaned_data

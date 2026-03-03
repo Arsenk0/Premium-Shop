@@ -1,13 +1,14 @@
 from django.contrib import admin
-from .models import Category, Product, Order, OrderItem, Size, ProductImage
+from .models import Category, Product, Order, OrderItem, Size, ProductImage, Profile
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
-@admin.register(Size)
-class SizeAdmin(admin.ModelAdmin):
-    list_display = ['name']
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'phone', 'city']
+    search_fields = ['user__username', 'phone', 'city']
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
@@ -20,6 +21,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ['price', 'stock', 'available']
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name', 'article']
+    filter_horizontal = ['sizes']
     inlines = [ProductImageInline]
 
 class OrderItemInline(admin.TabularInline):
@@ -29,11 +31,14 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'first_name', 'last_name', 'phone', 'contact_method', 'social_handle', 'paid', 'status', 'created']
-    list_filter = ['paid', 'created', 'updated', 'status', 'contact_method']
-    search_fields = ['first_name', 'last_name', 'phone', 'social_handle', 'city', 'warehouse']
+    list_display = ['id', 'user', 'first_name', 'last_name', 'phone', 'status', 'paid', 'created']
+    list_filter = ['status', 'paid', 'created', 'contact_method']
+    search_fields = ['id', 'first_name', 'last_name', 'phone', 'user__username']
     
     fieldsets = (
+        ('Прив\'язка до користувача', {
+            'fields': ('user',)
+        }),
         ('Дані Клієнта', {
             'fields': ('first_name', 'last_name', 'phone', 'contact_method', 'social_handle')
         }),
@@ -50,3 +55,9 @@ class OrderAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('created', 'updated')
     inlines = [OrderItemInline]
+
+@admin.register(Size)
+class SizeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'type']
+    list_filter = ['type']
+    search_fields = ['name']
