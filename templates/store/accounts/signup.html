@@ -17,20 +17,43 @@
                 {% endfor %}
             </div>
             {% endif %}
+
             {% for field in form %}
             <div class="form-group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+
                 {% if field.name == 'password1' or field.name == 'password2' %}
                 <div class="password-wrapper" style="position: relative;">
                     {{ field }}
                     <span class="toggle-password"
-                        style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                        style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #666; padding: 5px;">
                         <i class="fas fa-eye"></i>
                     </span>
                 </div>
                 {% else %}
                 {{ field }}
                 {% endif %}
+
+                {% if field.name == 'password1' %}
+                <div id="password-checklist" class="password-checklist">
+                    <p style="margin-bottom: 8px; font-weight: 600; font-size: 0.9rem;">Надійний пароль містить:</p>
+                    <ul style="list-style: none; padding-left: 0; margin: 0;">
+                        <li id="req-length" class="req-item">
+                            <i class="fas fa-times"></i><i class="fas fa-check"></i> Від 8 символів
+                        </li>
+                        <li id="req-letter" class="req-item">
+                            <i class="fas fa-times"></i><i class="fas fa-check"></i> Літери
+                        </li>
+                        <li id="req-number" class="req-item">
+                            <i class="fas fa-times"></i><i class="fas fa-check"></i> Цифри
+                        </li>
+                        <li id="req-special" class="req-item">
+                            <i class="fas fa-times"></i><i class="fas fa-check"></i> Спецсимвол (наприклад !@#$%&)
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
+
                 {% if field.errors %}
                 <div class="error-msg">
                     {{ field.errors|striptags }}
@@ -38,11 +61,58 @@
                 {% endif %}
             </div>
             {% endfor %}
+
             <button type="submit" class="btn btn-primary"
                 style="width: 100%; margin-top: 1rem;">Зареєструватися</button>
         </form>
+
+        <style>
+            /* Стилі для динамічного чеклиста пароля */
+            .password-checklist {
+                margin-top: 12px;
+                font-size: 0.85rem;
+                color: #64748b;
+                display: none; /* Приховано за замовчуванням */
+                background: #f8fafc;
+                padding: 1rem;
+                border-radius: 12px;
+                border: 1px solid #e2e8f0;
+                transition: all 0.3s ease;
+            }
+            .req-item {
+                margin-bottom: 6px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.3s ease;
+            }
+            .req-item i.fa-times {
+                color: #e11d48; /* Червоний хрестик */
+                width: 14px;
+            }
+            .req-item i.fa-check {
+                color: #10b981; /* Зелена галочка */
+                display: none;
+                width: 14px;
+            }
+
+            /* Стан, коли вимога виконана */
+            .req-item.valid {
+                color: #10b981;
+                text-decoration: line-through;
+                opacity: 0.7;
+            }
+            .req-item.valid i.fa-times {
+                display: none;
+            }
+            .req-item.valid i.fa-check {
+                display: inline-block;
+            }
+        </style>
+
         <script>
             document.addEventListener('DOMContentLoaded', function () {
+                // 1. Логіка показу/приховування пароля
                 document.querySelectorAll('.toggle-password').forEach(function (el) {
                     el.addEventListener('click', function () {
                         const input = this.parentElement.querySelector('input');
@@ -55,6 +125,42 @@
                         }
                     });
                 });
+
+                // 2. Логіка "живої" перевірки пароля
+                const pwdInput = document.getElementById('id_password1');
+                const checklist = document.getElementById('password-checklist');
+
+                if (pwdInput && checklist) {
+                    // Показувати чеклист, коли користувач клікає на поле
+                    pwdInput.addEventListener('focus', function() {
+                        checklist.style.display = 'block';
+                    });
+
+                    // Перевіряти при кожному натисканні клавіші
+                    pwdInput.addEventListener('input', function () {
+                        const val = this.value;
+
+                        // Перевірка довжини (>= 8)
+                        const reqLength = document.getElementById('req-length');
+                        if (val.length >= 8) reqLength.classList.add('valid');
+                        else reqLength.classList.remove('valid');
+
+                        // Перевірка на літери
+                        const reqLetter = document.getElementById('req-letter');
+                        if (/[a-zA-Zа-яА-ЯіІїЇєЄ]/.test(val)) reqLetter.classList.add('valid');
+                        else reqLetter.classList.remove('valid');
+
+                        // Перевірка на цифри
+                        const reqNumber = document.getElementById('req-number');
+                        if (/\d/.test(val)) reqNumber.classList.add('valid');
+                        else reqNumber.classList.remove('valid');
+
+                        // Перевірка на спецсимволи
+                        const reqSpecial = document.getElementById('req-special');
+                        if (/[!@#$%^&*(),.?":{}|<>\-_+=\[\]]/.test(val)) reqSpecial.classList.add('valid');
+                        else reqSpecial.classList.remove('valid');
+                    });
+                }
             });
         </script>
 

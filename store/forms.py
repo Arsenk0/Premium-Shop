@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Order
 
+
 class UserSignupForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text='Вкажіть вашу пошту (для відновлення пароля)')
 
@@ -11,17 +12,18 @@ class UserSignupForm(UserCreationForm):
         model = User
         fields = UserCreationForm.Meta.fields + ('email',)
 
+
 class OrderCreateForm(forms.ModelForm):
     phone = forms.CharField(
         validators=[
             RegexValidator(
-                regex=r'^\+?1?\d{9,15}$',
+                regex=r'^\+?[\d\s\-]{9,20}$',
                 message="Номер телефону повинен бути у форматі: '+380999999999'. Від 9 до 15 цифр."
             )
         ],
         widget=forms.TextInput(attrs={'placeholder': '+380 99 999 99 99'})
     )
-    
+
     city_ref = forms.CharField(widget=forms.HiddenInput(), required=False)
     warehouse_ref = forms.CharField(widget=forms.HiddenInput(), required=False)
 
@@ -33,7 +35,8 @@ class OrderCreateForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['first_name', 'last_name', 'phone', 'contact_method', 'social_handle', 'city', 'city_ref', 'warehouse', 'warehouse_ref']
+        fields = ['first_name', 'last_name', 'phone', 'contact_method', 'social_handle', 'city', 'city_ref',
+                  'warehouse', 'warehouse_ref']
         widgets = {
             'first_name': forms.TextInput(attrs={'placeholder': 'Олександр'}),
             'last_name': forms.TextInput(attrs={'placeholder': 'Шевченко'}),
@@ -59,10 +62,9 @@ class OrderCreateForm(forms.ModelForm):
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
-        # Clean from spaces, dashes, etc.
         phone = ''.join(c for c in phone if c.isdigit() or c == '+')
         if len(phone) < 10:
-             raise forms.ValidationError("Введіть коректний номер телефону (напр. +380...)")
+            raise forms.ValidationError("Введіть коректний номер телефону (напр. +380...)")
         return phone
 
     def clean_city(self):
@@ -85,7 +87,6 @@ class OrderCreateForm(forms.ModelForm):
         if method in ['TELEGRAM', 'INSTAGRAM'] and handle:
             handle = handle.strip().rstrip('/')
             if handle.startswith('https://'):
-                # Extract handle from link if possible
                 handle = '@' + handle.split('/')[-1]
             elif not handle.startswith('@'):
                 if handle.replace('.', '').replace('_', '').isalnum():

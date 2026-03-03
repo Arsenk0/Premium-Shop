@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
@@ -20,6 +21,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Size(models.Model):
     TYPE_CHOICES = [
         ('shoes', 'Взуття'),
@@ -27,7 +29,7 @@ class Size(models.Model):
     ]
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='shoes', verbose_name="Тип")
-    
+
     class Meta:
         verbose_name = 'Розмір'
         verbose_name_plural = 'Розміри'
@@ -62,6 +64,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/%Y/%m/%d')
@@ -70,6 +73,7 @@ class ProductImage(models.Model):
     class Meta:
         verbose_name = 'Зображення товару'
         verbose_name_plural = 'Зображення товарів'
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
@@ -83,18 +87,22 @@ class Profile(models.Model):
     def __str__(self):
         return f'Профіль {self.user.username}'
 
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     if hasattr(instance, 'profile'):
         instance.profile.save()
 
+
 class Order(models.Model):
-    user = models.ForeignKey(User, related_name='orders', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Користувач")
+    user = models.ForeignKey(User, related_name='orders', on_delete=models.SET_NULL, null=True, blank=True,
+                             verbose_name="Користувач")
     first_name = models.CharField(max_length=50, verbose_name="Ім'я")
     last_name = models.CharField(max_length=50, verbose_name="Прізвище")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
@@ -126,6 +134,10 @@ class Order(models.Model):
 
     def __str__(self):
         return f'Order {self.id}'
+
+    def get_total_cost(self):
+        return sum(item.price * item.quantity for item in self.items.all())
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
