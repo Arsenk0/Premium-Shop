@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from .models import Category, Product, Order, OrderItem
-from .forms import OrderCreateForm
+from .forms import OrderCreateForm, UserSignupForm
 
 # Session-based cart logic
 def get_cart(request):
@@ -9,6 +12,9 @@ def get_cart(request):
     return cart
 
 def product_list(request, category_slug=None):
+    if not request.user.is_authenticated:
+        return render(request, 'store/welcome.html')
+
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
@@ -21,7 +27,25 @@ def product_list(request, category_slug=None):
         'products': products
     })
 
+def signup(request):
+    if request.method == 'POST':
+        form = UserSignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user, backend='store.auth_backends.EmailOrUsernameModelBackend')
+            return redirect('store:product_list')
+    else:
+        form = UserSignupForm()
+    return render(request, 'store/accounts/signup.html', {'form': form})
+
+@login_required
+def profile(request):
+    orders = request.user.orders.all()
+    return render(request, 'store/accounts/profile.html', {'orders': orders})
+
 def product_detail(request, id, slug):
+    if not request.user.is_authenticated:
+        return render(request, 'store/welcome.html')
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
     return render(request, 'store/product/detail.html', {'product': product})
 
@@ -50,6 +74,7 @@ def cart_add(request, product_id):
         cart[product_key]['quantity'] += 1
     
     request.session['cart'] = cart
+    request.session.modified = True
     
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return JsonResponse({
@@ -164,7 +189,10 @@ def order_create(request):
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
-            order = form.save()
+            order = form.save(commit=False)
+            if request.user.is_authenticated:
+                order.user = request.user
+            order.save()
             for item_key, item in cart.items():
                 try:
                     p_id = item.get('product_id', int(item_key.split('_')[0]) if '_' in item_key else int(item_key))

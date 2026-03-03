@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Мій кабінет{% endblock %}
+
+{% block content %}
+<div class="container fade-in">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+        <h1>Вітаємо, {{ request.user.username }}! 👋</h1>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Вийти</button>
+        </form>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem;">
+        <!-- Profile Info -->
+        <div
+            style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow); height: fit-content;">
+            <h3 style="margin-bottom: 1.5rem;">Ваші дані</h3>
+            <p><strong>Username:</strong> {{ request.user.username }}</p>
+            <p><strong>Email:</strong> {{ request.user.email|default:"не вказано" }}</p>
+            <br>
+            <p style="color: #666; font-size: 0.9rem;">Дані для доставки підтягуються автоматично з ваших попередніх
+                замовлень.</p>
+        </div>
+
+        <!-- Order History -->
+        <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow);">
+            <h3 style="margin-bottom: 1.5rem;">Історія замовлень</h3>
+            {% if orders %}
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                {% for order in orders %}
+                <div
+                    style="border: 1px solid #eee; padding: 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong style="font-size: 1.1rem;">Замовлення #{{ order.id }}</strong><br>
+                        <small style="color: #888;">Від {{ order.created|date:"d.m.Y H:i" }}</small><br>
+                        <span class="status-badge status-{{ order.status|lower }}">{{ order.get_status_display }}</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <strong style="font-size: 1.2rem;">{{ order.get_total_cost }} грн</strong>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p style="color: #888;">У вас поки немає замовлень.</p>
+            <br>
+            <a href="{% url 'store:product_list' %}" class="btn btn-primary">Почати шопінг</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+    }
+
+    .status-new {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .status-processing {
+        background: #fff3e0;
+        color: #f57c00;
+    }
+
+    .status-shipped {
+        background: #f3e5f5;
+        color: #7b1fa2;
+    }
+
+    .status-completed {
+        background: #e8f5e9;
+        color: #388e3c;
+    }
+
+    .status-canceled {
+        background: #ffebee;
+        color: #d32f2f;
+    }
+</style>
+{% endblock %}

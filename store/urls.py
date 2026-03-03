@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = 'store'
@@ -8,8 +8,9 @@ urlpatterns = [
     path('search/', views.product_search, name='product_search'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
-    path('<slug:category_slug>/', views.product_list, name='product_list_by_category'),
-    path('<int:id>/<slug:slug>/', views.product_detail, name='product_detail'),
+    path('signup/', views.signup, name='signup'),
+    path('profile/', views.profile, name='profile'),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('cart/add/<int:product_id>/', views.cart_add, name='cart_add'),
     path('cart/remove/<str:item_key>/', views.cart_remove, name='cart_remove'),
     path('cart/update/<str:item_key>/', views.cart_update, name='cart_update'),
@@ -19,4 +20,6 @@ urlpatterns = [
     path('order/success/<int:order_id>/', views.order_success, name='order_success'),
     path('api/nova-poshta/cities/', views.nova_poshta_cities, name='api_np_cities'),
     path('api/nova-poshta/warehouses/', views.nova_poshta_warehouses, name='api_np_warehouses'),
+    path('<slug:category_slug>/', views.product_list, name='product_list_by_category'),
+    path('<int:id>/<slug:slug>/', views.product_detail, name='product_detail'),
 ]
