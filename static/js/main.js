@@ -52,6 +52,64 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    // Cart Quantity Updates
+    const qtyControls = document.querySelectorAll('.quantity-controls');
+    qtyControls.forEach(control => {
+        const itemKey = control.dataset.itemKey;
+        const addBtn = control.querySelector('.qty-btn.add');
+        const subBtn = control.querySelector('.qty-btn.subtract');
+        const valSpan = control.querySelector('.qty-val');
+
+        addBtn.addEventListener('click', () => updateQuantity(itemKey, 'add'));
+        subBtn.addEventListener('click', () => updateQuantity(itemKey, 'subtract'));
+    });
+
+    const deleteBtns = document.querySelectorAll('.qty-btn.delete');
+    deleteBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const itemKey = btn.dataset.itemKey;
+            updateQuantity(itemKey, 'delete');
+        });
+    });
+
+    function updateQuantity(itemKey, action) {
+        const formData = new FormData();
+        formData.append('action', action);
+
+        const csrftoken = getCookie('csrftoken');
+
+        fetch(`/cart/update/${itemKey}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrftoken
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    // Refresh to update all prices and totals reliably
+                    location.reload();
+                }
+            });
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     // Scroll Animations
     const fadeElems = document.querySelectorAll('.fade-in');
     const observer = new IntersectionObserver((entries) => {

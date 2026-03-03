@@ -399,6 +399,54 @@ a:not(.btn):not(.cart-link):not(.logo a):hover:after {
     color: #0088cc;
 }
 
+/* Quantity Controls */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: #f8f9fa;
+    padding: 0.4rem;
+    border-radius: 30px;
+    width: fit-content;
+    border: 1px solid #eee;
+}
+
+.qty-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.qty-btn:hover {
+    background: var(--primary);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.qty-btn.delete:hover {
+    background: #fff;
+    color: var(--accent);
+    transform: scale(1.05);
+    text-decoration: underline;
+}
+
+.qty-val {
+    font-weight: 600;
+    min-width: 1.5rem;
+    text-align: center;
+}
+
 .fa-instagram {
     color: #e4405f;
 }

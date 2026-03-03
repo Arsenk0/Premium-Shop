@@ -65,6 +65,33 @@ def cart_remove(request, item_key):
     if item_key in cart:
         del cart[item_key]
     request.session['cart'] = cart
+    request.session.modified = True
+    return redirect('store:cart_detail')
+
+def cart_update(request, item_key):
+    if request.method == 'POST':
+        cart = request.session.get('cart', {})
+        action = request.POST.get('action') # 'add', 'subtract', 'delete'
+        
+        if item_key in cart:
+            if action == 'add':
+                cart[item_key]['quantity'] += 1
+            elif action == 'subtract':
+                cart[item_key]['quantity'] -= 1
+                if cart[item_key]['quantity'] <= 0:
+                    del cart[item_key]
+            elif action == 'delete':
+                del cart[item_key]
+                
+        request.session['cart'] = cart
+        request.session.modified = True
+        
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({
+                'status': 'ok',
+                'cart_count': get_cart_count(request)
+            })
+            
     return redirect('store:cart_detail')
 
 def cart_detail(request):

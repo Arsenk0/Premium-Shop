@@ -31,11 +31,20 @@
                         {% if item.size %}<br><small>Розмір: {{ item.size }}</small>{% endif %}
                     </div>
                 </td>
-                <td style="padding: 1rem;">{{ item.quantity }}</td>
-                <td style="padding: 1rem;">{{ item.product.price }} грн</td>
-                <td style="padding: 1rem;">{{ item.total_price }} грн</td>
                 <td style="padding: 1rem;">
-                    <a href="{% url 'store:cart_remove' item.item_key %}" style="color: var(--accent);">Видалити</a>
+                    <div class="quantity-controls" data-item-key="{{ item.item_key }}">
+                        <button class="qty-btn subtract" type="button">−</button>
+                        <span class="qty-val">{{ item.quantity }}</span>
+                        <button class="qty-btn add" type="button">+</button>
+                    </div>
+                </td>
+                <td style="padding: 1rem;">{{ item.product.price }} грн</td>
+                <td style="padding: 1rem;"><span class="item-total">{{ item.total_price }}</span> грн</td>
+                <td style="padding: 1rem;">
+                    <button class="qty-btn delete" data-item-key="{{ item.item_key }}"
+                        style="background: none; border: none; color: var(--accent); cursor: pointer; padding: 0; font-size: 0.9rem;">
+                        <i class="fa-solid fa-trash-can"></i> Видалити
+                    </button>
                 </td>
             </tr>
             {% endfor %}
