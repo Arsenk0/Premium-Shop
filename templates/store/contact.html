@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Контакти - PREMIUM SHOP{% endblock %}
+
+{% block content %}
+<div class="container fade-in" style="max-width: 900px; padding: 4rem 0;">
+    <h1 style="font-size: 4rem; margin-bottom: 2rem; text-align: center; letter-spacing: -2px;">ЗВ'ЯЖІТЬСЯ <span
+            style="color: var(--accent);">З НАМИ</span></h1>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div style="background: #fff; padding: 3rem; border-radius: 24px; box-shadow: var(--shadow);">
+            <h3>Ми в соцмережах</h3>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Ми завжди на зв'язку тут:</p>
+
+            <a href="#" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem; background: #0088cc;">
+                <i class="fab fa-telegram"></i> Telegram
+            </a>
+            <a href="#" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem; background: #e4405f;">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="#" class="btn btn-primary" style="width: 100%; background: #25d366;">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+        </div>
+
+        <div style="background: #fff; padding: 3rem; border-radius: 24px; box-shadow: var(--shadow);">
+            <h3>Наш офіс</h3>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Де нас знайти:</p>
+
+            <p><strong>Адреса:</strong> м. Київ, вул. Хрещатик, 1</p>
+            <p><strong>Графік:</strong> Пн-Пт 10:00 - 19:00</p>
+            <p><strong>Телефон:</strong> +380 99 999 99 99</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

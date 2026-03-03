@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Оформлення замовлення{% endblock %}
+
+{% block content %}
+<div class="container fade-in" style="max-width: 800px; padding-top: 3rem; padding-bottom: 5rem;">
+    <h1 style="font-size: 3.5rem; margin-bottom: 3rem; text-align: center; font-weight: 900; letter-spacing: -2px;">
+        Оформлення замовлення <span
+            style="display: block; font-size: 1.2rem; font-weight: 400; letter-spacing: normal; margin-top: 0.5rem; opacity: 0.6;">Заповніть
+            дані для доставки</span>
+    </h1>
+
+    <div
+        style="background: #fff; padding: 3rem; border-radius: 32px; box-shadow: 0 30px 60px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.03);">
+        <form action="." method="post" id="checkout-form">
+            {% csrf_token %}
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div class="form-group">
+                    <label>Ім'я</label>
+                    {{ form.first_name }}
+                    {{ form.first_name.errors }}
+                </div>
+                <div class="form-group">
+                    <label>Прізвище</label>
+                    {{ form.last_name }}
+                    {{ form.last_name.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Номер телефону</label>
+                {{ form.phone }}
+                {{ form.phone.errors }}
+            </div>
+
+            <div class="form-group">
+                <label style="margin-bottom: 1rem; display: block;">Як з вами зручніше зв'язатися?</label>
+                <div class="contact-methods">
+                    {% for radio in form.contact_method %}
+                    <label class="contact-method-option">
+                        {{ radio.tag }}
+                        <div class="contact-method-card">
+                            <div class="method-icon-wrapper">
+                                {% if radio.choice_label == "Telegram" %}
+                                <i class="fab fa-telegram"></i>
+                                {% elif radio.choice_label == "Instagram" %}
+                                <i class="fab fa-instagram"></i>
+                                {% else %}
+                                <i class="fab fa-whatsapp"></i>
+                                {% endif %}
+                            </div>
+                            <span>{{ radio.choice_label }}</span>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Ваш нікнейм або номер (ми напишемо вам сюди)</label>
+                {{ form.social_handle }}
+                {{ form.social_handle.errors }}
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+                    Наприклад: @nickname або номер телефону для WhatsApp
+                </p>
+            </div>
+
+            <div class="form-group" style="position: relative;">
+                <label>Місто доставки</label>
+                {{ form.city }}
+                {{ form.city_ref }}
+                {{ form.city.errors }}
+                <div id="city-results" class="autocomplete-results"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Відділення Нової Пошти</label>
+                {{ form.warehouse }}
+                {{ form.warehouse_ref }}
+                {{ form.warehouse.errors }}
+                <p id="warehouse-loading" style="display: none; font-size: 0.8rem; color: var(--accent);">Завантаження
+                    відділень...</p>
+            </div>
+
+            <br>
+            <button type="submit" class="btn btn-primary"
+                style="width: 100%; padding: 1.5rem; font-size: 1.3rem; border-radius: 16px;">
+                Підтвердити замовлення 🚀
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .autocomplete-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        z-index: 1000;
+        max-height: 200px;
+        overflow-y: auto;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        display: none;
+    }
+
+    .city-item {
+        padding: 0.8rem 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .city-item:hover {
+        background: #f5f5f5;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cityInput = document.getElementById('id_city');
+        const cityRefInput = document.getElementById('id_city_ref');
+        const warehouseSelect = document.getElementById('id_warehouse');
+        const warehouseRefInput = document.getElementById('id_warehouse_ref');
+        const cityResults = document.getElementById('city-results');
+        const loadingText = document.getElementById('warehouse-loading');
+
+        let debounceTimer;
+
+        cityInput.addEventListener('input', function () {
+            clearTimeout(debounceTimer);
+            const query = this.value;
+
+            if (query.length < 2) {
+                cityResults.style.display = 'none';
+                return;
+            }
+
+            debounceTimer = setTimeout(() => {
+                fetch(`/api/nova-poshta/cities/?q=${encodeURIComponent(query)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.data.length > 0) {
+                            cityResults.innerHTML = data.data.map(city => `
+                            <div class="city-item" data-ref="${city.ref}" data-name="${city.name}">${city.name}</div>
+                        `).join('');
+                            cityResults.style.display = 'block';
+                        } else {
+                            cityResults.style.display = 'none';
+                        }
+                    });
+            }, 300);
+        });
+
+        cityResults.addEventListener('click', function (e) {
+            if (e.target.classList.contains('city-item')) {
+                const name = e.target.dataset.name;
+                const ref = e.target.dataset.ref;
+
+                cityInput.value = name;
+                cityRefInput.value = ref;
+                cityResults.style.display = 'none';
+
+                // Load warehouses
+                loadWarehouses(ref);
+            }
+        });
+
+        function loadWarehouses(cityRef) {
+            warehouseSelect.innerHTML = '<option value="">Завантаження...</option>';
+            warehouseSelect.disabled = true;
+            loadingText.style.display = 'block';
+
+            fetch(`/api/nova-poshta/warehouses/?city_ref=${cityRef}`)
+                .then(res => res.json())
+                .then(data => {
+                    loadingText.style.display = 'none';
+                    if (data.data.length > 0) {
+                        warehouseSelect.innerHTML = '<option value="">Оберіть відділення</option>' +
+                            data.data.map(wh => `
+                            <option value="${wh.name}" data-ref="${wh.ref}">${wh.name}</option>
+                        `).join('');
+                        warehouseSelect.disabled = false;
+                    } else {
+                        warehouseSelect.innerHTML = '<option value="">Відділень не знайдено</option>';
+                    }
+                });
+        }
+
+        warehouseSelect.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            warehouseRefInput.value = selectedOption.dataset.ref || '';
+        });
+
+        // Close results when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!cityInput.contains(e.target) && !cityResults.contains(e.target)) {
+                cityResults.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Ваш кошик{% endblock %}
+
+{% block content %}
+<div class="container fade-in">
+    <h1>Ваш кошик 🛒</h1>
+    <br>
+    {% if cart_items %}
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 3rem;">
+        <thead>
+            <tr style="border-bottom: 2px solid #000; text-align: left;">
+                <th style="padding: 1rem;">Товар</th>
+                <th style="padding: 1rem;">Кількість</th>
+                <th style="padding: 1rem;">Ціна</th>
+                <th style="padding: 1rem;">Усього</th>
+                <th style="padding: 1rem;">Дія</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 1rem; display: flex; align-items: center; gap: 1rem;">
+                    {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
+                        style="width: 80px; border-radius: 8px;">
+                    {% endif %}
+                    <div>
+                        <strong>{{ item.product.name }}</strong><br>
+                        <small>Арт: {{ item.product.article }}</small>
+                        {% if item.size %}<br><small>Розмір: {{ item.size }}</small>{% endif %}
+                    </div>
+                </td>
+                <td style="padding: 1rem;">{{ item.quantity }}</td>
+                <td style="padding: 1rem;">{{ item.product.price }} грн</td>
+                <td style="padding: 1rem;">{{ item.total_price }} грн</td>
+                <td style="padding: 1rem;">
+                    <a href="{% url 'store:cart_remove' item.item_key %}" style="color: var(--accent);">Видалити</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="text-align: right; padding: 2rem; background: #fff; border-radius: 12px; box-shadow: var(--shadow);">
+        <h2 style="font-size: 2.5rem;">Разом: {{ total_price }} грн</h2>
+        <br>
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; align-items: center;">
+            <a href="{% url 'store:product_list' %}" class="btn btn-secondary">Продовжити покупки</a>
+            <a href="{% url 'store:order_create' %}" class="btn btn-primary">Оформити замовлення</a>
+        </div>
+    </div>
+    {% else %}
+    <p>Ваш кошик порожній.</p>
+    <br>
+    <a href="{% url 'store:product_list' %}" class="btn btn-primary">Перейти до покупок</a>
+    {% endif %}
+</div>
+{% endblock %}

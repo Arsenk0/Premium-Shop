@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Premium Shop - найкращий стрітвір та кросівки в Україні. Тільки оригінальна якість та преміальний сервіс.">
+    <meta name="keywords" content="кросівки, стрітвір, одяг, Україна, купити кросівки, premium shop">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}Premium Shop - Твій Стиль{% endblock %}">
+    <meta property="og:description" content="Найкращий вибір преміального одягу та взуття.">
+    <meta property="og:image" content="{% static 'img/og-image.jpg' %}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{% url 'store:product_list' %}">PREMIUM<span>SHOP</span></a>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'store:about' %}">Про нас</a>
+            <a href="{% url 'store:contact' %}">Контакти</a>
+            <form action="{% url 'store:product_search' %}" method="get" class="search-bar">
+                <input type="text" name="q" placeholder="Пошук..." value="{{ request.GET.q }}">
+                <button type="submit" style="background:none; border:none; cursor:pointer;">🔍</button>
+            </form>
+            <a href="{% url 'store:cart_detail' %}" class="cart-link">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count" class="cart-badge">{{ cart_count }}</span>
+            </a>
+        </div>
+    </nav>
+
+    <div id="toast-container"></div>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer style="background: var(--primary); color: white; padding: 4rem 5%; margin-top: 6rem;">
+        <div class="container"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; text-align: left;">
+            <div>
+                <h3 style="margin-bottom: 1.5rem;">PREMIUM SHOP</h3>
+                <p style="color: #888; font-size: 0.9rem;">Найкращий стрітвір та кросівки в Україні. Тільки оригінальна
+                    якість та преміальний сервіс.</p>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 1rem;">Навігація</h4>
+                <ul style="list-style: none; color: #888; font-size: 0.9rem;">
+                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:about' %}">Про нас</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:contact' %}">Контакти</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 1rem;">Соцмережі</h4>
+                <div style="display: flex; gap: 1rem; font-size: 1.5rem;">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div
+            style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #333; color: #555; font-size: 0.8rem;">
+            &copy; 2026 Premium Shop. Всі права захищені.
+        </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

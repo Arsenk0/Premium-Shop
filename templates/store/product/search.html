@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Пошук: {{ query }}{% endblock %}
+
+{% block content %}
+<div class="container fade-in">
+    <h1>Результати пошуку для: "{{ query }}"</h1>
+    <br>
+    {% if products %}
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <a href="{% url 'store:product_detail' product.id product.slug %}">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                <img src="https://via.placeholder.com/300x400" alt="No image">
+                {% endif %}
+            </a>
+            <div class="product-info">
+                <span class="product-category">{{ product.category.name }}</span>
+                <h3 class="product-name">
+                    <a href="{% url 'store:product_detail' product.id product.slug %}">{{ product.name }}</a>
+                </h3>
+                <p style="color: grey; font-size: 0.9rem;">Арт: {{ product.article }}</p>
+                <div class="product-price-row">
+                    <span class="product-price">${{ product.price }}</span>
+                    <a href="{% url 'store:cart_add' product.id %}" class="btn btn-primary">+ В кошик</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>На жаль, за вашим запитом "{{ query }}" нічого не знайдено.</p>
+    <br>
+    <a href="{% url 'store:product_list' %}" class="btn btn-secondary">Повернутися до каталогу</a>
+    {% endif %}
+</div>
+{% endblock %}

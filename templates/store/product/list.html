@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{% if category %}{{ category.name }}{% else %}Каталог одягу та кросівок{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if not category %}
+<section class="hero fade-in">
+    <div>
+        <h1>Нова Колекція 2026</h1>
+        <p>Знайди свій ідеальний стиль сьогодні</p>
+        <br>
+        <a href="#products" class="btn btn-primary">Купувати зараз</a>
+    </div>
+</section>
+{% endif %}
+
+<div class="container" id="products">
+    <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+        <a href="{% url 'store:product_list' %}"
+            class="btn {% if not category %}btn-primary{% else %}btn-secondary{% endif %}">Всі товари</a>
+        {% for c in categories %}
+        <a href="{% url 'store:product_list_by_category' c.slug %}"
+            class="btn {% if category.slug == c.slug %}btn-primary{% else %}btn-secondary{% endif %}">{{ c.name }}</a>
+        {% endfor %}
+    </div>
+
+    <h2>{% if category %}{{ category.name }}{% else %}Всі товари{% endif %}</h2>
+    <br>
+
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card fade-in">
+            <a href="{% url 'store:product_detail' product.id product.slug %}">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                <img src="https://via.placeholder.com/300x400" alt="No image">
+                {% endif %}
+            </a>
+            <div class="product-info">
+                <span class="product-category">{{ product.category.name }}</span>
+                <h3 class="product-name">
+                    <a href="{% url 'store:product_detail' product.id product.slug %}">{{ product.name }}</a>
+                </h3>
+                <p style="color: grey; font-size: 0.9rem;">Арт: {{ product.article }}</p>
+                <div class="product-price-row">
+                    <span class="product-price">{{ product.price }} грн</span>
+                    <a href="{% url 'store:cart_add' product.id %}" class="btn btn-primary">+ В кошик</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Товарів поки немає.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

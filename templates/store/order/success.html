@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Замовлення підтверджено!{% endblock %}
+
+{% block content %}
+<div class="container fade-in" style="max-width: 600px; text-align: center; padding-top: 5rem; padding-bottom: 5rem;">
+    <div style="background: white; padding: 4rem; border-radius: 24px; box-shadow: var(--shadow);">
+        <div style="font-size: 5rem; margin-bottom: 2rem;">🎉</div>
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Дякуємо за замовлення!</h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2.5rem;">
+            Ваше замовлення <strong>#{{ order.id }}</strong> успішно прийнято в обробку.
+            Ми зв'яжемося з вами через <strong>{{ order.contact_method }}</strong> найближчим часом.
+        </p>
+
+        <div style="text-align: left; background: #f8fafc; padding: 2rem; border-radius: 16px; margin-bottom: 2.5rem;">
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Деталі доставки:</h3>
+            <p style="margin-bottom: 0.5rem;"><strong>Отримувач:</strong> {{ order.first_name }} {{ order.last_name }}
+            </p>
+            <p style="margin-bottom: 0.5rem;"><strong>Місто:</strong> {{ order.city }}</p>
+            <p><strong>Відділення:</strong> {{ order.warehouse }}</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <a href="{% url 'store:product_list' %}" class="btn btn-primary" style="width: 100%;">
+                Повернутися до каталогу 🛍️
+            </a>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Виникли питання? Напишіть нам у підтримку.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
