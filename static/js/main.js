@@ -107,6 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+        if (!cookieValue && name === 'csrftoken') {
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            if (meta) cookieValue = meta.getAttribute('content');
+        }
         return cookieValue;
     }
 

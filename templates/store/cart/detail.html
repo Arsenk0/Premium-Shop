@@ -5,6 +5,7 @@
 {% block content %}
 <div class="container fade-in">
     <h1>Ваш кошик 🛒</h1>
+    {% csrf_token %}
     <br>
     {% if cart_items %}
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 3rem;">
