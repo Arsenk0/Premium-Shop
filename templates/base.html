@@ -31,6 +31,7 @@
         </div>
         <div class="nav-links">
             <a href="{% url 'store:about' %}">Про нас</a>
+            <a href="{% url 'store:reviews_page' %}">Відгуки</a>
             <a href="{% url 'store:contact' %}">Контакти</a>
             <form action="{% url 'store:product_search' %}" method="get" class="search-bar">
                 <input type="text" name="q" placeholder="Пошук..." value="{{ request.GET.q }}">
@@ -68,6 +69,7 @@
                 <h4 style="margin-bottom: 1rem;">Навігація</h4>
                 <ul style="list-style: none; color: #888; font-size: 0.9rem;">
                     <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:about' %}">Про нас</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:reviews_page' %}">Відгуки</a></li>
                     <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:contact' %}">Контакти</a></li>
                 </ul>
             </div>

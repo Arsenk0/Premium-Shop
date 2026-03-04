@@ -2,7 +2,7 @@ from django import forms
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Order
+from .models import Order, Review
 
 
 class UserSignupForm(UserCreationForm):
@@ -35,7 +35,7 @@ class OrderCreateForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['first_name', 'last_name', 'phone', 'contact_method', 'social_handle', 'city', 'city_ref',
+        fields = ['first_name', 'last_name', 'email', 'phone', 'contact_method', 'social_handle', 'city', 'city_ref',
                   'warehouse', 'warehouse_ref']
         widgets = {
             'first_name': forms.TextInput(attrs={'placeholder': 'Олександр'}),
@@ -43,6 +43,7 @@ class OrderCreateForm(forms.ModelForm):
             'social_handle': forms.TextInput(attrs={'placeholder': '@username або посилання'}),
             'city': forms.TextInput(attrs={'placeholder': 'Почніть вводити місто...', 'autocomplete': 'off'}),
             'warehouse': forms.Select(attrs={'disabled': 'disabled'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'example@mail.com'}),
         }
         help_texts = {
             'social_handle': 'Вкажіть ваш Instagram або Telegram. Якщо ви обрали "Дзвінок", це поле можна залишити порожнім.',
@@ -97,3 +98,13 @@ class OrderCreateForm(forms.ModelForm):
         elif method == 'PHONE':
             cleaned_data['social_handle'] = cleaned_data.get('phone')
         return cleaned_data
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'comment']
+        widgets = {
+            'comment': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Ваш відгук...'}),
+            'rating': forms.Select(attrs={'class': 'form-group'}),
+        }

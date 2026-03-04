@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.product_list, name='product_list'),
     path('search/', views.product_search, name='product_search'),
     path('about/', views.about, name='about'),
+    path('reviews/', views.reviews_page, name='reviews_page'),
     path('contact/', views.contact, name='contact'),
     path('signup/', views.signup, name='signup'),
     path('profile/', views.profile, name='profile'),
@@ -22,4 +23,5 @@ urlpatterns = [
     path('api/nova-poshta/warehouses/', views.nova_poshta_warehouses, name='api_np_warehouses'),
     path('<slug:category_slug>/', views.product_list, name='product_list_by_category'),
     path('<int:id>/<slug:slug>/', views.product_detail, name='product_detail'),
+    path('review/add/<int:product_id>/', views.add_review, name='add_review'),
 ]

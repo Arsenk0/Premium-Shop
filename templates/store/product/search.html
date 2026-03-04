@@ -25,7 +25,8 @@
                 <p style="color: grey; font-size: 0.9rem;">Арт: {{ product.article }}</p>
                 <div class="product-price-row">
                     <span class="product-price">{{ product.price }} грн</span>
-                    <a href="{% url 'store:cart_add' product.id %}" class="btn btn-primary">+ В кошик</a>
+                    <a href="{% url 'store:product_detail' product.id product.slug %}"
+                        class="btn btn-primary">Більше</a>
                 </div>
             </div>
         </div>

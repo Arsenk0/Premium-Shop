@@ -7,6 +7,8 @@
 
 {% block content %}
 {% if not category %}
+{% if not request.GET.q %}
+{% if not current_filters.min_price and not current_filters.max_price and not current_filters.size %}
 <section class="hero fade-in">
     <div>
         <h1>Нова Колекція 2026</h1>
@@ -16,45 +18,314 @@
     </div>
 </section>
 {% endif %}
+{% endif %}
+{% endif %}
 
 <div class="container" id="products">
-    <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
-        <a href="{% url 'store:product_list' %}"
-            class="btn {% if not category %}btn-primary{% else %}btn-secondary{% endif %}">Всі товари</a>
-        {% for c in categories %}
-        <a href="{% url 'store:product_list_by_category' c.slug %}"
-            class="btn {% if category.slug == c.slug %}btn-primary{% else %}btn-secondary{% endif %}">{{ c.name }}</a>
-        {% endfor %}
-    </div>
-
-    <h2>{% if category %}{{ category.name }}{% else %}Всі товари{% endif %}</h2>
-    <br>
-
-    <div class="product-grid">
-        {% for product in products %}
-        <div class="product-card fade-in">
-            <a href="{% url 'store:product_detail' product.id product.slug %}">
-                {% if product.image %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                {% else %}
-                <img src="https://via.placeholder.com/300x400" alt="No image">
+    <div class="product-page-layout">
+        <!-- Sidebar Filters -->
+        <aside class="filters-sidebar fade-in">
+            <form method="get" action="." id="filter-form">
+                {% if request.GET.q %}
+                <input type="hidden" name="q" value="{{ request.GET.q }}">
                 {% endif %}
-            </a>
-            <div class="product-info">
-                <span class="product-category">{{ product.category.name }}</span>
-                <h3 class="product-name">
-                    <a href="{% url 'store:product_detail' product.id product.slug %}">{{ product.name }}</a>
-                </h3>
-                <p style="color: grey; font-size: 0.9rem;">Арт: {{ product.article }}</p>
-                <div class="product-price-row">
-                    <span class="product-price">{{ product.price }} грн</span>
-                    <a href="{% url 'store:cart_add' product.id %}" class="btn btn-primary">+ В кошик</a>
+
+                <div class="filter-section">
+                    <h4>Сортування</h4>
+                    <select name="sort" class="filter-select" onchange="this.form.submit()">
+                        <option value="newest" {% if current_filters.sort == 'newest' %}selected{% endif %}>Новинки
+                        </option>
+                        <option value="price_asc" {% if current_filters.sort == 'price_asc' %}selected{% endif %}>
+                            Найдешевші</option>
+                        <option value="price_desc" {% if current_filters.sort == 'price_desc' %}selected{% endif %}>
+                            Найдорожчі</option>
+                        <option value="name_asc" {% if current_filters.sort == 'name_asc' %}selected{% endif %}>За назвою
+                            (А-Я)</option>
+                    </select>
                 </div>
+
+                <div class="filter-section">
+                    <h4>Категорії</h4>
+                    <div class="category-links">
+                        <a href="{% url 'store:product_list' %}"
+                            class="cat-link {% if not category %}active{% endif %}">Всі товари</a>
+                        {% for c in categories %}
+                        <a href="{% url 'store:product_list_by_category' c.slug %}"
+                            class="cat-link {% if category.slug == c.slug %}active{% endif %}">{{ c.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>Ціна (грн)</h4>
+                    <div class="price-inputs">
+                        <input type="number" name="min_price" placeholder="Від" value="{{ current_filters.min_price }}">
+                        <input type="number" name="max_price" placeholder="До" value="{{ current_filters.max_price }}">
+                    </div>
+                </div>
+
+                {% if all_sizes %}
+                <div class="filter-section">
+                    <h4>Розмір</h4>
+                    <div class="size-filter-grid">
+                        {% for s in all_sizes %}
+                        <label class="size-filter-item">
+                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name %}checked{% endif %} onchange="this.form.submit()">
+                            <span>{{ s.name }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="filter-actions">
+                    <button type="submit" class="btn btn-primary"
+                        style="width: 100%; min-width: auto;">Застосувати</button>
+                    <a href="{% if category %}{% url 'store:product_list_by_category' category.slug %}{% else %}{% url 'store:product_list' %}{% endif %}"
+                        class="btn btn-secondary"
+                        style="width: 100%; min-width: auto; margin-top: 0.5rem; height: 44px; font-size: 0.9rem;">Скинути</a>
+                </div>
+            </form>
+        </aside>
+
+        <!-- Product Grid & Content -->
+        <main class="product-main-content">
+            <div class="product-list-header">
+                <h2>{% if category %}{{ category.name }}{% else %}Всі товари{% endif %}</h2>
+                <p class="results-count">Знайдено {{ products.paginator.count }} товарів</p>
             </div>
-        </div>
-        {% empty %}
-        <p>Товарів поки немає.</p>
-        {% endfor %}
+
+            <div class="product-grid">
+                {% for product in products %}
+                <div class="product-card fade-in">
+                    <a href="{% url 'store:product_detail' product.id product.slug %}">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <img src="https://via.placeholder.com/300x400" alt="No image">
+                        {% endif %}
+                    </a>
+                    <div class="product-info">
+                        <span class="product-category">{{ product.category.name }}</span>
+                        <h3 class="product-name">
+                            <a href="{% url 'store:product_detail' product.id product.slug %}">{{ product.name }}</a>
+                        </h3>
+                        <p style="color: grey; font-size: 0.8rem; margin-bottom: 0.5rem;">Арт: {{ product.article }}</p>
+                        <div class="product-price-row">
+                            <span class="product-price">{{ product.price }} грн</span>
+                            <a href="{% url 'store:product_detail' product.id product.slug %}" class="btn btn-primary"
+                                style="min-width: 100px; height: 40px; font-size: 0.85rem; padding: 0 1rem;">Більше</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="empty-state">
+                    <p>Товарів не знайдено за вашими критеріями.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if products.has_other_pages %}
+            <div class="pagination">
+                {% if products.has_previous %}
+                <a href="?page={{ products.previous_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}"
+                    class="page-link">&laquo;</a>
+                {% endif %}
+
+                {% for i in products.paginator.page_range %}
+                {% if products.number == i %}
+                <span class="page-link active">{{ i }}</span>
+                {% else %}
+                <a href="?page={{ i }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}"
+                    class="page-link">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if products.has_next %}
+                <a href="?page={{ products.next_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}"
+                    class="page-link">&raquo;</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </main>
     </div>
 </div>
+
+<style>
+    .product-page-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 2rem;
+    }
+
+    .filters-sidebar {
+        background: white;
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+    }
+
+    .filters-sidebar::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .filters-sidebar::-webkit-scrollbar-thumb {
+        background: #eee;
+        border-radius: 10px;
+    }
+
+    .filter-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .filter-section:last-of-type {
+        border-bottom: none;
+    }
+
+    .filter-section h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .filter-select {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 0.9rem;
+    }
+
+    .category-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .cat-link {
+        font-size: 0.95rem;
+        color: #555;
+        padding: 0.3rem 0;
+        transition: color 0.3s;
+    }
+
+    .cat-link:hover,
+    .cat-link.active {
+        color: var(--primary);
+        font-weight: 600;
+        padding-left: 5px;
+    }
+
+    .price-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .price-inputs input {
+        width: 100%;
+        padding: 0.6rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 0.85rem;
+    }
+
+    .size-filter-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+        gap: 8px;
+    }
+
+    .size-filter-item {
+        cursor: pointer;
+    }
+
+    .size-filter-item input {
+        display: none;
+    }
+
+    .size-filter-item span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.2s;
+    }
+
+    .size-filter-item input:checked+span {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+    }
+
+    .product-list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 2rem;
+    }
+
+    .results-count {
+        color: #888;
+        font-size: 0.9rem;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 3rem;
+    }
+
+    .page-link {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: white;
+        border: 1px solid #ddd;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .page-link.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+    }
+
+    .page-link:hover:not(.active) {
+        background: #f8f9fa;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 992px) {
+        .product-page-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .filters-sidebar {
+            position: relative;
+            top: 0;
+            margin-bottom: 2rem;
+            max-height: none;
+        }
+    }
+</style>
 {% endblock %}

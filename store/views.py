@@ -2,11 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.db.models import Q
+from django.db.models import Q, Min, Max
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
-from .models import Category, Product, Order, OrderItem
-from .forms import OrderCreateForm, UserSignupForm
+from .models import Category, Product, Order, OrderItem, Size, Review
+from .forms import OrderCreateForm, UserSignupForm, ReviewForm
 from .services import NovaPoshtaService
+from .tasks import send_order_confirmation_email
 
 
 def get_cart(request):
@@ -18,13 +20,64 @@ def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
+    
+    # Filtering by category
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
+    
+    # Filtering by price
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    if min_price:
+        products = products.filter(price__gte=min_price)
+    if max_price:
+        products = products.filter(price__lte=max_price)
+        
+    # Filtering by size
+    size_filter = request.GET.get('size')
+    if size_filter:
+        products = products.filter(sizes__name=size_filter)
+        
+    # Sorting
+    sort = request.GET.get('sort')
+    if sort == 'price_asc':
+        products = products.order_by('price')
+    elif sort == 'price_desc':
+        products = products.order_by('-price')
+    elif sort == 'name_asc':
+        products = products.order_by('name')
+    elif sort == 'newest':
+        products = products.order_by('-created')
+    else:
+        products = products.order_by('-created') # Default sorting
+
+    # Pagination
+    paginator = Paginator(products, 12) # 12 products per page
+    page = request.GET.get('page')
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
+    # Get dynamic filter options
+    all_sizes = Size.objects.filter(products__in=Product.objects.filter(available=True)).distinct()
+    price_range = Product.objects.filter(available=True).aggregate(Min('price'), Max('price'))
+
     return render(request, 'store/product/list.html', {
         'category': category,
         'categories': categories,
-        'products': products
+        'products': products,
+        'all_sizes': all_sizes,
+        'price_range': price_range,
+        'current_filters': {
+            'min_price': min_price,
+            'max_price': max_price,
+            'size': size_filter,
+            'sort': sort
+        }
     })
 
 
@@ -48,7 +101,26 @@ def profile(request):
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
-    return render(request, 'store/product/detail.html', {'product': product})
+    reviews = product.reviews.all()
+    form = ReviewForm()
+    return render(request, 'store/product/detail.html', {
+        'product': product,
+        'reviews': reviews,
+        'form': form
+    })
+
+@login_required
+def add_review(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.user = request.user
+            review.save()
+            return redirect('store:product_detail', id=product.id, slug=product.slug)
+    return redirect('store:product_detail', id=product.id, slug=product.slug)
 
 
 def product_search(request):
@@ -210,6 +282,10 @@ def order_create(request):
                     )
                 except (ValueError, Product.DoesNotExist):
                     continue
+            
+            # Trigger asynchronous email
+            send_order_confirmation_email.delay(order.id)
+            
             request.session['cart'] = {}
             request.session.modified = True
             return redirect('store:order_success', order_id=order.id)
@@ -238,6 +314,10 @@ def nova_poshta_warehouses(request):
     warehouses = NovaPoshtaService.get_warehouses(city_ref)
     return JsonResponse({'data': warehouses})
 
+
+def reviews_page(request):
+    reviews = Review.objects.all().order_by('-created_at')
+    return render(request, 'store/reviews.html', {'reviews': reviews})
 
 def about(request):
     return render(request, 'store/about.html')

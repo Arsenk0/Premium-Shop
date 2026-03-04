@@ -15,23 +15,44 @@
         <form action="." method="post" id="checkout-form">
             {% csrf_token %}
 
+            {% if form.errors %}
+            <div class="error-banner">
+                <p>Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують вашої уваги.</p>
+                {% if form.non_field_errors %}
+                <ul class="errorlist">
+                    {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endif %}
+
+
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                 <div class="form-group">
                     <label>Ім'я</label>
                     {{ form.first_name }}
-                    {{ form.first_name.errors }}
+                    {% if form.first_name.errors %}<div class="error-msg">{{ form.first_name.errors.0 }}</div>{% endif %}
                 </div>
                 <div class="form-group">
                     <label>Прізвище</label>
                     {{ form.last_name }}
-                    {{ form.last_name.errors }}
+                    {% if form.last_name.errors %}<div class="error-msg">{{ form.last_name.errors.0 }}</div>{% endif %}
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>Номер телефону</label>
-                {{ form.phone }}
-                {{ form.phone.errors }}
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div class="form-group">
+                    <label>Номер телефону</label>
+                    {{ form.phone }}
+                    {% if form.phone.errors %}<div class="error-msg">{{ form.phone.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="form-group">
+                    <label>Email (для підтвердження)</label>
+                    {{ form.email|default_if_none:"" }}
+                    {% if form.email.errors %}<div class="error-msg">{{ form.email.errors.0 }}</div>{% endif %}
+                </div>
             </div>
 
             <div class="form-group">
@@ -60,7 +81,7 @@
             <div class="form-group">
                 <label>Ваш нікнейм або номер (ми напишемо вам сюди)</label>
                 {{ form.social_handle }}
-                {{ form.social_handle.errors }}
+                {% if form.social_handle.errors %}<div class="error-msg">{{ form.social_handle.errors.0 }}</div>{% endif %}
                 <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
                     Наприклад: @nickname або номер телефону для WhatsApp
                 </p>
@@ -70,7 +91,7 @@
                 <label>Місто доставки</label>
                 {{ form.city }}
                 {{ form.city_ref }}
-                {{ form.city.errors }}
+                {% if form.city.errors %}<div class="error-msg">{{ form.city.errors.0 }}</div>{% endif %}
                 <div id="city-results" class="autocomplete-results"></div>
             </div>
 
@@ -78,7 +99,7 @@
                 <label>Відділення Нової Пошти</label>
                 {{ form.warehouse }}
                 {{ form.warehouse_ref }}
-                {{ form.warehouse.errors }}
+                {% if form.warehouse.errors %}<div class="error-msg">{{ form.warehouse.errors.0 }}</div>{% endif %}
                 <p id="warehouse-loading" style="display: none; font-size: 0.8rem; color: var(--accent);">Завантаження
                     відділень...</p>
             </div>

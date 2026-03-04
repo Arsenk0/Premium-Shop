@@ -1,4 +1,5 @@
 from django.test import TestCase, Client
+from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.urls import reverse
 from .models import Category, Product, Size
@@ -68,3 +69,48 @@ class CartLogicTest(TestCase):
         
         with self.assertRaises(ValidationError):
             item.clean()
+
+class ProductCatalogTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.category = Category.objects.create(name="Electronics")
+        self.p1 = Product.objects.create(category=self.category, name="A-Laptop", article="LT-1", price=1000, available=True)
+        self.p2 = Product.objects.create(category=self.category, name="B-Phone", article="PH-1", price=500, available=True)
+        self.s1 = Size.objects.create(name="L", type="apparel")
+        self.p1.sizes.add(self.s1)
+
+    def test_filtering_by_price(self):
+        response = self.client.get(reverse('store:product_list'), {'max_price': 600})
+        self.assertEqual(len(response.context['products']), 1)
+        self.assertEqual(response.context['products'][0], self.p2)
+
+    def test_sorting_by_price(self):
+        response = self.client.get(reverse('store:product_list'), {'sort': 'price_asc'})
+        self.assertEqual(response.context['products'][0], self.p2)
+        
+        response = self.client.get(reverse('store:product_list'), {'sort': 'price_desc'})
+        self.assertEqual(response.context['products'][0], self.p1)
+
+    def test_filtering_by_size(self):
+        response = self.client.get(reverse('store:product_list'), {'size': 'L'})
+        self.assertEqual(len(response.context['products']), 1)
+        self.assertEqual(response.context['products'][0], self.p1)
+
+class ReviewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='testuser', password='password')
+        self.category = Category.objects.create(name="Test")
+        self.product = Product.objects.create(category=self.category, name="Test Product", article="TP-1", price=10, available=True)
+
+    def test_add_review(self):
+        self.client.login(username='testuser', password='password')
+        response = self.client.post(reverse('store:add_review', args=[self.product.id]), {
+            'rating': 5,
+            'comment': 'Great product!'
+        })
+        from .models import Review
+        self.assertEqual(Review.objects.count(), 1)
+        review = Review.objects.first()
+        self.assertEqual(review.rating, 5)
+        self.assertEqual(review.comment, 'Great product!')

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Відгуки наших клієнтів - PREMIUM SHOP{% endblock %}
+
+{% block content %}
+<div class="container fade-in" style="max-width: 1000px; padding: 4rem 0;">
+    <div style="text-align: center; margin-bottom: 4rem;">
+        <h1 style="font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 1rem;">ЩО ПРО НАС <span
+                style="color: var(--accent);">КАЖУТЬ</span></h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem;">Ми цінуємо кожного клієнта та ваш фідбек</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+        {% for review in reviews %}
+        <div class="review-card"
+            style="background: #fff; padding: 2rem; border-radius: 24px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.03); transition: transform 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                <div>
+                    <strong style="display: block; font-size: 1.1rem; margin-bottom: 0.2rem;">{{ review.user.username }}</strong>
+                    <span style="font-size: 0.8rem; color: #888;">на <a
+                            href="{% url 'store:product_detail' review.product.id review.product.slug %}"
+                            style="color: var(--primary); font-weight: 600;">{{ review.product.name }}</a></span> </div>
+                <div style="color: #ffc107; white-space: nowrap;">
+                    {% for i in "12345" %}
+                    {% if forloop.counter <= review.rating %} <i class="fas fa-star"></i>
+                        {% else %}
+                        <i class="far fa-star"></i>
+                        {% endif %}
+                        {% endfor %}
+                </div>
+            </div>
+            <p style="line-height: 1.6; color: #444; margin-bottom: 1.5rem; font-style: italic;">"{{ review.comment }}" </p>
+            <div style="font-size: 0.8rem; color: #bbb; text-align: right;">
+                {{ review.created_at|date:"d.m.Y" }} </div>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; background: #fff; border-radius: 24px;">
+            <i class="fas fa-comment-slash"
+                style="font-size: 3rem; color: #eee; margin-bottom: 1rem; display: block;"></i>
+            <p style="color: #888;">Тут поки порожньо. Станьте першим, хто залишить відгук на один із наших товарів!</p>
+            <br>
+            <a href="{% url 'store:product_list' %}" class="btn btn-primary">До каталогу</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .review-card:hover {
+        transform: translateY(-10px);
+    }
+</style>
+{% endblock %}

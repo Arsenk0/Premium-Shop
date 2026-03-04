@@ -116,6 +116,7 @@ class Order(models.Model):
     city_ref = models.CharField(max_length=100, blank=True, verbose_name="Ref міста")
     warehouse = models.CharField(max_length=255, verbose_name="Відділення")
     warehouse_ref = models.CharField(max_length=100, blank=True, verbose_name="Ref відділення")
+    email = models.EmailField(verbose_name="Email", default='no-reply@shop.com')
     created = models.DateTimeField(auto_now_add=True, verbose_name="Створено")
     updated = models.DateTimeField(auto_now=True, verbose_name="Оновлено")
     paid = models.BooleanField(default=False, verbose_name="Оплачено")
@@ -153,3 +154,17 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return str(self.id)
+class Review(models.Model):
+    product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
+    rating = models.PositiveSmallIntegerField(choices=[(i, str(i)) for i in range(1, 6)], verbose_name="Рейтинг")
+    comment = models.TextField(verbose_name="Коментар")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата")
+
+    class Meta:
+        ordering = ('-created_at',)
+        verbose_name = "Відгук"
+        verbose_name_plural = "Відгуки"
+
+    def __str__(self):
+        return f'Відгук від {self.user.username} на {self.product.name}'
