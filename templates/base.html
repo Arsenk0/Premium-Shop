@@ -38,11 +38,6 @@
             </form>
             {% if user.is_authenticated %}
             <a href="{% url 'store:profile' %}" class="nav-auth-link"><i class="fas fa-user"></i> Кабінет</a>
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="nav-auth-link"
-                    style="background: none; border: none; font-family: inherit; font-size: inherit; color: inherit; cursor: pointer; padding: 0;">Вийти</button>
-            </form>
             {% else %}
             <a href="{% url 'login' %}" class="nav-auth-link">Вхід</a>
             <a href="{% url 'store:signup' %}" class="nav-auth-link">Реєстрація</a>

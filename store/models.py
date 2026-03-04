@@ -7,7 +7,7 @@ from django.dispatch import receiver
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
 
     class Meta:
         verbose_name = 'Категорія'
@@ -15,7 +15,7 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name, allow_unicode=True)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -42,7 +42,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     article = models.CharField(max_length=50, unique=True, verbose_name="Article/SKU")
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
@@ -58,7 +58,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name, allow_unicode=True)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -145,6 +145,11 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
     size = models.CharField(max_length=50, blank=True, null=True, verbose_name="Розмір")
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.product.sizes.exists() and not self.size:
+            raise ValidationError({'size': f"Будь ласка, оберіть розмір для товару {self.product.name}"})
 
     def __str__(self):
         return str(self.id)

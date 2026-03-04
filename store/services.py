@@ -1,6 +1,9 @@
 import requests
 import json
+import logging
 from django.conf import settings
+
+logger = logging.getLogger(__name__)
 
 class NovaPoshtaService:
     API_URL = "https://api.novaposhta.ua/v2.0/json/"
@@ -26,7 +29,7 @@ class NovaPoshtaService:
                     'ref': city['Ref']
                 } for city in data.get('data', [])]
         except Exception as e:
-            print(f"NP Error: {e}")
+            logger.error(f"NP Error in search_cities: {e}")
         return []
 
     @classmethod
@@ -48,5 +51,5 @@ class NovaPoshtaService:
                     'ref': wh['Ref']
                 } for wh in data.get('data', [])]
         except Exception as e:
-            print(f"NP Error: {e}")
+            logger.error(f"NP Error in get_warehouses: {e}")
         return []

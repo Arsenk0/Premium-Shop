@@ -66,6 +66,13 @@ def cart_add(request, product_id):
     cart = request.session.get('cart', {})
     product = get_object_or_404(Product, id=product_id)
     size = request.GET.get('size')
+    
+    # Enforce size selection if product has sizes
+    if product.sizes.exists() and not size:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'error', 'message': 'Будь ласка, оберіть розмір!'}, status=400)
+        return redirect('store:product_detail', id=product.id, slug=product.slug)
+
     product_key = f"{product_id}_{size}" if size else str(product_id)
 
     if product_key not in cart:
@@ -175,14 +182,7 @@ def cart_sidebar_data(request):
 
 def get_cart_count(request):
     cart = request.session.get('cart', {})
-    total = 0
-    for item_key, item in cart.items():
-        try:
-            p_id = item.get('product_id', int(item_key.split('_')[0]) if '_' in item_key else int(item_key))
-            if Product.objects.filter(id=p_id).exists():
-                total += item.get('quantity', 1)
-        except (ValueError, Product.DoesNotExist):
-            continue
+    total = sum(item.get('quantity', 0) for item in cart.values())
     return total
 
 

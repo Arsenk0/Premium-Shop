@@ -130,6 +130,11 @@
 
         let debounceTimer;
 
+        // If we have a city_ref but warehouses are not loaded (e.g. after form validation error)
+        if (cityRefInput.value && (!warehouseSelect.value || warehouseSelect.disabled)) {
+            loadWarehouses(cityRefInput.value, warehouseRefInput.value);
+        }
+
         cityInput.addEventListener('input', function () {
             clearTimeout(debounceTimer);
             const query = this.value;
@@ -169,7 +174,7 @@
             }
         });
 
-        function loadWarehouses(cityRef) {
+        function loadWarehouses(cityRef, selectedWhRef = null) {
             warehouseSelect.innerHTML = '<option value="">Завантаження...</option>';
             warehouseSelect.disabled = true;
             loadingText.style.display = 'block';
@@ -179,10 +184,12 @@
                 .then(data => {
                     loadingText.style.display = 'none';
                     if (data.data.length > 0) {
-                        warehouseSelect.innerHTML = '<option value="">Оберіть відділення</option>' +
-                            data.data.map(wh => `
-                            <option value="${wh.name}" data-ref="${wh.ref}">${wh.name}</option>
-                        `).join('');
+                        let options = '<option value="">Оберіть відділення</option>';
+                        data.data.forEach(wh => {
+                            const selected = wh.ref === selectedWhRef ? 'selected' : '';
+                            options += `<option value="${wh.name}" data-ref="${wh.ref}" ${selected}>${wh.name}</option>`;
+                        });
+                        warehouseSelect.innerHTML = options;
                         warehouseSelect.disabled = false;
                     } else {
                         warehouseSelect.innerHTML = '<option value="">Відділень не знайдено</option>';

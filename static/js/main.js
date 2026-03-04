@@ -28,7 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw err; });
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data.status === 'ok') {
                         // Update badge
@@ -39,6 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
                             setTimeout(() => cartCount.style.transform = 'scale(1)', 200);
                         }
                         showToast(`🛍 Додано до кошика!`);
+
+                        // Clear error UI if present
+                        const errorMsg = document.getElementById('size-error');
+                        if (errorMsg) errorMsg.style.display = 'none';
+                    }
+                })
+                .catch(err => {
+                    if (err.message) {
+                        showToast(`⚠️ ${err.message}`);
+                        const errorMsg = document.getElementById('size-error');
+                        if (errorMsg) errorMsg.style.display = 'block';
                     }
                 });
         });

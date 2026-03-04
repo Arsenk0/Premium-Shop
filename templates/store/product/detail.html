@@ -52,8 +52,8 @@
         <p class="detail-price">{{ product.price }} грн</p>
 
         {% if product.sizes.all %}
-        <div style="margin-bottom: 1.5rem;">
-            <h3 style="margin-bottom: 1rem;">Оберіть розмір</h3>
+        <div style="margin-bottom: 1.5rem;" id="size-selection-area">
+            <h3 style="margin-bottom: 1rem;">Оберіть розмір <span style="color: var(--accent);">*</span></h3>
             <div class="size-selector" style="display: flex; gap: 10px; flex-wrap: wrap;">
                 {% for size in product.sizes.all %}
                 <label class="size-option">
@@ -62,6 +62,8 @@
                 </label>
                 {% endfor %}
             </div>
+            <p id="size-error" style="color: var(--accent); font-size: 0.85rem; margin-top: 0.5rem; display: none;">⚠️
+                Будь ласка, оберіть розмір!</p>
         </div>
         {% endif %}
 
