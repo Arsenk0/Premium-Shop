@@ -11,7 +11,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('signup/', views.signup, name='signup'),
     path('profile/', views.profile, name='profile'),
-    path('accounts/', include('django.contrib.auth.urls')),
+
     path('cart/add/<int:product_id>/', views.cart_add, name='cart_add'),
     path('cart/remove/<str:item_key>/', views.cart_remove, name='cart_remove'),
     path('cart/update/<str:item_key>/', views.cart_update, name='cart_update'),

@@ -94,7 +94,7 @@ class OrderCreateForm(forms.ModelForm):
                 if handle.replace('.', '').replace('_', '').isalnum():
                     handle = '@' + handle
                 else:
-                    raise forms.ValidationError({'social_handle': _(f"Для {method} нікнейм зазвичай починається з @")})
+                    raise forms.ValidationError({'social_handle': _("Для %(method)s нікнейм зазвичай починається з @") % {'method': method}})
             cleaned_data['social_handle'] = handle
         elif method == 'PHONE':
             cleaned_data['social_handle'] = cleaned_data.get('phone')

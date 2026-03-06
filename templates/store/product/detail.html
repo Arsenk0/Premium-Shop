@@ -22,7 +22,7 @@
         <div class="main-image" style="margin-bottom: 1rem;">
             {% if product.image %}
             <img id="main-product-img" src="{{ product.image.url }}" alt="{{ product.name }}"
-                style="width: 100%; border-radius: 12px; box-shadow: var(--shadow); height: 550px; object-fit: cover;">
+                style="width: 100%; border-radius: 12px; box-shadow: var(--shadow); height: 550px; object-fit: cover; transition: var(--transition);">
             {% else %}
             <img src="https://via.placeholder.com/600x800" alt="{% trans 'Немає зображення' %}"
                 style="width: 100%; border-radius: 12px;">
@@ -47,7 +47,7 @@
     </div>
 
     <div class="product-details">
-        <span class="product-category">{{ product.category.name }}</span>
+        <span class="product-category">{% translate product.category.name %}</span>
         <h1 style="font-size: 2.5rem; margin: 0.5rem 0; font-weight: 800;">{{ product.name }}</h1>
         <p style="color: grey; margin-bottom: 0.5rem; font-size: 0.9rem;">{% trans "Артикул:" %} {{ product.article }}
         </p>
@@ -93,7 +93,7 @@
             </p>
         </div>
 
-        <a id="add-to-cart-btn" href="{% url 'store:cart_add' product.id %}" class="btn btn-primary"
+        <a id="add-to-cart-btn" href="{% url 'store:cart_add' product.id %}" class="btn btn-primary hover-scale"
             style="width: 100%; height: 60px; font-size: 1.2rem; gap: 10px;">
             {% trans "Додати в кошик" %} <i class="fas fa-shopping-cart"></i>
         </a>

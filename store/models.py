@@ -136,7 +136,7 @@ class OrderItem(models.Model):
     def clean(self):
         from django.core.exceptions import ValidationError
         if self.product.sizes.exists() and not self.size:
-            raise ValidationError({'size': _(f"Будь ласка, оберіть розмір для товару {self.product.name}")})
+            raise ValidationError({'size': _("Будь ласка, оберіть розмір для товару %(product)s") % {'product': self.product.name}})
 
     def __str__(self):
         return str(self.id)

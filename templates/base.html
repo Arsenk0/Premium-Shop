@@ -24,7 +24,9 @@
     </script>
 </head>
 
-<body>
+<body data-toast-added="{% trans 'Додано до кошика!' %}" data-toast-error="{% trans 'Халепа, щось пішло не так!' %}"
+    data-toast-select-size="{% trans 'Будь ласка, оберіть розмір!' %}" data-loading="{% trans 'Завантаження...' %}"
+    data-select-warehouse="{% trans 'Оберіть відділення' %}" data-no-warehouses="{% trans 'Відділень не знайдено' %}">
     <nav class="navbar">
         <div class="logo">
             <a href="{% url 'store:product_list' %}">PREMIUM<span>SHOP</span></a>
@@ -43,18 +45,19 @@
             <a href="{% url 'login' %}" class="nav-auth-link">{% trans "Вхід" %}</a>
             <a href="{% url 'store:signup' %}" class="nav-auth-link">{% trans "Реєстрація" %}</a>
             {% endif %}
-            
+
             <form action="{% url 'set_language' %}" method="post" style="display:flex; align-items:center;">
                 {% csrf_token %}
-                <input name="next" type="hidden" value="{{ redirect_to }}">
-                <select name="language" onchange="this.form.submit()" style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer;">
+                <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                <select name="language" onchange="this.form.submit()"
+                    style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer;">
                     {% get_current_language as LANGUAGE_CODE %}
                     {% get_available_languages as LANGUAGES %}
                     {% get_language_info_list for LANGUAGES as languages %}
                     {% for language in languages %}
-                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                            {{ language.code|upper }}
-                        </option>
+                    <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                        {{ language.code|upper }}
+                    </option>
                     {% endfor %}
                 </select>
             </form>
@@ -85,7 +88,8 @@
                 <ul style="list-style: none; color: #888; font-size: 0.9rem;">
                     <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:about' %}">{% trans "Про нас" %}</a></li>
                     <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:reviews_page' %}">{% trans "Відгуки" %}</a></li>
-                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:contact' %}">{% trans "Контакти" %}</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:contact' %}">{% trans "Контакти" %}</a>
+                    </li>
                 </ul>
             </div>
             <div>

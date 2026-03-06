@@ -10,6 +10,8 @@
     --border-radius: 12px;
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    --transition-fast: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    --radius-pill: 50px;
 }
 
 * {
@@ -233,6 +235,53 @@ a:not(.btn):not(.cart-link):not(.logo a):hover:after {
     background: #222;
 }
 
+/* New Hover Effects */
+.hover-scale {
+    transition: var(--transition);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.hover-lift {
+    transition: var(--transition);
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+}
+
+/* Sidebar Tool Animations */
+.filter-section {
+    transition: var(--transition);
+}
+
+.size-filter-item {
+    transition: var(--transition-fast);
+}
+
+.size-filter-item:hover {
+    transform: translateY(-2px);
+    background: #f8fafc;
+}
+
+.cat-link {
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    transition: var(--transition-fast);
+}
+
+.cat-link:hover {
+    background: #f1f5f9;
+    padding-left: 1rem;
+}
+
+.cat-link.active {
+    background: var(--primary);
+    color: white !important;
+}
+
 /* Forms */
 .form-group {
     margin-bottom: 1.5rem;
@@ -275,6 +324,28 @@ a:not(.btn):not(.cart-link):not(.logo a):hover:after {
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* Phase 2: Cart & Toast */

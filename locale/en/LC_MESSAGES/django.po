@@ -1,18 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Premium Shop - English translations
+# Copyright (C) 2026 Premium Shop
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 09:59+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2026-03-06 15:04+0000\n"
+"PO-Revision-Date: 2026-03-06 16:00+0200\n"
+"Last-Translator: Premium Shop Team\n"
+"Language-Team: English\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,7 +35,7 @@ msgstr "Enter your email (for password recovery)"
 #: store/forms.py:22
 msgid ""
 "Номер телефону повинен бути у форматі: '+380999999999'. Від 9 до 15 цифр."
-msgstr ""
+msgstr "Phone number must be in format: '+380999999999'. From 9 to 15 digits."
 
 #: store/forms.py:32 store/models.py:99
 msgid "Дзвінок по телефону"
@@ -64,6 +62,8 @@ msgid ""
 "Вкажіть ваш Instagram або Telegram. Якщо ви обрали \"Дзвінок\", це поле "
 "можна залишити порожнім."
 msgstr ""
+"Enter your Instagram or Telegram. If you selected \"Phone call\", this field "
+"can be left empty."
 
 #: store/forms.py:56
 msgid "Ім'я занадто коротке"
@@ -84,6 +84,11 @@ msgstr "Please indicate the city"
 #: store/forms.py:81
 msgid "Будь ласка, оберіть відділення"
 msgstr "Please select a warehouse"
+
+#: store/forms.py:97
+#, python-format
+msgid "Для %(method)s нікнейм зазвичай починається з @"
+msgstr "For %(method)s nickname usually starts with @"
 
 #: store/forms.py:109
 msgid "Ваш відгук..."
@@ -109,7 +114,7 @@ msgstr "Clothing"
 msgid "Тип"
 msgstr "Type"
 
-#: store/models.py:32 store/models.py:134 templates/store/product/list.html:71
+#: store/models.py:32 store/models.py:134 templates/store/product/list.html:72
 msgid "Розмір"
 msgstr "Size"
 
@@ -165,11 +170,11 @@ msgstr "Profile"
 msgid "Користувач"
 msgstr "User"
 
-#: store/models.py:92 templates/store/order/create.html:36
+#: store/models.py:92 templates/store/order/create.html:35
 msgid "Ім'я"
 msgstr "First Name"
 
-#: store/models.py:93 templates/store/order/create.html:42
+#: store/models.py:93 templates/store/order/create.html:41
 msgid "Прізвище"
 msgstr "Last name"
 
@@ -233,6 +238,11 @@ msgstr "Status"
 msgid "Замовлення"
 msgstr "Orders"
 
+#: store/models.py:139
+#, python-format
+msgid "Будь ласка, оберіть розмір для товару %(product)s"
+msgstr "Please select a size for product %(product)s"
+
 #: store/models.py:146
 msgid "Рейтинг"
 msgstr "Rating"
@@ -249,7 +259,7 @@ msgstr "Date"
 msgid "Відгук"
 msgstr "Review"
 
-#: store/models.py:153 templates/base.html:34 templates/base.html:87
+#: store/models.py:153 templates/base.html:36 templates/base.html:90
 msgid "Відгуки"
 msgstr "Reviews"
 
@@ -257,11 +267,12 @@ msgstr "Reviews"
 msgid "Відгук від"
 msgstr "Review by"
 
-#: store/models.py:156 templates/store/reviews.html:23
+#: store/models.py:156 templates/store/reviews.html:21
 msgid "на"
 msgstr "on"
 
-#: store/views.py:147 templates/store/product/detail.html:79
+#: store/views.py:147 templates/base.html:28
+#: templates/store/product/detail.html:79
 msgid "Будь ласка, оберіть розмір!"
 msgstr "Please select a size!"
 
@@ -270,6 +281,8 @@ msgid ""
 "Premium Shop - найкращий стрітвір та кросівки в Україні. Тільки оригінальна "
 "якість та преміальний сервіс."
 msgstr ""
+"Premium Shop - the best streetwear and sneakers in Ukraine. Only original "
+"quality and premium service."
 
 #: templates/base.html:11
 msgid "кросівки, стрітвір, одяг, Україна, купити кросівки, premium shop"
@@ -283,68 +296,93 @@ msgstr "Premium Shop - Your Style"
 msgid "Найкращий вибір преміального одягу та взуття."
 msgstr "The best selection of premium clothing and footwear."
 
-#: templates/base.html:33 templates/base.html:86
+#: templates/base.html:27
+msgid "Додано до кошика!"
+msgstr "Added to cart!"
+
+#: templates/base.html:27
+msgid "Халепа, щось пішло не так!"
+msgstr "Oops, something went wrong!"
+
+#: templates/base.html:28 templates/store/order/create.html:254
+msgid "Завантаження..."
+msgstr "Loading..."
+
+#: templates/base.html:29 templates/store/order/create.html:260
+msgid "Оберіть відділення"
+msgstr "Select warehouse"
+
+#: templates/base.html:29
+msgid "Відділень не знайдено"
+msgstr "No warehouses found"
+
+#: templates/base.html:35 templates/base.html:89
 msgid "Про нас"
 msgstr "About us"
 
-#: templates/base.html:35 templates/base.html:88
+#: templates/base.html:37 templates/base.html:91
 msgid "Контакти"
 msgstr "Contacts"
 
-#: templates/base.html:37
+#: templates/base.html:39
 msgid "Пошук..."
 msgstr "Search..."
 
-#: templates/base.html:41
+#: templates/base.html:43
 msgid "Кабінет"
 msgstr "Dashboard"
 
-#: templates/base.html:43 templates/registration/login.html:4
+#: templates/base.html:45 templates/registration/login.html:4
 msgid "Вхід"
 msgstr "Login"
 
-#: templates/base.html:44 templates/store/accounts/signup.html:4
+#: templates/base.html:46 templates/store/accounts/signup.html:4
 msgid "Реєстрація"
 msgstr "Registration"
 
-#: templates/base.html:81
+#: templates/base.html:84
 msgid ""
 "Найкращий стрітвір та кросівки в Україні. Тільки оригінальна якість та "
 "преміальний сервіс."
 msgstr ""
+"The best streetwear and sneakers in Ukraine. Only original quality and "
+"premium service."
 
-#: templates/base.html:84
+#: templates/base.html:87
 msgid "Навігація"
 msgstr "Navigation"
 
-#: templates/base.html:92
+#: templates/base.html:96
 msgid "Соцмережі"
 msgstr "Social media"
 
-#: templates/base.html:102
+#: templates/base.html:106
 msgid "Всі права захищені."
 msgstr "All rights reserved."
 
-#: templates/base.html:111
+#: templates/base.html:115
 msgid "Бажаєте додати в кошик? 😉"
 msgstr "Want to add to cart? 😉"
 
-#: templates/base.html:112
+#: templates/base.html:116
 msgid ""
 "Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в особистому "
 "кабінеті та ви отримували бонуси!"
 msgstr ""
+"Log in or sign up so your items are saved in your account and you earn "
+"bonuses!"
 
-#: templates/base.html:115
+#: templates/base.html:119 templates/registration/login.html:22
+#: templates/store/accounts/signup.html:176
 msgid "Увійти"
 msgstr "Log in"
 
-#: templates/base.html:117 templates/registration/login.html:44
-#: templates/store/welcome.html:22
+#: templates/base.html:121 templates/registration/login.html:43
+#: templates/store/accounts/signup.html:66 templates/store/welcome.html:21
 msgid "Зареєструватися"
 msgstr "Sign up"
 
-#: templates/base.html:119
+#: templates/base.html:123
 msgid "Продовжити як гість"
 msgstr "Continue as guest"
 
@@ -360,7 +398,7 @@ msgstr "Login or Email"
 msgid "Пароль"
 msgstr "Password"
 
-#: templates/registration/login.html:43
+#: templates/registration/login.html:42
 msgid "Немає аккаунту?"
 msgstr "No account?"
 
@@ -368,27 +406,41 @@ msgstr "No account?"
 msgid "Про нас - PREMIUM SHOP"
 msgstr "About us - PREMIUM SHOP"
 
-#: templates/store/about.html:18
+#: templates/store/about.html:13
+msgid ""
+"Ми — команда фанатів вуличної моди, які вірять, що одяг — це не просто речі, "
+"а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок та "
+"худі, щоб ви отримували лише найкращу якість та найсвіжіші релізи."
+msgstr ""
+"We are a team of street fashion fans who believe that clothing is not just "
+"things, but a way of self-expression. We carefully select each sneaker and "
+"hoodie model so you get only the best quality and freshest releases."
+
+#: templates/store/about.html:16
 msgid "Наші цінності:"
 msgstr "Our values:"
 
-#: templates/store/about.html:22
+#: templates/store/about.html:20
 msgid "Тільки оригінальна якість"
 msgstr "Only original quality"
 
-#: templates/store/about.html:22
+#: templates/store/about.html:20
 msgid "ніяких компромісів."
 msgstr "no compromises."
 
-#: templates/store/about.html:26
+#: templates/store/about.html:24
 msgid "Швидкий сервіс"
 msgstr "Fast service"
 
-#: templates/store/about.html:31
+#: templates/store/about.html:24
+msgid "менеджер зв'яжеться з вами протягом 15 хвилин."
+msgstr "a manager will contact you within 15 minutes."
+
+#: templates/store/about.html:28
 msgid "Стиль понад усе"
 msgstr "Style above all"
 
-#: templates/store/about.html:31
+#: templates/store/about.html:28
 msgid "ми завжди в курсі останніх трендів."
 msgstr "we're always up to date with the latest trends."
 
@@ -416,30 +468,40 @@ msgstr "Username:"
 msgid "Email:"
 msgstr "Email:"
 
-#: templates/store/accounts/profile.html:31
+#: templates/store/accounts/profile.html:22
+msgid "не вказано"
+msgstr "not specified"
+
+#: templates/store/accounts/profile.html:24
+msgid ""
+"Дані для доставки підтягуються автоматично з ваших попередніх замовлень."
+msgstr "Delivery data is automatically pulled from your previous orders."
+
+#: templates/store/accounts/profile.html:29
 msgid "Історія замовлень"
 msgstr "Order History"
 
-#: templates/store/accounts/profile.html:38
+#: templates/store/accounts/profile.html:36
 msgid "Замовлення #"
 msgstr "Order #"
 
-#: templates/store/accounts/profile.html:39
-#: templates/store/product/list.html:62
+#: templates/store/accounts/profile.html:37
+#: templates/store/product/list.html:63
 msgid "Від"
 msgstr "From"
 
-#: templates/store/accounts/profile.html:43 templates/store/cart/detail.html:43
-#: templates/store/cart/detail.html:44 templates/store/cart/detail.html:57
-#: templates/store/product/detail.html:54 templates/store/product/list.html:121
+#: templates/store/accounts/profile.html:37 templates/store/cart/detail.html:40
+#: templates/store/cart/detail.html:41 templates/store/cart/detail.html:55
+#: templates/store/product/detail.html:54 templates/store/product/list.html:122
+#: templates/store/product/search.html:27
 msgid "грн"
 msgstr "UAH"
 
-#: templates/store/accounts/profile.html:49
+#: templates/store/accounts/profile.html:43
 msgid "У вас поки немає замовлень."
 msgstr "You have no orders yet."
 
-#: templates/store/accounts/profile.html:51
+#: templates/store/accounts/profile.html:45
 msgid "Почати шопінг"
 msgstr "Start shopping"
 
@@ -447,19 +509,28 @@ msgstr "Start shopping"
 msgid "Створити аккаунт"
 msgstr "Create account"
 
-#: templates/store/accounts/signup.html:44
+#: templates/store/accounts/signup.html:40
+msgid "Надійний пароль містить:"
+msgstr "A strong password contains:"
+
+#: templates/store/accounts/signup.html:43
 msgid "Від 8 символів"
 msgstr "8+ characters"
 
-#: templates/store/accounts/signup.html:47
+#: templates/store/accounts/signup.html:46
 msgid "Літери"
 msgstr "Letters"
 
-#: templates/store/accounts/signup.html:50
+#: templates/store/accounts/signup.html:49
 msgid "Цифри"
 msgstr "Numbers"
 
-#: templates/store/accounts/signup.html:179
+#: templates/store/accounts/signup.html:52
+#, python-format
+msgid "Спецсимвол (наприклад !@#$%%&)"
+msgstr "Special character (e.g. !@#$%%&)"
+
+#: templates/store/accounts/signup.html:176
 msgid "Вже є аккаунт?"
 msgstr "Already have an account?"
 
@@ -483,7 +554,8 @@ msgstr "Total"
 msgid "Дія"
 msgstr "Action"
 
-#: templates/store/cart/detail.html:32 templates/store/product/list.html:118
+#: templates/store/cart/detail.html:32 templates/store/product/list.html:119
+#: templates/store/product/search.html:25
 msgid "Арт:"
 msgstr "SKU:"
 
@@ -491,27 +563,27 @@ msgstr "SKU:"
 msgid "Розмір:"
 msgstr "Size:"
 
-#: templates/store/cart/detail.html:48
+#: templates/store/cart/detail.html:46
 msgid "Видалити"
 msgstr "Delete"
 
-#: templates/store/cart/detail.html:57
+#: templates/store/cart/detail.html:55
 msgid "Разом:"
 msgstr "Total:"
 
-#: templates/store/cart/detail.html:60
+#: templates/store/cart/detail.html:58
 msgid "Продовжити покупки"
 msgstr "Continue shopping"
 
-#: templates/store/cart/detail.html:61
+#: templates/store/cart/detail.html:59
 msgid "Оформити замовлення"
 msgstr "Checkout"
 
-#: templates/store/cart/detail.html:65
+#: templates/store/cart/detail.html:63
 msgid "Ваш кошик порожній."
 msgstr "Your cart is empty."
 
-#: templates/store/cart/detail.html:67
+#: templates/store/cart/detail.html:65
 msgid "Перейти до покупок"
 msgstr "Go shopping"
 
@@ -563,45 +635,55 @@ msgstr "Mon-Fri 10:00 - 19:00"
 msgid "Телефон:"
 msgstr "Phone:"
 
-#: templates/store/order/create.html:4 templates/store/order/create.html:9
+#: templates/store/order/create.html:4
 msgid "Оформлення замовлення"
 msgstr "Order checkout"
 
-#: templates/store/order/create.html:21
+#: templates/store/order/create.html:9
+msgid "Оформлення"
+msgstr "Checkout"
+
+#: templates/store/order/create.html:10
+msgid "Заповніть дані для доставки"
+msgstr "Fill in your delivery details"
+
+#: templates/store/order/create.html:20
 msgid ""
 "Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують "
 "вашої уваги."
-msgstr "Please check the correctness of the completed fields. Some data requires your attention."
+msgstr ""
+"Please check the correctness of the completed fields. Some data requires "
+"your attention."
 
-#: templates/store/order/create.html:50
+#: templates/store/order/create.html:49
 msgid "Номер телефону"
 msgstr "Phone number"
 
-#: templates/store/order/create.html:55
+#: templates/store/order/create.html:54
 msgid "Email (для підтвердження)"
 msgstr "Email (for confirmation)"
 
-#: templates/store/order/create.html:62
+#: templates/store/order/create.html:61
 msgid "Як з вами зручніше зв'язатися?"
 msgstr "How would you like us to contact you?"
 
-#: templates/store/order/create.html:85
+#: templates/store/order/create.html:84
 msgid "Ваш нікнейм або номер (ми напишемо вам сюди)"
 msgstr "Your nickname or number (we'll text you here)"
 
-#: templates/store/order/create.html:90
+#: templates/store/order/create.html:89
 msgid "Наприклад: @nickname або номер телефону для WhatsApp"
 msgstr "Example: @nickname or phone number for WhatsApp"
 
-#: templates/store/order/create.html:95
+#: templates/store/order/create.html:94
 msgid "Місто доставки"
 msgstr "Delivery city"
 
-#: templates/store/order/create.html:103
+#: templates/store/order/create.html:101
 msgid "Відділення Нової Пошти"
 msgstr "Nova Poshta Warehouse"
 
-#: templates/store/order/create.html:114
+#: templates/store/order/create.html:111
 msgid "Підтвердити замовлення"
 msgstr "Confirm order"
 
@@ -615,12 +697,8 @@ msgstr "Thank you for your order!"
 
 #: templates/store/order/success.html:12
 #, python-format
-msgid ""
-"Ваше замовлення <strong>#{{\n"
-"                order_id }}</strong> успішно прийнято в обробку.\n"
-"            Ми зв'яжемося з вами через <strong>%(contact_method)s</strong> "
-"найближчим часом."
-msgstr ""
+msgid "Ваше замовлення <strong>#%(order_id)s</strong> успішно прийнято в обробку. Ми зв'яжемося з вами через <strong>%(contact_method)s</strong> найближчим часом."
+msgstr "Your order <strong>#%(order_id)s</strong> has been successfully accepted for processing. We will contact you via <strong>%(contact_method)s</strong> shortly."
 
 #: templates/store/order/success.html:18
 msgid "Деталі доставки:"
@@ -739,46 +817,71 @@ msgstr "Shop now"
 msgid "Сортування"
 msgstr "Sorting"
 
-#: templates/store/product/list.html:51 templates/store/product/list.html:98
+#: templates/store/product/list.html:51 templates/store/product/list.html:99
 msgid "Всі товари"
 msgstr "All products"
 
-#: templates/store/product/list.html:60
+#: templates/store/product/list.html:61
 msgid "Ціна (грн)"
 msgstr "Price (UAH)"
 
-#: templates/store/product/list.html:64
+#: templates/store/product/list.html:65
 msgid "До"
 msgstr "To"
 
-#: templates/store/product/list.html:99
+#: templates/store/product/list.html:100
 #, python-format
-msgid ""
-"Знайдено %(counter)s\n"
-"                    товар"
+msgid "Знайдено %(counter)s товар"
 msgid_plural "Знайдено %(counter)s товарів"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Found %(counter)s product"
+msgstr[1] "Found %(counter)s products"
 
-#: templates/store/product/list.html:130
+#: templates/store/product/list.html:131
 msgid "Товарів не знайдено за вашими критеріями."
 msgstr "No products found for your criteria."
+
+#: templates/store/product/search.html:4
+msgid "Пошук"
+msgstr "Search"
+
+#: templates/store/product/search.html:8
+msgid "Результати пошуку для"
+msgstr "Search results for"
+
+#: templates/store/product/search.html:30
+msgid "Більше"
+msgstr "More"
+
+#: templates/store/product/search.html:38
+msgid "Нічого не знайдено за вашим запитом."
+msgstr "Nothing found for your query."
+
+#: templates/store/product/search.html:39 templates/store/reviews.html:42
+msgid "До каталогу"
+msgstr "To catalog"
 
 #: templates/store/reviews.html:4
 msgid "Відгуки наших клієнтів - PREMIUM SHOP"
 msgstr "Customer reviews - PREMIUM SHOP"
 
-#: templates/store/reviews.html:10
+#: templates/store/reviews.html:9
+msgid "ЩО ПРО НАС"
+msgstr "WHAT THEY"
+
+#: templates/store/reviews.html:9
 msgid "КАЖУТЬ"
 msgstr "SAY"
 
-#: templates/store/reviews.html:11
+#: templates/store/reviews.html:10
 msgid "Ми цінуємо кожного клієнта та ваш фідбек"
 msgstr "We value every customer and your feedback"
 
-#: templates/store/reviews.html:48
-msgid "До каталогу"
-msgstr "To catalog"
+#: templates/store/reviews.html:40
+msgid ""
+"Тут поки порожньо. Станьте першим, хто залишить відгук на один із наших "
+"товарів!"
+msgstr ""
+"Nothing here yet. Be the first to leave a review on one of our products!"
 
 #: templates/store/welcome.html:4
 msgid "Ласкаво просимо | PREMIUM SHOP"
@@ -788,19 +891,26 @@ msgstr "Welcome | PREMIUM SHOP"
 msgid "Твій стиль починається тут"
 msgstr "Your style begins here"
 
-#: templates/store/welcome.html:19
+#: templates/store/welcome.html:14
+msgid ""
+"Ексклюзивні колекції преміального одягу та взуття від провідних брендів "
+"світу."
+msgstr ""
+"Exclusive collections of premium clothing and footwear from the world's "
+"leading brands."
+
+#: templates/store/welcome.html:18
 msgid "Увійти до кабінету"
 msgstr "Log into your account"
 
-#: templates/store/welcome.html:29
+#: templates/store/welcome.html:28
 msgid "Тільки оригінал"
 msgstr "Only original"
 
-#: templates/store/welcome.html:33
+#: templates/store/welcome.html:32
 msgid "Швидка доставка"
 msgstr "Fast delivery"
 
-#: templates/store/welcome.html:37
+#: templates/store/welcome.html:36
 msgid "Програма лояльності"
 msgstr "Loyalty program"
-

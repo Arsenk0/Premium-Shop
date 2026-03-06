@@ -1,15 +1,15 @@
 {% extends "base.html" %}
+{% load static i18n %}
 
-{% block title %}Пошук: {{ query }}{% endblock %}
+{% block title %}{% trans "Пошук" %}: {{ query }}{% endblock %}
 
 {% block content %}
 <div class="container fade-in">
-    <h1>Результати пошуку для: "{{ query }}"</h1>
-    <br>
+    <h2 style="margin-bottom: 2rem;">{% trans "Результати пошуку для" %}: "{{ query }}"</h2>
     {% if products %}
     <div class="product-grid">
         {% for product in products %}
-        <div class="product-card">
+        <div class="product-card hover-lift fade-in">
             <a href="{% url 'store:product_detail' product.id product.slug %}">
                 {% if product.image %}
                 <img src="{{ product.image.url }}" alt="{{ product.name }}">
@@ -22,20 +22,22 @@
                 <h3 class="product-name">
                     <a href="{% url 'store:product_detail' product.id product.slug %}">{{ product.name }}</a>
                 </h3>
-                <p style="color: grey; font-size: 0.9rem;">Арт: {{ product.article }}</p>
+                <p style="color: grey; font-size: 0.9rem;">{% trans "Арт:" %} {{ product.article }}</p>
                 <div class="product-price-row">
-                    <span class="product-price">{{ product.price }} грн</span>
+                    <span class="product-price">{{ product.price }} {% trans "грн" %}</span>
                     <a href="{% url 'store:product_detail' product.id product.slug %}"
-                        class="btn btn-primary">Більше</a>
+                        class="btn btn-primary hover-scale"
+                        style="min-width: 100px; height: 40px; font-size: 0.85rem; padding: 0 1rem;">{% trans "Більше" %}</a>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
     {% else %}
-    <p>На жаль, за вашим запитом "{{ query }}" нічого не знайдено.</p>
-    <br>
-    <a href="{% url 'store:product_list' %}" class="btn btn-secondary">Повернутися до каталогу</a>
+    <div class="empty-state">
+        <p>{% trans "Нічого не знайдено за вашим запитом." %}</p>
+        <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale">{% trans "До каталогу" %}</a>
+    </div>
     {% endif %}
 </div>
 {% endblock %}

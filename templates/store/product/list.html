@@ -2,7 +2,7 @@
 {% load static i18n %}
 
 {% block title %}
-{% if category %}{{ category.name }}{% else %}{% trans "Каталог одягу та кросівок" %}{% endif %}
+{% if category %}{% translate category.name %}{% else %}{% trans "Каталог одягу та кросівок" %}{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -24,7 +24,7 @@
 <div class="container" id="products">
     <div class="product-page-layout">
         <!-- Sidebar Filters -->
-        <aside class="filters-sidebar fade-in">
+        <aside class="filters-sidebar slide-in-left visible">
             <form method="get" action="." id="filter-form">
                 {% if request.GET.q %}
                 <input type="hidden" name="q" value="{{ request.GET.q }}">
@@ -33,13 +33,13 @@
                 <div class="filter-section">
                     <h4>{% trans "Сортування" %}</h4>
                     <select name="sort" class="filter-select" onchange="this.form.submit()">
-                        <option value="newest" {% if current_filters.sort == 'newest' %}selected{% endif %}>{% trans
+                        <option value="newest" {% if current_filters.sort=='newest' %}selected{% endif %}>{% trans
                             "Новинки" %}</option>
-                        <option value="price_asc" {% if current_filters.sort == 'price_asc' %}selected{% endif %}>{% trans
+                        <option value="price_asc" {% if current_filters.sort=='price_asc' %}selected{% endif %}>{% trans
                             "Найдешевші" %}</option>
-                        <option value="price_desc" {% if current_filters.sort == 'price_desc' %}selected{% endif %}>{%
+                        <option value="price_desc" {% if current_filters.sort=='price_desc' %}selected{% endif %}>{%
                             trans "Найдорожчі" %}</option>
-                        <option value="name_asc" {% if current_filters.sort == 'name_asc' %}selected{% endif %}>{% trans
+                        <option value="name_asc" {% if current_filters.sort=='name_asc' %}selected{% endif %}>{% trans
                             "За назвою (А-Я)" %}</option>
                     </select>
                 </div>
@@ -51,7 +51,8 @@
                             class="cat-link {% if not category %}active{% endif %}">{% trans "Всі товари" %}</a>
                         {% for c in categories %}
                         <a href="{% url 'store:product_list_by_category' c.slug %}"
-                            class="cat-link {% if category.slug == c.slug %}active{% endif %}">{{ c.name }}</a>
+                            class="cat-link {% if category.slug == c.slug %}active{% endif %}">{% translate c.name
+                            %}</a>
                         {% endfor %}
                     </div>
                 </div>
@@ -72,7 +73,8 @@
                     <div class="size-filter-grid">
                         {% for s in all_sizes %}
                         <label class="size-filter-item">
-                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name %}checked{% endif %} onchange="this.form.submit()">
+                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size==s.name
+                                %}checked{% endif %} onchange="this.form.submit()">
                             <span>{{ s.name }}</span>
                         </label>
                         {% endfor %}
@@ -81,8 +83,8 @@
                 {% endif %}
 
                 <div class="filter-actions">
-                    <button type="submit" class="btn btn-primary" style="width: 100%; min-width: auto;">{% trans
-                        "Застосувати" %}</button>
+                    <button type="submit" class="btn btn-primary hover-scale" style="width: 100%; min-width: auto;">{%
+                        trans "Застосувати" %}</button>
                     <a href="{% if category %}{% url 'store:product_list_by_category' category.slug %}{% else %}{% url 'store:product_list' %}{% endif %}"
                         class="btn btn-secondary"
                         style="width: 100%; min-width: auto; margin-top: 0.5rem; height: 44px; font-size: 0.9rem;">{%
@@ -94,14 +96,14 @@
         <!-- Product Grid & Content -->
         <main class="product-main-content">
             <div class="product-list-header">
-                <h2>{% if category %}{{ category.name }}{% else %}{% trans "Всі товари" %}{% endif %}</h2>
+                <h2>{% if category %}{% translate category.name %}{% else %}{% trans "Всі товари" %}{% endif %}</h2>
                 <p class="results-count">{% blocktrans count counter=products.paginator.count %}Знайдено {{ counter }}
                     товар{% plural %}Знайдено {{ counter }} товарів{% endblocktrans %}</p>
             </div>
 
             <div class="product-grid">
                 {% for product in products %}
-                <div class="product-card fade-in">
+                <div class="product-card hover-lift fade-in">
                     <a href="{% url 'store:product_detail' product.id product.slug %}">
                         {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}">
@@ -110,7 +112,7 @@
                         {% endif %}
                     </a>
                     <div class="product-info">
-                        <span class="product-category">{{ product.category.name }}</span>
+                        <span class="product-category">{% translate product.category.name %}</span>
                         <h3 class="product-name">
                             <a href="{% url 'store:product_detail' product.id product.slug %}">{{ product.name }}</a>
                         </h3>

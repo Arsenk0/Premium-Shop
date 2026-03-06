@@ -1,6 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Premium Shop Phase 2 Loaded');
 
+    // Get translated strings from body data attributes
+    const body = document.body;
+    const TRANSLATIONS = {
+        toastAdded: body.dataset.toastAdded || 'Додано до кошика!',
+        toastError: body.dataset.toastError || 'Халепа, щось пішло не так!',
+        toastSelectSize: body.dataset.toastSelectSize || 'Будь ласка, оберіть розмір!',
+        loading: body.dataset.loading || 'Завантаження...',
+        selectWarehouse: body.dataset.selectWarehouse || 'Оберіть відділення',
+        noWarehouses: body.dataset.noWarehouses || 'Відділень не знайдено',
+    };
+
     // AJAX Add to Cart
     const addBtns = document.querySelectorAll('a[href*="/cart/add/"], #add-to-cart-btn');
     addBtns.forEach(btn => {
@@ -19,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (sizeInput) {
                 url += `?size=${sizeInput.value}`;
             } else if (document.querySelector('input[name="size"]')) {
-                showToast('⚠️ Будь ласка, оберіть розмір!');
+                showToast(`⚠️ ${TRANSLATIONS.toastSelectSize}`);
                 return;
             }
 
@@ -43,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             cartCount.style.transform = 'scale(1.3)';
                             setTimeout(() => cartCount.style.transform = 'scale(1)', 200);
                         }
-                        showToast(`🛍 Додано до кошика!`);
+                        showToast(`🛍 ${TRANSLATIONS.toastAdded}`);
 
                         // Clear error UI if present
                         const errorMsg = document.getElementById('size-error');
@@ -78,29 +89,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const qtyControls = document.querySelectorAll('.quantity-controls');
     qtyControls.forEach(control => {
         const itemKey = control.dataset.itemKey;
+        const url = control.dataset.url;
         const addBtn = control.querySelector('.qty-btn.add');
         const subBtn = control.querySelector('.qty-btn.subtract');
         const valSpan = control.querySelector('.qty-val');
 
-        addBtn.addEventListener('click', () => updateQuantity(itemKey, 'add'));
-        subBtn.addEventListener('click', () => updateQuantity(itemKey, 'subtract'));
+        if (addBtn) addBtn.addEventListener('click', () => updateQuantity(itemKey, 'add', url));
+        if (subBtn) subBtn.addEventListener('click', () => updateQuantity(itemKey, 'subtract', url));
     });
 
     const deleteBtns = document.querySelectorAll('.qty-btn.delete');
     deleteBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const itemKey = btn.dataset.itemKey;
-            updateQuantity(itemKey, 'delete');
+            const url = btn.dataset.url;
+            updateQuantity(itemKey, 'delete', url);
         });
     });
 
-    function updateQuantity(itemKey, action) {
+    function updateQuantity(itemKey, action, url) {
+        const actionUrl = url || `/${document.documentElement.lang || 'uk'}/cart/update/${itemKey}/`;
         const formData = new FormData();
         formData.append('action', action);
 
         const csrftoken = getCookie('csrftoken');
 
-        fetch(`/cart/update/${itemKey}/`, {
+        fetch(actionUrl, {
             method: 'POST',
             body: formData,
             headers: {
@@ -108,12 +122,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 'X-CSRFToken': csrftoken
             }
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.status === 'ok') {
                     // Refresh to update all prices and totals reliably
                     location.reload();
+                } else if (data.status === 'error' && data.message) {
+                    showToast(`⚠️ ${data.message}`);
                 }
+            })
+            .catch(error => {
+                console.error('Error updating cart:', error);
+                showToast(`⚠️ ${TRANSLATIONS.toastError}`);
             });
     }
 

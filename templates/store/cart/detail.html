@@ -34,16 +34,14 @@
                     </div>
                 </td>
                 <td style="padding: 1rem;">
-                    <div class="quantity-controls" data-item-key="{{ item.item_key }}">
+                    <div class="quantity-controls" data-item-key="{{ item.item_key }}"
+                        data-url="{% url 'store:cart_update' item.item_key %}">
                         <button class="qty-btn subtract" type="button">−</button>
-                        <span class="qty-val">{{ item.quantity }}</span>
-                        <button class="qty-btn add" type="button">+</button>
-                    </div>
-                </td>
-                <td style="padding: 1rem;">{{ item.product.price }} {% trans "грн" %}</td>
+                        <span class="qty-val">{{ item.quantity }}</span> <button class="qty-btn add" type="button">+</button> </div> </td> <td style="padding: 1rem;">{{ item.product.price }} {% trans "грн" %}</td>
                 <td style="padding: 1rem;"><span class="item-total">{{ item.total_price }}</span> {% trans "грн" %}</td>
                 <td style="padding: 1rem;">
                     <button class="qty-btn delete" data-item-key="{{ item.item_key }}"
+                        data-url="{% url 'store:cart_update' item.item_key %}"
                         style="background: none; border: none; color: var(--accent); cursor: pointer; padding: 0; font-size: 0.9rem;">
                         <i class="fa-solid fa-trash-can"></i> {% trans "Видалити" %}
                     </button>
