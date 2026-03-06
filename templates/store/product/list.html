@@ -33,13 +33,13 @@
                 <div class="filter-section">
                     <h4>{% trans "Сортування" %}</h4>
                     <select name="sort" class="filter-select" onchange="this.form.submit()">
-                        <option value="newest" {% if current_filters.sort=='newest' %}selected{% endif %}>{% trans
+                        <option value="newest" {% if current_filters.sort == 'newest' %}selected{% endif %}>{% trans
                             "Новинки" %}</option>
-                        <option value="price_asc" {% if current_filters.sort=='price_asc' %}selected{% endif %}>{% trans
+                        <option value="price_asc" {% if current_filters.sort == 'price_asc' %}selected{% endif %}>{% trans
                             "Найдешевші" %}</option>
-                        <option value="price_desc" {% if current_filters.sort=='price_desc' %}selected{% endif %}>{%
+                        <option value="price_desc" {% if current_filters.sort == 'price_desc' %}selected{% endif %}>{%
                             trans "Найдорожчі" %}</option>
-                        <option value="name_asc" {% if current_filters.sort=='name_asc' %}selected{% endif %}>{% trans
+                        <option value="name_asc" {% if current_filters.sort == 'name_asc' %}selected{% endif %}>{% trans
                             "За назвою (А-Я)" %}</option>
                     </select>
                 </div>
@@ -72,8 +72,7 @@
                     <div class="size-filter-grid">
                         {% for s in all_sizes %}
                         <label class="size-filter-item">
-                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size==s.name
-                                %}checked{% endif %} onchange="this.form.submit()">
+                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name %}checked{% endif %} onchange="this.form.submit()">
                             <span>{{ s.name }}</span>
                         </label>
                         {% endfor %}
