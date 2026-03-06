@@ -67,3 +67,8 @@ Thumbs.db
 populate_expansion.py
 populate_v11.py
 updates/
+
+
+# Translations
+*.mo
+*.pot
