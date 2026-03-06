@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Оформлення замовлення{% endblock %}
+{% block title %}{% trans "Оформлення замовлення" %}{% endblock %}
 
 {% block content %}
 <div class="container fade-in" style="max-width: 800px; padding-top: 3rem; padding-bottom: 5rem;">
     <h1 style="font-size: 3.5rem; margin-bottom: 3rem; text-align: center; font-weight: 900; letter-spacing: -2px;">
-        Оформлення замовлення <span
-            style="display: block; font-size: 1.2rem; font-weight: 400; letter-spacing: normal; margin-top: 0.5rem; opacity: 0.6;">Заповніть
-            дані для доставки</span>
+        {% trans "Оформлення замовлення" %} <span
+            style="display: block; font-size: 1.2rem; font-weight: 400; letter-spacing: normal; margin-top: 0.5rem; opacity: 0.6;">{%
+            trans "Заповніть дані для доставки" %}</span>
     </h1>
 
     <div
@@ -17,7 +18,8 @@
 
             {% if form.errors %}
             <div class="error-banner">
-                <p>Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують вашої уваги.</p>
+                <p>{% trans "Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують вашої уваги." %}
+                </p>
                 {% if form.non_field_errors %}
                 <ul class="errorlist">
                     {% for error in form.non_field_errors %}
@@ -31,12 +33,13 @@
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                 <div class="form-group">
-                    <label>Ім'я</label>
+                    <label>{% trans "Ім'я" %}</label>
                     {{ form.first_name }}
-                    {% if form.first_name.errors %}<div class="error-msg">{{ form.first_name.errors.0 }}</div>{% endif %}
+                    {% if form.first_name.errors %}<div class="error-msg">{{ form.first_name.errors.0 }}</div>{% endif
+                    %}
                 </div>
                 <div class="form-group">
-                    <label>Прізвище</label>
+                    <label>{% trans "Прізвище" %}</label>
                     {{ form.last_name }}
                     {% if form.last_name.errors %}<div class="error-msg">{{ form.last_name.errors.0 }}</div>{% endif %}
                 </div>
@@ -44,19 +47,19 @@
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                 <div class="form-group">
-                    <label>Номер телефону</label>
+                    <label>{% trans "Номер телефону" %}</label>
                     {{ form.phone }}
                     {% if form.phone.errors %}<div class="error-msg">{{ form.phone.errors.0 }}</div>{% endif %}
                 </div>
                 <div class="form-group">
-                    <label>Email (для підтвердження)</label>
+                    <label>{% trans "Email (для підтвердження)" %}</label>
                     {{ form.email|default_if_none:"" }}
                     {% if form.email.errors %}<div class="error-msg">{{ form.email.errors.0 }}</div>{% endif %}
                 </div>
             </div>
 
             <div class="form-group">
-                <label style="margin-bottom: 1rem; display: block;">Як з вами зручніше зв'язатися?</label>
+                <label style="margin-bottom: 1rem; display: block;">{% trans "Як з вами зручніше зв'язатися?" %}</label>
                 <div class="contact-methods">
                     {% for radio in form.contact_method %}
                     <label class="contact-method-option">
@@ -79,16 +82,17 @@
             </div>
 
             <div class="form-group">
-                <label>Ваш нікнейм або номер (ми напишемо вам сюди)</label>
+                <label>{% trans "Ваш нікнейм або номер (ми напишемо вам сюди)" %}</label>
                 {{ form.social_handle }}
-                {% if form.social_handle.errors %}<div class="error-msg">{{ form.social_handle.errors.0 }}</div>{% endif %}
+                {% if form.social_handle.errors %}<div class="error-msg">{{ form.social_handle.errors.0 }}</div>{% endif
+                %}
                 <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
-                    Наприклад: @nickname або номер телефону для WhatsApp
+                    {% trans "Наприклад: @nickname або номер телефону для WhatsApp" %}
                 </p>
             </div>
 
             <div class="form-group" style="position: relative;">
-                <label>Місто доставки</label>
+                <label>{% trans "Місто доставки" %}</label>
                 {{ form.city }}
                 {{ form.city_ref }}
                 {% if form.city.errors %}<div class="error-msg">{{ form.city.errors.0 }}</div>{% endif %}
@@ -96,18 +100,18 @@
             </div>
 
             <div class="form-group">
-                <label>Відділення Нової Пошти</label>
+                <label>{% trans "Відділення Нової Пошти" %}</label>
                 {{ form.warehouse }}
                 {{ form.warehouse_ref }}
                 {% if form.warehouse.errors %}<div class="error-msg">{{ form.warehouse.errors.0 }}</div>{% endif %}
-                <p id="warehouse-loading" style="display: none; font-size: 0.8rem; color: var(--accent);">Завантаження
-                    відділень...</p>
+                <p id="warehouse-loading" style="display: none; font-size: 0.8rem; color: var(--accent);">{% trans
+                    "Завантаження відділень..." %}</p>
             </div>
 
             <br>
             <button type="submit" class="btn btn-primary"
                 style="width: 100%; padding: 1.5rem; font-size: 1.3rem; border-radius: 16px;">
-                Підтвердити замовлення 🚀
+                {% trans "Підтвердити замовлення" %} 🚀
             </button>
         </form>
     </div>

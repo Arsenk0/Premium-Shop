@@ -7,13 +7,15 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from .models import Category, Product, Order, OrderItem, Size, Review
 from .forms import OrderCreateForm, UserSignupForm, ReviewForm
-from .services import NovaPoshtaService
+from .services import NovaPoshtaService, OrderService
 from .tasks import send_order_confirmation_email
+from .cart import Cart
+from django.utils.translation import gettext as _
 
-
-def get_cart(request):
-    cart = request.session.get('cart', {})
-    return cart
+def get_cart_count(request):
+    """Fallback helper, though we can also just use len(Cart(request))."""
+    cart = Cart(request)
+    return len(cart)
 
 
 def product_list(request, category_slug=None):
@@ -135,30 +137,22 @@ def product_search(request):
 
 
 def cart_add(request, product_id):
-    cart = request.session.get('cart', {})
+    cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     size = request.GET.get('size')
     
     # Enforce size selection if product has sizes
     if product.sizes.exists() and not size:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return JsonResponse({'status': 'error', 'message': 'Будь ласка, оберіть розмір!'}, status=400)
+            return JsonResponse({'status': 'error', 'message': _('Будь ласка, оберіть розмір!')}, status=400)
         return redirect('store:product_detail', id=product.id, slug=product.slug)
 
-    product_key = f"{product_id}_{size}" if size else str(product_id)
-
-    if product_key not in cart:
-        cart[product_key] = {'product_id': product_id, 'quantity': 1, 'price': str(product.price), 'size': size}
-    else:
-        cart[product_key]['quantity'] += 1
-
-    request.session['cart'] = cart
-    request.session.modified = True
+    cart.add(product, size)
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return JsonResponse({
             'status': 'ok',
-            'cart_count': get_cart_count(request),
+            'cart_count': len(cart),
             'product_name': product.name
         })
 
@@ -166,128 +160,69 @@ def cart_add(request, product_id):
 
 
 def cart_remove(request, item_key):
-    cart = request.session.get('cart', {})
-    if item_key in cart:
-        del cart[item_key]
-    request.session['cart'] = cart
-    request.session.modified = True
+    cart = Cart(request)
+    cart.remove(item_key)
     return redirect('store:cart_detail')
 
 
 def cart_update(request, item_key):
     if request.method == 'POST':
-        cart = request.session.get('cart', {})
+        cart = Cart(request)
         action = request.POST.get('action')
-
-        if item_key in cart:
-            if action == 'add':
-                cart[item_key]['quantity'] += 1
-            elif action == 'subtract':
-                cart[item_key]['quantity'] -= 1
-                if cart[item_key]['quantity'] <= 0:
-                    del cart[item_key]
-            elif action == 'delete':
-                del cart[item_key]
-
-        request.session['cart'] = cart
-        request.session.modified = True
+        cart.update(item_key, action)
 
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({
                 'status': 'ok',
-                'cart_count': get_cart_count(request)
+                'cart_count': len(cart)
             })
 
     return redirect('store:cart_detail')
 
 
 def cart_detail(request):
-    cart = request.session.get('cart', {})
-    cart_items = []
-    total_price = 0
-    for item_key, item in cart.items():
-        try:
-            p_id = item.get('product_id', int(item_key.split('_')[0]) if '_' in item_key else int(item_key))
-            product = Product.objects.get(id=p_id)
-            item_total = product.price * item['quantity']
-            total_price += item_total
-            cart_items.append({
-                'item_key': item_key,
-                'product': product,
-                'quantity': item['quantity'],
-                'size': item.get('size'),
-                'total_price': item_total
-            })
-        except (Product.DoesNotExist, ValueError):
-            continue
-    return render(request, 'store/cart/detail.html', {'cart_items': cart_items, 'total_price': total_price})
+    cart = Cart(request)
+    return render(request, 'store/cart/detail.html', {'cart_items': cart, 'total_price': cart.get_total_price()})
 
 
 def cart_sidebar_data(request):
-    cart = request.session.get('cart', {})
+    cart = Cart(request)
     cart_items = []
-    total_price = 0
-    for item_key, item in cart.items():
-        try:
-            p_id = item.get('product_id', int(item_key.split('_')[0]) if '_' in item_key else int(item_key))
-            product = Product.objects.get(id=p_id)
-            item_total = product.price * item['quantity']
-            total_price += item_total
-            cart_items.append({
-                'id': product.id,
-                'name': product.name,
-                'price': str(product.price),
-                'quantity': item['quantity'],
-                'size': item.get('size'),
-                'total_price': str(item_total),
-                'image_url': product.image.url if product.image else '/static/img/no-image.png'
-            })
-        except Product.DoesNotExist:
-            continue
+    
+    for item in cart:
+        # Since cart iteration fetches products, we can use them directly
+        product = item['product']
+        cart_items.append({
+            'id': product.id,
+            'name': product.name,
+            'price': str(product.price),
+            'quantity': item['quantity'],
+            'size': item.get('size'),
+            'total_price': str(item['total_price']),
+            'image_url': product.image.url if product.image else '/static/img/no-image.png'
+        })
 
     return JsonResponse({
         'cart_items': cart_items,
-        'total_price': str(total_price),
-        'cart_count': sum(item['quantity'] for item in cart_items)
+        'total_price': str(cart.get_total_price()),
+        'cart_count': len(cart)
     })
 
 
-def get_cart_count(request):
-    cart = request.session.get('cart', {})
-    total = sum(item.get('quantity', 0) for item in cart.values())
-    return total
-
-
 def order_create(request):
-    cart = request.session.get('cart', {})
-    if not cart:
+    cart = Cart(request)
+    if len(cart) == 0:
         return redirect('store:product_list')
+        
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
-            order = form.save(commit=False)
-            if request.user.is_authenticated:
-                order.user = request.user
-            order.save()
-            for item_key, item in cart.items():
-                try:
-                    p_id = item.get('product_id', int(item_key.split('_')[0]) if '_' in item_key else int(item_key))
-                    product = Product.objects.get(id=p_id)
-                    OrderItem.objects.create(
-                        order=order,
-                        product=product,
-                        price=product.price,
-                        quantity=item.get('quantity', 1) if isinstance(item, dict) else 1,
-                        size=item.get('size')
-                    )
-                except (ValueError, Product.DoesNotExist):
-                    continue
+            order = OrderService.create_order(cart, request.user, form.cleaned_data)
             
             # Trigger asynchronous email
             send_order_confirmation_email.delay(order.id)
             
-            request.session['cart'] = {}
-            request.session.modified = True
+            cart.clear()
             return redirect('store:order_success', order_id=order.id)
     else:
         form = OrderCreateForm()

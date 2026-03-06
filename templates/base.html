@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-{% load static %}
-<html lang="uk">
+{% load static i18n %}
+<html lang="{{ request.LANGUAGE_CODE }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token }}">
     <meta name="description"
-        content="Premium Shop - найкращий стрітвір та кросівки в Україні. Тільки оригінальна якість та преміальний сервіс.">
-    <meta name="keywords" content="кросівки, стрітвір, одяг, Україна, купити кросівки, premium shop">
+        content="{% trans 'Premium Shop - найкращий стрітвір та кросівки в Україні. Тільки оригінальна якість та преміальний сервіс.' %}">
+    <meta name="keywords" content="{% trans 'кросівки, стрітвір, одяг, Україна, купити кросівки, premium shop' %}">
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:title" content="{% block og_title %}Premium Shop - Твій Стиль{% endblock %}">
-    <meta property="og:description" content="Найкращий вибір преміального одягу та взуття.">
+    <meta property="og:title" content="{% block og_title %}{% trans 'Premium Shop - Твій Стиль' %}{% endblock %}">
+    <meta property="og:description" content="{% trans 'Найкращий вибір преміального одягу та взуття.' %}">
     <meta property="og:image" content="{% static 'img/og-image.jpg' %}">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -29,20 +29,36 @@
         <div class="logo">
             <a href="{% url 'store:product_list' %}">PREMIUM<span>SHOP</span></a>
         </div>
-        <div class="nav-links">
-            <a href="{% url 'store:about' %}">Про нас</a>
-            <a href="{% url 'store:reviews_page' %}">Відгуки</a>
-            <a href="{% url 'store:contact' %}">Контакти</a>
+        <div class="nav-links" style="display: flex; align-items: center; gap: 1rem;">
+            <a href="{% url 'store:about' %}">{% trans "Про нас" %}</a>
+            <a href="{% url 'store:reviews_page' %}">{% trans "Відгуки" %}</a>
+            <a href="{% url 'store:contact' %}">{% trans "Контакти" %}</a>
             <form action="{% url 'store:product_search' %}" method="get" class="search-bar">
-                <input type="text" name="q" placeholder="Пошук..." value="{{ request.GET.q }}">
+                <input type="text" name="q" placeholder="{% trans 'Пошук...' %}" value="{{ request.GET.q }}">
                 <button type="submit" style="background:none; border:none; cursor:pointer;">🔍</button>
             </form>
             {% if user.is_authenticated %}
-            <a href="{% url 'store:profile' %}" class="nav-auth-link"><i class="fas fa-user"></i> Кабінет</a>
+            <a href="{% url 'store:profile' %}" class="nav-auth-link"><i class="fas fa-user"></i> {% trans "Кабінет" %}</a>
             {% else %}
-            <a href="{% url 'login' %}" class="nav-auth-link">Вхід</a>
-            <a href="{% url 'store:signup' %}" class="nav-auth-link">Реєстрація</a>
+            <a href="{% url 'login' %}" class="nav-auth-link">{% trans "Вхід" %}</a>
+            <a href="{% url 'store:signup' %}" class="nav-auth-link">{% trans "Реєстрація" %}</a>
             {% endif %}
+            
+            <form action="{% url 'set_language' %}" method="post" style="display:flex; align-items:center;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <select name="language" onchange="this.form.submit()" style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer;">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.code|upper }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+
             <a href="{% url 'store:cart_detail' %}" class="cart-link">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count" class="cart-badge">{{ cart_count }}</span>
@@ -62,19 +78,18 @@
             style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; text-align: left;">
             <div>
                 <h3 style="margin-bottom: 1.5rem;">PREMIUM SHOP</h3>
-                <p style="color: #888; font-size: 0.9rem;">Найкращий стрітвір та кросівки в Україні. Тільки оригінальна
-                    якість та преміальний сервіс.</p>
+                <p style="color: #888; font-size: 0.9rem;">{% trans "Найкращий стрітвір та кросівки в Україні. Тільки оригінальна якість та преміальний сервіс." %}</p>
             </div>
             <div>
-                <h4 style="margin-bottom: 1rem;">Навігація</h4>
+                <h4 style="margin-bottom: 1rem;">{% trans "Навігація" %}</h4>
                 <ul style="list-style: none; color: #888; font-size: 0.9rem;">
-                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:about' %}">Про нас</a></li>
-                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:reviews_page' %}">Відгуки</a></li>
-                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:contact' %}">Контакти</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:about' %}">{% trans "Про нас" %}</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:reviews_page' %}">{% trans "Відгуки" %}</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:contact' %}">{% trans "Контакти" %}</a></li>
                 </ul>
             </div>
             <div>
-                <h4 style="margin-bottom: 1rem;">Соцмережі</h4>
+                <h4 style="margin-bottom: 1rem;">{% trans "Соцмережі" %}</h4>
                 <div style="display: flex; gap: 1rem; font-size: 1.5rem;">
                     <a href="#"><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-telegram"></i></a>
@@ -84,7 +99,7 @@
         </div>
         <div
             style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #333; color: #555; font-size: 0.8rem;">
-            &copy; 2026 Premium Shop. Всі права захищені.
+            &copy; 2026 Premium Shop. {% trans "Всі права захищені." %}
         </div>
     </footer>
 
@@ -93,17 +108,15 @@
         <div class="modal-content fade-in">
             <button class="modal-close" onclick="closeLoginModal()">&times;</button>
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Бажаєте додати в кошик? 😉</h2>
-                <p style="color: var(--text-muted);">Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в
-                    особистому кабінеті та ви отримували бонуси!</p>
+                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">{% trans "Бажаєте додати в кошик? 😉" %}</h2>
+                <p style="color: var(--text-muted);">{% trans "Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в особистому кабінеті та ви отримували бонуси!" %}</p>
             </div>
             <div style="display: grid; gap: 1rem;">
-                <a href="{% url 'login' %}" class="btn btn-primary" style="width: 100%; height: 50px;">Увійти</a>
+                <a href="{% url 'login' %}" class="btn btn-primary" style="width: 100%; height: 50px;">{% trans "Увійти" %}</a>
                 <a href="{% url 'store:signup' %}" class="btn"
-                    style="width: 100%; height: 50px; border: 2px solid #eee;">Зареєструватися</a>
+                    style="width: 100%; height: 50px; border: 2px solid #eee;">{% trans "Зареєструватися" %}</a>
                 <button onclick="closeLoginModal()"
-                    style="background: none; border: none; color: grey; text-decoration: underline; cursor: pointer; margin-top: 1rem;">Продовжити
-                    як гість</button>
+                    style="background: none; border: none; color: grey; text-decoration: underline; cursor: pointer; margin-top: 1rem;">{% trans "Продовжити як гість" %}</button>
             </div>
         </div>
     </div>

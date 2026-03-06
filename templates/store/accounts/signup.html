@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Реєстрація{% endblock %}
+{% block title %}{% trans "Реєстрація" %}{% endblock %}
 
 {% block content %}
 <div class="container fade-in" style="max-width: 500px; margin-top: 4rem;">
     <div style="background: white; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow);">
-        <h1 style="text-align: center; margin-bottom: 2rem;">Створити аккаунт</h1>
+        <h1 style="text-align: center; margin-bottom: 2rem;">{% trans "Створити аккаунт" %}</h1>
 
         <form method="post" class="premium-form">
             {% csrf_token %}
@@ -36,19 +37,21 @@
 
                 {% if field.name == 'password1' %}
                 <div id="password-checklist" class="password-checklist">
-                    <p style="margin-bottom: 8px; font-weight: 600; font-size: 0.9rem;">Надійний пароль містить:</p>
+                    <p style="margin-bottom: 8px; font-weight: 600; font-size: 0.9rem;">{% trans "Надійний пароль
+                        містить:" %}</p>
                     <ul style="list-style: none; padding-left: 0; margin: 0;">
                         <li id="req-length" class="req-item">
-                            <i class="fas fa-times"></i><i class="fas fa-check"></i> Від 8 символів
+                            <i class="fas fa-times"></i><i class="fas fa-check"></i> {% trans "Від 8 символів" %}
                         </li>
                         <li id="req-letter" class="req-item">
-                            <i class="fas fa-times"></i><i class="fas fa-check"></i> Літери
+                            <i class="fas fa-times"></i><i class="fas fa-check"></i> {% trans "Літери" %}
                         </li>
                         <li id="req-number" class="req-item">
-                            <i class="fas fa-times"></i><i class="fas fa-check"></i> Цифри
+                            <i class="fas fa-times"></i><i class="fas fa-check"></i> {% trans "Цифри" %}
                         </li>
                         <li id="req-special" class="req-item">
-                            <i class="fas fa-times"></i><i class="fas fa-check"></i> Спецсимвол (наприклад !@#$%&)
+                            <i class="fas fa-times"></i><i class="fas fa-check"></i> {% trans "Спецсимвол (наприклад
+                            !@#$%&)" %}
                         </li>
                     </ul>
                 </div>
@@ -62,8 +65,8 @@
             </div>
             {% endfor %}
 
-            <button type="submit" class="btn btn-primary"
-                style="width: 100%; margin-top: 1rem;">Зареєструватися</button>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">{% trans
+                "Зареєструватися" %}</button>
         </form>
 
         <style>
@@ -72,13 +75,15 @@
                 margin-top: 12px;
                 font-size: 0.85rem;
                 color: #64748b;
-                display: none; /* Приховано за замовчуванням */
+                display: none;
+                /* Приховано за замовчуванням */
                 background: #f8fafc;
                 padding: 1rem;
                 border-radius: 12px;
                 border: 1px solid #e2e8f0;
                 transition: all 0.3s ease;
             }
+
             .req-item {
                 margin-bottom: 6px;
                 display: flex;
@@ -86,12 +91,16 @@
                 gap: 8px;
                 transition: all 0.3s ease;
             }
+
             .req-item i.fa-times {
-                color: #e11d48; /* Червоний хрестик */
+                color: #e11d48;
+                /* Червоний хрестик */
                 width: 14px;
             }
+
             .req-item i.fa-check {
-                color: #10b981; /* Зелена галочка */
+                color: #10b981;
+                /* Зелена галочка */
                 display: none;
                 width: 14px;
             }
@@ -102,9 +111,11 @@
                 text-decoration: line-through;
                 opacity: 0.7;
             }
+
             .req-item.valid i.fa-times {
                 display: none;
             }
+
             .req-item.valid i.fa-check {
                 display: inline-block;
             }
@@ -132,7 +143,7 @@
 
                 if (pwdInput && checklist) {
                     // Показувати чеклист, коли користувач клікає на поле
-                    pwdInput.addEventListener('focus', function() {
+                    pwdInput.addEventListener('focus', function () {
                         checklist.style.display = 'block';
                     });
 
@@ -165,7 +176,8 @@
         </script>
 
         <div style="text-align: center; margin-top: 2rem; color: #666;">
-            Вже є аккаунт? <a href="{% url 'login' %}" style="color: var(--primary); font-weight: 600;">Увійти</a>
+            {% trans "Вже є аккаунт?" %} <a href="{% url 'login' %}" style="color: var(--primary); font-weight: 600;">{%
+                trans "Увійти" %}</a>
         </div>
     </div>
 </div>

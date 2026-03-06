@@ -1,24 +1,26 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Вхід{% endblock %}
+{% block title %}{% trans "Вхід" %}{% endblock %}
 
 {% block content %}
 <div class="container fade-in" style="max-width: 500px; margin-top: 4rem;">
     <div style="background: white; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow);">
-        <h1 style="text-align: center; margin-bottom: 2rem;">Вхід у кабінет</h1>
+        <h1 style="text-align: center; margin-bottom: 2rem;">{% trans "Вхід у кабінет" %}</h1>
 
         <form method="post" class="premium-form">
             {% csrf_token %}
 
             <div class="form-group">
-                <label for="id_username">Логін або Email</label>
+                <label for="id_username">{% trans "Логін або Email" %}</label>
                 {{ form.username }}
             </div>
             <div class="form-group">
-                <label for="id_password">Пароль</label>
+                <label for="id_password">{% trans "Пароль" %}</label>
                 {{ form.password }}
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Увійти</button>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">{% trans "Увійти"
+                %}</button>
         </form>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -38,8 +40,8 @@
         </script>
 
         <div style="text-align: center; margin-top: 2rem; color: #666;">
-            Немає аккаунту? <a href="{% url 'store:signup' %}"
-                style="color: var(--primary); font-weight: 600;">Зареєструватися</a>
+            {% trans "Немає аккаунту?" %} <a href="{% url 'store:signup' %}"
+                style="color: var(--primary); font-weight: 600;">{% trans "Зареєструватися" %}</a>
         </div>
     </div>
 </div>

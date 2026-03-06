@@ -1,14 +1,15 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Мій кабінет{% endblock %}
+{% block title %}{% trans "Мій кабінет" %}{% endblock %}
 
 {% block content %}
 <div class="container fade-in">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
-        <h1>Вітаємо, {{ request.user.username }}! 👋</h1>
+        <h1>{% trans "Вітаємо," %} {{ request.user.username }}! 👋</h1>
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-secondary">Вийти</button>
+            <button type="submit" class="btn btn-secondary">{% trans "Вийти" %}</button>
         </form>
     </div>
 
@@ -16,37 +17,38 @@
         <!-- Profile Info -->
         <div
             style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow); height: fit-content;">
-            <h3 style="margin-bottom: 1.5rem;">Ваші дані</h3>
-            <p><strong>Username:</strong> {{ request.user.username }}</p>
-            <p><strong>Email:</strong> {{ request.user.email|default:"не вказано" }}</p>
+            <h3 style="margin-bottom: 1.5rem;">{% trans "Ваші дані" %}</h3>
+            <p><strong>{% trans "Username:" %}</strong> {{ request.user.username }}</p>
+            <p><strong>{% trans "Email:" %}</strong> {% if request.user.email %}{{ request.user.email }}{% else %}{%
+                trans "не вказано" %}{% endif %}</p>
             <br>
-            <p style="color: #666; font-size: 0.9rem;">Дані для доставки підтягуються автоматично з ваших попередніх
-                замовлень.</p>
+            <p style="color: #666; font-size: 0.9rem;">{% trans "Дані для доставки підтягуються автоматично з ваших
+                попередніх замовлень." %}</p>
         </div>
 
         <!-- Order History -->
         <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow);">
-            <h3 style="margin-bottom: 1.5rem;">Історія замовлень</h3>
+            <h3 style="margin-bottom: 1.5rem;">{% trans "Історія замовлень" %}</h3>
             {% if orders %}
             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                 {% for order in orders %}
                 <div
                     style="border: 1px solid #eee; padding: 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <strong style="font-size: 1.1rem;">Замовлення #{{ order.id }}</strong><br>
-                        <small style="color: #888;">Від {{ order.created|date:"d.m.Y H:i" }}</small><br>
+                        <strong style="font-size: 1.1rem;">{% trans "Замовлення #" %}{{ order.id }}</strong><br>
+                        <small style="color: #888;">{% trans "Від" %} {{ order.created|date:"d.m.Y H:i" }}</small><br>
                         <span class="status-badge status-{{ order.status|lower }}">{{ order.get_status_display }}</span>
                     </div>
                     <div style="text-align: right;">
-                        <strong style="font-size: 1.2rem;">{{ order.get_total_cost }} грн</strong>
+                        <strong style="font-size: 1.2rem;">{{ order.get_total_cost }} {% trans "грн" %}</strong>
                     </div>
                 </div>
                 {% endfor %}
             </div>
             {% else %}
-            <p style="color: #888;">У вас поки немає замовлень.</p>
+            <p style="color: #888;">{% trans "У вас поки немає замовлень." %}</p>
             <br>
-            <a href="{% url 'store:product_list' %}" class="btn btn-primary">Почати шопінг</a>
+            <a href="{% url 'store:product_list' %}" class="btn btn-primary">{% trans "Почати шопінг" %}</a>
             {% endif %}
         </div>
     </div>

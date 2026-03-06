@@ -2,6 +2,7 @@ import requests
 import json
 import logging
 from django.conf import settings
+from .models import OrderItem
 
 logger = logging.getLogger(__name__)
 
@@ -53,3 +54,26 @@ class NovaPoshtaService:
         except Exception as e:
             logger.error(f"NP Error in get_warehouses: {e}")
         return []
+
+class OrderService:
+    @staticmethod
+    def create_order(cart, user, form_data):
+        from .models import Order
+        
+        # Create the order object
+        order = Order(**form_data)
+        if user.is_authenticated:
+            order.user = user
+        order.save()
+
+        # Create order items
+        for item in cart:
+            OrderItem.objects.create(
+                order=order,
+                product=item['product'],
+                price=item['price'],
+                quantity=item['quantity'],
+                size=item.get('size')
+            )
+            
+        return order

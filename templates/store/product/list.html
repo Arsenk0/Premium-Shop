@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 
 {% block title %}
-{% if category %}{{ category.name }}{% else %}Каталог одягу та кросівок{% endif %}
+{% if category %}{{ category.name }}{% else %}{% trans "Каталог одягу та кросівок" %}{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -11,10 +11,10 @@
 {% if not current_filters.min_price and not current_filters.max_price and not current_filters.size %}
 <section class="hero fade-in">
     <div>
-        <h1>Нова Колекція 2026</h1>
-        <p>Знайди свій ідеальний стиль сьогодні</p>
+        <h1>{% trans "Нова Колекція 2026" %}</h1>
+        <p>{% trans "Знайди свій ідеальний стиль сьогодні" %}</p>
         <br>
-        <a href="#products" class="btn btn-primary">Купувати зараз</a>
+        <a href="#products" class="btn btn-primary">{% trans "Купувати зараз" %}</a>
     </div>
 </section>
 {% endif %}
@@ -31,24 +31,24 @@
                 {% endif %}
 
                 <div class="filter-section">
-                    <h4>Сортування</h4>
+                    <h4>{% trans "Сортування" %}</h4>
                     <select name="sort" class="filter-select" onchange="this.form.submit()">
-                        <option value="newest" {% if current_filters.sort == 'newest' %}selected{% endif %}>Новинки
-                        </option>
-                        <option value="price_asc" {% if current_filters.sort == 'price_asc' %}selected{% endif %}>
-                            Найдешевші</option>
-                        <option value="price_desc" {% if current_filters.sort == 'price_desc' %}selected{% endif %}>
-                            Найдорожчі</option>
-                        <option value="name_asc" {% if current_filters.sort == 'name_asc' %}selected{% endif %}>За назвою
-                            (А-Я)</option>
+                        <option value="newest" {% if current_filters.sort=='newest' %}selected{% endif %}>{% trans
+                            "Новинки" %}</option>
+                        <option value="price_asc" {% if current_filters.sort=='price_asc' %}selected{% endif %}>{% trans
+                            "Найдешевші" %}</option>
+                        <option value="price_desc" {% if current_filters.sort=='price_desc' %}selected{% endif %}>{%
+                            trans "Найдорожчі" %}</option>
+                        <option value="name_asc" {% if current_filters.sort=='name_asc' %}selected{% endif %}>{% trans
+                            "За назвою (А-Я)" %}</option>
                     </select>
                 </div>
 
                 <div class="filter-section">
-                    <h4>Категорії</h4>
+                    <h4>{% trans "Категорії" %}</h4>
                     <div class="category-links">
                         <a href="{% url 'store:product_list' %}"
-                            class="cat-link {% if not category %}active{% endif %}">Всі товари</a>
+                            class="cat-link {% if not category %}active{% endif %}">{% trans "Всі товари" %}</a>
                         {% for c in categories %}
                         <a href="{% url 'store:product_list_by_category' c.slug %}"
                             class="cat-link {% if category.slug == c.slug %}active{% endif %}">{{ c.name }}</a>
@@ -57,20 +57,23 @@
                 </div>
 
                 <div class="filter-section">
-                    <h4>Ціна (грн)</h4>
+                    <h4>{% trans "Ціна (грн)" %}</h4>
                     <div class="price-inputs">
-                        <input type="number" name="min_price" placeholder="Від" value="{{ current_filters.min_price }}">
-                        <input type="number" name="max_price" placeholder="До" value="{{ current_filters.max_price }}">
+                        <input type="number" name="min_price" placeholder="{% trans 'Від' %}"
+                            value="{{ current_filters.min_price }}">
+                        <input type="number" name="max_price" placeholder="{% trans 'До' %}"
+                            value="{{ current_filters.max_price }}">
                     </div>
                 </div>
 
                 {% if all_sizes %}
                 <div class="filter-section">
-                    <h4>Розмір</h4>
+                    <h4>{% trans "Розмір" %}</h4>
                     <div class="size-filter-grid">
                         {% for s in all_sizes %}
                         <label class="size-filter-item">
-                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name %}checked{% endif %} onchange="this.form.submit()">
+                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size==s.name
+                                %}checked{% endif %} onchange="this.form.submit()">
                             <span>{{ s.name }}</span>
                         </label>
                         {% endfor %}
@@ -79,11 +82,12 @@
                 {% endif %}
 
                 <div class="filter-actions">
-                    <button type="submit" class="btn btn-primary"
-                        style="width: 100%; min-width: auto;">Застосувати</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; min-width: auto;">{% trans
+                        "Застосувати" %}</button>
                     <a href="{% if category %}{% url 'store:product_list_by_category' category.slug %}{% else %}{% url 'store:product_list' %}{% endif %}"
                         class="btn btn-secondary"
-                        style="width: 100%; min-width: auto; margin-top: 0.5rem; height: 44px; font-size: 0.9rem;">Скинути</a>
+                        style="width: 100%; min-width: auto; margin-top: 0.5rem; height: 44px; font-size: 0.9rem;">{%
+                        trans "Скинути" %}</a>
                 </div>
             </form>
         </aside>
@@ -91,8 +95,9 @@
         <!-- Product Grid & Content -->
         <main class="product-main-content">
             <div class="product-list-header">
-                <h2>{% if category %}{{ category.name }}{% else %}Всі товари{% endif %}</h2>
-                <p class="results-count">Знайдено {{ products.paginator.count }} товарів</p>
+                <h2>{% if category %}{{ category.name }}{% else %}{% trans "Всі товари" %}{% endif %}</h2>
+                <p class="results-count">{% blocktrans count counter=products.paginator.count %}Знайдено {{ counter }}
+                    товар{% plural %}Знайдено {{ counter }} товарів{% endblocktrans %}</p>
             </div>
 
             <div class="product-grid">
@@ -110,17 +115,19 @@
                         <h3 class="product-name">
                             <a href="{% url 'store:product_detail' product.id product.slug %}">{{ product.name }}</a>
                         </h3>
-                        <p style="color: grey; font-size: 0.8rem; margin-bottom: 0.5rem;">Арт: {{ product.article }}</p>
+                        <p style="color: grey; font-size: 0.8rem; margin-bottom: 0.5rem;">{% trans "Арт:" %} {{
+                            product.article }}</p>
                         <div class="product-price-row">
-                            <span class="product-price">{{ product.price }} грн</span>
+                            <span class="product-price">{{ product.price }} {% trans "грн" %}</span>
                             <a href="{% url 'store:product_detail' product.id product.slug %}" class="btn btn-primary"
-                                style="min-width: 100px; height: 40px; font-size: 0.85rem; padding: 0 1rem;">Більше</a>
+                                style="min-width: 100px; height: 40px; font-size: 0.85rem; padding: 0 1rem;">{% trans
+                                "Більше" %}</a>
                         </div>
                     </div>
                 </div>
                 {% empty %}
                 <div class="empty-state">
-                    <p>Товарів не знайдено за вашими критеріями.</p>
+                    <p>{% trans "Товарів не знайдено за вашими критеріями." %}</p>
                 </div>
                 {% endfor %}
             </div>

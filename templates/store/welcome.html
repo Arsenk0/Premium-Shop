@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Ласкаво просимо | PREMIUM SHOP{% endblock %}
+{% block title %}{% trans "Ласкаво просимо | PREMIUM SHOP" %}{% endblock %}
 
 {% block content %}
 <div class="welcome-container fade-in">
@@ -10,30 +10,31 @@
         <div class="welcome-logo">
             PREMIUM<span>SHOP</span>
         </div>
-        <h1 class="welcome-title">Твій стиль починається тут</h1>
-        <p class="welcome-subtitle">Ексклюзивні колекції преміального одягу та взуття від провідних брендів світу.</p>
+        <h1 class="welcome-title">{% trans "Твій стиль починається тут" %}</h1>
+        <p class="welcome-subtitle">{% trans "Ексклюзивні колекції преміального одягу та взуття від провідних брендів
+            світу." %}</p>
 
         <div class="welcome-actions">
             <a href="{% url 'login' %}" class="btn welcome-btn btn-white">
-                Увійти до кабінету <i class="fas fa-sign-in-alt"></i>
+                {% trans "Увійти до кабінету" %} <i class="fas fa-sign-in-alt"></i>
             </a>
             <a href="{% url 'store:signup' %}" class="btn welcome-btn btn-outline">
-                Зареєструватися <i class="fas fa-user-plus"></i>
+                {% trans "Зареєструватися" %} <i class="fas fa-user-plus"></i>
             </a>
         </div>
 
         <div class="welcome-features">
             <div class="feature-item">
                 <i class="fas fa-check-circle"></i>
-                <span>Тільки оригінал</span>
+                <span>{% trans "Тільки оригінал" %}</span>
             </div>
             <div class="feature-item">
                 <i class="fas fa-shipping-fast"></i>
-                <span>Швидка доставка</span>
+                <span>{% trans "Швидка доставка" %}</span>
             </div>
             <div class="feature-item">
                 <i class="fas fa-star"></i>
-                <span>Програма лояльності</span>
+                <span>{% trans "Програма лояльності" %}</span>
             </div>
         </div>
     </div>

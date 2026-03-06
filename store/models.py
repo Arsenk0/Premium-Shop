@@ -1,17 +1,15 @@
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
+from django.utils.translation import gettext_lazy as _
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
 
     class Meta:
-        verbose_name = 'Категорія'
-        verbose_name_plural = 'Категорії'
+        verbose_name = _('Категорія')
+        verbose_name_plural = _('Категорії')
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -24,15 +22,15 @@ class Category(models.Model):
 
 class Size(models.Model):
     TYPE_CHOICES = [
-        ('shoes', 'Взуття'),
-        ('apparel', 'Одяг'),
+        ('shoes', _('Взуття')),
+        ('apparel', _('Одяг')),
     ]
     name = models.CharField(max_length=50)
-    type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='shoes', verbose_name="Тип")
+    type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='shoes', verbose_name=_("Тип"))
 
     class Meta:
-        verbose_name = 'Розмір'
-        verbose_name_plural = 'Розміри'
+        verbose_name = _('Розмір')
+        verbose_name_plural = _('Розміри')
         ordering = ['type', 'name']
 
     def __str__(self):
@@ -41,20 +39,20 @@ class Size(models.Model):
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    article = models.CharField(max_length=50, unique=True, verbose_name="Article/SKU")
+    article = models.CharField(max_length=50, unique=True, verbose_name=_("Article/SKU"))
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
-    sizes = models.ManyToManyField(Size, related_name='products', blank=True, verbose_name="Доступні розміри")
+    sizes = models.ManyToManyField(Size, related_name='products', blank=True, verbose_name=_("Доступні розміри"))
     stock = models.PositiveIntegerField(default=0)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товари'
+        verbose_name = _('Товар')
+        verbose_name_plural = _('Товари')
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -71,67 +69,55 @@ class ProductImage(models.Model):
     alt_text = models.CharField(max_length=200, blank=True)
 
     class Meta:
-        verbose_name = 'Зображення товару'
-        verbose_name_plural = 'Зображення товарів'
+        verbose_name = _('Зображення товару')
+        verbose_name_plural = _('Зображення товарів')
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    phone = models.CharField(max_length=20, blank=True, verbose_name="Телефон")
-    social_handle = models.CharField(max_length=100, blank=True, verbose_name="Нікнейм")
-    city = models.CharField(max_length=100, blank=True, verbose_name="Місто")
+    phone = models.CharField(max_length=20, blank=True, verbose_name=_("Телефон"))
+    social_handle = models.CharField(max_length=100, blank=True, verbose_name=_("Нікнейм"))
+    city = models.CharField(max_length=100, blank=True, verbose_name=_("Місто"))
     city_ref = models.CharField(max_length=100, blank=True)
-    warehouse = models.CharField(max_length=255, blank=True, verbose_name="Відділення")
+    warehouse = models.CharField(max_length=255, blank=True, verbose_name=_("Відділення"))
     warehouse_ref = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return f'Профіль {self.user.username}'
-
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    if hasattr(instance, 'profile'):
-        instance.profile.save()
+        return f'{_("Профіль")} {self.user.username}'
 
 
 class Order(models.Model):
     user = models.ForeignKey(User, related_name='orders', on_delete=models.SET_NULL, null=True, blank=True,
-                             verbose_name="Користувач")
-    first_name = models.CharField(max_length=50, verbose_name="Ім'я")
-    last_name = models.CharField(max_length=50, verbose_name="Прізвище")
-    phone = models.CharField(max_length=20, verbose_name="Телефон")
-    social_handle = models.CharField(max_length=100, blank=True, verbose_name="Ваш нікнейм / Номер")
+                             verbose_name=_("Користувач"))
+    first_name = models.CharField(max_length=50, verbose_name=_("Ім'я"))
+    last_name = models.CharField(max_length=50, verbose_name=_("Прізвище"))
+    phone = models.CharField(max_length=20, verbose_name=_("Телефон"))
+    social_handle = models.CharField(max_length=100, blank=True, verbose_name=_("Ваш нікнейм / Номер"))
     contact_method = models.CharField(max_length=20, choices=[
         ('TELEGRAM', 'Telegram'),
         ('INSTAGRAM', 'Instagram'),
-        ('PHONE', 'Дзвінок по телефону'),
-    ], default='TELEGRAM', verbose_name="Спосіб зв'язку")
-    city = models.CharField(max_length=100, verbose_name="Місто")
-    city_ref = models.CharField(max_length=100, blank=True, verbose_name="Ref міста")
-    warehouse = models.CharField(max_length=255, verbose_name="Відділення")
-    warehouse_ref = models.CharField(max_length=100, blank=True, verbose_name="Ref відділення")
-    email = models.EmailField(verbose_name="Email", default='no-reply@shop.com')
-    created = models.DateTimeField(auto_now_add=True, verbose_name="Створено")
-    updated = models.DateTimeField(auto_now=True, verbose_name="Оновлено")
-    paid = models.BooleanField(default=False, verbose_name="Оплачено")
+        ('PHONE', _('Дзвінок по телефону')),
+    ], default='TELEGRAM', verbose_name=_("Спосіб зв'язку"))
+    city = models.CharField(max_length=100, verbose_name=_("Місто"))
+    city_ref = models.CharField(max_length=100, blank=True, verbose_name=_("Ref міста"))
+    warehouse = models.CharField(max_length=255, verbose_name=_("Відділення"))
+    warehouse_ref = models.CharField(max_length=100, blank=True, verbose_name=_("Ref відділення"))
+    email = models.EmailField(verbose_name=_("Email"), default='no-reply@shop.com')
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_("Створено"))
+    updated = models.DateTimeField(auto_now=True, verbose_name=_("Оновлено"))
+    paid = models.BooleanField(default=False, verbose_name=_("Оплачено"))
     status = models.CharField(max_length=20, choices=[
-        ('New', 'Нове'),
-        ('Processing', 'В обробці'),
-        ('Shipped', 'Відправлено'),
-        ('Completed', 'Виконано'),
-        ('Canceled', 'Скасовано'),
-    ], default='New', verbose_name="Статус")
+        ('New', _('Нове')),
+        ('Processing', _('В обробці')),
+        ('Shipped', _('Відправлено')),
+        ('Completed', _('Виконано')),
+        ('Canceled', _('Скасовано')),
+    ], default='New', verbose_name=_("Статус"))
 
     class Meta:
         ordering = ('-created',)
-        verbose_name = "Замовлення"
-        verbose_name_plural = "Замовлення"
+        verbose_name = _("Замовлення")
+        verbose_name_plural = _("Замовлення")
 
     def __str__(self):
         return f'Order {self.id}'
@@ -145,26 +131,26 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
-    size = models.CharField(max_length=50, blank=True, null=True, verbose_name="Розмір")
+    size = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Розмір"))
 
     def clean(self):
         from django.core.exceptions import ValidationError
         if self.product.sizes.exists() and not self.size:
-            raise ValidationError({'size': f"Будь ласка, оберіть розмір для товару {self.product.name}"})
+            raise ValidationError({'size': _(f"Будь ласка, оберіть розмір для товару {self.product.name}")})
 
     def __str__(self):
         return str(self.id)
 class Review(models.Model):
     product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
-    rating = models.PositiveSmallIntegerField(choices=[(i, str(i)) for i in range(1, 6)], verbose_name="Рейтинг")
-    comment = models.TextField(verbose_name="Коментар")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата")
+    rating = models.PositiveSmallIntegerField(choices=[(i, str(i)) for i in range(1, 6)], verbose_name=_("Рейтинг"))
+    comment = models.TextField(verbose_name=_("Коментар"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Дата"))
 
     class Meta:
         ordering = ('-created_at',)
-        verbose_name = "Відгук"
-        verbose_name_plural = "Відгуки"
+        verbose_name = _("Відгук")
+        verbose_name_plural = _("Відгуки")
 
     def __str__(self):
-        return f'Відгук від {self.user.username} на {self.product.name}'
+        return f'{_("Відгук від")} {self.user.username} {_("на")} {self.product.name}'
