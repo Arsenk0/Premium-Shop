@@ -1,17 +1,69 @@
 from django import forms
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.utils.translation import gettext_lazy as _
 from .models import Order, Review
 
 
 class UserSignupForm(UserCreationForm):
-    email = forms.EmailField(required=True, help_text=_('Вкажіть вашу пошту (для відновлення пароля)'))
+    email = forms.EmailField(
+        required=True, 
+        help_text=_('Вкажіть вашу пошту (для відновлення пароля)'),
+        error_messages={
+            'required': _("Будь ласка, введіть вашу електронну пошту."),
+            'invalid': _("Введіть коректну адресу електронної пошти.")
+        }
+    )
 
     class Meta(UserCreationForm.Meta):
         model = User
         fields = UserCreationForm.Meta.fields + ('email',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].error_messages.update({
+            'required': _("Будь ласка, введіть ім'я користувача."),
+            'invalid': _("Логін може містити лише літери, цифри та символи @/./+/-/_"),
+            'unique': _("Користувач із таким іменем вже існує. Будь ласка, оберіть інше."),
+        })
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if username and len(username) < 3:
+            raise forms.ValidationError(_("Логін повинен містити щонайменше 3 символи."))
+        # uniqueness is handled by model validation but we can return username
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError(_("Цей email вже використовується в системі. Можливо, ви вже зареєстровані?"))
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password1")
+        password_confirm = cleaned_data.get("password2")
+
+        if password and password_confirm and password != password_confirm:
+            self.add_error('password2', _("Паролі не співпадають. Будь ласка, перевірте введені дані."))
+        return cleaned_data
+
+class CustomLoginForm(AuthenticationForm):
+    error_messages = {
+        'invalid_login': _("Неправильний логін або пароль. Спробуйте ще раз."),
+        'inactive': _("Цей акаунт деактивовано. Зверніться до служби підтримки."),
+    }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].error_messages.update({
+            'required': _("Будь ласка, введіть логін та пароль.")
+        })
+        self.fields['password'].error_messages.update({
+            'required': _("Будь ласка, введіть логін та пароль.")
+        })
 
 
 class OrderCreateForm(forms.ModelForm):

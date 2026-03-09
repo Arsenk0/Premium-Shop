@@ -10,15 +10,17 @@
         <p style="color: var(--text-muted); font-size: 1.1rem;">{% trans "Заповніть дані для доставки" %}</p>
     </div>
 
-    <div style="background: #fff; padding: 3rem; border-radius: 32px; box-shadow: 0 30px 60px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.03);">
+    <div
+        style="background: #fff; padding: 3rem; border-radius: 32px; box-shadow: 0 30px 60px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.03);">
         <form action="." method="post" id="checkout-form">
             {% csrf_token %}
 
             {% if form.errors %}
             <div class="error-banner">
-                <p>{% trans "Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують вашої уваги." %}</p>
+                <p>{% trans "Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують вашої уваги." %}
+                </p>
                 {% if form.non_field_errors %}
-                <ul class="errorlist">
+                <ul class="errorlist shake">
                     {% for error in form.non_field_errors %}
                     <li>{{ error }}</li>
                     {% endfor %}
@@ -31,26 +33,42 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                 <div class="form-group">
                     <label>{% trans "Ім'я" %}</label>
-                    {{ form.first_name }}
-                    {% if form.first_name.errors %}<div class="error-msg">{{ form.first_name.errors.0 }}</div>{% endif %}
+                    <input type="text" name="{{ form.first_name.html_name }}" id="{{ form.first_name.id_for_label }}"
+                        class="{% if form.first_name.errors %}input-error shake{% endif %}" required 
+                        {% if form.first_name.value %}value="{{ form.first_name.value }}"{% endif %}>
+                    {% if form.first_name.errors %}
+                        <div class="error-msg">{{ form.first_name.errors.0 }}</div>
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     <label>{% trans "Прізвище" %}</label>
-                    {{ form.last_name }}
-                    {% if form.last_name.errors %}<div class="error-msg">{{ form.last_name.errors.0 }}</div>{% endif %}
+                    <input type="text" name="{{ form.last_name.html_name }}" id="{{ form.last_name.id_for_label }}"
+                        class="{% if form.last_name.errors %}input-error shake{% endif %}" required 
+                        {% if form.last_name.value %}value="{{ form.last_name.value }}"{% endif %}>
+                    {% if form.last_name.errors %}
+                        <div class="error-msg">{{ form.last_name.errors.0 }}</div>
+                    {% endif %}
                 </div>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                 <div class="form-group">
                     <label>{% trans "Номер телефону" %}</label>
-                    {{ form.phone }}
-                    {% if form.phone.errors %}<div class="error-msg">{{ form.phone.errors.0 }}</div>{% endif %}
+                    <input type="text" name="{{ form.phone.html_name }}" id="{{ form.phone.id_for_label }}"
+                        class="{% if form.phone.errors %}input-error shake{% endif %}" required 
+                        {% if form.phone.value %}value="{{ form.phone.value }}"{% endif %}>
+                    {% if form.phone.errors %}
+                        <div class="error-msg">{{ form.phone.errors.0 }}</div>
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     <label>{% trans "Email (для підтвердження)" %}</label>
-                    {{ form.email|default_if_none:"" }}
-                    {% if form.email.errors %}<div class="error-msg">{{ form.email.errors.0 }}</div>{% endif %}
+                    <input type="email" name="{{ form.email.html_name }}" id="{{ form.email.id_for_label }}"
+                        class="{% if form.email.errors %}input-error shake{% endif %}" 
+                        {% if form.email.value %}value="{{ form.email.value }}"{% endif %}>
+                    {% if form.email.errors %}
+                        <div class="error-msg">{{ form.email.errors.0 }}</div>
+                    {% endif %}
                 </div>
             </div>
 
@@ -79,7 +97,8 @@
 
             <div class="form-group">
                 <label>{% trans "Ваш нікнейм або номер (ми напишемо вам сюди)" %}</label>
-                {{ form.social_handle }}
+                <input type="text" name="{{ form.social_handle.html_name }}" id="{{ form.social_handle.id_for_label }}"
+                    class="{% if form.social_handle.errors %}input-error shake{% endif %}" required {% if form.social_handle.value %}value="{{ form.social_handle.value }}"{% endif %}>
                 {% if form.social_handle.errors %}<div class="error-msg">{{ form.social_handle.errors.0 }}</div>{% endif %}
                 <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
                     {% trans "Наприклад: @nickname або номер телефону для WhatsApp" %}
@@ -88,20 +107,30 @@
 
             <div class="form-group" style="position: relative;">
                 <label>{% trans "Місто доставки" %}</label>
-                {{ form.city }} {{ form.city_ref }}
+                <input type="text" name="{{ form.city.html_name }}" id="{{ form.city.id_for_label }}"
+                    class="{% if form.city.errors %}input-error shake{% endif %}" required {% if form.city.value %}value="{{ form.city.value }}"{% endif %} autocomplete="off">
+                <input type="hidden" name="{{ form.city_ref.html_name }}" id="{{ form.city_ref.id_for_label }}" {% if form.city_ref.value %}value="{{ form.city_ref.value }}"{% endif %}>
                 {% if form.city.errors %}<div class="error-msg">{{ form.city.errors.0 }}</div>{% endif %}
                 <div id="city-results" class="autocomplete-results"></div>
             </div>
 
             <div class="form-group">
                 <label>{% trans "Відділення Нової Пошти" %}</label>
-                {{ form.warehouse }} {{ form.warehouse_ref }}
+                <select name="{{ form.warehouse.html_name }}" id="{{ form.warehouse.id_for_label }}"
+                    class="{% if form.warehouse.errors %}input-error shake{% endif %}" required>
+                    <option value="">{% trans "Спочатку оберіть місто" %}</option>
+                    {% if form.warehouse.value %}
+                    <option value="{{ form.warehouse.value }}" selected>{{ form.warehouse.value }}</option>
+                    {% endif %}
+                </select>
+                <input type="hidden" name="{{ form.warehouse_ref.html_name }}" id="{{ form.warehouse_ref.id_for_label }}" {% if form.warehouse_ref.value %}value="{{ form.warehouse_ref.value }}"{% endif %}>
                 {% if form.warehouse.errors %}<div class="error-msg">{{ form.warehouse.errors.0 }}</div>{% endif %}
                 <p id="warehouse-loading" style="display: none; font-size: 0.8rem; color: var(--accent);">{% trans "Завантаження відділень..." %}</p>
             </div>
 
             <br>
-            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1.5rem; font-size: 1.3rem; border-radius: 16px;">
+            <button type="submit" class="btn btn-primary hover-scale"
+                style="width: 100%; padding: 1.5rem; font-size: 1.3rem; border-radius: 16px;">
                 {% trans "Підтвердити замовлення" %} 🚀
             </button>
         </form>

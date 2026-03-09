@@ -11,16 +11,35 @@
         <form method="post" class="premium-form">
             {% csrf_token %}
 
+            {% if form.non_field_errors %}
+            <div class="error-banner">
+                {% for error in form.non_field_errors %}
+                <p><i class="fas fa-exclamation-circle"></i> {{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             <div class="form-group">
                 <label for="id_username">{% trans "Логін або Email" %}</label>
-                {{ form.username }}
+                <input type="text" name="{{ form.username.html_name }}" id="{{ form.username.id_for_label }}" class="{% if form.username.errors %}input-error shake{% endif %}" required {% if form.username.value %}value="{{ form.username.value }}"{% endif %}>
+                {% if form.username.errors %}
+                <div class="error-msg">{{ form.username.errors|striptags }}</div>
+                {% endif %}
             </div>
+            
             <div class="form-group">
                 <label for="id_password">{% trans "Пароль" %}</label>
-                {{ form.password }}
+                <input type="password" name="{{ form.password.html_name }}" id="{{ form.password.id_for_label }}" class="{% if form.password.errors or form.non_field_errors %}input-error shake{% endif %}" required>
+                {% if form.password.errors %}
+                <div class="error-msg">{{ form.password.errors|striptags }}</div>
+                {% endif %}
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">{% trans "Увійти" %}</button>
+            
+            <button type="submit" class="btn btn-primary hover-scale" style="width: 100%; margin-top: 1rem;">
+                {% trans "Увійти" %}
+            </button>
         </form>
+        
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 document.querySelectorAll('.toggle-password').forEach(function (el) {
@@ -39,8 +58,7 @@
         </script>
 
         <div style="text-align: center; margin-top: 2rem; color: #666;">
-            {% trans "Немає аккаунту?" %} <a href="{% url 'store:signup' %}"
-                style="color: var(--primary); font-weight: 600;">{% trans "Зареєструватися" %}</a>
+            {% trans "Немає аккаунту?" %} <a href="{% url 'store:signup' %}" class="hover-scale" style="color: var(--primary); font-weight: 600;">{% trans "Зареєструватися" %}</a>
         </div>
     </div>
 </div>
