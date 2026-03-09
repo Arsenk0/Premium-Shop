@@ -55,19 +55,33 @@ A modern, high-performance Django e-commerce platform designed for selling premi
     python manage.py migrate
     ```
 
-6.  **Start Services**:
-    - **Redis** (required for Celery):
-      ```bash
-      redis-server
-      ```
-    - **Celery Worker**:
-      ```bash
-      celery -A shop_project worker --loglevel=info
-      ```
-    - **Django Server**:
-      ```bash
-      python manage.py runserver
-      ```
+6.  **Compile Translations**:
+    ```bash
+    python manage.py compilemessages
+    ```
+
+## 🚀 Running the Project
+
+To ensure all features (including **Product Reviews**, **Async Tasks**, and **Order Notifications**) work correctly, you need to run the following services in **three separate terminal windows**:
+
+1.  **Terminal 1: Redis Server** (Required for Celery)
+    ```bash
+    redis-server
+    ```
+
+2.  **Terminal 2: Celery Worker** (Handles background tasks like reviews & emails)
+    ```bash
+    celery -A shop_project worker --loglevel=info
+    ```
+
+3.  **Terminal 3: Django Development Server**
+    ```bash
+    python manage.py runserver
+    ```
+
+---
+> [!NOTE]
+> The project is now fully functional with all major bugs resolved. Ensure Redis is running before starting the Celery worker.
 
 ## 📝 Configuration
 
