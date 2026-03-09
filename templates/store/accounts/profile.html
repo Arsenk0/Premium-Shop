@@ -9,7 +9,7 @@
         <h1>{% trans "Вітаємо," %} {{ request.user.username }}! 👋</h1>
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-secondary">{% trans "Вийти" %}</button>
+            <button type="submit" class="btn btn-secondary hover-scale">{% trans "Вийти" %}</button>
         </form>
     </div>
 
@@ -30,8 +30,8 @@
             {% if orders %}
             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                 {% for order in orders %}
-                <div
-                    style="border: 1px solid #eee; padding: 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <div class="order-card hover-lift"
+                    style="border: 1px solid #eee; padding: 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; transition: var(--transition);">
                     <div>
                         <strong style="font-size: 1.1rem;">{% trans "Замовлення #" %}{{ order.id }}</strong><br>
                         <small style="color: #888;">{% trans "Від" %} {{ order.created|date:"d.m.Y H:i" }}</small><br> <span class="status-badge status-{{ order.status|lower }}">{{ order.get_status_display }}</span> </div> <div style="text-align: right;"> <strong style="font-size: 1.2rem;">{{ order.get_total_cost }} {% trans "грн" %}</strong>
@@ -42,7 +42,7 @@
             {% else %}
             <p style="color: #888;">{% trans "У вас поки немає замовлень." %}</p>
             <br>
-            <a href="{% url 'store:product_list' %}" class="btn btn-primary">{% trans "Почати шопінг" %}</a>
+            <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale">{% trans "Почати шопінг" %}</a>
             {% endif %}
         </div>
     </div>

@@ -40,7 +40,7 @@
                         <span class="qty-val">{{ item.quantity }}</span> <button class="qty-btn add" type="button">+</button> </div> </td> <td style="padding: 1rem;">{{ item.product.price }} {% trans "грн" %}</td>
                 <td style="padding: 1rem;"><span class="item-total">{{ item.total_price }}</span> {% trans "грн" %}</td>
                 <td style="padding: 1rem;">
-                    <button class="qty-btn delete" data-item-key="{{ item.item_key }}"
+                    <button class="qty-btn delete hover-scale" data-item-key="{{ item.item_key }}"
                         data-url="{% url 'store:cart_update' item.item_key %}"
                         style="background: none; border: none; color: var(--accent); cursor: pointer; padding: 0; font-size: 0.9rem;">
                         <i class="fa-solid fa-trash-can"></i> {% trans "Видалити" %}
@@ -55,14 +55,14 @@
         <h2 style="font-size: 2.5rem;">{% trans "Разом:" %} {{ total_price }} {% trans "грн" %}</h2>
         <br>
         <div style="display: flex; justify-content: flex-end; gap: 1rem; align-items: center;">
-            <a href="{% url 'store:product_list' %}" class="btn btn-secondary">{% trans "Продовжити покупки" %}</a>
-            <a href="{% url 'store:order_create' %}" class="btn btn-primary">{% trans "Оформити замовлення" %}</a>
+            <a href="{% url 'store:product_list' %}" class="btn btn-secondary hover-scale">{% trans "Продовжити покупки" %}</a>
+            <a href="{% url 'store:order_create' %}" class="btn btn-primary hover-scale">{% trans "Оформити замовлення" %}</a>
         </div>
     </div>
     {% else %}
     <p>{% trans "Ваш кошик порожній." %}</p>
     <br>
-    <a href="{% url 'store:product_list' %}" class="btn btn-primary">{% trans "Перейти до покупок" %}</a>
+    <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale">{% trans "Перейти до покупок" %}</a>
     {% endif %}
 </div>
 {% endblock %}
