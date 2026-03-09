@@ -9,6 +9,7 @@
 {% if not category %}
 {% if not request.GET.q %}
 {% if not current_filters.min_price and not current_filters.max_price and not current_filters.size %}
+
 <section class="hero fade-in">
     <div>
         <h1>{% trans "Нова Колекція 2026" %}</h1>
@@ -21,47 +22,71 @@
 {% endif %}
 {% endif %}
 
+
 <div class="container" id="products">
     <div class="product-page-layout">
-        <!-- Sidebar Filters -->
+
+
         <aside class="filters-sidebar slide-in-left visible">
             <form method="get" action="." id="filter-form">
+
                 {% if request.GET.q %}
                 <input type="hidden" name="q" value="{{ request.GET.q }}">
                 {% endif %}
 
                 <div class="filter-section">
-                    <h4>{% trans "Сортування" %}</h4>
+                    <h4>{% trans "SORTING" %}</h4>
+
                     <select name="sort" class="filter-select" onchange="this.form.submit()">
-                        <option value="newest" {% if current_filters.sort=='newest' %}selected{% endif %}>{% trans
-                            "Новинки" %}</option>
-                        <option value="price_asc" {% if current_filters.sort=='price_asc' %}selected{% endif %}>{% trans
-                            "Найдешевші" %}</option>
-                        <option value="price_desc" {% if current_filters.sort=='price_desc' %}selected{% endif %}>{%
-                            trans "Найдорожчі" %}</option>
-                        <option value="name_asc" {% if current_filters.sort=='name_asc' %}selected{% endif %}>{% trans
-                            "За назвою (А-Я)" %}</option>
+
+                        <option value="newest" {% if current_filters.sort == 'newest' %}selected{% endif %}>
+                            {% trans "Новинки" %}
+                        </option>
+
+                        <option value="price_asc" {% if current_filters.sort == 'price_asc' %}selected{% endif %}>
+                            {% trans "Найдешевші" %}
+                        </option>
+
+                        <option value="price_desc" {% if current_filters.sort == 'price_desc' %}selected{% endif %}>
+                            {% trans "Найдорожчі" %}
+                        </option>
+
+                        <option value="name_asc" {% if current_filters.sort == 'name_asc' %}selected{% endif %}>
+                            {% trans "За назвою (А-Я)" %}
+                        </option>
+
                     </select>
                 </div>
 
                 <div class="filter-section">
-                    <h4>{% trans "Категорії" %}</h4>
+                    <h4>{% trans "CATEGORIES" %}</h4>
+
                     <div class="category-links">
+
                         <a href="{% url 'store:product_list' %}"
-                            class="cat-link {% if not category %}active{% endif %}">{% trans "Всі товари" %}</a>
+                            class="cat-link {% if not category %}active{% endif %}">
+                            {% trans "Всі товари" %}
+                        </a>
+
                         {% for c in categories %}
+
                         <a href="{% url 'store:product_list_by_category' c.slug %}"
-                            class="cat-link {% if category.slug == c.slug %}active{% endif %}">{% translate c.name
-                            %}</a>
+                            class="cat-link {% if category.slug == c.slug %}active{% endif %}">
+                            {% translate c.name %}
+                        </a>
+
                         {% endfor %}
+
                     </div>
                 </div>
 
                 <div class="filter-section">
                     <h4>{% trans "Ціна (грн)" %}</h4>
+
                     <div class="price-inputs">
                         <input type="number" name="min_price" placeholder="{% trans 'Від' %}"
                             value="{{ current_filters.min_price }}">
+
                         <input type="number" name="max_price" placeholder="{% trans 'До' %}"
                             value="{{ current_filters.max_price }}">
                     </div>
@@ -69,97 +94,180 @@
 
                 {% if all_sizes %}
                 <div class="filter-section">
+
                     <h4>{% trans "Розмір" %}</h4>
+
                     <div class="size-filter-grid">
+
                         {% for s in all_sizes %}
+
                         <label class="size-filter-item">
-                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size==s.name
+
+                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name
                                 %}checked{% endif %} onchange="this.form.submit()">
+
                             <span>{{ s.name }}</span>
+
                         </label>
+
                         {% endfor %}
+
                     </div>
+
                 </div>
                 {% endif %}
 
                 <div class="filter-actions">
-                    <button type="submit" class="btn btn-primary hover-scale" style="width: 100%; min-width: auto;">{%
-                        trans "Застосувати" %}</button>
+
+                    <button type="submit" class="btn btn-primary hover-scale" style="width: 100%; min-width: auto;">
+                        {% trans "Застосувати" %}
+                    </button>
+
                     <a href="{% if category %}{% url 'store:product_list_by_category' category.slug %}{% else %}{% url 'store:product_list' %}{% endif %}"
                         class="btn btn-secondary"
-                        style="width: 100%; min-width: auto; margin-top: 0.5rem; height: 44px; font-size: 0.9rem;">{%
-                        trans "Скинути" %}</a>
+                        style="width: 100%; min-width: auto; margin-top: 0.5rem; height: 44px; font-size: 0.9rem;">
+                        {% trans "Очистити" %}
+                    </a>
+
                 </div>
+
             </form>
         </aside>
 
-        <!-- Product Grid & Content -->
         <main class="product-main-content">
+
             <div class="product-list-header">
-                <h2>{% if category %}{% translate category.name %}{% else %}{% trans "Всі товари" %}{% endif %}</h2>
-                <p class="results-count">{% blocktrans count counter=products.paginator.count %}Знайдено {{ counter }}
-                    товар{% plural %}Знайдено {{ counter }} товарів{% endblocktrans %}</p>
+
+                <h2>
+                    {% if category %}
+                    {% translate category.name %}
+                    {% else %}
+                    {% trans "Всі товари" %}
+                    {% endif %}
+                </h2>
+
+                <p class="results-count">
+                    {% blocktrans count counter=products.paginator.count %}
+                    Знайдено {{ counter }} товар
+                    {% plural %}
+                    Знайдено {{ counter }} товарів
+                    {% endblocktrans %}
+                </p>
+
             </div>
 
             <div class="product-grid">
+
                 {% for product in products %}
+
                 <div class="product-card hover-lift fade-in">
+
                     <a href="{% url 'store:product_detail' product.id product.slug %}">
+
                         {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}">
                         {% else %}
                         <img src="https://via.placeholder.com/300x400" alt="No image">
                         {% endif %}
+
                     </a>
+
                     <div class="product-info">
-                        <span class="product-category">{% translate product.category.name %}</span>
+
+                        <span class="product-category">
+                            {% translate product.category.name %}
+                        </span>
+
                         <h3 class="product-name">
-                            <a href="{% url 'store:product_detail' product.id product.slug %}">{{ product.name }}</a>
+
+                            <a href="{% url 'store:product_detail' product.id product.slug %}">
+                                {{ product.name }}
+                            </a>
+
                         </h3>
-                        <p style="color: grey; font-size: 0.8rem; margin-bottom: 0.5rem;">{% trans "Арт:" %} {{
-                            product.article }}</p>
+
+                        <p style="color: grey; font-size: 0.8rem; margin-bottom: 0.5rem;">
+                            {% trans "Арт:" %} {{ product.article }}
+                        </p>
+
                         <div class="product-price-row">
-                            <span class="product-price">{{ product.price }} {% trans "грн" %}</span>
+
+                            <span class="product-price">
+                                {{ product.price }} {% trans "грн" %}
+                            </span>
+
                             <a href="{% url 'store:product_detail' product.id product.slug %}" class="btn btn-primary"
-                                style="min-width: 100px; height: 40px; font-size: 0.85rem; padding: 0 1rem;">{% trans
-                                "Більше" %}</a>
+                                style="min-width: 100px; height: 40px; font-size: 0.85rem; padding: 0 1rem;">
+                                {% trans "Більше" %}
+                            </a>
+
                         </div>
+
                     </div>
+
                 </div>
+
                 {% empty %}
+
                 <div class="empty-state">
                     <p>{% trans "Товарів не знайдено за вашими критеріями." %}</p>
                 </div>
+
                 {% endfor %}
+
             </div>
 
-            <!-- Pagination -->
             {% if products.has_other_pages %}
+
             <div class="pagination">
+
                 {% if products.has_previous %}
+
                 <a href="?page={{ products.previous_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}"
-                    class="page-link">&laquo;</a>
+                    class="page-link">
+                    &laquo;
+                </a>
+
                 {% endif %}
 
                 {% for i in products.paginator.page_range %}
+
                 {% if products.number == i %}
+
                 <span class="page-link active">{{ i }}</span>
+
                 {% else %}
+
                 <a href="?page={{ i }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}"
-                    class="page-link">{{ i }}</a>
+                    class="page-link">
+                    {{ i }}
+                </a>
+
                 {% endif %}
+
                 {% endfor %}
 
                 {% if products.has_next %}
+
                 <a href="?page={{ products.next_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}"
-                    class="page-link">&raquo;</a>
+                    class="page-link">
+                    &raquo;
+                </a>
+
                 {% endif %}
+
             </div>
+
             {% endif %}
+
         </main>
+
     </div>
+
 </div>
 
+
+{% endblock %}
 <style>
     .product-page-layout {
         display: grid;
@@ -336,4 +444,3 @@
         }
     }
 </style>
-{% endblock %}

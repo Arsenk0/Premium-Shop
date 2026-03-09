@@ -226,7 +226,8 @@
             timeout = setTimeout(() => {
                 fetch(`{% url 'store:api_np_cities' %}?q=${encodeURIComponent(query)}`)
                     .then(r => r.json())
-                    .then(data => {
+                    .then(res => {
+                        const data = res.data || res;
                         cityResults.innerHTML = '';
                         if (data.length > 0) {
                             data.forEach(city => {
@@ -255,7 +256,8 @@
 
             fetch(`{% url 'store:api_np_warehouses' %}?city_ref=${cityRef}`)
                 .then(r => r.json())
-                .then(data => {
+                .then(res => {
+                    const data = res.data || res;
                     loadingMsg.style.display = 'none';
                     warehouseSelect.innerHTML = '<option value="">{% trans "Оберіть відділення" %}</option>';
                     data.forEach(w => {
