@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
 <script>
     function updateMainImage(container, src) {
         const mainImg = document.getElementById('main-product-img');
+        if (!mainImg) return;
         mainImg.style.opacity = '0';
         setTimeout(() => {
             mainImg.src = src;
@@ -14,32 +18,24 @@
     }
 </script>
 
-{% block title %}{{ product.name }}{% endblock %}
-
-{% block content %}
 <div class="container fade-in" style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 1.5rem; padding-top: 1rem;">
     <div class="product-gallery">
         <div class="main-image" style="margin-bottom: 1rem;">
             {% if product.image %}
-            <img id="main-product-img" src="{{ product.image.url }}" alt="{{ product.name }}"
-                style="width: 100%; border-radius: 12px; box-shadow: var(--shadow); height: 550px; object-fit: cover; transition: var(--transition);">
+            <img id="main-product-img" src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; border-radius: 12px; box-shadow: var(--shadow); height: 550px; object-fit: cover; transition: var(--transition);">
             {% else %}
-            <img src="https://via.placeholder.com/600x800" alt="{% trans 'Немає зображення' %}"
-                style="width: 100%; border-radius: 12px;">
+            <img src="https://via.placeholder.com/600x800" alt="{% trans 'Немає зображення' %}" style="width: 100%; border-radius: 12px;">
             {% endif %}
         </div>
 
         {% if product.images.all %}
-        <div class="thumbnails"
-            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; margin-top: 1rem;">
-            <div class="thumb-container active" onclick="updateMainImage(this, '{{ product.image.url }}')"> <img
-                    src="{{ product.image.url }}"
-                    style="width: 100%; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer;">
+        <div class="thumbnails" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; margin-top: 1rem;">
+            <div class="thumb-container active" onclick="updateMainImage(this, '{{ product.image.url }}')">
+                <img src="{{ product.image.url }}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer;">
             </div>
             {% for extra_img in product.images.all %}
-            <div class="thumb-container" onclick="updateMainImage(this, '{{ extra_img.image.url }}')"> <img
-                    src="{{ extra_img.image.url }}"
-                    style="width: 100%; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer;">
+            <div class="thumb-container" onclick="updateMainImage(this, '{{ extra_img.image.url }}')">
+                <img src="{{ extra_img.image.url }}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer;">
             </div>
             {% endfor %}
         </div>
@@ -50,77 +46,84 @@
         <span class="product-category">{% translate product.category.name %}</span>
         <h1 style="font-size: 2.5rem; margin: 0.5rem 0; font-weight: 800;">{{ product.name }}</h1>
         <p style="color: grey; margin-bottom: 0.5rem; font-size: 0.9rem;">
-            {% blocktrans with article=product.article %}SKU: {{ article }}{% endblocktrans %}
+            {% blocktrans with article=product.article %}Артикул: {{ article }}{% endblocktrans %}
         </p>
         <p class="detail-price">{{ product.price }} {% trans "грн" %}</p>
+
         <div style="margin-bottom: 1.5rem;">
             {% if reviews.count > 0 %}
             <span style="font-size: 0.85rem; color: #888; margin-right: 0.5rem;">
-                <i class="fas fa-star" style="color: #ffc107;"></i> {{ reviews.count }} {% trans "відгуків" %} </span>
+                <i class="fas fa-star" style="color: #ffc107;"></i> {{ reviews.count }} {% trans "відгуків" %}
+            </span>
             <span style="color: #eee;">|</span>
             {% endif %}
-            <a href="#reviews-section"
-                style="font-size: 0.85rem; color: var(--primary); font-weight: 700; margin-left: 0.5rem; text-decoration: none;">
+            <a href="#reviews-section" style="font-size: 0.85rem; color: var(--primary); font-weight: 700; margin-left: 0.5rem; text-decoration: none;">
                 {% trans "Залишити відгук" %}
             </a>
         </div>
 
         {% if product.sizes.all %}
         <div style="margin-bottom: 1.5rem;" id="size-selection-area">
-            <h3 style="margin-bottom: 1rem;">{% trans "Оберіть розмір" %} <span style="color: var(--accent);">*</span>
-            </h3>
+            <h3 style="margin-bottom: 1rem;">{% trans "Оберіть розмір" %} <span style="color: var(--accent);">*</span></h3>
             <div class="size-selector" style="display: flex; gap: 10px; flex-wrap: wrap;">
                 {% for size in product.sizes.all %}
                 <label class="size-option">
-                    <input type="radio" name="size" value="{{ size.name }}" style="display: none;"> <span
-                        class="size-label">{{ size.name }}</span> </label>
+                    <input type="radio" name="size" value="{{ size.name }}" style="display: none;">
+                    <span class="size-label">{{ size.name }}</span>
+                </label>
                 {% endfor %}
             </div>
-            <p id="size-error" style="color: var(--accent); font-size: 0.85rem; margin-top: 0.5rem; display: none;">⚠️
-                {% trans "Будь ласка, оберіть розмір!" %}</p>
+            <p id="size-error" style="color: var(--accent); font-size: 0.85rem; margin-top: 0.5rem; display: none;">⚠️ {% trans "Будь ласка, оберіть розмір!" %}</p>
         </div>
         {% endif %}
 
         <div style="margin-bottom: 1rem;">
-            <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">{% trans "DESCRIPTION" %}</h3>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">{% trans "Опис" %}</h3>
             <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">{{ product.description }}</p>
         </div>
 
         <div style="margin-bottom: 1.5rem;">
             <h3 style="font-size: 1rem; margin-bottom: 0.2rem;">{% trans "Наявність" %}</h3>
             <p style="font-weight: 600; font-size: 0.9rem;">
-                {% if product.available %}✅ {% trans "В наявності" %} ({{ product.stock }} {% trans "шт." %}){% else %}❌
-                {% trans "Немає в наявності" %}{% endif %}
+                {% if product.available %}
+                ✅ {% trans "В наявності" %} ({{ product.stock }} {% trans "шт." %})
+                {% else %}
+                ❌ {% trans "Немає в наявності" %}
+                {% endif %}
             </p>
         </div>
 
-        <a id="add-to-cart-btn" href="{% url 'store:cart_add' product.id %}" class="btn btn-primary hover-scale"
-            style="width: 100%; height: 60px; font-size: 1.2rem; gap: 10px;">
+        {% if product.available %}
+        <a id="add-to-cart-btn" href="{% url 'store:cart_add' product.id %}" class="btn btn-primary hover-scale" style="width: 100%; height: 60px; font-size: 1.2rem; gap: 10px; display: flex; align-items: center; justify-content: center;">
             {% trans "Додати в кошик" %} <i class="fas fa-shopping-cart"></i>
         </a>
+        {% else %}
+        <button class="btn" style="width: 100%; height: 60px; background: #ccc; cursor: not-allowed;" disabled>
+            {% trans "Немає в наявності" %}
+        </button>
+        {% endif %}
     </div>
 </div>
 
-<!-- Reviews Section -->
-<div id="reviews-section" class="container fade-in"
-    style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid #eee; scroll-margin-top: 100px;">
+<div id="reviews-section" class="container fade-in" style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid #eee; scroll-margin-top: 100px;">
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
         <div>
             <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">{% trans "Відгуки покупців" %}</h3>
             {% for review in reviews %}
-            <div class="review-card"
-                style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #f0f0f0;">
+            <div class="review-card" style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #f0f0f0;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                    <strong style="font-size: 1.1rem;">{{ review.user.username }}</strong> <span
-                        style="color: #ffc107; white-space: nowrap;">
+                    <strong style="font-size: 1.1rem;">{{ review.user.username }}</strong>
+                    <span style="color: #ffc107; white-space: nowrap;">
                         {% for i in "12345" %}
-                        {% if forloop.counter <= review.rating %}<i class="fas fa-star"></i>{% else %}<i
-                                class="far fa-star"></i>{% endif %}
-                            {% endfor %}
+                            {% if forloop.counter <= review.rating %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
                     </span>
                 </div>
-                <p style="color: grey; font-size: 0.85rem; margin-bottom: 1rem;">{{ review.created_at|date:"d.m.Y" }}
-                </p>
+                <p style="color: grey; font-size: 0.85rem; margin-bottom: 1rem;">{{ review.created_at|date:"d.m.Y" }}</p>
                 <p style="line-height: 1.6;">{{ review.comment }}</p>
             </div>
             {% empty %}
@@ -145,10 +148,12 @@
                     <button type="submit" class="btn btn-primary" style="width: 100%;">{% trans "Надіслати відгук" %}</button>
                 </form>
                 {% else %}
-                <p style="text-align: center; color: grey;">{% trans "Для того, щоб залишити відгук, будь ласка," %} <a
-                        href="{% url 'login' %}" style="color: var(--primary); font-weight: 700;">{% trans "увійдіть"
-                        %}</a> {% trans "або" %} <a href="{% url 'store:signup' %}"
-                        style="color: var(--primary); font-weight: 700;">{% trans "зареєструйтесь" %}</a>.</p>
+                <p style="text-align: center; color: grey;">
+                    {% trans "Для того, щоб залишити відгук, будь ласка," %}
+                    <a href="{% url 'login' %}" style="color: var(--primary); font-weight: 700;">{% trans "увійдіть" %}</a>
+                    {% trans "або" %}
+                    <a href="{% url 'store:signup' %}" style="color: var(--primary); font-weight: 700;">{% trans "зареєструйтесь" %}</a>.
+                </p>
                 {% endif %}
             </div>
         </div>
@@ -156,54 +161,27 @@
 </div>
 
 <style>
-    .detail-price {
-        font-size: 2rem;
-        font-weight: 900;
-        margin-bottom: 1rem;
-        color: var(--primary);
-    }
-
-    #main-product-img {
-        transition: opacity 0.3s ease;
-    }
-
-    .thumb-container {
-        border: 2px solid transparent;
-        border-radius: 10px;
-        padding: 2px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        overflow: hidden;
-    }
-
-    .thumb-container.active {
-        border-color: var(--accent);
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .thumb-container:hover {
-        transform: translateY(-2px);
-    }
-
-    .size-label {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 60px;
-        height: 50px;
-        border: 2px solid #eee;
-        border-radius: 12px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: var(--transition);
-    }
-
-    .size-option input:checked+.size-label {
-        border-color: var(--primary);
-        background: var(--primary);
-        color: white;
-        transform: translateY(-3px);
-    }
+    .detail-price { font-size: 2rem; font-weight: 900; margin-bottom: 1rem; color: var(--primary); }
+    #main-product-img { transition: opacity 0.3s ease; }
+    .thumb-container { border: 2px solid transparent; border-radius: 10px; padding: 2px; transition: all 0.3s ease; cursor: pointer; overflow: hidden; }
+    .thumb-container.active { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+    .size-label { display: inline-flex; align-items: center; justify-content: center; min-width: 60px; height: 50px; border: 2px solid #eee; border-radius: 12px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+    .size-option input:checked+.size-label { border-color: var(--primary); background: var(--primary); color: white; transform: translateY(-3px); }
 </style>
+
+<script>
+    // Додаткова логіка для перевірки розміру перед відправкою
+    document.getElementById('add-to-cart-btn')?.addEventListener('click', function(e) {
+        const selectedSize = document.querySelector('input[name="size"]:checked');
+        if (!selectedSize) {
+            e.preventDefault();
+            const errorP = document.getElementById('size-error');
+            if (errorP) errorP.style.display = 'block';
+            document.getElementById('size-selection-area')?.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            // Додаємо вибраний розмір до URL
+            this.href = this.href.split('?')[0] + '?size=' + encodeURIComponent(selectedSize.value);
+        }
+    });
+</script>
 {% endblock %}
