@@ -903,3 +903,6 @@ msgstr "Sneakers"
 
 msgid "Аксесуари"
 msgstr "Accessories"
+
+msgid "Надіслати відгук"
+msgstr "Submit review"

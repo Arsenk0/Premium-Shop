@@ -905,3 +905,6 @@ msgstr "Tenisky"
 
 msgid "Аксесуари"
 msgstr "Doplňky"
+
+msgid "Надіслати відгук"
+msgstr "Odeslat recenzi"
