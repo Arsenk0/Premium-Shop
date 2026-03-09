@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processors.cart_context',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -113,8 +114,6 @@ LANGUAGE_CODE = 'uk'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-USE_L10N = True
-
 USE_TZ = True
 
 LANGUAGES = [

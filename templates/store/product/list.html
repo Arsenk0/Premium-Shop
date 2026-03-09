@@ -102,9 +102,7 @@
                         {% for s in all_sizes %}
 
                         <label class="size-filter-item">
-
-                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name
-                                %}checked{% endif %} onchange="this.form.submit()">
+                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name %}checked{% endif %} onchange="this.form.submit()">
 
                             <span>{{ s.name }}</span>
 
@@ -267,7 +265,6 @@
 </div>
 
 
-{% endblock %}
 <style>
     .product-page-layout {
         display: grid;
@@ -444,3 +441,4 @@
         }
     }
 </style>
+{% endblock %}
