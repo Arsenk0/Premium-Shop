@@ -107,7 +107,7 @@ class Order(models.Model):
     city_ref = models.CharField(max_length=100, blank=True, verbose_name=_("Ref міста"))
     warehouse = models.CharField(max_length=255, verbose_name=_("Відділення"))
     warehouse_ref = models.CharField(max_length=100, blank=True, verbose_name=_("Ref відділення"))
-    email = models.EmailField(verbose_name=_("Email"), default='no-reply@shop.com')
+    email = models.EmailField(verbose_name=_("Email"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("Створено"))
     updated = models.DateTimeField(auto_now=True, verbose_name=_("Оновлено"))
     paid = models.BooleanField(default=False, verbose_name=_("Оплачено"))

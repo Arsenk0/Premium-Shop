@@ -62,7 +62,7 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    <label>{% trans "Email (для підтвердження)" %}</label>
+                    <label>{% trans "Email" %}</label>
                     <input type="email" name="{{ form.email.html_name }}" id="{{ form.email.id_for_label }}"
                         class="{% if form.email.errors %}input-error shake{% endif %}" 
                         {% if form.email.value %}value="{{ form.email.value }}"{% endif %}>
