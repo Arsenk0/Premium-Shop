@@ -27,11 +27,12 @@ class Size(models.Model):
     ]
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='shoes', verbose_name=_("Тип"))
+    sorting_order = models.PositiveIntegerField(default=0, verbose_name=_("Порядок сортування"))
 
     class Meta:
         verbose_name = _('Розмір')
         verbose_name_plural = _('Розміри')
-        ordering = ['type', 'name']
+        ordering = ['type', 'sorting_order', 'name']
 
     def __str__(self):
         return f"{self.get_type_display()}: {self.name}"

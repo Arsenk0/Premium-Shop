@@ -59,7 +59,8 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'type']
+    list_display = ['name', 'type', 'sorting_order']
+    list_editable = ['sorting_order']
     list_filter = ['type']
     search_fields = ['name']
 

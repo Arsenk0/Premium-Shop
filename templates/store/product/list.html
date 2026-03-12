@@ -94,24 +94,21 @@
 
                 {% if all_sizes %}
                 <div class="filter-section">
-
                     <h4>{% trans "Розмір" %}</h4>
-
-                    <div class="size-filter-grid">
-
-                        {% for s in all_sizes %}
-
-                        <label class="size-filter-item">
-                            <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name %}checked{% endif %} onchange="this.form.submit()">
-
-                            <span>{{ s.name }}</span>
-
-                        </label>
-
-                        {% endfor %}
-
-                    </div>
-
+                    
+                    {% regroup all_sizes by get_type_display as size_groups %}
+                    
+                    {% for group in size_groups %}
+                        <h5 style="margin: 1rem 0 0.5rem 0; font-size: 0.9rem; color: var(--text-muted);">{{ group.grouper }}</h5>
+                        <div class="size-filter-grid">
+                            {% for s in group.list %}
+                            <label class="size-filter-item">
+                                <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name %}checked{% endif %} onchange="this.form.submit()">
+                                <span>{{ s.name }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
                 </div>
                 {% endif %}
 
