@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Список бажань" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="margin-bottom: 2rem;">
+        <h1 style="font-size: 2.5rem; font-weight: 800;">{% trans "Ваш список бажань 💖" %}</h1>
+        <p style="color: var(--text-muted);">{% trans "Товари, які ви зберегли." %}</p>
+    </div>
+
+    {% if wishlist_items %}
+    <div class="product-grid">
+        {% for item in wishlist_items %}
+        {% with product=item.product %}
+        <div class="product-card fade-in">
+            <a href="{{ product.get_absolute_url }}">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                <img src="{% static 'img/no-image.png' %}" alt="{{ product.name }}">
+                {% endif %}
+            </a>
+            <div class="product-info">
+                <div class="product-category">{{ product.category.name }}</div>
+                <a href="{{ product.get_absolute_url }}">
+                    <h3 class="product-name">{{ product.name }}</h3>
+                </a>
+                <div class="product-price-row">
+                    <span class="product-price">{{ product.price }} ₴</span>
+                    <button class="btn-wishlist toggle-wishlist active" data-product-id="{{ product.id }}" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--accent);">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 4rem 1rem;">
+        <i class="fas fa-heart-broken" style="font-size: 4rem; color: #ddd; margin-bottom: 1.5rem;"></i>
+        <h2>{% trans "Ваш список бажань порожній" %}</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">{% trans "Додайте товари, які вам сподобалися, щоб не загубити їх." %}</p>
+        <a href="{% url 'store:product_list' %}" class="btn btn-primary">{% trans "Перейти до покупок" %}</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -155,3 +155,16 @@ class Review(models.Model):
 
     def __str__(self):
         return f'{_("Відгук від")} {self.user.username} {_("на")} {self.product.name}'
+
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, related_name='wishlist', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='wishlisted_by', on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'product')
+        verbose_name = _("Список бажань")
+        verbose_name_plural = _("Списки бажань")
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.name}"

@@ -19,8 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             let url = btn.getAttribute('href');
 
-            // Check for authentication
-            if (window.isUserAuthenticated === false) {
+    // Check for authentication
+    const isUserAuthenticated = body.dataset.authenticated === 'true';
+    if (isUserAuthenticated === false) {
                 showLoginModal();
                 return;
             }
@@ -173,10 +174,180 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fadeElems.forEach(elem => observer.observe(elem));
 
+    // --- Helpers ---
+    function getLangPrefix() {
+        const lang = document.documentElement.lang || 'uk';
+        return `/${lang}`;
+    }
+
+    // --- AJAX Filtering Logic ---
+    const filterForm = document.getElementById('filter-form');
+    const productListContainer = document.getElementById('product-list-container');
+
+    if (filterForm && productListContainer) {
+        filterForm.querySelectorAll('input, select').forEach(input => {
+            input.addEventListener('change', () => {
+                applyFilters();
+            });
+        });
+
+        filterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            applyFilters();
+        });
+    }
+
+    function applyFilters() {
+        if (!filterForm || !productListContainer) return;
+
+        const formData = new FormData(filterForm);
+        const params = new URLSearchParams(formData).toString();
+        const url = `${window.location.pathname}?${params}`;
+
+        // Show loading state
+        productListContainer.style.opacity = '0.5';
+
+        fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.text())
+        .then(html => {
+            productListContainer.innerHTML = html;
+            productListContainer.style.opacity = '1';
+
+            // Update URL without reloading
+            window.history.pushState({}, '', url);
+
+            // Re-rebind wishlist buttons and animations
+            rebindWishlistButtons();
+            const newFadeElems = productListContainer.querySelectorAll('.fade-in');
+            newFadeElems.forEach(elem => observer.observe(elem));
+        })
+        .catch(err => {
+            console.error('Filter error:', err);
+            productListContainer.style.opacity = '1';
+        });
+    }
+
+    // --- Wishlist Toggle Logic ---
+    function rebindWishlistButtons() {
+        const wishlistBtns = document.querySelectorAll('.toggle-wishlist');
+        wishlistBtns.forEach(btn => {
+            btn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleWishlist(btn);
+            };
+        });
+    }
+
+    function toggleWishlist(btn) {
+        const productId = btn.dataset.productId;
+        
+        if (body.dataset.authenticated !== 'true') {
+            showLoginModal('wishlist');
+            return;
+        }
+
+        fetch(`${getLangPrefix()}/wishlist/toggle/${productId}/`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                if (data.action === 'added') {
+                    btn.classList.add('active');
+                    showToast('💖 ' + (body.dataset.toastWishlistAdded || 'Додано до списку бажань!'));
+                } else {
+                    btn.classList.remove('active');
+                    showToast('💔 ' + (body.dataset.toastWishlistRemoved || 'Видалено зі списку бажань'));
+                    
+                    if (window.location.pathname.includes('/wishlist/')) {
+                        const card = btn.closest('.product-card');
+                        if (card) {
+                            card.style.opacity = '0';
+                            setTimeout(() => card.remove(), 500);
+                        }
+                    }
+                }
+            }
+        })
+        .catch(err => console.error('Wishlist error:', err));
+    }
+
+    rebindWishlistButtons();
+
+    // --- Search Autocomplete ---
+    const searchInput = document.querySelector('input[name="q"]');
+    if (searchInput) {
+        const autocompleteContainer = document.createElement('div');
+        autocompleteContainer.className = 'search-autocomplete';
+        searchInput.parentNode.appendChild(autocompleteContainer);
+
+        let debounceTimer;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            const query = searchInput.value.trim();
+            
+            if (query.length < 2) {
+                autocompleteContainer.style.display = 'none';
+                return;
+            }
+
+            debounceTimer = setTimeout(() => {
+                fetch(`${getLangPrefix()}/api/search-autocomplete/?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.results && data.results.length > 0) {
+                            autocompleteContainer.innerHTML = '';
+                            data.results.forEach(res => {
+                                const item = document.createElement('a');
+                                item.href = res.url;
+                                item.className = 'autocomplete-item';
+                                item.innerHTML = `
+                                    <img src="${res.image}" alt="">
+                                    <div>
+                                        <div class="name">${res.name}</div>
+                                        <div class="price">${res.price} ₴</div>
+                                    </div>
+                                `;
+                                autocompleteContainer.appendChild(item);
+                            });
+                            autocompleteContainer.style.display = 'block';
+                        } else {
+                            autocompleteContainer.style.display = 'none';
+                        }
+                    })
+                    .catch(err => console.error('Search error:', err));
+            }, 300);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !autocompleteContainer.contains(e.target)) {
+                autocompleteContainer.style.display = 'none';
+            }
+        });
+    }
+
     // Global Modal Functions
-    window.showLoginModal = function () {
+    window.showLoginModal = function (context = 'cart') {
         const modal = document.getElementById('login-modal');
-        if (modal) {
+        const titleEl = document.getElementById('login-modal-title');
+        const descEl = document.getElementById('login-modal-desc');
+
+        if (modal && titleEl && descEl) {
+            if (context === 'wishlist') {
+                titleEl.textContent = body.dataset.modalWishlistTitle || 'Бажаєте додати в список бажань? 😉';
+                descEl.textContent = body.dataset.modalWishlistDesc || 'Увійдіть або зареєструйтесь, щоб ваші улюблені товари завжди були під рукою!';
+            } else {
+                titleEl.textContent = body.dataset.modalCartTitle || 'Бажаєте додати в кошик? 😉';
+                descEl.textContent = body.dataset.modalCartDesc || 'Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в особистому кабінеті та ви отримували бонуси!';
+            }
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }

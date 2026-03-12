@@ -19,14 +19,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script>
-        window.isUserAuthenticated = ("{{ user.is_authenticated|yesno:'true,false' }}" === "true");
-    </script>
 </head>
 
-<body data-toast-added="{% trans 'Додано до кошика!' %}" data-toast-error="{% trans 'Халепа, щось пішло не так!' %}"
+<body data-authenticated="{{ user.is_authenticated|yesno:'true,false' }}"
+    data-toast-added="{% trans 'Додано до кошика!' %}" data-toast-error="{% trans 'Халепа, щось пішло не так!' %}"
     data-toast-select-size="{% trans 'Будь ласка, оберіть розмір!' %}" data-loading="{% trans 'Завантаження...' %}"
-    data-select-warehouse="{% trans 'Оберіть відділення' %}" data-no-warehouses="{% trans 'Відділень не знайдено' %}">
+    data-select-warehouse="{% trans 'Оберіть відділення' %}" data-no-warehouses="{% trans 'Відділень не знайдено' %}"
+    data-modal-wishlist-title="{% trans 'Бажаєте додати в список бажань? 😉' %}"
+    data-modal-wishlist-desc="{% trans 'Увійдіть або зареєструйтесь, щоб ваші улюблені товари завжди були під рукою!' %}"
+    data-modal-cart-title="{% trans 'Бажаєте додати в кошик? 😉' %}"
+    data-modal-cart-desc="{% trans 'Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в особистому кабінеті та ви отримували бонуси!' %}">
     <nav class="navbar">
         <div class="logo">
             <a href="{% url 'store:product_list' %}">PREMIUM<span>SHOP</span></a>
@@ -62,6 +64,7 @@
                 </select>
             </form>
 
+            <a href="{% url 'store:wishlist_list' %}" class="nav-auth-link" title="{% trans 'Список бажань' %}"><i class="fas fa-heart"></i></a>
             <a href="{% url 'store:cart_detail' %}" class="cart-link">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count" class="cart-badge">{{ cart_count }}</span>
@@ -112,8 +115,8 @@
         <div class="modal-content fade-in">
             <button class="modal-close" onclick="closeLoginModal()">&times;</button>
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">{% trans "Бажаєте додати в кошик? 😉" %}</h2>
-                <p style="color: var(--text-muted);">{% trans "Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в особистому кабінеті та ви отримували бонуси!" %}</p>
+                <h2 id="login-modal-title" style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">{% trans "Бажаєте додати в кошик? 😉" %}</h2>
+                <p id="login-modal-desc" style="color: var(--text-muted);">{% trans "Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в особистому кабінеті та ви отримували бонуси!" %}</p>
             </div>
             <div style="display: grid; gap: 1rem;">
                 <a href="{% url 'login' %}" class="btn btn-primary hover-scale" style="width: 100%; height: 50px;">{% trans "Увійти" %}</a>
@@ -125,53 +128,6 @@
         </div>
     </div>
 
-    <style>
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 24px;
-            max-width: 450px;
-            width: 90%;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: #f5f5f5;
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover {
-            background: #eee;
-            transform: rotate(90deg);
-        }
-    </style>
 
     <script src="{% static 'js/main.js' %}"></script>
 </body>

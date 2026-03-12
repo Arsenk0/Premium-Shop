@@ -982,3 +982,21 @@ msgstr "Sneakers"
 
 msgid "Аксесуари"
 msgstr "Accessories"
+
+msgid "Ваш список бажань 💖"
+msgstr "Your Wishlist 💖"
+
+msgid "Товари, які ви зберегли."
+msgstr "Items you have saved."
+
+msgid "Ваш список бажань порожній"
+msgstr "Your wishlist is empty"
+
+msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
+msgstr "Add items you like so you don't lose them."
+
+msgid "Бажаєте додати в список бажань? 😉"
+msgstr "Want to add to your wishlist? 😉"
+
+msgid "Увійдіть або зареєструйтесь, щоб ваші улюблені товари завжди були під рукою!"
+msgstr "Log in or sign up to keep your favorite items always at hand!"

@@ -991,3 +991,21 @@ msgstr "Tenisky"
 
 msgid "Аксесуари"
 msgstr "Doplňky"
+
+msgid "Ваш список бажань 💖"
+msgstr "Váš seznam přání 💖"
+
+msgid "Товари, які ви зберегли."
+msgstr "Položky, které jste si uložili."
+
+msgid "Ваш список бажань порожній"
+msgstr "Váš seznam přání je prázdný"
+
+msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
+msgstr "Přidejte položky, které se vám líbí, abyste je neztratili."
+
+msgid "Бажаєте додати в список бажань? 😉"
+msgstr "Chcete přidat do seznamu přání? 😉"
+
+msgid "Увійдіть або зареєструйтесь, щоб ваші улюблені товари завжди були під рукою!"
+msgstr "Přihlaste se nebo se zaregistrujte, abyste měli své oblíbené položky vždy po ruce!"

@@ -4,83 +4,83 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q, Min, Max
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView
 from django.http import JsonResponse
-from .models import Category, Product, Order, OrderItem, Size, Review
+from .models import Category, Product, Order, OrderItem, Size, Review, Wishlist
 from .forms import OrderCreateForm, UserSignupForm, ReviewForm
 from .services import NovaPoshtaService, OrderService
 from .tasks import send_order_confirmation_email
 from .cart import Cart
 from django.utils.translation import gettext as _
 
-def get_cart_count(request):
-    """Fallback helper, though we can also just use len(Cart(request))."""
-    cart = Cart(request)
-    return len(cart)
+class ProductListView(ListView):
+    model = Product
+    template_name = 'store/product/list.html'
+    context_object_name = 'products'
+    paginate_by = 12
 
-
-def product_list(request, category_slug=None):
-    category = None
-    categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
-    
-    # Filtering by category
-    if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
-    
-    # Filtering by price
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    if min_price:
-        products = products.filter(price__gte=min_price)
-    if max_price:
-        products = products.filter(price__lte=max_price)
+    def get_queryset(self):
+        queryset = Product.objects.filter(available=True)
+        category_slug = self.kwargs.get('category_slug')
         
-    # Filtering by size
-    size_filter = request.GET.get('size')
-    if size_filter:
-        products = products.filter(sizes__name=size_filter)
+        if category_slug:
+            self.category = get_object_or_404(Category, slug=category_slug)
+            queryset = queryset.filter(category=self.category)
+        else:
+            self.category = None
+
+        # Filtering
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+        size_filter = self.request.GET.get('size')
         
-    # Sorting
-    sort = request.GET.get('sort')
-    if sort == 'price_asc':
-        products = products.order_by('price')
-    elif sort == 'price_desc':
-        products = products.order_by('-price')
-    elif sort == 'name_asc':
-        products = products.order_by('name')
-    elif sort == 'newest':
-        products = products.order_by('-created')
-    else:
-        products = products.order_by('-created') # Default sorting
+        if min_price:
+            queryset = queryset.filter(price__gte=min_price)
+        if max_price:
+            queryset = queryset.filter(price__lte=max_price)
+        if size_filter:
+            queryset = queryset.filter(sizes__name=size_filter)
 
-    # Pagination
-    paginator = Paginator(products, 12) # 12 products per page
-    page = request.GET.get('page')
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)
+        # Sorting
+        sort = self.request.GET.get('sort')
+        if sort == 'price_asc':
+            queryset = queryset.order_by('price')
+        elif sort == 'price_desc':
+            queryset = queryset.order_by('-price')
+        elif sort == 'name_asc':
+            queryset = queryset.order_by('name')
+        else:
+            queryset = queryset.order_by('-created')
+            
+        return queryset
 
-    # Get dynamic filter options
-    all_sizes = Size.objects.filter(products__in=Product.objects.filter(available=True)).distinct()
-    price_range = Product.objects.filter(available=True).aggregate(Min('price'), Max('price'))
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data()
+        
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return render(request, 'store/product/product_list_fragment.html', context)
+            
+        return self.render_to_response(context)
 
-    return render(request, 'store/product/list.html', {
-        'category': category,
-        'categories': categories,
-        'products': products,
-        'all_sizes': all_sizes,
-        'price_range': price_range,
-        'current_filters': {
-            'min_price': min_price,
-            'max_price': max_price,
-            'size': size_filter,
-            'sort': sort
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.category
+        context['categories'] = Category.objects.all()
+        context['all_sizes'] = Size.objects.filter(products__in=Product.objects.filter(available=True)).distinct()
+        context['price_range'] = Product.objects.filter(available=True).aggregate(Min('price'), Max('price'))
+        context['current_filters'] = {
+            'min_price': self.request.GET.get('min_price'),
+            'max_price': self.request.GET.get('max_price'),
+            'size': self.request.GET.get('size'),
+            'sort': self.request.GET.get('sort')
         }
-    })
+        if self.request.user.is_authenticated:
+            context['wishlist_product_ids'] = set(Wishlist.objects.filter(user=self.request.user).values_list('product_id', flat=True))
+        else:
+            context['wishlist_product_ids'] = set()
+        return context
 
 
 def signup(request):
@@ -101,15 +101,25 @@ def profile(request):
     return render(request, 'store/accounts/profile.html', {'orders': orders})
 
 
-def product_detail(request, id, slug):
-    product = get_object_or_404(Product, id=id, slug=slug, available=True)
-    reviews = product.reviews.all()
-    form = ReviewForm()
-    return render(request, 'store/product/detail.html', {
-        'product': product,
-        'reviews': reviews,
-        'form': form
-    })
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'store/product/detail.html'
+    context_object_name = 'product'
+    slug_url_kwarg = 'slug'
+    query_pk_and_slug = True
+
+    def get_queryset(self):
+        return Product.objects.filter(available=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['reviews'] = self.object.reviews.all()
+        context['form'] = ReviewForm()
+        if self.request.user.is_authenticated:
+            context['wishlist_product_ids'] = set(Wishlist.objects.filter(user=self.request.user).values_list('product_id', flat=True))
+        else:
+            context['wishlist_product_ids'] = set()
+        return context
 
 @login_required
 def add_review(request, product_id):
@@ -254,9 +264,51 @@ def reviews_page(request):
     reviews = Review.objects.all().order_by('-created_at')
     return render(request, 'store/reviews.html', {'reviews': reviews})
 
+
 def about(request):
     return render(request, 'store/about.html')
 
 
 def contact(request):
     return render(request, 'store/contact.html')
+
+
+def search_autocomplete(request):
+    query = request.GET.get('q', '')
+    products = Product.objects.filter(
+        Q(name__icontains=query) | Q(article__icontains=query),
+        available=True
+    )[:5]
+
+    results = []
+    for product in products:
+        results.append({
+            'name': product.name,
+            'url': product.get_absolute_url(),
+            'image': product.image.url if product.image else '/static/img/no-image.png',
+            'price': str(product.price)
+        })
+    return JsonResponse({'results': results})
+
+
+@login_required
+def toggle_wishlist(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    wishlist_item, created = Wishlist.objects.get_or_create(user=request.user, product=product)
+
+    if not created:
+        wishlist_item.delete()
+        action = 'removed'
+    else:
+        action = 'added'
+
+    return JsonResponse({'status': 'ok', 'action': action})
+
+
+class WishlistListView(LoginRequiredMixin, ListView):
+    model = Wishlist
+    template_name = 'store/wishlist.html'
+    context_object_name = 'wishlist_items'
+
+    def get_queryset(self):
+        return Wishlist.objects.filter(user=self.request.user).select_related('product')

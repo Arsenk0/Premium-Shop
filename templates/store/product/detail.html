@@ -102,10 +102,15 @@
         </div>
 
         {% if product.available %}
-        <a id="add-to-cart-btn" href="{% url 'store:cart_add' product.id %}" class="btn btn-primary hover-scale"
-            style="width: 100%; height: 60px; font-size: 1.2rem; gap: 10px; display: flex; align-items: center; justify-content: center;">
-            {% trans "Додати в кошик" %} <i class="fas fa-shopping-cart"></i>
-        </a>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <a id="add-to-cart-btn" href="{% url 'store:cart_add' product.id %}" class="btn btn-primary hover-scale"
+                style="flex-grow: 1; height: 60px; font-size: 1.2rem; gap: 10px; display: flex; align-items: center; justify-content: center;">
+                {% trans "Додати в кошик" %} <i class="fas fa-shopping-cart"></i>
+            </a>
+            <button class="btn-wishlist toggle-wishlist {% if product.id in wishlist_product_ids %}active{% endif %}" data-product-id="{{ product.id }}" style="background: white; border: 2px solid #eee; width: 60px; height: 60px; border-radius: 12px; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); transition: var(--transition); display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
         {% else %}
         <button class="btn" style="width: 100%; height: 60px; background: #ccc; cursor: not-allowed;" disabled>
             {% trans "Немає в наявності" %}

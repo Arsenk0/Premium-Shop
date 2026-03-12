@@ -1,0 +1,102 @@
+{% load static i18n %}
+
+<div class="product-list-header">
+    <h2>
+        {% if category %}
+        {% translate category.name %}
+        {% else %}
+        {% trans "Всі товари" %}
+        {% endif %}
+    </h2>
+    <p class="results-count">
+        {% if products.paginator %}
+            {% blocktrans count counter=products.paginator.count %}
+            Знайдено {{ counter }} товар
+            {% plural %}
+            Знайдено {{ counter }} товарів
+            {% endblocktrans %}
+        {% else %}
+            {% with total_count=products|length %}
+                {% blocktrans count counter=total_count %}
+                Знайдено {{ counter }} товар
+                {% plural %}
+                Знайдено {{ counter }} товарів
+                {% endblocktrans %}
+            {% endwith %}
+        {% endif %}
+    </p>
+</div>
+
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card hover-lift fade-in visible">
+        <a href="{% url 'store:product_detail' product.id product.slug %}">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+            <img src="https://via.placeholder.com/300x400" alt="No image">
+            {% endif %}
+        </a>
+        <div class="product-info">
+            <span class="product-category">
+                {% translate product.category.name %}
+            </span>
+            <h3 class="product-name">
+                <a href="{% url 'store:product_detail' product.id product.slug %}">
+                    {{ product.name }}
+                </a>
+            </h3>
+            <p style="color: grey; font-size: 0.8rem; margin-bottom: 0.5rem;">
+                {% trans "Арт:" %} {{ product.article }}
+            </p>
+            <div class="product-price-row">
+                <span class="product-price">
+                    {{ product.price }} {% trans "грн" %}
+                </span>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button class="btn-wishlist toggle-wishlist {% if product.id in wishlist_product_ids %}active{% endif %}" data-product-id="{{ product.id }}" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); transition: var(--transition);">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <a href="{% url 'store:product_detail' product.id product.slug %}" class="btn btn-primary"
+                        style="min-width: 100px; height: 40px; font-size: 0.85rem; padding: 0 1rem;">
+                        {% trans "Більше" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="empty-state">
+        <p>{% trans "Товарів не знайдено за вашими критеріями." %}</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% if products.has_other_pages %}
+<div class="pagination">
+    {% if products.has_previous %}
+    <a href="?page={{ products.previous_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}"
+        class="page-link ajax-page-link">
+        &laquo;
+    </a>
+    {% endif %}
+
+    {% for i in products.paginator.page_range %}
+    {% if products.number == i %}
+    <span class="page-link active">{{ i }}</span>
+    {% else %}
+    <a href="?page={{ i }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}"
+        class="page-link ajax-page-link">
+        {{ i }}
+    </a>
+    {% endif %}
+    {% endfor %}
+
+    {% if products.has_next %}
+    <a href="?page={{ products.next_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}"
+        class="page-link ajax-page-link">
+        &raquo;
+    </a>
+    {% endif %}
+</div>
+{% endif %}
