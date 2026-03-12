@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Premium Shop Phase 2 Loaded');
-
     // Get translated strings from body data attributes
     const body = document.body;
     const TRANSLATIONS = {
