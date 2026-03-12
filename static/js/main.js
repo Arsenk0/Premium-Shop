@@ -28,14 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Check for size selection
             const sizeInput = document.querySelector('input[name="size"]:checked');
+            const cartUrl = new URL(url, window.location.origin);
             if (sizeInput) {
-                url += `?size=${sizeInput.value}`;
+                cartUrl.searchParams.set('size', sizeInput.value);
             } else if (document.querySelector('input[name="size"]')) {
                 showToast(`⚠️ ${TRANSLATIONS.toastSelectSize}`);
                 return;
             }
 
-            fetch(url, {
+            fetch(cartUrl.toString(), {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }

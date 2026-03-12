@@ -230,19 +230,4 @@
     }
 </style>
 
-<script>
-    // Додаткова логіка для перевірки розміру перед відправкою
-    document.getElementById('add-to-cart-btn')?.addEventListener('click', function (e) {
-        const selectedSize = document.querySelector('input[name="size"]:checked');
-        if (!selectedSize) {
-            e.preventDefault();
-            const errorP = document.getElementById('size-error');
-            if (errorP) errorP.style.display = 'block';
-            document.getElementById('size-selection-area')?.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            // Додаємо вибраний розмір до URL
-            this.href = this.href.split('?')[0] + '?size=' + encodeURIComponent(selectedSize.value);
-        }
-    });
-</script>
 {% endblock %}
