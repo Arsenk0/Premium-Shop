@@ -35,18 +35,18 @@ class CartLogicTest(TestCase):
         self.client.get(reverse('store:cart_add', args=[self.product.id]))
         
         # Check count via view logic (mocking the request)
-        from .views import get_cart_count
+        from .cart import Cart
         class MockRequest:
             def __init__(self, session):
                 self.session = session
         
         mock_req = MockRequest(self.client.session)
-        self.assertEqual(get_cart_count(mock_req), 1)
+        self.assertEqual(len(Cart(mock_req)), 1)
 
         # Add another of the same product
         self.client.get(reverse('store:cart_add', args=[self.product.id]))
         mock_req.session = self.client.session
-        self.assertEqual(get_cart_count(mock_req), 2)
+        self.assertEqual(len(Cart(mock_req)), 2)
 
     def test_cart_add_without_size_fails_if_required(self):
         # Product has sizes (added in setUp via ManyToMany if needed, but let's ensure it has some)
