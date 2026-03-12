@@ -4,83 +4,308 @@
 {% block title %}{% trans "Мій кабінет" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
-        <h1>{% trans "Вітаємо," %} {{ request.user.username }}! 👋</h1>
+<div class="container fade-in premium-dashboard">
+    <!-- Header Section -->
+    <div class="dashboard-header">
+        <div class="user-info">
+            <div class="avatar-placeholder">
+                {{ request.user.username|slice:":1"|upper }}
+            </div>
+            <div>
+                <h1>{% trans "Вітаємо," %} {{ request.user.username }}! 👋</h1>
+                <p class="user-email">{{ request.user.email }}</p>
+            </div>
+        </div>
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-secondary hover-scale">{% trans "Вийти" %}</button>
+            <button type="submit" class="btn btn-outline hover-scale">{% trans "Вийти" %}</button>
         </form>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem;">
-        <!-- Profile Info -->
-        <div
-            style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow); height: fit-content;">
-            <h3 style="margin-bottom: 1.5rem;">{% trans "Ваші дані" %}</h3>
-            <p><strong>{% trans "Username:" %}</strong> {{ request.user.username }}</p>
-            <p><strong>{% trans "Email:" %}</strong> {% if request.user.email %}{{ request.user.email }}{% else %}{% trans "не вказано" %}{% endif %}</p>
-            <br>
-            <p style="color: #666; font-size: 0.9rem;">{% trans "Дані для доставки підтягуються автоматично з ваших попередніх замовлень." %}</p>
-        </div>
-
-        <!-- Order History -->
-        <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow);">
-            <h3 style="margin-bottom: 1.5rem;">{% trans "Історія замовлень" %}</h3>
-            {% if orders %}
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                {% for order in orders %}
-                <div class="order-card hover-lift"
-                    style="border: 1px solid #eee; padding: 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; transition: var(--transition);">
-                    <div>
-                        <strong style="font-size: 1.1rem;">{% trans "Замовлення #" %}{{ order.id }}</strong><br>
-                        <small style="color: #888;">{% trans "Від" %} {{ order.created|date:"d.m.Y H:i" }}</small><br> <span class="status-badge status-{{ order.status|lower }}">{{ order.get_status_display }}</span> </div> <div style="text-align: right;"> <strong style="font-size: 1.2rem;">{{ order.get_total_cost }} {% trans "грн" %}</strong>
-                    </div>
-                </div>
-                {% endfor %}
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card hover-lift">
+            <div class="stat-icon">📦</div>
+            <div class="stat-content">
+                <span class="stat-label">{% trans "Замовлення" %}</span>
+                <span class="stat-value">{{ stats.total_orders }}</span>
             </div>
-            {% else %}
-            <p style="color: #888;">{% trans "У вас поки немає замовлень." %}</p>
-            <br>
-            <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale">{% trans "Почати шопінг" %}</a>
-            {% endif %}
         </div>
+        <div class="stat-card hover-lift">
+            <div class="stat-icon">💰</div>
+            <div class="stat-content">
+                <span class="stat-label">{% trans "Витрачено" %}</span>
+                <span class="stat-value">{{ stats.total_spent }} <small>грн</small></span>
+            </div>
+        </div>
+        <div class="stat-card hover-lift">
+            <div class="stat-icon">❤️</div>
+            <div class="stat-content">
+                <span class="stat-label">{% trans "Обране" %}</span>
+                <span class="stat-value">{{ stats.wishlist_count }}</span>
+            </div>
+        </div>
+        <div class="stat-card hover-lift">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-content">
+                <span class="stat-label">{% trans "Відгуки" %}</span>
+                <span class="stat-value">{{ stats.reviews_count }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-main">
+        <!-- Sidebar: Quick Actions -->
+        <aside class="dashboard-sidebar">
+            <div class="card">
+                <h3>{% trans "Швидкі дії" %}</h3>
+                <nav class="quick-actions">
+                    <a href="{% url 'store:wishlist_list' %}" class="action-link">
+                        <span>❤️</span> {% trans "Список бажань" %}
+                    </a>
+                    <a href="#" class="action-link">
+                        <span>🔍</span> {% trans "Відстежити замовлення" %}
+                    </a>
+                    <a href="#" class="action-link">
+                        <span>👤</span> {% trans "Редагувати профіль" %}
+                    </a>
+                    <a href="#" class="action-link">
+                        <span>🔒</span> {% trans "Змінити пароль" %}
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content: Recent Activity -->
+        <main class="dashboard-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>{% trans "Остання активність" %}</h3>
+                </div>
+                {% if activities %}
+                <div class="activity-feed">
+                    {% for activity in activities %}
+                    <div class="activity-item">
+                        <div class="activity-icon">{{ activity.icon }}</div>
+                        <div class="activity-info">
+                            <div class="activity-header">
+                                <strong>{{ activity.title }}</strong>
+                                <span class="activity-date">{{ activity.date|date:"d.m.Y" }}</span>
+                            </div>
+                            <p class="activity-desc">{{ activity.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <p>{% trans "У вас поки немає активності. Почніть шопінг вже зараз!" %}</p>
+                    <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale">{% trans "Перейти до покупок" %}</a>
+                </div>
+                {% endif %}
+            </div>
+        </main>
     </div>
 </div>
 
 <style>
-    .status-badge {
-        display: inline-block;
-        padding: 0.25rem 0.75rem;
+    :root {
+        --premium-bg: #f8f9fa;
+        --card-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        --accent-color: #000;
+        --text-muted: #6c757d;
+    }
+
+    .premium-dashboard {
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .avatar-placeholder {
+        width: 64px;
+        height: 64px;
+        background: var(--accent-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .user-email {
+        color: var(--text-muted);
+        margin: 0;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 1.5rem;
         border-radius: 20px;
+        box-shadow: var(--card-shadow);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: transform 0.3s ease;
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+        background: var(--premium-bg);
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--accent-color);
+    }
+
+    /* Dashboard Layout */
+    .dashboard-main {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 2rem;
+    }
+
+    @media (max-width: 992px) {
+        .dashboard-main {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 24px;
+        box-shadow: var(--card-shadow);
+        height: 100%;
+    }
+
+    .card h3 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-size: 1.25rem;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .action-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        text-decoration: none;
+        color: #333;
+        border-radius: 12px;
+        transition: background 0.2s;
+    }
+
+    .action-link:hover {
+        background: var(--premium-bg);
+    }
+
+    /* Activity Feed */
+    .activity-feed {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .activity-item {
+        display: flex;
+        gap: 1rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .activity-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .activity-icon {
+        font-size: 1.25rem;
+        margin-top: 0.25rem;
+    }
+
+    .activity-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.25rem;
+    }
+
+    .activity-date {
         font-size: 0.8rem;
-        font-weight: 600;
-        margin-top: 0.5rem;
+        color: var(--text-muted);
     }
 
-    .status-new {
-        background: #e3f2fd;
-        color: #1976d2;
+    .activity-desc {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-muted);
     }
 
-    .status-processing {
-        background: #fff3e0;
-        color: #f57c00;
+    .empty-state {
+        text-align: center;
+        padding: 3rem 0;
+        color: var(--text-muted);
     }
 
-    .status-shipped {
-        background: #f3e5f5;
-        color: #7b1fa2;
+    .btn-outline {
+        border: 1px solid #ddd;
+        background: transparent;
+        color: #333;
     }
 
-    .status-completed {
-        background: #e8f5e9;
-        color: #388e3c;
+    .btn-outline:hover {
+        background: #f8f9fa;
+        border-color: #000;
     }
 
-    .status-canceled {
-        background: #ffebee;
-        color: #d32f2f;
+    .hover-lift:hover {
+        transform: translateY(-5px);
     }
 </style>
 {% endblock %}

@@ -10,7 +10,8 @@ from django.http import JsonResponse
 from .models import Category, Product, Order, OrderItem, Size, Review, Wishlist
 from .forms import OrderCreateForm, UserSignupForm, ReviewForm
 from .services import NovaPoshtaService, OrderService
-from .tasks import send_order_confirmation_email
+from .services import dashboard_service
+from .tasks import send_order_confirmation_email, send_welcome_email
 from .cart import Cart
 from django.utils.translation import gettext as _
 
@@ -88,6 +89,8 @@ def signup(request):
         form = UserSignupForm(request.POST)
         if form.is_valid():
             user = form.save()
+            # Trigger welcome email
+            send_welcome_email.delay(user.id)
             login(request, user, backend='store.auth_backends.EmailOrUsernameModelBackend')
             return redirect('store:product_list')
     else:
@@ -97,8 +100,12 @@ def signup(request):
 
 @login_required
 def profile(request):
-    orders = request.user.orders.all()
-    return render(request, 'store/accounts/profile.html', {'orders': orders})
+    stats = dashboard_service.get_user_dashboard_stats(request.user)
+    activities = dashboard_service.get_recent_activity(request.user)
+    return render(request, 'store/accounts/profile.html', {
+        'stats': stats,
+        'activities': activities
+    })
 
 
 class ProductDetailView(DetailView):
@@ -131,8 +138,8 @@ def add_review(request, product_id):
             review.product = product
             review.user = request.user
             review.save()
-            return redirect('store:product_detail', id=product.id, slug=product.slug)
-    return redirect('store:product_detail', id=product.id, slug=product.slug)
+            return redirect('store:product_detail', pk=product.id, slug=product.slug)
+    return redirect('store:product_detail', pk=product.id, slug=product.slug)
 
 
 def product_search(request):
@@ -155,7 +162,7 @@ def cart_add(request, product_id):
     if product.sizes.exists() and not size:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'status': 'error', 'message': _('Будь ласка, оберіть розмір!')}, status=400)
-        return redirect('store:product_detail', id=product.id, slug=product.slug)
+        return redirect('store:product_detail', pk=product.id, slug=product.slug)
 
     cart.add(product, size)
 

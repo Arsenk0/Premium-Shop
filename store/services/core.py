@@ -2,7 +2,7 @@ import requests
 import json
 import logging
 from django.conf import settings
-from .models import OrderItem
+from ..models import OrderItem
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +58,7 @@ class NovaPoshtaService:
 class OrderService:
     @staticmethod
     def create_order(cart, user, form_data):
-        from .models import Order
+        from ..models import Order
         
         # Create the order object
         order = Order(**form_data)
