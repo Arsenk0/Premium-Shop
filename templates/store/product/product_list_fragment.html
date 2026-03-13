@@ -10,17 +10,17 @@
     </h2>
     <p class="results-count">
         {% if products.paginator %}
-            {% blocktrans count counter=products.paginator.count %}
-            Знайдено {{ counter }} товар
+            {% blocktrans count counter=products.paginator.count trimmed %}
+                Found {{ counter }} product
             {% plural %}
-            Знайдено {{ counter }} товарів
+                Found {{ counter }} products
             {% endblocktrans %}
         {% else %}
             {% with total_count=products|length %}
-                {% blocktrans count counter=total_count %}
-                Знайдено {{ counter }} товар
+                {% blocktrans count counter=total_count trimmed %}
+                    Found {{ counter }} product
                 {% plural %}
-                Знайдено {{ counter }} товарів
+                    Found {{ counter }} products
                 {% endblocktrans %}
             {% endwith %}
         {% endif %}
@@ -50,16 +50,15 @@
             <p style="color: grey; font-size: 0.8rem; margin-bottom: 0.5rem;">
                 {% trans "Арт:" %} {{ product.article }}
             </p>
-            <div class="product-price-row">
+            <div class="product-price-row" style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                 <span class="product-price">
                     {{ product.price }} {% trans "грн" %}
                 </span>
-                <div style="display: flex; gap: 0.5rem; align-items: center;">
-                    <button class="btn-wishlist toggle-wishlist {% if product.id in wishlist_product_ids %}active{% endif %}" data-product-id="{{ product.id }}" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); transition: var(--transition);">
+                <div style="display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0;">
+                    <button class="btn-wishlist toggle-wishlist {% if product.id in wishlist_product_ids %}active{% endif %}" data-product-id="{{ product.id }}" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted); transition: var(--transition);">
                         <i class="fas fa-heart"></i>
                     </button>
-                    <a href="{% url 'store:product_detail' product.id product.slug %}" class="btn btn-primary"
-                        style="min-width: 100px; height: 40px; font-size: 0.85rem; padding: 0 1rem;">
+                    <a href="{% url 'store:product_detail' product.id product.slug %}" class="btn btn-primary btn-more">
                         {% trans "Більше" %}
                     </a>
                 </div>
