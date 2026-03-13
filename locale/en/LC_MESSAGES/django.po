@@ -28,9 +28,14 @@ msgstr "English"
 msgid "Czech"
 msgstr "Czech"
 
-#: store/forms.py:12
 msgid "Вкажіть вашу пошту (для відновлення пароля)"
 msgstr "Enter your email (for password recovery)"
+
+msgid "Витрачено"
+msgstr "Spent"
+
+msgid "Обране"
+msgstr "Favorites"
 
 #: store/forms.py:14
 msgid "Будь ласка, введіть вашу електронну пошту."
@@ -472,6 +477,33 @@ msgstr "My dashboard"
 #: templates/store/accounts/profile.html:9
 msgid "Вітаємо,"
 msgstr "Welcome,"
+
+msgid "Швидкі дії"
+msgstr "Quick Actions"
+
+msgid "Список бажань"
+msgstr "Wishlist"
+
+msgid "Відстежити замовлення"
+msgstr "Track Order"
+
+msgid "Редагувати профіль"
+msgstr "Edit Profile"
+
+msgid "Змінити пароль"
+msgstr "Change Password"
+
+msgid "Остання активність"
+msgstr "Recent Activity"
+
+msgid "У вас поки немає активності. Почніть шопінг вже зараз!"
+msgstr "You have no activity yet. Start shopping now!"
+
+msgid "Додано до списку бажань!"
+msgstr "Added to wishlist!"
+
+msgid "Видалено зі списку бажань"
+msgstr "Removed from wishlist"
 
 #: templates/store/accounts/profile.html:12
 msgid "Вийти"
