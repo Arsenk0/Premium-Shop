@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 14:31+0000\n"
-"PO-Revision-Date: 2026-03-06 16:00+0200\n"
+"POT-Creation-Date: 2026-03-13 11:15+0000\n"
+"PO-Revision-Date: 2026-03-13 13:35+0200\n"
 "Last-Translator: Premium Shop Team\n"
 "Language-Team: Czech\n"
 "Language: cs\n"
@@ -17,26 +17,21 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: shop_project/settings.py:121
+#: shop_project/settings.py:125
 msgid "Ukrainian"
 msgstr "Ukrajinština"
 
-#: shop_project/settings.py:122
+#: shop_project/settings.py:126
 msgid "English"
 msgstr "Angličtina"
 
-#: shop_project/settings.py:123
+#: shop_project/settings.py:127
 msgid "Czech"
 msgstr "Čeština"
 
+#: store/forms.py:12
 msgid "Вкажіть вашу пошту (для відновлення пароля)"
 msgstr "Zadejte svůj e-mail (pro obnovu hesla)"
-
-msgid "Витрачено"
-msgstr "Utraceno"
-
-msgid "Обране"
-msgstr "Oblíbené"
 
 #: store/forms.py:14
 msgid "Будь ласка, введіть вашу електронну пошту."
@@ -52,18 +47,21 @@ msgstr "Zadejte prosím uživatelské jméno."
 
 #: store/forms.py:27
 msgid "Логін може містити лише літери, цифри та символи @/./+/-/_"
-msgstr "Uživatelské jméno může obsahovat pouze písmena, číslice a znaky @/./+/-/_."
+msgstr ""
+"Přihlašovací jméno může obsahovat pouze písmena, číslice a znaky @/./+/-/_."
 
 #: store/forms.py:28
 msgid "Користувач із таким іменем вже існує. Будь ласка, оберіть інше."
-msgstr "Uživatel s tímto uživatelským jménem již existuje. Vyberte prosím jiné."
+msgstr ""
+"Uživatel s tímto jménem již existuje. Vyberte prosím jiné."
 
 #: store/forms.py:34
 msgid "Логін повинен містити щонайменше 3 символи."
 msgstr "Uživatelské jméno musí obsahovat alespoň 3 znaky."
 
 #: store/forms.py:41
-msgid "Цей email вже використовується в системі. Можливо, ви вже зареєстровані?"
+msgid ""
+"Цей email вже використовується в системі. Можливо, ви вже зареєстровані?"
 msgstr "Tento e-mail se již v systému používá. Možná jste již zaregistrováni?"
 
 #: store/forms.py:50
@@ -72,7 +70,7 @@ msgstr "Hesla se neshodují. Zkontrolujte prosím zadané údaje."
 
 #: store/forms.py:55
 msgid "Неправильний логін або пароль. Спробуйте ще раз."
-msgstr "Neplatné uživatelské jméno nebo heslo. Zkuste to prosím znovu."
+msgstr "Nesprávné uživatelské jméno nebo heslo. Zkuste to prosím znovu."
 
 #: store/forms.py:56
 msgid "Цей акаунт деактивовано. Зверніться до служби підтримки."
@@ -83,10 +81,12 @@ msgid "Будь ласка, введіть логін та пароль."
 msgstr "Zadejte prosím uživatelské jméno a heslo."
 
 #: store/forms.py:74
-msgid "Номер телефону повинен бути у форматі: '+380999999999'. Від 9 до 15 цифр."
-msgstr "Telefonní číslo musí být ve formátu: '+380999999999'. Od 9 do 15 číslic."
+msgid ""
+"Номер телефону повинен бути у форматі: '+380999999999'. Від 9 до 15 цифр."
+msgstr ""
+"Telefonní číslo musí být ve formátu: '+380999999999'. Od 9 do 15 číslic."
 
-#: store/forms.py:84 store/models.py:99
+#: store/forms.py:84 store/models.py:104
 msgid "Дзвінок по телефону"
 msgstr "Telefonní hovor"
 
@@ -107,8 +107,12 @@ msgid "Почніть вводити місто..."
 msgstr "Začněte psát město..."
 
 #: store/forms.py:102
-msgid "Вкажіть ваш Instagram або Telegram. Якщо ви обрали \"Дзвінок\", це поле можна залишити порожнім."
-msgstr "Zadejte svůj Instagram nebo Telegram. Pokud jste zvolili \"Telefonní hovor\", toto pole můžete nechat prázdné."
+msgid ""
+"Вкажіть ваш Instagram або Telegram. Якщо ви обрали \"Дзвінок\", це поле "
+"можна залишити порожнім."
+msgstr ""
+"Zadejte svůj Instagram nebo Telegram. Pokud jste zvolili \"Telefonní "
+"hovor\", můžete toto pole nechat prázdné."
 
 #: store/forms.py:108
 msgid "Ім'я занадто коротке"
@@ -133,7 +137,7 @@ msgstr "Vyberte prosím pobočku"
 #: store/forms.py:149
 #, python-format
 msgid "Для %(method)s нікнейм зазвичай починається з @"
-msgstr "Pro %(method)s přezdívka obvykle začíná @"
+msgstr "Pro %(method)s přezdívka obvykle začíná na @"
 
 #: store/forms.py:161
 msgid "Ваш відгук..."
@@ -159,171 +163,207 @@ msgstr "Oblečení"
 msgid "Тип"
 msgstr "Typ"
 
-#: store/models.py:32 store/models.py:134 templates/store/product/list.html:98
+#: store/models.py:30
+msgid "Порядок сортування"
+msgstr "Pořadí řazení"
+
+#: store/models.py:33 store/models.py:139 templates/store/product/list.html:97
 msgid "Розмір"
 msgstr "Velikost"
 
-#: store/models.py:33
+#: store/models.py:34
 msgid "Розміри"
 msgstr "Velikosti"
 
-#: store/models.py:42
+#: store/models.py:43
 msgid "Article/SKU"
 msgstr "Article/SKU"
 
-#: store/models.py:47
+#: store/models.py:48
 msgid "Доступні розміри"
 msgstr "Dostupné velikosti"
 
-#: store/models.py:54 templates/store/cart/detail.html:15
+#: store/models.py:55 templates/store/cart/detail.html:15
 msgid "Товар"
 msgstr "Produkt"
 
-#: store/models.py:55
+#: store/models.py:56
 msgid "Товари"
 msgstr "Produkty"
 
-#: store/models.py:72
+#: store/models.py:77
 msgid "Зображення товару"
 msgstr "Obrázek produktu"
 
-#: store/models.py:73
+#: store/models.py:78
 msgid "Зображення товарів"
 msgstr "Obrázky produktů"
 
-#: store/models.py:78 store/models.py:94
+#: store/models.py:83 store/models.py:99
 msgid "Телефон"
 msgstr "Telefon"
 
-#: store/models.py:79
+#: store/models.py:84
 msgid "Нікнейм"
 msgstr "Přezdívka"
 
-#: store/models.py:80 store/models.py:101
+#: store/models.py:85 store/models.py:106
 msgid "Місто"
 msgstr "Město"
 
-#: store/models.py:82 store/models.py:103
+#: store/models.py:87 store/models.py:108
 msgid "Відділення"
 msgstr "Pobočka"
 
-#: store/models.py:86
+#: store/models.py:91
 msgid "Профіль"
 msgstr "Profil"
 
-#: store/models.py:91
+#: store/models.py:96
 msgid "Користувач"
 msgstr "Uživatel"
 
-#: store/models.py:92 templates/store/order/create.html:35
+#: store/models.py:97 templates/store/order/create.html:35
 msgid "Ім'я"
 msgstr "Jméno"
 
-#: store/models.py:93 templates/store/order/create.html:43
+#: store/models.py:98 templates/store/order/create.html:44
 msgid "Прізвище"
 msgstr "Příjmení"
 
-#: store/models.py:95
+#: store/models.py:100
 msgid "Ваш нікнейм / Номер"
 msgstr "Vaše přezdívka / Číslo"
 
-#: store/models.py:100
+#: store/models.py:105
 msgid "Спосіб зв'язку"
 msgstr "Způsob kontaktu"
 
-#: store/models.py:102
+#: store/models.py:107
 msgid "Ref міста"
-msgstr "Město Ref"
+msgstr "Ref města"
 
-#: store/models.py:104
+#: store/models.py:109
 msgid "Ref відділення"
-msgstr "Sklad Ref"
+msgstr "Ref pobočky"
 
-#: store/models.py:105
+#: store/models.py:110 templates/store/order/create.html:65
 msgid "Email"
 msgstr "E-mail"
 
-#: store/models.py:106
+#: store/models.py:111
 msgid "Створено"
 msgstr "Vytvořeno"
 
-#: store/models.py:107
+#: store/models.py:112
 msgid "Оновлено"
 msgstr "Aktualizováno"
 
-#: store/models.py:108
+#: store/models.py:113
 msgid "Оплачено"
 msgstr "Zaplaceno"
 
-#: store/models.py:110
+#: store/models.py:115
 msgid "Нове"
 msgstr "Nové"
 
-#: store/models.py:111
+#: store/models.py:116
 msgid "В обробці"
 msgstr "Zpracovává se"
 
-#: store/models.py:112
+#: store/models.py:117
 msgid "Відправлено"
 msgstr "Odesláno"
 
-#: store/models.py:113
+#: store/models.py:118
 msgid "Виконано"
-msgstr "Dokončeno"
+msgstr "Vyřízeno"
 
-#: store/models.py:114
+#: store/models.py:119
 msgid "Скасовано"
 msgstr "Zrušeno"
 
-#: store/models.py:115
+#: store/models.py:120 store/services/dashboard_service.py:39
 msgid "Статус"
 msgstr "Stav"
 
-#: store/models.py:119 store/models.py:120
+#: store/models.py:124 store/models.py:125
+#: store/services/dashboard_service.py:38
+#: templates/store/accounts/profile.html:30
 msgid "Замовлення"
 msgstr "Objednávky"
 
-#: store/models.py:139
+#: store/models.py:144
 #, python-format
 msgid "Будь ласка, оберіть розмір для товару %(product)s"
 msgstr "Vyberte prosím velikost pro produkt %(product)s"
 
-#: store/models.py:146
+#: store/models.py:151
 msgid "Рейтинг"
 msgstr "Hodnocení"
 
-#: store/models.py:147
+#: store/models.py:152
 msgid "Коментар"
 msgstr "Komentář"
 
-#: store/models.py:148
+#: store/models.py:153
 msgid "Дата"
 msgstr "Datum"
 
-#: store/models.py:152
+#: store/models.py:157
 msgid "Відгук"
 msgstr "Recenze"
 
-#: store/models.py:153 templates/base.html:36 templates/base.html:90
+#: store/models.py:158 templates/base.html:40 templates/base.html:95
+#: templates/store/accounts/profile.html:51
 msgid "Відгуки"
 msgstr "Recenze"
 
-#: store/models.py:156
+#: store/models.py:161
 msgid "Відгук від"
 msgstr "Recenze od"
 
-#: store/models.py:156 templates/store/reviews.html:21
+#: store/models.py:161 templates/store/reviews.html:21
 msgid "на"
 msgstr "na"
 
-#: store/views.py:147 templates/base.html:28
+#: store/models.py:170 templates/base.html:69
+#: templates/store/accounts/profile.html:64 templates/store/wishlist.html:4
+msgid "Список бажань"
+msgstr "Seznam přání"
+
+#: store/models.py:171
+msgid "Списки бажань"
+msgstr "Seznamy přání"
+
+#: store/services/dashboard_service.py:49
+msgid "Відгук на"
+msgstr "Recenze na"
+
+#: store/services/dashboard_service.py:50
+msgid "Оцінка:"
+msgstr "Hodnocení:"
+
+#: store/services/dashboard_service.py:60
+msgid "Додано в обране:"
+msgstr "Přidáno do oblíbených:"
+
+#: store/services/dashboard_service.py:61
+msgid "Будемо чекати на ваше замовлення!"
+msgstr "Těšíme se na vaši objednávku!"
+
+#: store/views.py:169 templates/base.html:26
 #: templates/store/product/detail.html:84
 msgid "Будь ласка, оберіть розмір!"
 msgstr "Vyberte prosím velikost!"
 
 #: templates/base.html:10
-msgid "Premium Shop - найкращий стрітвір та кросівки в Україні. Тільки оригінальна якість та преміальний сервіс."
-msgstr "Premium Shop - nejlepší streetwear a tenisky na Ukrajině. Pouze originální kvalita a prémiový servis."
+msgid ""
+"Premium Shop - найкращий стрітвір та кросівки в Україні. Тільки оригінальна "
+"якість та преміальний сервіс."
+msgstr ""
+"Premium Shop - nejlepší streetwear a tenisky na Ukrajině. Pouze originální "
+"kvalita a prémiový servis."
 
 #: templates/base.html:11
 msgid "кросівки, стрітвір, одяг, Україна, купити кросівки, premium shop"
@@ -337,85 +377,112 @@ msgstr "Premium Shop - Váš styl"
 msgid "Найкращий вибір преміального одягу та взуття."
 msgstr "Nejlepší výběr prémiového oblečení a obuvi."
 
-#: templates/base.html:27
+#: templates/base.html:25
 msgid "Додано до кошика!"
 msgstr "Přidáno do košíku!"
 
-#: templates/base.html:27
+#: templates/base.html:25
 msgid "Халепа, щось пішло не так!"
-msgstr "Ups, něco se pokazilo!"
+msgstr "Jejda, něco se nepovedlo!"
 
-#: templates/base.html:28 templates/store/order/create.html:282
+#: templates/base.html:26 templates/store/order/create.html:282
 msgid "Завантаження..."
 msgstr "Načítání..."
 
-#: templates/base.html:29 templates/store/order/create.html:291
+#: templates/base.html:27 templates/store/order/create.html:291
 msgid "Оберіть відділення"
 msgstr "Vyberte pobočku"
 
-#: templates/base.html:29
+#: templates/base.html:27
 msgid "Відділень не знайдено"
 msgstr "Žádné pobočky nenalezeny"
 
-#: templates/base.html:35 templates/base.html:89
-msgid "Про нас"
-msgstr "O nás"
+#: templates/base.html:28
+msgid "Додано до списку бажань!"
+msgstr "Přidáno do seznamu přání!"
 
-#: templates/base.html:37 templates/base.html:91
-msgid "Контакти"
-msgstr "Kontakty"
+#: templates/base.html:29
+msgid "Видалено зі списку бажань"
+msgstr "Odstraněno ze seznamu přání"
 
-#: templates/base.html:39
-msgid "Пошук..."
-msgstr "Hledat..."
+#: templates/base.html:30
+msgid "Бажаєте додати в список бажань? 😉"
+msgstr "Chcete přidat do seznamu přání? 😉"
 
-#: templates/base.html:43
-msgid "Кабінет"
-msgstr "Účet"
+#: templates/base.html:31
+msgid ""
+"Увійдіть або зареєструйтесь, щоб ваші улюблені товари завжди були під рукою!"
+msgstr ""
+"Přihlaste se nebo se zaregistrujte, abyste měli své oblíbené kousky vždy po "
+"ruce!"
 
-#: templates/base.html:45 templates/registration/login.html:4
-msgid "Вхід"
-msgstr "Přihlášení"
-
-#: templates/base.html:46 templates/store/accounts/signup.html:4
-msgid "Реєстрація"
-msgstr "Registrace"
-
-#: templates/base.html:84
-msgid "Найкращий стрітвір та кросівки в Україні. Тільки оригінальна якість та преміальний сервіс."
-msgstr "Nejlepší streetwear a tenisky na Ukrajině. Pouze originální kvalita a prémiový servis."
-
-#: templates/base.html:87
-msgid "Навігація"
-msgstr "Navigace"
-
-#: templates/base.html:96
-msgid "Соцмережі"
-msgstr "Sociální sítě"
-
-#: templates/base.html:106
-msgid "Всі права захищені."
-msgstr "Všechna práva vyhrazena."
-
-#: templates/base.html:115
+#: templates/base.html:32 templates/base.html:120
 msgid "Бажаєте додати в кошик? 😉"
 msgstr "Chcete přidat do košíku? 😉"
 
-#: templates/base.html:116
-msgid "Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в особистому кабінеті та ви отримували бонуси!"
-msgstr "Přihlaste se nebo se zaregistrujte, aby se vaše položky uložily ve vašem účtu a získávali jste bonusy!"
+#: templates/base.html:33 templates/base.html:121
+msgid ""
+"Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в особистому "
+"кабінеті та ви отримували бонуси!"
+msgstr ""
+"Přihlaste se nebo se zaregistrujte, aby se vaše zboží uložilo na účtu "
+"a mohli jste získávat bonusy!"
 
-#: templates/base.html:119 templates/registration/login.html:39
+#: templates/base.html:39 templates/base.html:94
+msgid "Про нас"
+msgstr "O nás"
+
+#: templates/base.html:41 templates/base.html:96
+msgid "Контакти"
+msgstr "Kontakty"
+
+#: templates/base.html:43
+msgid "Пошук..."
+msgstr "Hledat..."
+
+#: templates/base.html:47
+msgid "Кабінет"
+msgstr "Můj účet"
+
+#: templates/base.html:49 templates/registration/login.html:4
+msgid "Вхід"
+msgstr "Přihlášení"
+
+#: templates/base.html:50 templates/store/accounts/signup.html:4
+msgid "Реєстрація"
+msgstr "Registrace"
+
+#: templates/base.html:89
+msgid ""
+"Найкращий стрітвір та кросівки в Україні. Тільки оригінальна якість та "
+"преміальний сервіс."
+msgstr ""
+"Nejlepší streetwear a tenisky na Ukrajině. Pouze originální kvalita a "
+"prémiový servis."
+
+#: templates/base.html:92
+msgid "Навігація"
+msgstr "Navigace"
+
+#: templates/base.html:101
+msgid "Соцмережі"
+msgstr "Sociální sítě"
+
+#: templates/base.html:111
+msgid "Всі права захищені."
+msgstr "Všechna práva vyhrazena."
+
+#: templates/base.html:124 templates/registration/login.html:39
 #: templates/store/accounts/signup.html:175
 msgid "Увійти"
 msgstr "Přihlásit se"
 
-#: templates/base.html:121 templates/registration/login.html:61
-#: templates/store/accounts/signup.html:65 templates/store/welcome.html:21
+#: templates/base.html:126 templates/registration/login.html:61
+#: templates/store/accounts/signup.html:65
 msgid "Зареєструватися"
 msgstr "Zaregistrovat se"
 
-#: templates/base.html:123
+#: templates/base.html:128
 msgid "Продовжити як гість"
 msgstr "Pokračovat jako host"
 
@@ -439,9 +506,19 @@ msgstr "Nemáte účet?"
 msgid "Про нас - PREMIUM SHOP"
 msgstr "O nás - PREMIUM SHOP"
 
+#: templates/store/about.html:8
+msgid "Про"
+msgstr "O"
+
 #: templates/store/about.html:13
-msgid "Ми — команда фанатів вуличної моди, які вірять, що одяг — це не просто речі, а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок та худі, щоб ви отримували лише найкращу якість та найсвіжіші релізи."
-msgstr "Jsme tým fanoušků pouličního oblečení, kteří věří, že oblečení není jen o věcech, ale o sebevyjádření. Pečlivě vybíráme každý model tenisek a mikiny, abyste dostali jen tu nejlepší kvalitu a nejčerstvější novinky."
+msgid ""
+"Ми — команда фанатів вуличної моди, які вірять, що одяг — це не просто речі, "
+"а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок та "
+"худі, щоб ви отримували лише найкращу якість та найсвіжіші релізи."
+msgstr ""
+"Jsme tým fanoušků pouliční módy, kteří věří, že oblečení nejsou jen "
+"věci, ale způsob sebevyjádření. Pečlivě vybíráme každý model tenisek a mikin, "
+"abyste dostali jen tu nejlepší kvalitu a nejčerstvější novinky."
 
 #: templates/store/about.html:16
 msgid "Наші цінності:"
@@ -461,7 +538,7 @@ msgstr "Rychlý servis"
 
 #: templates/store/about.html:24
 msgid "менеджер зв'яжеться з вами протягом 15 хвилин."
-msgstr "manažer vás kontaktuje do 15 minut."
+msgstr "manažer vás bude kontaktovat do 15 minut."
 
 #: templates/store/about.html:28
 msgid "Стиль понад усе"
@@ -475,88 +552,58 @@ msgstr "jsme vždy informováni o nejnovějších trendech."
 msgid "Мій кабінет"
 msgstr "Můj účet"
 
-#: templates/store/accounts/profile.html:9
+#: templates/store/accounts/profile.html:15
 msgid "Вітаємо,"
 msgstr "Vítejte,"
 
-msgid "Швидкі дії"
-msgstr "Rychlé akce"
-
-msgid "Список бажань"
-msgstr "Seznam přání"
-
-msgid "Відстежити замовлення"
-msgstr "Sledovat objednávku"
-
-msgid "Редагувати профіль"
-msgstr "Upravit profil"
-
-msgid "Змінити пароль"
-msgstr "Změnit heslo"
-
-msgid "Остання активність"
-msgstr "Poslední aktivita"
-
-msgid "У вас поки немає активності. Почніть шопінг вже зараз!"
-msgstr "Zatím nemáte žádnou aktivitu. Začněte nakupovat právě teď!"
-
-msgid "Додано до списку бажань!"
-msgstr "Přidáno do seznamu přání!"
-
-msgid "Видалено зі списку бажань"
-msgstr "Odstraněno ze seznamu přání"
-
-#: templates/store/accounts/profile.html:12
+#: templates/store/accounts/profile.html:21
 msgid "Вийти"
 msgstr "Odhlásit se"
 
-#: templates/store/accounts/profile.html:20
-msgid "Ваші дані"
-msgstr "Vaše údaje"
-
-#: templates/store/accounts/profile.html:21
-msgid "Username:"
-msgstr "Uživatelské jméno:"
-
-#: templates/store/accounts/profile.html:22
-msgid "Email:"
-msgstr "E-mail:"
-
-#: templates/store/accounts/profile.html:22
-msgid "не вказано"
-msgstr "neuvedeno"
-
-#: templates/store/accounts/profile.html:24
-msgid "Дані для доставки підтягуються автоматично з ваших попередніх замовлень."
-msgstr "Údaje pro doručení se automaticky načítají z vašich předchozích objednávek."
-
-#: templates/store/accounts/profile.html:29
-msgid "Історія замовлень"
-msgstr "Historie objednávek"
-
-#: templates/store/accounts/profile.html:36
-msgid "Замовлення #"
-msgstr "Objednávka #"
-
 #: templates/store/accounts/profile.html:37
-#: templates/store/product/list.html:87
-msgid "Від"
-msgstr "Od"
+msgid "Витрачено"
+msgstr "Utraceno"
 
-#: templates/store/accounts/profile.html:37 templates/store/cart/detail.html:40
+#: templates/store/accounts/profile.html:38 templates/store/cart/detail.html:40
 #: templates/store/cart/detail.html:41 templates/store/cart/detail.html:55
-#: templates/store/product/detail.html:56 templates/store/product/list.html:194
-#: templates/store/product/search.html:27
+#: templates/store/product/detail.html:56
+#: templates/store/product/product_list_fragment.html:55
+#: templates/store/product/search.html:28
 msgid "грн"
 msgstr "Kč"
 
-#: templates/store/accounts/profile.html:43
-msgid "У вас поки немає замовлень."
-msgstr "Zatím nemáte žádné objednávky."
+#: templates/store/accounts/profile.html:44
+msgid "Обране"
+msgstr "Oblíbené"
 
-#: templates/store/accounts/profile.html:45
-msgid "Почати шопінг"
-msgstr "Začít nakupovat"
+#: templates/store/accounts/profile.html:61
+msgid "Швидкі дії"
+msgstr "Rychlé akce"
+
+#: templates/store/accounts/profile.html:67
+msgid "Відстежити замовлення"
+msgstr "Sledovat objednávku"
+
+#: templates/store/accounts/profile.html:70
+msgid "Редагувати профіль"
+msgstr "Upravit profil"
+
+#: templates/store/accounts/profile.html:73
+msgid "Змінити пароль"
+msgstr "Změnit heslo"
+
+#: templates/store/accounts/profile.html:83
+msgid "Остання активність"
+msgstr "Poslední aktivita"
+
+#: templates/store/accounts/profile.html:102
+msgid "У вас поки немає активності. Почніть шопінг вже зараз!"
+msgstr "Zatím nemáte žádnou aktivitu. Začněte nakupovat právě teď!"
+
+#: templates/store/accounts/profile.html:103
+#: templates/store/cart/detail.html:65 templates/store/wishlist.html:47
+msgid "Перейти до покупок"
+msgstr "Přejít k nakupování"
 
 #: templates/store/accounts/signup.html:9
 msgid "Створити аккаунт"
@@ -568,7 +615,7 @@ msgstr "Silné heslo obsahuje:"
 
 #: templates/store/accounts/signup.html:42
 msgid "Від 8 символів"
-msgstr "8+ znaků"
+msgstr "8 a více znaků"
 
 #: templates/store/accounts/signup.html:45
 msgid "Літери"
@@ -607,8 +654,9 @@ msgstr "Celkem"
 msgid "Дія"
 msgstr "Akce"
 
-#: templates/store/cart/detail.html:32 templates/store/product/list.html:188
-#: templates/store/product/search.html:25
+#: templates/store/cart/detail.html:32
+#: templates/store/product/product_list_fragment.html:51
+#: templates/store/product/search.html:26
 msgid "Арт:"
 msgstr "SKU:"
 
@@ -618,7 +666,7 @@ msgstr "Velikost:"
 
 #: templates/store/cart/detail.html:46
 msgid "Видалити"
-msgstr "Smazat"
+msgstr "Odstranit"
 
 #: templates/store/cart/detail.html:55
 msgid "Разом:"
@@ -635,10 +683,6 @@ msgstr "Pokladna"
 #: templates/store/cart/detail.html:63
 msgid "Ваш кошик порожній."
 msgstr "Váš košík je prázdný."
-
-#: templates/store/cart/detail.html:65
-msgid "Перейти до покупок"
-msgstr "Přejít k nakupování"
 
 #: templates/store/contact.html:4
 msgid "Контакти - PREMIUM SHOP"
@@ -690,7 +734,7 @@ msgstr "Telefon:"
 
 #: templates/store/order/create.html:4
 msgid "Оформлення замовлення"
-msgstr "Zpracování objednávky"
+msgstr "Dokončení objednávky"
 
 #: templates/store/order/create.html:9
 msgid "Оформлення"
@@ -698,43 +742,47 @@ msgstr "Pokladna"
 
 #: templates/store/order/create.html:10
 msgid "Заповніть дані для доставки"
-msgstr "Vyplňte údaje pro doručení"
+msgstr "Vyplňte dodací údaje"
 
 #: templates/store/order/create.html:20
-msgid "Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують вашої уваги."
-msgstr "Zkontrolujte prosím správnost zadání. Některé údaje vyžadují vaši pozornost."
+msgid ""
+"Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують "
+"вашої уваги."
+msgstr ""
+"Zkontrolujte prosím správnost vyplněných polí. Některé údaje vyžadují vaši "
+"pozornost."
 
-#: templates/store/order/create.html:53
+#: templates/store/order/create.html:56
 msgid "Номер телефону"
 msgstr "Telefonní číslo"
 
-#: templates/store/order/create.html:60
-msgid "Email (для підтвердження)"
-msgstr "E-mail (pro potvrzení)"
-
-#: templates/store/order/create.html:69
+#: templates/store/order/create.html:76
 msgid "Як з вами зручніше зв'язатися?"
 msgstr "Jak vás máme kontaktovat?"
 
-#: templates/store/order/create.html:92
+#: templates/order/create.html:99
 msgid "Ваш нікнейм або номер (ми напишемо вам сюди)"
 msgstr "Vaše přezdívka nebo číslo (sem vám napíšeme)"
 
-#: templates/store/order/create.html:99
+#: templates/store/order/create.html:104
 msgid "Наприклад: @nickname або номер телефону для WhatsApp"
 msgstr "Například: @nickname nebo telefonní číslo pro WhatsApp"
 
-#: templates/store/order/create.html:104
+#: templates/store/order/create.html:109
 msgid "Місто доставки"
 msgstr "Město doručení"
 
-#: templates/store/order/create.html:115
-msgid "Відділення Нової Пошти"
-msgstr "Pobočka Nova Poshta"
-
 #: templates/store/order/create.html:118
+msgid "Відділення Нової Пошти"
+msgstr "Pobočka Nové pošty"
+
+#: templates/store/order/create.html:121
 msgid "Спочатку оберіть місто"
 msgstr "Nejprve vyberte město"
+
+#: templates/store/order/create.html:128
+msgid "Завантаження відділень..."
+msgstr "Načítání poboček..."
 
 #: templates/store/order/create.html:134
 msgid "Підтвердити замовлення"
@@ -746,7 +794,7 @@ msgstr "Chyba načítání"
 
 #: templates/store/order/success.html:4
 msgid "Замовлення підтверджено!"
-msgstr "Objednávka potvrzena!"
+msgstr "Objednávka byla potvrzena!"
 
 #: templates/store/order/success.html:10
 msgid "Дякуємо за замовлення!"
@@ -754,8 +802,14 @@ msgstr "Děkujeme za vaši objednávku!"
 
 #: templates/store/order/success.html:12
 #, python-format
-msgid "Ваше замовлення <strong>#%(order_id)s</strong> успішно прийнято в обробку. Ми зв'яжемося з вами через <strong>%(contact_method)s</strong> найближчим часом."
-msgstr "Vaše objednávka <strong>#%(order_id)s</strong> byla úspěšně přijata ke zpracování. Budeme vás kontaktovat prostřednictvím <strong>%(contact_method)s</strong> co nejdříve."
+msgid ""
+"Ваше замовлення <strong>#%(order_id)s</strong> успішно прийнято в обробку. "
+"Ми зв'яжемося з вами через <strong>%(contact_method)s</strong> найближчим "
+"часом."
+msgstr ""
+"Vaše objednávka <strong>#%(order_id)s</strong> byla úspěšně přijata ke "
+"zpracování. Budeme vás co nejdříve kontaktovat prostřednictvím "
+"<strong>%(contact_method)s</strong>."
 
 #: templates/store/order/success.html:16
 msgid "Деталі доставки:"
@@ -775,7 +829,7 @@ msgstr "Pobočka:"
 
 #: templates/store/order/success.html:24
 msgid "Повернутися до каталогу"
-msgstr "Návrat do katalogu"
+msgstr "Zpět do katalogu"
 
 #: templates/store/order/success.html:27
 msgid "Виникли питання? Напишіть нам у підтримку."
@@ -794,9 +848,9 @@ msgid "відгуків"
 msgstr "recenzí"
 
 #: templates/store/product/detail.html:67
-#: templates/store/product/detail.html:147
+#: templates/store/product/detail.html:152
 msgid "Залишити відгук"
-msgstr "Zanechat recenzi"
+msgstr "Napsat recenzi"
 
 #: templates/store/product/detail.html:73
 msgid "Оберіть розмір"
@@ -819,47 +873,47 @@ msgid "шт."
 msgstr "ks."
 
 #: templates/store/product/detail.html:99
-#: templates/store/product/detail.html:111
+#: templates/store/product/detail.html:116
 msgid "Немає в наявності"
 msgstr "Není skladem"
 
-#: templates/store/product/detail.html:107
+#: templates/store/product/detail.html:108
 msgid "Додати в кошик"
 msgstr "Přidat do košíku"
 
-#: templates/store/product/detail.html:121
+#: templates/store/product/detail.html:126
 msgid "Відгуки покупців"
 msgstr "Hodnocení zákazníků"
 
-#: templates/store/product/detail.html:141
+#: templates/store/product/detail.html:146
 msgid "Відгуків поки немає. Будьте першим!"
 msgstr "Zatím žádné recenze. Buďte první!"
 
-#: templates/store/product/detail.html:152
+#: templates/store/product/detail.html:157
 msgid "Ваша оцінка"
 msgstr "Vaše hodnocení"
 
-#: templates/store/product/detail.html:156
+#: templates/store/product/detail.html:161
 msgid "Ваш коментар"
 msgstr "Váš komentář"
 
-#: templates/store/product/detail.html:160
+#: templates/store/product/detail.html:165
 msgid "Надіслати відгук"
 msgstr "Odeslat recenzi"
 
-#: templates/store/product/detail.html:165
+#: templates/store/product/detail.html:170
 msgid "Для того, щоб залишити відгук, будь ласка,"
 msgstr "Chcete-li zanechat recenzi, prosím"
 
-#: templates/store/product/detail.html:167
+#: templates/store/product/detail.html:172
 msgid "увійдіть"
 msgstr "přihlaste se"
 
-#: templates/store/product/detail.html:169
+#: templates/store/product/detail.html:174
 msgid "або"
 msgstr "nebo"
 
-#: templates/store/product/detail.html:171
+#: templates/store/product/detail.html:176
 msgid "зареєструйтесь"
 msgstr "zaregistrujte se"
 
@@ -873,7 +927,7 @@ msgstr "Nová kolekce 2026"
 
 #: templates/store/product/list.html:16
 msgid "Знайди свій ідеальний стиль сьогодні"
-msgstr "Najděte svůj dokonalý styl dnes"
+msgstr "Najděte svůj dokonalý styl ještě dnes"
 
 #: templates/store/product/list.html:18
 msgid "Купувати зараз"
@@ -885,21 +939,22 @@ msgstr "Třídění"
 
 #: templates/store/product/list.html:43
 msgid "Новинки"
-msgstr "Novinky"
+msgstr "Nejnovější"
 
 #: templates/store/product/list.html:47
 msgid "Найдешевші"
-msgstr "Nejlevnější"
+msgstr "Od nejlevnějšího"
 
 #: templates/store/product/list.html:51
 msgid "Найдорожчі"
-msgstr "Nejdražší"
+msgstr "Od nejdražšího"
 
 #: templates/store/product/list.html:55
 msgid "За назвою (А-Я)"
 msgstr "Podle názvu (A-Z)"
 
 #: templates/store/product/list.html:68
+#: templates/store/product/product_list_fragment.html:8
 msgid "Всі товари"
 msgstr "Všechny produkty"
 
@@ -907,18 +962,23 @@ msgstr "Všechny produkty"
 msgid "Ціна (грн)"
 msgstr "Cena (Kč)"
 
+#: templates/store/product/list.html:87
+msgid "Від"
+msgstr "Od"
+
 #: templates/store/product/list.html:90
 msgid "До"
 msgstr "Do"
 
+#: templates/store/product/list.html:118
 msgid "Тільки в наявності"
 msgstr "Pouze skladem"
 
-#: templates/store/product/list.html:121
+#: templates/store/product/list.html:125
 msgid "Застосувати"
 msgstr "Použít"
 
-#: templates/store/product/list.html:127
+#: templates/store/product/list.html:131
 msgid "Очистити"
 msgstr "Vyčistit"
 
@@ -932,13 +992,14 @@ msgstr[1] "Nalezeny %(counter)s produkty"
 msgstr[2] "Nalezeno %(counter)s produktů"
 msgstr[3] "Nalezeno %(counter)s produktů"
 
-#: templates/store/product/list.html:199 templates/store/product/search.html:30
+#: templates/store/product/product_list_fragment.html:62
+#: templates/store/product/search.html:31
 msgid "Більше"
 msgstr "Více"
 
-#: templates/store/product/list.html:211
+#: templates/store/product/product_list_fragment.html:70
 msgid "Товарів не знайдено за вашими критеріями."
-msgstr "Pro vaše kritéria nebyly nalezeny žádné produkty."
+msgstr "Podle vašich kritérií nebyly nalezeny žádné produkty."
 
 #: templates/store/product/search.html:4
 msgid "Пошук"
@@ -948,11 +1009,11 @@ msgstr "Hledání"
 msgid "Результати пошуку для"
 msgstr "Výsledky hledání pro"
 
-#: templates/store/product/search.html:38
+#: templates/store/product/search.html:39
 msgid "Нічого не знайдено за вашим запитом."
 msgstr "Pro váš dotaz nebylo nic nalezeno."
 
-#: templates/store/product/search.html:39 templates/store/reviews.html:42
+#: templates/store/product/search.html:40 templates/store/reviews.html:42
 msgid "До каталогу"
 msgstr "Do katalogu"
 
@@ -973,34 +1034,84 @@ msgid "Ми цінуємо кожного клієнта та ваш фідбе�
 msgstr "Vážíme si každého zákazníka a vaší zpětné vazby"
 
 #: templates/store/reviews.html:40
-msgid "Тут поки порожньо. Станьте першим, хто залишить відгук на один із наших товарів!"
-msgstr "Zde je zatím prázdno. Buďte první, kdo zanechá recenzi na jeden z našich produktů!"
+msgid ""
+"Тут поки порожньо. Станьте першим, хто залишить відгук на один із наших "
+"товарів!"
+msgstr ""
+"Zatím tu je prázdno. Buďte první, kdo zanechá recenzi na jeden z našich "
+"produktů!"
 
-#: templates/store/welcome.html:4
+#: templates/store/wishlist.html:9
+msgid "Ваш список бажань 💖"
+msgstr "Váš seznam přání 💖"
+
+#: templates/store/wishlist.html:10
+msgid "Товари, які ви зберегли."
+msgstr "Položky, které jste si uložili."
+
+#: templates/store/wishlist.html:45
+msgid "Ваш список бажань порожній"
+msgstr "Váš seznam přání je prázdný"
+
+#: templates/store/wishlist.html:46
+msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
+msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."
+
+msgid "Ваші дані"
+msgstr "Vaše údaje"
+
+msgid "Username:"
+msgstr "Uživatelské jméno:"
+
+msgid "Email:"
+msgstr "E-mail:"
+
+msgid "не вказано"
+msgstr "neuvedeno"
+
+msgid ""
+"Дані для доставки підтягуються автоматично з ваших попередніх замовлень."
+msgstr ""
+"Údaje pro doručení se automaticky načítají z vašich předchozích "
+"objednávek."
+
+msgid "Історія замовлень"
+msgstr "Historie objednávek"
+
+msgid "Замовлення #"
+msgstr "Objednávka #"
+
+msgid "У вас поки немає замовлень."
+msgstr "Zatím nemáte žádné objednávky."
+
+msgid "Почати шопінг"
+msgstr "Začít nakupovat"
+
+msgid "Email (для підтвердження)"
+msgstr "E-mail (pro potvrzení)"
+
 msgid "Ласкаво просимо | PREMIUM SHOP"
 msgstr "Vítejte | PREMIUM SHOP"
 
-#: templates/store/welcome.html:13
 msgid "Твій стиль починається тут"
 msgstr "Váš styl začíná zde"
 
-#: templates/store/welcome.html:14
-msgid "Ексклюзивні колекції преміального одягу та взуття від провідних брендів світу."
-msgstr "Exkluzivní kolekce prémiového oblečení a obuvi od předních světových značek."
+msgid ""
+"Ексклюзивні колекції преміального одягу та взуття від провідних брендів "
+"світу."
+msgstr ""
+"Exkluzivní kolekce prémiového oblečení a obuvi od předních světových "
+"značek."
 
-#: templates/store/welcome.html:18
 msgid "Увійти до кабінету"
 msgstr "Přihlásit se k účtu"
 
-#: templates/store/welcome.html:28
 msgid "Тільки оригінал"
 msgstr "Pouze originál"
 
-#: templates/store/welcome.html:32
 msgid "Швидка доставка"
 msgstr "Rychlé doručení"
 
-#: templates/store/welcome.html:36
 msgid "Програма лояльності"
 msgstr "Věrnostní program"
 
@@ -1010,20 +1121,10 @@ msgstr "Tenisky"
 msgid "Аксесуари"
 msgstr "Doplňky"
 
-msgid "Ваш список бажань 💖"
-msgstr "Váš seznam přání 💖"
+#: templates/store/product/list.html:54
+msgid "За назвою (A-Z)"
+msgstr "Dle názvu (A-Z)"
 
-msgid "Товари, які ви зберегли."
-msgstr "Položky, které jste si uložili."
-
-msgid "Ваш список бажань порожній"
-msgstr "Váš seznam přání je prázdný"
-
-msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
-msgstr "Přidejte položky, které se vám líbí, abyste je neztratili."
-
-msgid "Бажаєте додати в список бажань? 😉"
-msgstr "Chcete přidat do seznamu přání? 😉"
-
-msgid "Увійдіть або зареєструйтесь, щоб ваші улюблені товари завжди були під рукою!"
-msgstr "Přihlaste se nebo se zaregistrujte, abyste měli své oblíbené položky vždy po ruce!"
+#: templates/store/product/list.html:58
+msgid "За назвою (Z-A)"
+msgstr "Dle názvu (Z-A)"

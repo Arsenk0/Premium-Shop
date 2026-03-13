@@ -20,7 +20,8 @@
                     <strong style="display: block; font-size: 1.1rem; margin-bottom: 0.2rem;">{{ review.user.username }}</strong>
                     <span style="font-size: 0.8rem; color: #888;">{% trans "на" %} <a
                             href="{% url 'store:product_detail' review.product.id review.product.slug %}"
-                            style="color: var(--primary); font-weight: 600;">{{ review.product.name }}</a></span>
+                            class="hover-red-line"
+                            style="color: var(--primary); font-weight: 600; text-decoration: none; position: relative; display: inline-block; padding-bottom: 2px;">{{ review.product.name }}</a></span>
                 </div>
                 <div style="color: #ffc107; white-space: nowrap;">
                     {% for i in "12345" %}
@@ -47,7 +48,25 @@
 
 <style>
     .review-card:hover {
-        transform: translateY(-10px);
+        transform: translateY(-5px);
+    }
+
+    .hover-red-line::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .hover-red-line:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
     }
 </style>
 {% endblock %}
