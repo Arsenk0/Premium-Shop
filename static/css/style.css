@@ -102,7 +102,7 @@ a:not(.btn):not(.cart-link):not(.logo a):hover:after {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&q=80&w=2070') center/cover;
     color: white;
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 
 .hero h1 {
@@ -115,7 +115,7 @@ a:not(.btn):not(.cart-link):not(.logo a):hover:after {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 0;
+    padding: 3rem 0;
 }
 
 .product-grid {
@@ -140,13 +140,22 @@ a:not(.btn):not(.cart-link):not(.logo a):hover:after {
 
 .product-card img {
     width: 100%;
-    height: 300px;
-    object-fit: cover;
+    height: 250px;
+    object-fit: contain;
+    background: #fff;
+    padding: 1.5rem;
+    display: block;
     transition: var(--transition);
 }
 
+.card-divider {
+    height: 2px;
+    background: var(--accent);
+    width: 100%;
+}
+
 .product-card:hover img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .product-info {

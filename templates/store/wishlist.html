@@ -22,6 +22,7 @@
                 <img src="{% static 'img/no-image.png' %}" alt="{{ product.name }}">
                 {% endif %}
             </a>
+            <div class="card-divider"></div>
             <div class="product-info">
                 <div class="product-category">{{ product.category.name }}</div>
                 <a href="{{ product.get_absolute_url }}">
