@@ -37,7 +37,7 @@
                 <div class="filter-section">
                     <h4>{% trans "Сортування" %}</h4>
 
-                    <select name="sort" class="filter-select" onchange="this.form.submit()">
+                    <select name="sort" class="filter-select">
 
                         <option value="newest" {% if current_filters.sort == 'newest' %}selected{% endif %}>
                             {% trans "Новинки" %}
@@ -52,7 +52,11 @@
                         </option>
 
                         <option value="name_asc" {% if current_filters.sort == 'name_asc' %}selected{% endif %}>
-                            {% trans "За назвою (А-Я)" %}
+                            {% trans "За назвою (A-Z)" %}
+                        </option>
+
+                        <option value="name_desc" {% if current_filters.sort == 'name_desc' %}selected{% endif %}>
+                            {% trans "За назвою (Z-A)" %}
                         </option>
 
                     </select>
@@ -103,7 +107,7 @@
                         <div class="size-filter-grid">
                             {% for s in group.list %}
                             <label class="size-filter-item">
-                                <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name %}checked{% endif %} onchange="this.form.submit()">
+                                <input type="radio" name="size" value="{{ s.name }}" {% if current_filters.size == s.name %}checked{% endif %}>
                                 <span>{{ s.name }}</span>
                             </label>
                             {% endfor %}
@@ -114,7 +118,7 @@
 
                 <div class="filter-section">
                     <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;">
-                        <input type="checkbox" name="in_stock" value="1" {% if current_filters.in_stock %}checked{% endif %} onchange="this.form.submit()" style="width: 18px; height: 18px;">
+                        <input type="checkbox" name="in_stock" value="1" {% if current_filters.in_stock %}checked{% endif %} style="width: 18px; height: 18px;">
                         {% trans "Тільки в наявності" %}
                     </label>
                 </div>
@@ -202,22 +206,36 @@
     .category-links {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0;
         align-items: stretch;
     }
 
     .cat-link {
         display: flex;
         align-items: center;
-        padding: 0.75rem 1rem;
+        padding: 1rem;
         font-size: 0.95rem;
         color: #333;
-        border-radius: 12px;
+        border-radius: 0;
         transition: all 0.2s;
         position: relative;
         text-decoration: none;
         width: 100%;
         box-sizing: border-box;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .cat-link:first-child {
+        border-radius: 12px 12px 0 0;
+    }
+
+    .cat-link:last-child {
+        border-bottom: none;
+        border-radius: 0 0 12px 12px;
+    }
+
+    .cat-link:only-child {
+        border-radius: 12px;
     }
 
     .cat-link:hover {

@@ -186,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filterForm && productListContainer) {
         filterForm.querySelectorAll('input, select').forEach(input => {
             input.addEventListener('change', () => {
+                input.blur(); // Force loss of focus to close native dropdowns immediately
                 applyFilters();
             });
         });

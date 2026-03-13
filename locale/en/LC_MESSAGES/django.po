@@ -504,6 +504,14 @@ msgstr "About us - PREMIUM SHOP"
 msgid "About"
 msgstr "About"
 
+#: templates/store/product/list.html:54
+msgid "За назвою (A-Z)"
+msgstr "Name (A-Z)"
+
+#: templates/store/product/list.html:58
+msgid "За назвою (Z-A)"
+msgstr "Name (Z-A)"
+
 #: templates/store/about.html:13
 msgid ""
 "Ми — команда фанатів вуличної моди, які вірять, що одяг — це не просто речі, "

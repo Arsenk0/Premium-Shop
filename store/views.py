@@ -55,6 +55,8 @@ class ProductListView(ListView):
             queryset = queryset.order_by('-price')
         elif sort == 'name_asc':
             queryset = queryset.order_by('name')
+        elif sort == 'name_desc':
+            queryset = queryset.order_by('-name')
         else:
             queryset = queryset.order_by('-created')
             
