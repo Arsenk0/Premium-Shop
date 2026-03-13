@@ -7,12 +7,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from django.http import JsonResponse
-from .models import Category, Product, Order, OrderItem, Size, Review, Wishlist
-from .forms import OrderCreateForm, UserSignupForm, ReviewForm
-from .services import NovaPoshtaService, OrderService
-from .services import dashboard_service
-from .tasks import send_order_confirmation_email, send_welcome_email
-from .cart import Cart
+from store.models import Category, Product, Order, OrderItem, Size, Review, Wishlist
+from store.forms import OrderCreateForm, UserSignupForm, ReviewForm
+from store.services import NovaPoshtaService, OrderService
+from store.services import dashboard_service
+from store.tasks import send_order_confirmation_email, send_welcome_email
+from store.cart import Cart
 from django.utils.translation import gettext as _
 
 class ProductListView(ListView):
@@ -42,6 +42,10 @@ class ProductListView(ListView):
             queryset = queryset.filter(price__lte=max_price)
         if size_filter:
             queryset = queryset.filter(sizes__name=size_filter)
+
+        in_stock = self.request.GET.get('in_stock')
+        if in_stock == '1':
+            queryset = queryset.filter(stock__gt=0)
 
         # Sorting
         sort = self.request.GET.get('sort')
@@ -75,7 +79,8 @@ class ProductListView(ListView):
             'min_price': self.request.GET.get('min_price'),
             'max_price': self.request.GET.get('max_price'),
             'size': self.request.GET.get('size'),
-            'sort': self.request.GET.get('sort')
+            'sort': self.request.GET.get('sort'),
+            'in_stock': self.request.GET.get('in_stock') == '1'
         }
         if self.request.user.is_authenticated:
             context['wishlist_product_ids'] = set(Wishlist.objects.filter(user=self.request.user).values_list('product_id', flat=True))

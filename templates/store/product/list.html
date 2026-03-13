@@ -112,6 +112,13 @@
                 </div>
                 {% endif %}
 
+                <div class="filter-section">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;">
+                        <input type="checkbox" name="in_stock" value="1" {% if current_filters.in_stock %}checked{% endif %} onchange="this.form.submit()" style="width: 18px; height: 18px;">
+                        {% trans "Тільки в наявності" %}
+                    </label>
+                </div>
+
                 <div class="filter-actions">
 
                     <button type="submit" class="btn btn-primary hover-scale" style="width: 100%; min-width: auto;">
