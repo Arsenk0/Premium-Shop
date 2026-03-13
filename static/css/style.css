@@ -321,25 +321,6 @@ a {
     background: #f8fafc;
 }
 
-.cat-link {
-    padding: 0.6rem 1.2rem;
-    border-radius: var(--radius-pill);
-    transition: var(--transition-fast);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text-muted);
-}
-
-.cat-link:hover {
-    background: #f1f5f9;
-    padding-left: 1.5rem;
-    color: var(--primary);
-}
-
-.cat-link.active {
-    background: var(--primary);
-    color: white !important;
-}
 
 /* Forms */
 .form-group {
