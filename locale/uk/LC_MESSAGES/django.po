@@ -876,58 +876,56 @@ msgstr ""
 
 #: templates/store/product/list.html:43
 msgid "Новинки"
-msgstr ""
+msgstr "Новинки"
 
 #: templates/store/product/list.html:47
 msgid "Найдешевші"
-msgstr ""
+msgstr "Найдешевші"
 
 #: templates/store/product/list.html:51
 msgid "Найдорожчі"
-msgstr ""
+msgstr "Найдорожчі"
 
 #: templates/store/product/list.html:55
 msgid "За назвою (А-Я)"
-msgstr ""
+msgstr "За назвою (А-Я)"
 
 #: templates/store/product/list.html:68 templates/store/product/list.html:143
 msgid "Всі товари"
-msgstr ""
+msgstr "Всі товари"
 
 #: templates/store/product/list.html:84
 msgid "Ціна (грн)"
-msgstr ""
+msgstr "Ціна (грн)"
+
+msgid "Тільки в наявності"
+msgstr "Тільки в наявності"
 
 #: templates/store/product/list.html:90
 msgid "До"
-msgstr ""
+msgstr "До"
 
 #: templates/store/product/list.html:121
 msgid "Застосувати"
-msgstr ""
+msgstr "Застосувати"
 
 #: templates/store/product/list.html:127
 msgid "Очистити"
-msgstr ""
+msgstr "Очистити"
 
-#: templates/store/product/list.html:148
+#: templates/store/product/product_list_fragment.html:13
+#: templates/store/product/product_list_fragment.html:20
 #, python-format
-msgid ""
-"\n"
-"                    Знайдено %(counter)s товар\n"
-"                    "
-msgid_plural ""
-"\n"
-"                    Знайдено %(counter)s товарів\n"
-"                    "
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgid "Found %(counter)s product"
+msgid_plural "Found %(counter)s products"
+msgstr[0] "Знайдено %(counter)s товар"
+msgstr[1] "Знайдено %(counter)s товари"
+msgstr[2] "Знайдено %(counter)s товарів"
+msgstr[3] "Знайдено %(counter)s товарів"
 
 #: templates/store/product/list.html:199 templates/store/product/search.html:30
 msgid "Більше"
-msgstr ""
+msgstr "Більше"
 
 #: templates/store/product/list.html:211
 msgid "Товарів не знайдено за вашими критеріями."
