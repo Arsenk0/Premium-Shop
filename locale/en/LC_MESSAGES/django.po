@@ -28,9 +28,14 @@ msgstr "English"
 msgid "Czech"
 msgstr "Czech"
 
-#: store/forms.py:12
 msgid "Вкажіть вашу пошту (для відновлення пароля)"
 msgstr "Enter your email (for password recovery)"
+
+msgid "Витрачено"
+msgstr "Spent"
+
+msgid "Обране"
+msgstr "Favorites"
 
 #: store/forms.py:14
 msgid "Будь ласка, введіть вашу електронну пошту."
@@ -473,6 +478,33 @@ msgstr "My dashboard"
 msgid "Вітаємо,"
 msgstr "Welcome,"
 
+msgid "Швидкі дії"
+msgstr "Quick Actions"
+
+msgid "Список бажань"
+msgstr "Wishlist"
+
+msgid "Відстежити замовлення"
+msgstr "Track Order"
+
+msgid "Редагувати профіль"
+msgstr "Edit Profile"
+
+msgid "Змінити пароль"
+msgstr "Change Password"
+
+msgid "Остання активність"
+msgstr "Recent Activity"
+
+msgid "У вас поки немає активності. Почніть шопінг вже зараз!"
+msgstr "You have no activity yet. Start shopping now!"
+
+msgid "Додано до списку бажань!"
+msgstr "Added to wishlist!"
+
+msgid "Видалено зі списку бажань"
+msgstr "Removed from wishlist"
+
 #: templates/store/accounts/profile.html:12
 msgid "Вийти"
 msgstr "Logout"
@@ -866,7 +898,7 @@ msgstr "Price: High to Low"
 msgid "За назвою (А-Я)"
 msgstr "Name (A-Z)"
 
-#: templates/store/product/list.html:68 templates/store/product/list.html:143
+#: templates/store/product/list.html:68
 msgid "Всі товари"
 msgstr "All products"
 
@@ -878,6 +910,9 @@ msgstr "Price (UAH)"
 msgid "До"
 msgstr "To"
 
+msgid "Тільки в наявності"
+msgstr "In stock only"
+
 #: templates/store/product/list.html:121
 msgid "Застосувати"
 msgstr "Apply"
@@ -886,24 +921,13 @@ msgstr "Apply"
 msgid "Очистити"
 msgstr "Clear"
 
-#: templates/store/product/list.html:148
+#: templates/store/product/product_list_fragment.html:13
+#: templates/store/product/product_list_fragment.html:20
 #, python-format
-msgid ""
-"\n"
-"                    Знайдено %(counter)s товар\n"
-"                    "
-msgid_plural ""
-"\n"
-"                    Знайдено %(counter)s товарів\n"
-"                    "
-msgstr[0] ""
-"\n"
-"                    Found %(counter)s product\n"
-"                    "
-msgstr[1] ""
-"\n"
-"                    Found %(counter)s products\n"
-"                    "
+msgid "Found %(counter)s product"
+msgid_plural "Found %(counter)s products"
+msgstr[0] "Found %(counter)s product"
+msgstr[1] "Found %(counter)s products"
 
 #: templates/store/product/list.html:199 templates/store/product/search.html:30
 msgid "Більше"

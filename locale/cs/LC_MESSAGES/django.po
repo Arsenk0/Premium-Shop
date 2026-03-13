@@ -29,9 +29,14 @@ msgstr "Angličtina"
 msgid "Czech"
 msgstr "Čeština"
 
-#: store/forms.py:12
 msgid "Вкажіть вашу пошту (для відновлення пароля)"
 msgstr "Zadejte svůj e-mail (pro obnovu hesla)"
+
+msgid "Витрачено"
+msgstr "Utraceno"
+
+msgid "Обране"
+msgstr "Oblíbené"
 
 #: store/forms.py:14
 msgid "Будь ласка, введіть вашу електронну пошту."
@@ -474,6 +479,33 @@ msgstr "Můj účet"
 msgid "Вітаємо,"
 msgstr "Vítejte,"
 
+msgid "Швидкі дії"
+msgstr "Rychlé akce"
+
+msgid "Список бажань"
+msgstr "Seznam přání"
+
+msgid "Відстежити замовлення"
+msgstr "Sledovat objednávku"
+
+msgid "Редагувати профіль"
+msgstr "Upravit profil"
+
+msgid "Змінити пароль"
+msgstr "Změnit heslo"
+
+msgid "Остання активність"
+msgstr "Poslední aktivita"
+
+msgid "У вас поки немає активності. Почніть шопінг вже зараз!"
+msgstr "Zatím nemáte žádnou aktivitu. Začněte nakupovat právě teď!"
+
+msgid "Додано до списку бажань!"
+msgstr "Přidáno do seznamu přání!"
+
+msgid "Видалено зі списку бажань"
+msgstr "Odstraněno ze seznamu přání"
+
 #: templates/store/accounts/profile.html:12
 msgid "Вийти"
 msgstr "Odhlásit se"
@@ -853,21 +885,21 @@ msgstr "Třídění"
 
 #: templates/store/product/list.html:43
 msgid "Новинки"
-msgstr "Nejnovější"
+msgstr "Novinky"
 
 #: templates/store/product/list.html:47
 msgid "Найдешевші"
-msgstr "Cena: Od nejnižší"
+msgstr "Nejlevnější"
 
 #: templates/store/product/list.html:51
 msgid "Найдорожчі"
-msgstr "Cena: Od nejvyšší"
+msgstr "Nejdražší"
 
 #: templates/store/product/list.html:55
 msgid "За назвою (А-Я)"
-msgstr "Název (A-Z)"
+msgstr "Podle názvu (A-Z)"
 
-#: templates/store/product/list.html:68 templates/store/product/list.html:143
+#: templates/store/product/list.html:68
 msgid "Всі товари"
 msgstr "Všechny produkty"
 
@@ -879,6 +911,9 @@ msgstr "Cena (Kč)"
 msgid "До"
 msgstr "Do"
 
+msgid "Тільки в наявності"
+msgstr "Pouze skladem"
+
 #: templates/store/product/list.html:121
 msgid "Застосувати"
 msgstr "Použít"
@@ -887,32 +922,15 @@ msgstr "Použít"
 msgid "Очистити"
 msgstr "Vyčistit"
 
-#: templates/store/product/list.html:148
+#: templates/store/product/product_list_fragment.html:13
+#: templates/store/product/product_list_fragment.html:20
 #, python-format
-msgid ""
-"\n"
-"                    Знайдено %(counter)s товар\n"
-"                    "
-msgid_plural ""
-"\n"
-"                    Знайдено %(counter)s товарів\n"
-"                    "
-msgstr[0] ""
-"\n"
-"                    Nalezen %(counter)s produkt\n"
-"                    "
-msgstr[1] ""
-"\n"
-"                    Nalezeny %(counter)s produkty\n"
-"                    "
-msgstr[2] ""
-"\n"
-"                    Nalezeno %(counter)s produktů\n"
-"                    "
-msgstr[3] ""
-"\n"
-"                    Nalezeno %(counter)s produktů\n"
-"                    "
+msgid "Found %(counter)s product"
+msgid_plural "Found %(counter)s products"
+msgstr[0] "Nalezen %(counter)s produkt"
+msgstr[1] "Nalezeny %(counter)s produkty"
+msgstr[2] "Nalezeno %(counter)s produktů"
+msgstr[3] "Nalezeno %(counter)s produktů"
 
 #: templates/store/product/list.html:199 templates/store/product/search.html:30
 msgid "Більше"
