@@ -88,11 +88,11 @@
                     <div class="activity-item">
                         <div class="activity-icon">{{ activity.icon }}</div>
                         <div class="activity-info">
-                            <div class="activity-header">
+                            <div class="activity-header" style="gap: 1rem;">
                                 <strong>{{ activity.title }}</strong>
                                 <span class="activity-date">{{ activity.date|date:"d.m.Y" }}</span>
                             </div>
-                            <p class="activity-desc">{{ activity.description }}</p>
+                            <p class="activity-desc">{{ activity.description|safe }}</p>
                         </div>
                     </div>
                     {% endfor %}
@@ -238,11 +238,30 @@
         text-decoration: none;
         color: #333;
         border-radius: 12px;
-        transition: background 0.2s;
+        transition: all 0.2s;
+        position: relative;
     }
 
     .action-link:hover {
-        background: var(--premium-bg);
+        background: #f8f9fa;
+    }
+
+    .action-link::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--accent);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .action-link:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
     }
 
     /* Activity Feed */

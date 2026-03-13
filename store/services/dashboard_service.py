@@ -1,6 +1,7 @@
 from django.db.models import Sum, Count
 from ..models import Order, Review, Wishlist
 from django.contrib.auth.models import User
+from django.utils.translation import gettext as _
 
 def get_user_dashboard_stats(user):
     """
@@ -23,11 +24,19 @@ def get_recent_activity(user, limit=5):
     # Recent Orders
     orders = Order.objects.filter(user=user).order_by('-created')[:limit]
     for order in orders:
+        status_colors = {
+            'New': '#17a2b8',
+            'Processing': '#ffc107',
+            'Shipped': '#007bff',
+            'Delivered': '#28a745',
+            'Cancelled': '#dc3545'
+        }
+        color = status_colors.get(order.status, '#6c757d')
         activities.append({
             'type': 'order',
             'date': order.created,
-            'title': f'Замовлення #{order.id}',
-            'description': f'Статус: {order.get_status_display()}',
+            'title': _('Замовлення') + f' #{order.id}',
+            'description': f"{_('Статус')}: <span style='color: {color}; font-weight: 600;'>{order.get_status_display()}</span>",
             'icon': '📦'
         })
         
@@ -37,8 +46,8 @@ def get_recent_activity(user, limit=5):
         activities.append({
             'type': 'review',
             'date': review.created_at,
-            'title': f'Відгук на {review.product.name}',
-            'description': f'Оцінка: {review.rating}/5',
+            'title': _('Відгук на') + f' {review.product.name}',
+            'description': _('Оцінка:') + f' {review.rating}/5',
             'icon': '⭐'
         })
         
@@ -48,8 +57,8 @@ def get_recent_activity(user, limit=5):
         activities.append({
             'type': 'wishlist',
             'date': item.added_at,
-            'title': f'Додано в обране: {item.product.name}',
-            'description': 'Будемо чекати на ваше замовлення!',
+            'title': _('Додано в обране:') + f' {item.product.name}',
+            'description': _('Будемо чекати на ваше замовлення!'),
             'icon': '❤️'
         })
         
