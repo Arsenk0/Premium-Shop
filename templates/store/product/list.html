@@ -130,8 +130,8 @@
                     </button>
 
                     <a href="{% if category %}{% url 'store:product_list_by_category' category.slug %}{% else %}{% url 'store:product_list' %}{% endif %}"
-                        class="btn btn-secondary"
-                        style="width: 100%; min-width: auto; margin-top: 0.5rem; height: 44px; font-size: 0.9rem;">
+                        class="btn btn-outline"
+                        style="width: 100%; min-width: auto; margin-top: 0.5rem;">
                         {% trans "Очистити" %}
                     </a>
 

@@ -55,7 +55,7 @@
         <h2 style="font-size: 2.5rem;">{% trans "Разом:" %} {{ total_price }} {% trans "грн" %}</h2>
         <br>
         <div style="display: flex; justify-content: flex-end; gap: 1rem; align-items: center;">
-            <a href="{% url 'store:product_list' %}" class="btn btn-secondary hover-scale">{% trans "Продовжити покупки" %}</a>
+            <a href="{% url 'store:product_list' %}" class="btn btn-pill hover-scale">← {% trans "Продовжити покупки" %}</a>
             <a href="{% url 'store:order_create' %}" class="btn btn-primary hover-scale">{% trans "Оформити замовлення" %}</a>
         </div>
     </div>

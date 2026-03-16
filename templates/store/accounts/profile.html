@@ -18,7 +18,7 @@
         </div>
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-outline hover-scale">{% trans "Вийти" %}</button>
+            <button type="submit" class="btn btn-pill hover-scale">{% trans "Вийти" %}</button>
         </form>
     </div>
 
@@ -323,17 +323,6 @@
         text-align: center;
         padding: 3rem 0;
         color: var(--text-muted);
-    }
-
-    .btn-outline {
-        border: 1px solid #ddd;
-        background: transparent;
-        color: #333;
-    }
-
-    .btn-outline:hover {
-        background: #f8f9fa;
-        border-color: #000;
     }
 
     .hover-lift:hover {
