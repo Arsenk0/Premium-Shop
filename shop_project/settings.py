@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processors.cart_context',
+                'store.context_processors.currency_context',
                 'django.template.context_processors.i18n',
             ],
         },
@@ -130,6 +131,26 @@ LANGUAGES = [
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+# Currency configuration
+# Rates are relative to UAH (e.g. 1 UAH = X USD)
+CURRENCIES = {
+    'uk': {
+        'code': 'UAH',
+        'symbol': 'грн',
+        'rate': 1,
+    },
+    'en': {
+        'code': 'USD',
+        'symbol': '$',
+        'rate': 0.024,  # Approximate rate for 1 UAH in USD
+    },
+    'cs': {
+        'code': 'CZK',
+        'symbol': 'Kč',
+        'rate': 0.55,   # Approximate rate for 1 UAH in CZK
+    },
+}
 
 
 # Static files (CSS, JavaScript, Images)
