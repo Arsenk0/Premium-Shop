@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n currency_tags %}
 
 {% block title %}{% trans "Мої замовлення" %}{% endblock %}
 
@@ -30,7 +30,8 @@
                         <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
                         <div>
                             <p class="item-name">{{ item.product.name }}</p>
-                            <p class="item-meta">{{ item.quantity }} x {{ item.price }} {% trans "грн" %}</p>
+                            <span>{{ item.price|currency:selected_currency }}</span>
+                            <p class="item-meta">{{ item.quantity }} x {{ item.price|currency }}</p>
                         </div>
                     </div>
                     {% endfor %}
@@ -38,7 +39,7 @@
                 
                 <div class="order-total">
                     <p class="total-label">{% trans "Загальна сума" %}</p>
-                    <p class="total-value">{{ order.get_total_cost }} {% trans "грн" %}</p>
+                    <span>{{ order.get_total_cost|currency:selected_currency }}</span>
                 </div>
             </div>
 
@@ -71,6 +72,26 @@
     .order-card {
         padding: 1.5rem;
         border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .order-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .order-card:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
     }
 
     .order-header {
