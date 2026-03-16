@@ -1128,3 +1128,51 @@ msgstr "Dle názvu (A-Z)"
 #: templates/store/product/list.html:58
 msgid "За назвою (Z-A)"
 msgstr "Dle názvu (Z-A)"
+
+msgid "Назад"
+msgstr "Zpět"
+
+msgid "Основні дані"
+msgstr "Základní údaje"
+
+msgid "Контактна інформація"
+msgstr "Kontaktní informace"
+
+msgid "Доставка"
+msgstr "Doprava"
+
+msgid "Зберегти зміни"
+msgstr "Uložit změny"
+
+msgid "Мої замовлення"
+msgstr "Moje objednávky"
+
+msgid "В кабінет"
+msgstr "Na účet"
+
+msgid "У вас ще немає замовлень"
+msgstr "Zatím nemáte žádné objednávky"
+
+msgid "Ваші покупки з'являться тут після оформлення замовлення."
+msgstr "Vaše nákupy se zde zobrazí po zadání objednávky."
+
+msgid "До покупок"
+msgstr "K nakupování"
+
+msgid "Оновити пароль"
+msgstr "Aktualizovat heslo"
+
+msgid "Пароль змінено"
+msgstr "Heslo změněno"
+
+msgid "Успішно!"
+msgstr "Úspěšně!"
+
+msgid "Ваш пароль було успішно змінено. Тепер ви можете використовувати новий пароль для входу."
+msgstr "Vaše heslo bylo úspěšně změněno. Nyní můžete k přihlášení použít své nové heslo."
+
+msgid "До кабінету"
+msgstr "Na účet"
+
+msgid "Нікнейм або номер"
+msgstr "Přezdívka nebo číslo"

@@ -63,13 +63,13 @@
                     <a href="{% url 'store:wishlist_list' %}" class="action-link">
                         <span>❤️</span> {% trans "Список бажань" %}
                     </a>
-                    <a href="#" class="action-link">
+                    <a href="{% url 'store:order_list' %}" class="action-link">
                         <span>🔍</span> {% trans "Відстежити замовлення" %}
                     </a>
-                    <a href="#" class="action-link">
+                    <a href="{% url 'store:profile_edit' %}" class="action-link">
                         <span>👤</span> {% trans "Редагувати профіль" %}
                     </a>
-                    <a href="#" class="action-link">
+                    <a href="{% url 'password_change' %}" class="action-link">
                         <span>🔒</span> {% trans "Змінити пароль" %}
                     </a>
                 </nav>

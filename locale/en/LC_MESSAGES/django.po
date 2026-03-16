@@ -1121,3 +1121,51 @@ msgstr "Accessories"
 #: templates/store/about.html:8
 msgid "Про"
 msgstr "About"
+
+msgid "Назад"
+msgstr "Back"
+
+msgid "Основні дані"
+msgstr "Basic Information"
+
+msgid "Контактна інформація"
+msgstr "Contact Information"
+
+msgid "Доставка"
+msgstr "Delivery"
+
+msgid "Зберегти зміни"
+msgstr "Save Changes"
+
+msgid "Мої замовлення"
+msgstr "My Orders"
+
+msgid "В кабінет"
+msgstr "Dashboard"
+
+msgid "У вас ще немає замовлень"
+msgstr "You have no orders yet"
+
+msgid "Ваші покупки з'являться тут після оформлення замовлення."
+msgstr "Your purchases will appear here after placing an order."
+
+msgid "До покупок"
+msgstr "To shopping"
+
+msgid "Оновити пароль"
+msgstr "Update Password"
+
+msgid "Пароль змінено"
+msgstr "Password Changed"
+
+msgid "Успішно!"
+msgstr "Success!"
+
+msgid "Ваш пароль було успішно змінено. Тепер ви можете використовувати новий пароль для входу."
+msgstr "Your password has been successfully changed. Now you can use your new password to log in."
+
+msgid "До кабінету"
+msgstr "Dashboard"
+
+msgid "Нікнейм або номер"
+msgstr "Nickname or number"

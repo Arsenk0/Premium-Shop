@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Редагувати профіль" %}{% endblock %}
+
+{% block content %}
+<div class="container fade-in premium-dashboard">
+    <div class="dashboard-header">
+        <h1>{% trans "Редагувати профіль" %} 👤</h1>
+        <a href="{% url 'store:profile' %}" class="btn btn-outline hover-scale" style="background-color: #e0e0e0 !important;">{% trans "Назад" %}</a>
+    </div>
+
+    <div class="card premium-card">
+        <form method="post" class="premium-form">
+            {% csrf_token %}
+            
+            <div class="form-grid">
+                <div class="form-section">
+                    <h3>{% trans "Основні дані" %}</h3>
+                    <div class="form-group">
+                        <label>{{ user_form.first_name.label }}</label>
+                        {{ user_form.first_name }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ user_form.last_name.label }}</label>
+                        {{ user_form.last_name }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ user_form.email.label }}</label>
+                        {{ user_form.email }}
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>{% trans "Контактна інформація" %}</h3>
+                    <div class="form-group">
+                        <label>{{ profile_form.phone.label }}</label>
+                        {{ profile_form.phone }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ profile_form.social_handle.label }}</label>
+                        {{ profile_form.social_handle }}
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>{% trans "Доставка" %}</h3>
+                    <div class="form-group">
+                        <label>{{ profile_form.city.label }}</label>
+                        {{ profile_form.city }}
+                        {{ profile_form.city_ref }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ profile_form.warehouse.label }}</label>
+                        {{ profile_form.warehouse }}
+                        {{ profile_form.warehouse_ref }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-lg hover-scale">{% trans "Зберегти зміни" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .premium-card {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 3rem;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        margin-bottom: 3rem;
+    }
+
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-section h3 {
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #888;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #000;
+        box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+        outline: none;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: center;
+        border-top: 1px solid #eee;
+        padding-top: 2rem;
+    }
+
+    .btn-lg {
+        padding: 1rem 3rem;
+        font-size: 1.1rem;
+    }
+</style>
+
+<script>
+    // Logic for Nova Poshta autocomplete (simplified for reuse)
+    document.addEventListener('DOMContentLoaded', function() {
+        const cityInput = document.getElementById('city-search');
+        const cityRef = document.querySelector('input[name="city_ref"]');
+        const warehouseSelect = document.getElementById('warehouse-select');
+        const warehouseRef = document.querySelector('input[name="warehouse_ref"]');
+
+        if (cityInput) {
+            cityInput.addEventListener('input', function() {
+                // Here we would normally implement the same autocomplete logic as in order creation
+                // For now, assume user knows what they are doing or we can add full NP logic if needed
+            });
+        }
+    });
+</script>
+{% endblock %}

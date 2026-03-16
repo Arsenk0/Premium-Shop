@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Мої замовлення" %}{% endblock %}
+
+{% block content %}
+<div class="container fade-in premium-dashboard">
+    <div class="dashboard-header">
+        <h1>{% trans "Мої замовлення" %} 📦</h1>
+        <a href="{% url 'store:profile' %}" class="btn btn-outline hover-scale" style="background-color: #e0e0e0 !important;">{% trans "В кабінет" %}</a>
+    </div>
+
+    <div class="orders-list">
+        {% for order in orders %}
+        <div class="card order-card hover-lift">
+            <div class="order-header">
+                <div>
+                    <span class="order-number">{% trans "Замовлення" %} #{{ order.id }}</span>
+                    <span class="order-date">{{ order.created|date:"d.m.Y" }}</span>
+                </div>
+                <div class="order-status status-{{ order.status|lower }}">
+                    {{ order.get_status_display }}
+                </div>
+            </div>
+            
+            <div class="order-body">
+                <div class="order-items">
+                    {% for item in order.items.all %}
+                    <div class="order-item-mini">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                        <div>
+                            <p class="item-name">{{ item.product.name }}</p>
+                            <p class="item-meta">{{ item.quantity }} x {{ item.price }} {% trans "грн" %}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="order-total">
+                    <p class="total-label">{% trans "Загальна сума" %}</p>
+                    <p class="total-value">{{ order.get_total_cost }} {% trans "грн" %}</p>
+                </div>
+            </div>
+
+            <div class="order-footer">
+                <div class="delivery-info">
+                    <span>📍 {{ order.city }}, {{ order.warehouse }}</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="card empty-state">
+            <div class="empty-icon">🛒</div>
+            <h2>{% trans "У вас ще немає замовлень" %}</h2>
+            <p>{% trans "Ваші покупки з'являться тут після оформлення замовлення." %}</p>
+            <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale">{% trans "До покупок" %}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .orders-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .order-card {
+        padding: 1.5rem;
+        border-radius: 20px;
+    }
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .order-number {
+        font-weight: 800;
+        font-size: 1.1rem;
+        display: block;
+    }
+
+    .order-date {
+        font-size: 0.85rem;
+        color: #888;
+    }
+
+    .order-status {
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .status-new { background: #e3f2fd; color: #1976d2; }
+    .status-processing { background: #fff3e0; color: #f57c00; }
+    .status-shipped { background: #f3e5f5; color: #7b1fa2; }
+    .status-completed { background: #e8f5e9; color: #388e3c; }
+    .status-canceled { background: #ffebee; color: #d32f2f; }
+
+    .order-body {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+
+    @media (max-width: 600px) {
+        .order-body {
+            flex-direction: column;
+        }
+    }
+
+    .order-items {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .order-item-mini {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .order-item-mini img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .item-name {
+        margin: 0;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .item-meta {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    .order-total {
+        text-align: right;
+        min-width: 150px;
+    }
+
+    .total-label {
+        font-size: 0.8rem;
+        color: #888;
+        margin: 0;
+    }
+
+    .total-value {
+        font-size: 1.25rem;
+        font-weight: 800;
+        margin: 0;
+    }
+
+    .order-footer {
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid #f0f0f0;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+    }
+</style>
+{% endblock %}

@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from django.http import JsonResponse
 from store.models import Category, Product, Order, OrderItem, Size, Review, Wishlist
-from store.forms import OrderCreateForm, UserSignupForm, ReviewForm
+from store.forms import OrderCreateForm, UserSignupForm, ReviewForm, UserUpdateForm, ProfileUpdateForm
 from store.services import NovaPoshtaService, OrderService
 from store.services import dashboard_service
 from store.tasks import send_order_confirmation_email, send_welcome_email
@@ -113,6 +113,31 @@ def profile(request):
         'stats': stats,
         'activities': activities
     })
+
+
+@login_required
+def profile_edit(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('store:profile')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+    
+    return render(request, 'store/accounts/edit_profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+
+@login_required
+def order_list(request):
+    orders = Order.objects.filter(user=request.user).order_by('-created')
+    return render(request, 'store/order/list.html', {'orders': orders})
 
 
 class ProductDetailView(DetailView):
@@ -249,7 +274,26 @@ def order_create(request):
             cart.clear()
             return redirect('store:order_success', order_id=order.id)
     else:
-        form = OrderCreateForm()
+        initial_data = {}
+        if request.user.is_authenticated:
+            initial_data = {
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'email': request.user.email,
+            }
+            try:
+                profile = request.user.profile
+                initial_data.update({
+                    'phone': profile.phone,
+                    'social_handle': profile.social_handle,
+                    'city': profile.city,
+                    'city_ref': profile.city_ref,
+                    'warehouse': profile.warehouse,
+                    'warehouse_ref': profile.warehouse_ref,
+                })
+            except AttributeError:
+                pass
+        form = OrderCreateForm(initial=initial_data)
     return render(request, 'store/order/create.html', {'cart': cart, 'form': form})
 
 
