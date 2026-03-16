@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n %}
+{% load static i18n currency_tags %}
 
 {% block title %}
 {% if category %}{% translate category.name %}{% else %}{% trans "Каталог одягу та кросівок" %}{% endif %}
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="filter-section">
-                    <h4>{% trans "Ціна (грн)" %}</h4>
+                    <h4>{% trans "Ціна" %} ({% get_currency_symbol selected_currency %})</h4>
 
                     <div class="price-inputs">
                         <input type="number" name="min_price" placeholder="{% trans 'Від' %}"

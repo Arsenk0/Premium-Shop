@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n currency_tags %}
 
 {% block title %}{% trans "Ваш кошик" %}{% endblock %}
 
@@ -37,8 +37,8 @@
                     <div class="quantity-controls" data-item-key="{{ item.item_key }}"
                         data-url="{% url 'store:cart_update' item.item_key %}">
                         <button class="qty-btn subtract" type="button">−</button>
-                        <span class="qty-val">{{ item.quantity }}</span> <button class="qty-btn add" type="button">+</button> </div> </td> <td style="padding: 1rem;">{{ item.product.price }} {% trans "грн" %}</td>
-                <td style="padding: 1rem;"><span class="item-total">{{ item.total_price }}</span> {% trans "грн" %}</td>
+                        <span class="qty-val">{{ item.quantity }}</span> <button class="qty-btn add" type="button">+</button> </div> </td> <td style="padding: 1rem;">{{ item.product.price|currency:selected_currency }}</td>
+                <td style="padding: 1rem;"><span class="item-total">{{ item.total_price|currency:selected_currency }}</span></td>
                 <td style="padding: 1rem;">
                     <button class="qty-btn delete hover-scale" data-item-key="{{ item.item_key }}"
                         data-url="{% url 'store:cart_update' item.item_key %}"
@@ -52,7 +52,7 @@
     </table>
 
     <div style="text-align: right; padding: 2rem; background: #fff; border-radius: 12px; box-shadow: var(--shadow);">
-        <h2 style="font-size: 2.5rem;">{% trans "Разом:" %} {{ total_price }} {% trans "грн" %}</h2>
+        <h2 style="font-size: 2.5rem;">{% trans "Разом:" %} {{ total_price|currency }}</h2>
         <br>
         <div style="display: flex; justify-content: flex-end; gap: 1rem; align-items: center;">
             <a href="{% url 'store:product_list' %}" class="btn btn-pill hover-scale">← {% trans "Продовжити покупки" %}</a>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n %}
+{% load static i18n currency_tags %}
 
 {% block title %}{{ product.name }}{% endblock %}
 
@@ -53,7 +53,7 @@
         <p style="color: grey; margin-bottom: 0.5rem; font-size: 0.9rem;">
             {% trans "Артикул:" %} {{ product.article }}
         </p>
-        <p class="detail-price">{{ product.price }} {% trans "грн" %}</p>
+        <div class="product-price">{{ product.price|currency:selected_currency }}</div>
 
         <div style="margin-bottom: 1.5rem;">
             {% if reviews.count > 0 %}

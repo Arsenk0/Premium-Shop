@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n %}
+{% load static i18n currency_tags %}
 
 {% block title %}{% trans "Пошук" %}: {{ query }}{% endblock %}
 
@@ -25,7 +25,7 @@
                 </h3>
                 <p style="color: grey; font-size: 0.9rem;">{% trans "Арт:" %} {{ product.article }}</p>
                 <div class="product-price-row">
-                    <span class="product-price">{{ product.price }} {% trans "грн" %}</span>
+                        <div class="product-price">{{ product.price|currency:selected_currency }}</div>
                     <a href="{% url 'store:product_detail' product.id product.slug %}"
                         class="btn btn-primary hover-scale"
                         style="min-width: 100px; height: 40px; font-size: 0.85rem; padding: 0 1rem;">{% trans "Більше" %}</a>
