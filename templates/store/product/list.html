@@ -76,7 +76,7 @@
 
                         <a href="{% url 'store:product_list_by_category' c.slug %}"
                             class="cat-link {% if category.slug == c.slug %}active{% endif %}">
-                            {% translate c.name %}
+                            {{ c.name }}
                         </a>
 
                         {% endfor %}

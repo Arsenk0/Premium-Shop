@@ -20,6 +20,7 @@ class Category(models.Model):
         return self.name
 
 
+
 class Size(models.Model):
     TYPE_CHOICES = [
         ('shoes', _('Взуття')),

@@ -48,7 +48,7 @@
     </div>
 
     <div class="product-details">
-        <span class="product-category">{% translate product.category.name %}</span>
+        <span class="product-category">{{ product.category.name }}</span>
         <h1 style="font-size: 2.5rem; margin: 0.5rem 0; font-weight: 800;">{{ product.name }}</h1>
         <p style="color: grey; margin-bottom: 0.5rem; font-size: 0.9rem;">
             {% trans "Артикул:" %} {{ product.article }}
