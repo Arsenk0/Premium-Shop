@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.http import require_POST
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -13,7 +14,11 @@ from store.services import NovaPoshtaService, OrderService
 from store.services import dashboard_service
 from store.tasks import send_order_confirmation_email, send_welcome_email
 from store.cart import Cart
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, get_language
+from django.utils import translation
+from django.conf import settings
+import decimal
+from decimal import Decimal
 
 class ProductListView(ListView):
     model = Product
@@ -36,10 +41,33 @@ class ProductListView(ListView):
         max_price = self.request.GET.get('max_price')
         size_filter = self.request.GET.get('size')
         
-        if min_price:
-            queryset = queryset.filter(price__gte=min_price)
-        if max_price:
-            queryset = queryset.filter(price__lte=max_price)
+        if min_price or max_price:
+            try:
+                # Use session currency if available, else language-based default
+                selected_currency = self.request.session.get('currency')
+                language = get_language()
+                
+                if selected_currency:
+                    # Find currency settings by currency code (e.g., 'USD')
+                    currency_settings = next((v for v in settings.CURRENCIES.values() if v['code'] == selected_currency), None)
+                else:
+                    currency_settings = settings.CURRENCIES.get(language, settings.CURRENCIES.get('uk'))
+                
+                if not currency_settings:
+                    currency_settings = settings.CURRENCIES.get('uk')
+
+                rate = Decimal(str(currency_settings['rate']))
+                
+                if min_price and min_price.strip():
+                    converted_min = Decimal(min_price) / rate
+                    queryset = queryset.filter(price__gte=converted_min)
+                if max_price and max_price.strip():
+                    converted_max = Decimal(max_price) / rate
+                    queryset = queryset.filter(price__lte=converted_max)
+            except (ValueError, decimal.InvalidOperation, TypeError):
+                # If invalid price is provided, we just don't filter by price
+                pass
+        
         if size_filter:
             queryset = queryset.filter(sizes__name=size_filter)
 
@@ -370,3 +398,32 @@ class WishlistListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Wishlist.objects.filter(user=self.request.user).select_related('product')
+
+@require_POST
+def set_currency(request):
+    currency_code = request.POST.get('currency')
+    if currency_code in [c['code'] for c in settings.CURRENCIES.values()]:
+        request.session['currency'] = currency_code
+    
+    next_url = request.POST.get('next', request.META.get('HTTP_REFERER', '/'))
+    return redirect(next_url)
+
+@require_POST
+def set_preferences(request):
+    language = request.POST.get('language')
+    currency = request.POST.get('currency')
+    next_url = request.POST.get('next', '/')
+    
+    if language in [lang[0] for lang in settings.LANGUAGES]:
+        translation.activate(language)
+        request.session['_language'] = language
+        response = redirect(next_url)
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language)
+    else:
+        response = redirect(next_url)
+
+    if currency in [c['code'] for c in settings.CURRENCIES.values()]:
+        request.session['currency'] = currency
+    
+    request.session['selection_made'] = True
+    return response

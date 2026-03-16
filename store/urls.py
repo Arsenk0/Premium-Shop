@@ -5,6 +5,8 @@ app_name = 'store'
 
 urlpatterns = [
     path('', views.ProductListView.as_view(), name='product_list'),
+    path('set-currency/', views.set_currency, name='set_currency'),
+    path('set-preferences/', views.set_preferences, name='set_preferences'),
     path('search/', views.product_search, name='product_search'),
     path('about/', views.about, name='about'),
     path('reviews/', views.reviews_page, name='reviews_page'),
