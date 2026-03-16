@@ -71,7 +71,7 @@
                 {% csrf_token %}
                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
                 <select name="currency" onchange="this.form.submit()"
-                    style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 0.9rem; font-weight: 600;">
+                    style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 0.9rem; font-weight: 400;">
                     <option value="UAH" {% if selected_currency == 'UAH' %}selected{% endif %}>UAH (грн)</option>
                     <option value="USD" {% if selected_currency == 'USD' %}selected{% endif %}>USD ($)</option>
                     <option value="CZK" {% if selected_currency == 'CZK' %}selected{% endif %}>CZK (Kč)</option>
