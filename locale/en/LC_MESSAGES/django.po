@@ -1169,3 +1169,18 @@ msgstr "Dashboard"
 
 msgid "Нікнейм або номер"
 msgstr "Nickname or number"
+
+msgid "Виберіть мову та валюту"
+msgstr "Choose language and currency"
+
+msgid "Налаштуйте сайт для зручного перегляду"
+msgstr "Customize the site for comfortable viewing"
+
+msgid "Мова"
+msgstr "Language"
+
+msgid "Валюта"
+msgstr "Currency"
+
+msgid "Підтвердити"
+msgstr "Confirm"

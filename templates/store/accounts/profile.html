@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n currency_tags %}
 
 {% block title %}{% trans "Мій кабінет" %}{% endblock %}
 
@@ -35,7 +35,7 @@
             <div class="stat-icon">💰</div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Витрачено" %}</span>
-                <span class="stat-value">{{ stats.total_spent }} <small>{% trans "грн" %}</small></span>
+                <span class="stat-value">{{ stats.total_spent|currency:selected_currency }}</span>
             </div>
         </div>
         <div class="stat-card hover-lift">
