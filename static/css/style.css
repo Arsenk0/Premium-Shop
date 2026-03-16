@@ -225,7 +225,7 @@ a {
 
 .product-price {
     font-size: 1.3rem;
-    font-weight: 800;
+    font-weight: 400;
     white-space: nowrap;
 }
 
@@ -288,6 +288,38 @@ a {
 
 .btn-primary:hover {
     background: #222;
+}
+
+.btn-outline {
+    border: 1px solid #ddd;
+    background: transparent;
+    color: #333;
+    text-decoration: none !important;
+}
+
+.btn-outline:hover {
+    background: #f8f9fa;
+    border-color: #000;
+}
+
+.btn-pill {
+    background: #e2e8f0;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 50px;
+    padding: 0.7rem 1.8rem;
+    font-weight: 700;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.btn-pill:hover {
+    background: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 /* New Hover Effects */
@@ -753,5 +785,5 @@ a {
 .autocomplete-item .price {
     font-size: 0.8rem;
     color: var(--primary);
-    font-weight: 700;
+    font-weight: 400;
 }

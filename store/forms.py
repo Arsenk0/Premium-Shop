@@ -3,7 +3,7 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.utils.translation import gettext_lazy as _
-from .models import Order, Review
+from .models import Order, Review, Profile
 
 
 class UserSignupForm(UserCreationForm):
@@ -153,6 +153,7 @@ class OrderCreateForm(forms.ModelForm):
         return cleaned_data
 
 
+
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
@@ -160,4 +161,29 @@ class ReviewForm(forms.ModelForm):
         widgets = {
             'comment': forms.Textarea(attrs={'rows': 4, 'placeholder': _('Ваш відгук...')}),
             'rating': forms.Select(attrs={'class': 'form-group'}),
+        }
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _("Ім'я")}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _("Прізвище")}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': _("Email")}),
+        }
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['phone', 'social_handle', 'city', 'city_ref', 'warehouse', 'warehouse_ref']
+        widgets = {
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _("Телефон")}),
+            'social_handle': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _("Нікнейм або номер")}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _("Місто"), 'id': 'city-search', 'autocomplete': 'off'}),
+            'city_ref': forms.HiddenInput(),
+            'warehouse': forms.Select(attrs={'class': 'form-control', 'id': 'warehouse-select'}),
+            'warehouse_ref': forms.HiddenInput(),
         }

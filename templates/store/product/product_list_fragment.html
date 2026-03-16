@@ -1,4 +1,4 @@
-{% load static i18n %}
+{% load static i18n currency_tags %}
 
 <div class="product-list-header">
     <h2>
@@ -51,9 +51,7 @@
                 {% trans "Арт:" %} {{ product.article }}
             </p>
             <div class="product-price-row" style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                <span class="product-price">
-                    {{ product.price }} {% trans "грн" %}
-                </span>
+                <span class="product-price">{{ product.price|currency:selected_currency }}</span>
                 <div style="display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0;">
                     <button class="btn-wishlist toggle-wishlist {% if product.id in wishlist_product_ids %}active{% endif %}" data-product-id="{{ product.id }}" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted); transition: var(--transition);">
                         <i class="fas fa-heart"></i>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n currency_tags %}
 
 {% block title %}{% trans "Мій кабінет" %}{% endblock %}
 
@@ -18,7 +18,7 @@
         </div>
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-outline hover-scale">{% trans "Вийти" %}</button>
+            <button type="submit" class="btn btn-pill hover-scale">{% trans "Вийти" %}</button>
         </form>
     </div>
 
@@ -35,7 +35,7 @@
             <div class="stat-icon">💰</div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Витрачено" %}</span>
-                <span class="stat-value">{{ stats.total_spent }} <small>{% trans "грн" %}</small></span>
+                <span class="stat-value">{{ stats.total_spent|currency:selected_currency }}</span>
             </div>
         </div>
         <div class="stat-card hover-lift">
@@ -63,13 +63,13 @@
                     <a href="{% url 'store:wishlist_list' %}" class="action-link">
                         <span>❤️</span> {% trans "Список бажань" %}
                     </a>
-                    <a href="#" class="action-link">
+                    <a href="{% url 'store:order_list' %}" class="action-link">
                         <span>🔍</span> {% trans "Відстежити замовлення" %}
                     </a>
-                    <a href="#" class="action-link">
+                    <a href="{% url 'store:profile_edit' %}" class="action-link">
                         <span>👤</span> {% trans "Редагувати профіль" %}
                     </a>
-                    <a href="#" class="action-link">
+                    <a href="{% url 'password_change' %}" class="action-link">
                         <span>🔒</span> {% trans "Змінити пароль" %}
                     </a>
                 </nav>
@@ -323,17 +323,6 @@
         text-align: center;
         padding: 3rem 0;
         color: var(--text-muted);
-    }
-
-    .btn-outline {
-        border: 1px solid #ddd;
-        background: transparent;
-        color: #333;
-    }
-
-    .btn-outline:hover {
-        background: #f8f9fa;
-        border-color: #000;
     }
 
     .hover-lift:hover {

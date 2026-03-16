@@ -5,12 +5,15 @@ app_name = 'store'
 
 urlpatterns = [
     path('', views.ProductListView.as_view(), name='product_list'),
+    path('set-currency/', views.set_currency, name='set_currency'),
+    path('set-preferences/', views.set_preferences, name='set_preferences'),
     path('search/', views.product_search, name='product_search'),
     path('about/', views.about, name='about'),
     path('reviews/', views.reviews_page, name='reviews_page'),
     path('contact/', views.contact, name='contact'),
     path('signup/', views.signup, name='signup'),
     path('profile/', views.profile, name='profile'),
+    path('profile/edit/', views.profile_edit, name='profile_edit'),
 
     # Cart
     path('cart/add/<int:product_id>/', views.cart_add, name='cart_add'),
@@ -22,6 +25,7 @@ urlpatterns = [
     # Orders
     path('order/create/', views.order_create, name='order_create'),
     path('order/success/<int:order_id>/', views.order_success, name='order_success'),
+    path('orders/', views.order_list, name='order_list'),
     
     # API
     path('api/nova-poshta/cities/', views.nova_poshta_cities, name='api_np_cities'),

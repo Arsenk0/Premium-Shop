@@ -50,19 +50,31 @@
             <a href="{% url 'store:signup' %}" class="nav-auth-link link-underline">{% trans "Реєстрація" %}</a>
             {% endif %}
 
-            <form action="{% url 'set_language' %}" method="post" style="display:flex; align-items:center;">
+            <form action="{% url 'set_language' %}" method="post" style="display:flex; align-items:center; margin-right: 0.5rem;">
                 {% csrf_token %}
                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
                 <select name="language" onchange="this.form.submit()"
-                    style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer;">
+                    style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 0.9rem;">
                     {% get_current_language as LANGUAGE_CODE %}
                     {% get_available_languages as LANGUAGES %}
                     {% get_language_info_list for LANGUAGES as languages %}
                     {% for language in languages %}
                     <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                        {% if language.code == 'uk' %}🇺🇦{% elif language.code == 'en' %}🇬🇧{% elif language.code == 'cs' %}🇨🇿{% endif %} 
                         {{ language.code|upper }}
                     </option>
                     {% endfor %}
+                </select>
+            </form>
+
+            <form action="{% url 'store:set_currency' %}" method="post" style="display:flex; align-items:center;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                <select name="currency" onchange="this.form.submit()"
+                    style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 0.9rem; font-weight: 400;">
+                    <option value="UAH" {% if selected_currency == 'UAH' %}selected{% endif %}>UAH (грн)</option>
+                    <option value="USD" {% if selected_currency == 'USD' %}selected{% endif %}>USD ($)</option>
+                    <option value="CZK" {% if selected_currency == 'CZK' %}selected{% endif %}>CZK (Kč)</option>
                 </select>
             </form>
 
@@ -130,6 +142,45 @@
         </div>
     </div>
 
+
+    <!-- Language/Currency Selection Modal -->
+    {% if show_preferences_modal %}
+    <div id="preferences-modal" class="modal-overlay" style="display: flex;">
+        <div class="modal-content fade-in" style="max-width: 500px; padding: 3rem;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">{% trans "Виберіть мову та валюту" %} 🌍</h2>
+                <p style="color: var(--text-muted);">{% trans "Налаштуйте сайт для зручного перегляду" %}</p>
+            </div>
+            
+            <form action="{% url 'store:set_preferences' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                
+                <div class="form-group">
+                    <label>{% trans "Мова" %}</label>
+                    <select name="language" class="filter-select" style="border-radius: 12px;">
+                        <option value="uk" {% if request.LANGUAGE_CODE == 'uk' %}selected{% endif %}>🇺🇦 Українська</option>
+                        <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>🇬🇧 English</option>
+                        <option value="cs" {% if request.LANGUAGE_CODE == 'cs' %}selected{% endif %}>🇨🇿 Čeština</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label>{% trans "Валюта" %}</label>
+                    <select name="currency" class="filter-select" style="border-radius: 12px;">
+                        <option value="UAH" {% if selected_currency == 'UAH' %}selected{% endif %}>UAH (грн)</option>
+                        <option value="USD" {% if selected_currency == 'USD' %}selected{% endif %}>USD ($)</option>
+                        <option value="CZK" {% if selected_currency == 'CZK' %}selected{% endif %}>CZK (Kč)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary hover-scale" style="width: 100%; margin-top: 2rem; height: 54px;">
+                    {% trans "Підтвердити" %} 🚀
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
 
     <script src="{% static 'js/main.js' %}"></script>
 </body>

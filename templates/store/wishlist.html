@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n %}
+{% load static i18n currency_tags %}
 
 {% block title %}{% trans "Список бажань" %}{% endblock %}
 
@@ -29,7 +29,7 @@
                     <h3 class="product-name">{{ product.name }}</h3>
                 </a>
                 <div class="product-price-row">
-                    <span class="product-price">{{ product.price }} ₴</span>
+                        <div class="product-price">{{ item.product.price|currency:selected_currency }}</div>
                     <button class="btn-wishlist toggle-wishlist active" data-product-id="{{ product.id }}" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--accent);">
                         <i class="fas fa-heart"></i>
                     </button>
