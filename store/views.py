@@ -16,6 +16,7 @@ from store.tasks import send_order_confirmation_email, send_welcome_email
 from store.cart import Cart
 from django.utils.translation import gettext as _, get_language
 from django.utils import translation
+from django.urls import translate_url
 from django.conf import settings
 import decimal
 from decimal import Decimal
@@ -417,7 +418,17 @@ def set_preferences(request):
     if language in [lang[0] for lang in settings.LANGUAGES]:
         translation.activate(language)
         request.session['_language'] = language
-        response = redirect(next_url)
+        
+        # Try to translate the next_url
+        translated_url = translate_url(next_url, language)
+        
+        # If translate_url failed (returns same URL but it has a prefix of another language)
+        # or if we just want to be extra safe, we ensure we don't redirect back to a conflicting prefix
+        if translated_url == next_url and any(next_url.startswith(f"/{l}/") for l in [lang[0] for lang in settings.LANGUAGES] if l != language):
+            # Fallback to home page with correct prefix if we can't translate reliably
+             translated_url = f"/{language}/" if language != settings.LANGUAGE_CODE else "/"
+
+        response = redirect(translated_url)
         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language)
     else:
         response = redirect(next_url)

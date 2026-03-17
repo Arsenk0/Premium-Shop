@@ -145,11 +145,12 @@
 
     <!-- Language/Currency Selection Modal -->
     {% if show_preferences_modal %}
+    {% language 'en' %}
     <div id="preferences-modal" class="modal-overlay" style="display: flex;">
         <div class="modal-content fade-in" style="max-width: 500px; padding: 3rem;">
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">{% trans "Виберіть мову та валюту" %} 🌍</h2>
-                <p style="color: var(--text-muted);">{% trans "Налаштуйте сайт для зручного перегляду" %}</p>
+                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">{% trans "Choose language and currency" %} 🌍</h2>
+                <p style="color: var(--text-muted);">{% trans "Customize the site for comfortable viewing" %}</p>
             </div>
             
             <form action="{% url 'store:set_preferences' %}" method="post">
@@ -157,7 +158,7 @@
                 <input type="hidden" name="next" value="{{ request.get_full_path }}">
                 
                 <div class="form-group">
-                    <label>{% trans "Мова" %}</label>
+                    <label>{% trans "Language" %}</label>
                     <select name="language" class="filter-select" style="border-radius: 12px;">
                         <option value="uk" {% if request.LANGUAGE_CODE == 'uk' %}selected{% endif %}>🇺🇦 Українська</option>
                         <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>🇬🇧 English</option>
@@ -166,7 +167,7 @@
                 </div>
 
                 <div class="form-group" style="margin-top: 1.5rem;">
-                    <label>{% trans "Валюта" %}</label>
+                    <label>{% trans "Currency" %}</label>
                     <select name="currency" class="filter-select" style="border-radius: 12px;">
                         <option value="UAH" {% if selected_currency == 'UAH' %}selected{% endif %}>UAH (грн)</option>
                         <option value="USD" {% if selected_currency == 'USD' %}selected{% endif %}>USD ($)</option>
@@ -175,11 +176,12 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary hover-scale" style="width: 100%; margin-top: 2rem; height: 54px;">
-                    {% trans "Підтвердити" %} 🚀
+                    {% trans "Confirm" %} 🚀
                 </button>
             </form>
         </div>
     </div>
+    {% endlanguage %}
     {% endif %}
 
     <script src="{% static 'js/main.js' %}"></script>
