@@ -31,7 +31,7 @@
                         <div>
                             <p class="item-name">{{ item.product.name }}</p>
                             <span>{{ item.price|currency:selected_currency }}</span>
-                            <p class="item-meta">{{ item.quantity }} x {{ item.price|currency }}</p>
+                            <p class="item-meta">{{ item.quantity }} x {{ item.price|currency:selected_currency }}</p>
                         </div>
                     </div>
                     {% endfor %}
