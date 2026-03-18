@@ -12,7 +12,14 @@ class EmailOrUsernameModelBackend(ModelBackend):
         except User.DoesNotExist:
             return None
         except User.MultipleObjectsReturned:
-            return User.objects.filter(email__iexact=username).order_by('id').first()
+            # Multiple users found — check password for each one
+            users = User.objects.filter(
+                Q(username__iexact=username) | Q(email__iexact=username)
+            ).order_by('id')
+            for user in users:
+                if user.check_password(password) and self.user_can_authenticate(user):
+                    return user
+            return None
         
         if user.check_password(password) and self.user_can_authenticate(user):
             return user
