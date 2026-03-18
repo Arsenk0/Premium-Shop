@@ -49,6 +49,7 @@ celerybeat.pid
 
 # Log files
 *.log
+django.log
 
 # OS generated files
 .DS_Store
