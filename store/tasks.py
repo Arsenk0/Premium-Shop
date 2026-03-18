@@ -1,4 +1,5 @@
 from celery import shared_task
+from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -13,7 +14,7 @@ def send_order_confirmation_email(order_id):
     try:
         order = Order.objects.get(id=order_id)
         subject = f'Замовлення №{order.id} - Підтвердження'
-        from_email = 'shop@example.com'
+        from_email = settings.DEFAULT_FROM_EMAIL
         to = order.email
 
         html_content = render_to_string('emails/order_confirmation.html', {'order': order})
@@ -34,7 +35,7 @@ def send_welcome_email(user_id):
     try:
         user = User.objects.get(id=user_id)
         subject = f'Ласкаво просимо до нашого магазину, {user.username}!'
-        from_email = 'shop@example.com'
+        from_email = settings.DEFAULT_FROM_EMAIL
         to = user.email
 
         if not to:
@@ -58,7 +59,7 @@ def send_order_status_update_email(order_id):
     try:
         order = Order.objects.get(id=order_id)
         subject = f'Оновлення статусу замовлення №{order.id}'
-        from_email = 'shop@example.com'
+        from_email = settings.DEFAULT_FROM_EMAIL
         to = order.email
 
         html_content = render_to_string('emails/order_status_update.html', {'order': order})

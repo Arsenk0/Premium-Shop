@@ -58,7 +58,7 @@ class NovaPoshtaService:
 class OrderService:
     @staticmethod
     def create_order(cart, user, form_data):
-        from ..models import Order
+        from ..models import Order, Product
         
         # Create the order object
         order = Order(**form_data)
@@ -66,14 +66,28 @@ class OrderService:
             order.user = user
         order.save()
 
-        # Create order items
+        # Create order items with current prices and decrement stock
         for item in cart:
-            OrderItem.objects.create(
+            product = item['product']
+            # Refresh product from DB to get current price and stock
+            product.refresh_from_db()
+            
+            order_item = OrderItem(
                 order=order,
-                product=item['product'],
-                price=item['price'],
+                product=product,
+                price=product.price,  # Use current DB price
                 quantity=item['quantity'],
                 size=item.get('size')
             )
+            order_item.full_clean()  # Validates size selection
+            order_item.save()
+            
+            # Decrement stock
+            if product.stock >= item['quantity']:
+                product.stock -= item['quantity']
+                product.save(update_fields=['stock'])
+            else:
+                # Should have been caught by cart validation, but safeguard here
+                logger.error(f"Stock error for {product.name} during order creation")
             
         return order
