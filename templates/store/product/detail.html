@@ -62,7 +62,7 @@
             </span>
             <span style="color: #eee;">|</span>
             {% endif %}
-            <a href="#reviews-section"
+            <a href="#reviews-section" class="link-underline"
                 style="font-size: 0.85rem; color: var(--primary); font-weight: 700; margin-left: 0.5rem; text-decoration: none;">
                 {% trans "Залишити відгук" %}
             </a>
@@ -103,14 +103,26 @@
 
         {% if product.available %}
         <div style="display: flex; gap: 1rem; align-items: center;">
-            <a id="add-to-cart-btn" href="{% url 'store:cart_add' product.id %}" class="btn btn-primary hover-scale"
-                style="flex-grow: 1; height: 60px; font-size: 1.2rem; gap: 10px; display: flex; align-items: center; justify-content: center;">
-                {% trans "Додати в кошик" %} <i class="fas fa-shopping-cart"></i>
-            </a>
+            <form id="add-to-cart-form" action="{% url 'store:cart_add' product.id %}" method="post" style="flex-grow: 1;">
+                {% csrf_token %}
+                <input type="hidden" name="size" id="selected-size-input">
+                <button type="submit" id="add-to-cart-btn" class="btn btn-primary hover-scale"
+                    style="width: 100%; height: 60px; font-size: 1.2rem; gap: 10px; display: flex; align-items: center; justify-content: center; border: none;">
+                    {% trans "Додати в кошик" %} <i class="fas fa-shopping-cart"></i>
+                </button>
+            </form>
             <button class="btn-wishlist toggle-wishlist {% if product.id in wishlist_product_ids %}active{% endif %}" data-product-id="{{ product.id }}" style="background: white; border: 2px solid #eee; width: 60px; height: 60px; border-radius: 12px; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); transition: var(--transition); display: flex; align-items: center; justify-content: center;">
                 <i class="fas fa-heart"></i>
             </button>
         </div>
+        <script>
+            // Sync radio button size selection to hidden input for fallback form submission
+            document.querySelectorAll('input[name="size"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    document.getElementById('selected-size-input').value = e.target.value;
+                });
+            });
+        </script>
         {% else %}
         <button class="btn" style="width: 100%; height: 60px; background: #ccc; cursor: not-allowed;" disabled>
             {% trans "Немає в наявності" %}

@@ -16,7 +16,9 @@ from store.tasks import send_order_confirmation_email, send_welcome_email
 from store.cart import Cart
 from django.utils.translation import gettext as _, get_language
 from django.utils import translation
+from django.urls import translate_url
 from django.conf import settings
+from .utils import rate_limit
 import decimal
 from decimal import Decimal
 
@@ -213,15 +215,22 @@ def product_search(request):
     return render(request, 'store/product/search.html', {'products': results, 'query': query})
 
 
+@require_POST
 def cart_add(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    size = request.GET.get('size')
+    size = request.POST.get('size') or request.GET.get('size')
     
     # Enforce size selection if product has sizes
     if product.sizes.exists() and not size:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'status': 'error', 'message': _('Будь ласка, оберіть розмір!')}, status=400)
+        return redirect('store:product_detail', pk=product.id, slug=product.slug)
+
+    # Check stock availability
+    if product.stock <= 0:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'error', 'message': _('Товар відсутній на складі!')}, status=400)
         return redirect('store:product_detail', pk=product.id, slug=product.slug)
 
     cart.add(product, size)
@@ -236,23 +245,24 @@ def cart_add(request, product_id):
     return redirect('store:cart_detail')
 
 
+@require_POST
 def cart_remove(request, item_key):
     cart = Cart(request)
     cart.remove(item_key)
     return redirect('store:cart_detail')
 
 
+@require_POST
 def cart_update(request, item_key):
-    if request.method == 'POST':
-        cart = Cart(request)
-        action = request.POST.get('action')
-        cart.update(item_key, action)
+    cart = Cart(request)
+    action = request.POST.get('action')
+    cart.update(item_key, action)
 
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return JsonResponse({
-                'status': 'ok',
-                'cart_count': len(cart)
-            })
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({
+            'status': 'ok',
+            'cart_count': len(cart),
+        })
 
     return redirect('store:cart_detail')
 
@@ -300,6 +310,12 @@ def order_create(request):
             send_order_confirmation_email.delay(order.id)
             
             cart.clear()
+            
+            # Store order ID in session for guest access (IDOR protection)
+            permitted_orders = request.session.get('permitted_orders', [])
+            permitted_orders.append(order.id)
+            request.session['permitted_orders'] = permitted_orders
+            
             return redirect('store:order_success', order_id=order.id)
     else:
         initial_data = {}
@@ -327,9 +343,24 @@ def order_create(request):
 
 def order_success(request, order_id):
     order = get_object_or_404(Order, id=order_id)
+    
+    # IDOR protection: check if order belongs to the user or is in session (for guests)
+    is_owner = False
+    if request.user.is_authenticated:
+        if order.user == request.user:
+            is_owner = True
+    else:
+        permitted_orders = request.session.get('permitted_orders', [])
+        if order.id in permitted_orders:
+            is_owner = True
+            
+    if not is_owner:
+        return redirect('store:product_list')
+        
     return render(request, 'store/order/success.html', {'order': order})
 
 
+@rate_limit('np_api', 5, 60)
 def nova_poshta_cities(request):
     query = request.GET.get('q', '')
     if len(query) < 2:
@@ -338,6 +369,7 @@ def nova_poshta_cities(request):
     return JsonResponse({'data': cities})
 
 
+@rate_limit('np_api', 10, 60)
 def nova_poshta_warehouses(request):
     city_ref = request.GET.get('city_ref', '')
     if not city_ref:
@@ -359,6 +391,7 @@ def contact(request):
     return render(request, 'store/contact.html')
 
 
+@rate_limit('search_api', 20, 60)
 def search_autocomplete(request):
     query = request.GET.get('q', '')
     products = Product.objects.filter(
@@ -417,7 +450,17 @@ def set_preferences(request):
     if language in [lang[0] for lang in settings.LANGUAGES]:
         translation.activate(language)
         request.session['_language'] = language
-        response = redirect(next_url)
+        
+        # Try to translate the next_url
+        translated_url = translate_url(next_url, language)
+        
+        # If translate_url failed (returns same URL but it has a prefix of another language)
+        # or if we just want to be extra safe, we ensure we don't redirect back to a conflicting prefix
+        if translated_url == next_url and any(next_url.startswith(f"/{l}/") for l in [lang[0] for lang in settings.LANGUAGES] if l != language):
+            # Fallback to home page with correct prefix if we can't translate reliably
+             translated_url = f"/{language}/" if language != settings.LANGUAGE_CODE else "/"
+
+        response = redirect(translated_url)
         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language)
     else:
         response = redirect(next_url)

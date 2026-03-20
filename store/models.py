@@ -167,7 +167,9 @@ class Wishlist(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'product')
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'product'], name='unique_wishlist_item')
+        ]
         verbose_name = _("Список бажань")
         verbose_name_plural = _("Списки бажань")
 

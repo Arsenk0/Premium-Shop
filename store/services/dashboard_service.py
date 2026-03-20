@@ -1,7 +1,8 @@
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, F
 from ..models import Order, Review, Wishlist
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
+from django.utils.html import escape
 
 def get_user_dashboard_stats(user):
     """
@@ -9,7 +10,9 @@ def get_user_dashboard_stats(user):
     """
     stats = {
         'total_orders': Order.objects.filter(user=user).count(),
-        'total_spent': Order.objects.filter(user=user, status='Completed').aggregate(total=Sum('items__price'))['total'] or 0,
+        'total_spent': Order.objects.filter(user=user, status='Completed').aggregate(
+            total=Sum(F('items__price') * F('items__quantity'))
+        )['total'] or 0,
         'wishlist_count': Wishlist.objects.filter(user=user).count(),
         'reviews_count': Review.objects.filter(user=user).count(),
     }
@@ -28,15 +31,16 @@ def get_recent_activity(user, limit=5):
             'New': '#17a2b8',
             'Processing': '#ffc107',
             'Shipped': '#007bff',
-            'Delivered': '#28a745',
-            'Cancelled': '#dc3545'
+            'Completed': '#28a745',
+            'Canceled': '#dc3545'
         }
         color = status_colors.get(order.status, '#6c757d')
+        status_display = escape(order.get_status_display())
         activities.append({
             'type': 'order',
             'date': order.created,
             'title': _('Замовлення') + f' #{order.id}',
-            'description': f"{_('Статус')}: <span style='color: {color}; font-weight: 600;'>{order.get_status_display()}</span>",
+            'description': f"{_('Статус')}: <span style='color: {color}; font-weight: 600;'>{status_display}</span>",
             'icon': '📦'
         })
         
@@ -46,7 +50,7 @@ def get_recent_activity(user, limit=5):
         activities.append({
             'type': 'review',
             'date': review.created_at,
-            'title': _('Відгук на') + f' {review.product.name}',
+            'title': _('Відгук на') + f' {escape(review.product.name)}',
             'description': _('Оцінка:') + f' {review.rating}/5',
             'icon': '⭐'
         })
@@ -57,7 +61,7 @@ def get_recent_activity(user, limit=5):
         activities.append({
             'type': 'wishlist',
             'date': item.added_at,
-            'title': _('Додано в обране:') + f' {item.product.name}',
+            'title': _('Додано в обране:') + f' {escape(item.product.name)}',
             'description': _('Будемо чекати на ваше замовлення!'),
             'icon': '❤️'
         })

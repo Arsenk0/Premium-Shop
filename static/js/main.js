@@ -35,8 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             fetch(cartUrl.toString(), {
+                method: 'POST',
                 headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': getCookie('csrftoken')
                 }
             })
                 .then(response => {

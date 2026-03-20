@@ -27,12 +27,13 @@ class CartLogicTest(TestCase):
             name="Test Product",
             article="PROD-1",
             price=50.00,
+            stock=10,
             available=True
         )
 
     def test_cart_count_is_correct(self):
-        # Add product to cart
-        self.client.get(reverse('store:cart_add', args=[self.product.id]))
+        # Add product to cart (POST request required)
+        self.client.post(reverse('store:cart_add', args=[self.product.id]))
         
         # Check count via view logic (mocking the request)
         from .cart import Cart
@@ -44,7 +45,7 @@ class CartLogicTest(TestCase):
         self.assertEqual(len(Cart(mock_req)), 1)
 
         # Add another of the same product
-        self.client.get(reverse('store:cart_add', args=[self.product.id]))
+        self.client.post(reverse('store:cart_add', args=[self.product.id]))
         mock_req.session = self.client.session
         self.assertEqual(len(Cart(mock_req)), 2)
 
@@ -53,7 +54,7 @@ class CartLogicTest(TestCase):
         size = Size.objects.create(name="42", type="shoes")
         self.product.sizes.add(size)
         
-        response = self.client.get(reverse('store:cart_add', args=[self.product.id]), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.post(reverse('store:cart_add', args=[self.product.id]), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json()['status'], 'error')
 
