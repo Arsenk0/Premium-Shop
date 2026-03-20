@@ -184,7 +184,7 @@ function updateQuantity(itemKey, action, url) {
                 entry.target.classList.add('visible');
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0 });
 
     fadeElems.forEach(elem => observer.observe(elem));
 
