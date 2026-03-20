@@ -81,7 +81,7 @@ class OrderCreateForm(forms.ModelForm):
     warehouse_ref = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     contact_method = forms.ChoiceField(
-        choices=[('TELEGRAM', 'Telegram'), ('INSTAGRAM', 'Instagram'), ('PHONE', _('Дзвінок по телефону'))],
+        choices=[('TELEGRAM', 'Telegram'), ('INSTAGRAM', 'Instagram'), ('WHATSAPP', 'WhatsApp')],
         initial='TELEGRAM',
         widget=forms.RadioSelect()
     )
@@ -99,7 +99,7 @@ class OrderCreateForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'placeholder': 'example@mail.com'}),
         }
         help_texts = {
-            'social_handle': _('Вкажіть ваш Instagram або Telegram. Якщо ви обрали "Дзвінок", це поле можна залишити порожнім.'),
+            'social_handle': _('Вкажіть ваш Instagram або Telegram. Якщо ви обрали "WhatsApp", це поле можна залишити порожнім.'),
         }
 
     def clean_first_name(self):
@@ -148,7 +148,7 @@ class OrderCreateForm(forms.ModelForm):
                 else:
                     raise forms.ValidationError({'social_handle': _("Для %(method)s нікнейм зазвичай починається з @") % {'method': method}})
             cleaned_data['social_handle'] = handle
-        elif method == 'PHONE':
+        elif method == 'WHATSAPP':
             cleaned_data['social_handle'] = cleaned_data.get('phone')
         return cleaned_data
 

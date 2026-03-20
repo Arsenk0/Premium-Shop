@@ -84,8 +84,10 @@
                                 <i class="fab fa-telegram"></i>
                                 {% elif radio.choice_label == "Instagram" %}
                                 <i class="fab fa-instagram"></i>
-                                {% else %}
+                                {% elif radio.choice_label == "WhatsApp" %}
                                 <i class="fab fa-whatsapp"></i>
+                                {% else %}
+                                <i class="fas fa-comment"></i>
                                 {% endif %}
                             </div>
                             <span>{{ radio.choice_label }}</span>
