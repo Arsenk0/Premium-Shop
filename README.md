@@ -99,3 +99,11 @@ Key environment variables in `.env`:
 
 ---
 *Created with ❤️ by Arsen Khomiak*
+
+## 📜 Personal Project
+
+This project is developed by Arsen Khomiak for personal use. You can explore the code and use it as a basis for your own boutique store.
+
+## 🤝 Fork and Build
+
+We do not accept contributions to this repository. Please see our [Fork Guide](FORK_GUIDE.md) for instructions on how to create your own copy and build something unique!
