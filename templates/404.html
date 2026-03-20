@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans '404 - Сторінку не знайдено' %}{% endblock %}
+
+{% block content %}
+<div class="container" style="text-align: center; padding: 10rem 0;">
+    <h1 style="font-size: 8rem; font-weight: 800; margin-bottom: 1rem;">404</h1>
+    <p style="font-size: 1.5rem; color: #888; margin-bottom: 3rem;">{% trans 'Халепа! Здається, ви загубилися.' %}</p>
+    <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale">{% trans 'На головну' %}</a>
+</div>
+{% endblock %}
