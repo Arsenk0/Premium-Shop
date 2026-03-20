@@ -102,7 +102,7 @@ class Order(models.Model):
     contact_method = models.CharField(max_length=20, choices=[
         ('TELEGRAM', 'Telegram'),
         ('INSTAGRAM', 'Instagram'),
-        ('PHONE', _('Дзвінок по телефону')),
+        ('WHATSAPP', 'WhatsApp'),
     ], default='TELEGRAM', verbose_name=_("Спосіб зв'язку"))
     city = models.CharField(max_length=100, verbose_name=_("Місто"))
     city_ref = models.CharField(max_length=100, blank=True, verbose_name=_("Ref міста"))

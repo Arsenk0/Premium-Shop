@@ -84,8 +84,10 @@
                                 <i class="fab fa-telegram"></i>
                                 {% elif radio.choice_label == "Instagram" %}
                                 <i class="fab fa-instagram"></i>
-                                {% else %}
+                                {% elif radio.choice_label == "WhatsApp" %}
                                 <i class="fab fa-whatsapp"></i>
+                                {% else %}
+                                <i class="fas fa-comment"></i>
                                 {% endif %}
                             </div>
                             <span>{{ radio.choice_label }}</span>
@@ -131,7 +133,7 @@
             <br>
             <button type="submit" class="btn btn-primary hover-scale"
                 style="width: 100%; padding: 1.5rem; font-size: 1.3rem; border-radius: 16px;">
-                {% trans "Підтвердити замовлення" %} 🚀
+                {% trans "Підтвердити замовлення" %}<i class="fas fa-paper-plane" style="margin-left: 10px;"></i>
             </button>
         </form>
     </div>
