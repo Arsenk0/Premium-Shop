@@ -16,25 +16,32 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             let url = btn.getAttribute('href');
+            if (!url) {
+                const form = btn.closest('form');
+                if (form) url = form.getAttribute('action');
+            }
 
-    // Check for authentication
-    const isUserAuthenticated = body.dataset.authenticated === 'true';
-    if (isUserAuthenticated === false) {
+            if (!url) return;
+
+            // Check for authentication
+            const isUserAuthenticated = body.dataset.authenticated === 'true';
+            if (isUserAuthenticated === false) {
                 showLoginModal();
                 return;
             }
 
             // Check for size selection
             const sizeInput = document.querySelector('input[name="size"]:checked');
-            const cartUrl = new URL(url, window.location.origin);
             if (sizeInput) {
+                const cartUrl = new URL(url, window.location.origin);
                 cartUrl.searchParams.set('size', sizeInput.value);
+                url = cartUrl.toString();
             } else if (document.querySelector('input[name="size"]')) {
-                showToast(`⚠️ ${TRANSLATIONS.toastSelectSize}`);
+                showToast(`<i class="fas fa-exclamation-triangle" style="color: var(--accent);"></i> <span>${TRANSLATIONS.toastSelectSize}</span>`);
                 return;
             }
 
-            fetch(cartUrl.toString(), {
+            fetch(url, {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
@@ -56,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             cartCount.style.transform = 'scale(1.3)';
                             setTimeout(() => cartCount.style.transform = 'scale(1)', 200);
                         }
-                        showToast(`🛍 ${TRANSLATIONS.toastAdded}`);
+                        showToast(`<i class="fas fa-shopping-bag"></i> <span>${TRANSLATIONS.toastAdded}</span>`);
 
                         // Clear error UI if present
                         const errorMsg = document.getElementById('size-error');
@@ -65,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .catch(err => {
                     if (err.message) {
-                        showToast(`⚠️ ${err.message}`);
+                        showToast(`<i class="fas fa-exclamation-circle" style="color: var(--accent);"></i> <span>${err.message}</span>`);
                         const errorMsg = document.getElementById('size-error');
                         if (errorMsg) errorMsg.style.display = 'block';
                     }
@@ -77,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = 'toast';
-        toast.innerHTML = `<span>${message}</span>`;
+        toast.innerHTML = message;
         container.appendChild(toast);
 
         setTimeout(() => {
@@ -135,12 +142,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Refresh to update all prices and totals reliably
                     location.reload();
                 } else if (data.status === 'error' && data.message) {
-                    showToast(`⚠️ ${data.message}`);
+                    showToast(`<i class="fas fa-exclamation-circle" style="color: var(--accent);"></i> <span>${data.message}</span>`);
                 }
             })
             .catch(error => {
                 console.error('Error updating cart:', error);
-                showToast(`⚠️ ${TRANSLATIONS.toastError}`);
+                showToast(`<i class="fas fa-exclamation-triangle" style="color: var(--accent);"></i> <span>${TRANSLATIONS.toastError}</span>`);
             });
     }
 
@@ -264,10 +271,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.status === 'ok') {
                 if (data.action === 'added') {
                     btn.classList.add('active');
-                    showToast('💖 ' + (body.dataset.toastWishlistAdded || 'Додано до списку бажань!'));
+                    showToast(`<i class="fas fa-heart" style="color: var(--accent);"></i> <span>` + (body.dataset.toastWishlistAdded || 'Додано до списку бажань!') + `</span>`);
                 } else {
                     btn.classList.remove('active');
-                    showToast('💔 ' + (body.dataset.toastWishlistRemoved || 'Видалено зі списку бажань'));
+                    showToast(`<i class="fas fa-heart-crack"></i> <span>` + (body.dataset.toastWishlistRemoved || 'Видалено зі списку бажань') + `</span>`);
                     
                     if (window.location.pathname.includes('/wishlist/')) {
                         const card = btn.closest('.product-card');

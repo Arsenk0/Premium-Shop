@@ -6,7 +6,7 @@
 {% block content %}
 <div class="container fade-in" style="max-width: 600px; text-align: center; padding-top: 5rem; padding-bottom: 5rem;">
     <div style="background: white; padding: 4rem; border-radius: 24px; box-shadow: var(--shadow);">
-        <div style="font-size: 5rem; margin-bottom: 2rem;">🎉</div>
+        <div style="font-size: 5rem; margin-bottom: 2rem;"><i class="fas fa-grin-stars" style="color: #ffc107;"></i></div>
         <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">{% trans "Дякуємо за замовлення!" %}</h1>
         <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2.5rem;">
             {% blocktrans with order_id=order.id contact_method=order.contact_method %}Ваше замовлення <strong>#{{ order_id }}</strong> успішно прийнято в обробку. Ми зв'яжемося з вами через <strong>{{ contact_method }}</strong> найближчим часом.{% endblocktrans %}
@@ -21,7 +21,7 @@
 
         <div style="display: flex; flex-direction: column; gap: 1rem;">
             <a href="{% url 'store:product_list' %}" class="btn btn-primary" style="width: 100%;">
-                {% trans "Повернутися до каталогу" %} 🛍️
+                {% trans "Повернутися до каталогу" %} <i class="fas fa-shopping-bag"></i>
             </a>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
                 {% trans "Виникли питання? Напишіть нам у підтримку." %}

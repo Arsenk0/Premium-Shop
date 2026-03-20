@@ -80,7 +80,7 @@
                 </label>
                 {% endfor %}
             </div>
-            <p id="size-error" style="color: var(--accent); font-size: 0.85rem; margin-top: 0.5rem; display: none;">⚠️
+            <p id="size-error" style="color: var(--accent); font-size: 0.85rem; margin-top: 0.5rem; display: none;"><i class="fas fa-exclamation-triangle"></i>
                 {% trans "Будь ласка, оберіть розмір!" %}</p>
         </div>
         {% endif %}
@@ -180,11 +180,11 @@
                 {% else %}
                 <p style="text-align: center; color: grey;">
                     {% trans "Для того, щоб залишити відгук, будь ласка," %}
-                    <a href="{% url 'login' %}" style="color: var(--primary); font-weight: 700;">
+                    <a href="{% url 'login' %}" class="link-underline" style="color: var(--primary); font-weight: 700;">
                         {% trans "увійдіть" %}
                     </a>
                     {% trans "або" %}
-                    <a href="{% url 'store:signup' %}" style="color: var(--primary); font-weight: 700;">
+                    <a href="{% url 'store:signup' %}" class="link-underline" style="color: var(--primary); font-weight: 700;">
                         {% trans "зареєструйтесь" %}
                     </a>.
                 </p>
