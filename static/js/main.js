@@ -116,7 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    function updateQuantity(itemKey, action, url) {
+    /**
+ * Updates the quantity of an item in the cart via AJAX.
+ * @param {string} itemKey - Unique key for the cart item.
+ * @param {string} action - Action to perform ("add", "subtract", or "delete").
+ * @param {string} url - Optional URL to the update endpoint.
+ */
+function updateQuantity(itemKey, action, url) {
         const actionUrl = url || `/${document.documentElement.lang || 'uk'}/cart/update/${itemKey}/`;
         const formData = new FormData();
         formData.append('action', action);
