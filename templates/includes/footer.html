@@ -1,0 +1,31 @@
+{% load static i18n %}
+<footer style="background: var(--primary); color: white; padding: 4rem 5%; margin-top: 6rem;">
+    <div class="container"
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; text-align: left;">
+        <div>
+            <h3 style="margin-bottom: 1.5rem;">PREMIUM SHOP</h3>
+            <p style="color: #888; font-size: 0.9rem;">{% trans "Найкращий стрітвір та кросівки в Україні. Тільки оригінальна якість та преміальний сервіс." %}</p>
+        </div>
+        <div>
+            <h4 style="margin-bottom: 1rem;">{% trans "Навігація" %}</h4>
+            <ul style="list-style: none; color: #888; font-size: 0.9rem;">
+                <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:about' %}" class="link-underline">{% trans "Про нас" %}</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:reviews_page' %}" class="link-underline">{% trans "Відгуки" %}</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:contact' %}" class="link-underline">{% trans "Контакти" %}</a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="margin-bottom: 1rem;">{% trans "Соцмережі" %}</h4>
+            <div style="display: flex; gap: 1rem; font-size: 1.5rem;">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+    <div
+        style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #333; color: #555; font-size: 0.8rem;">
+        &copy; 2026 Premium Shop. {% trans "Всі права захищені." %}
+    </div>
+</footer>
