@@ -22,7 +22,7 @@
             {% csrf_token %}
             <input name="next" type="hidden" value="{{ request.get_full_path }}">
             <select name="language" onchange="this.form.submit()"
-                style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 0.9rem;">
+                style="padding: 0.3rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-main); cursor: pointer; font-size: 0.9rem;">
                 {% get_current_language as LANGUAGE_CODE %}
                 {% get_available_languages as LANGUAGES %}
                 {% get_language_info_list for LANGUAGES as languages %}
@@ -39,12 +39,16 @@
             {% csrf_token %}
             <input name="next" type="hidden" value="{{ request.get_full_path }}">
             <select name="currency" onchange="this.form.submit()"
-                style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 0.9rem; font-weight: 400;">
+                style="padding: 0.3rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-main); cursor: pointer; font-size: 0.9rem; font-weight: 400;">
                 <option value="UAH" {% if selected_currency == 'UAH' %}selected{% endif %}>UAH (грн)</option>
                 <option value="USD" {% if selected_currency == 'USD' %}selected{% endif %}>USD ($)</option>
                 <option value="CZK" {% if selected_currency == 'CZK' %}selected{% endif %}>CZK (Kč)</option>
             </select>
         </form>
+
+        <button id="theme-toggle" class="nav-auth-link" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; margin-right: 0.5rem; color: var(--text-main);" title="Toggle Theme">
+            <i class="fas fa-moon"></i>
+        </button>
 
         <a href="{% url 'store:wishlist_list' %}" class="nav-auth-link" title="{% trans 'Список бажань' %}"><i class="fas fa-heart"></i></a>
         <a href="{% url 'store:cart_detail' %}" class="cart-link">

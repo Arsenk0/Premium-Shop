@@ -9,7 +9,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #fff !important;
+    color: var(--secondary) !important;
 }
 
 /* Buttons */
@@ -41,7 +41,7 @@
 }
 
 .btn-secondary {
-    background: #e0e0e0;
+    background: var(--border-color-dark);
     color: var(--primary);
 }
 
@@ -55,25 +55,25 @@
 }
 
 .btn-primary:hover {
-    background: #222;
+    background: var(--primary-hover);
 }
 
 .btn-outline {
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color-dark);
     background: transparent;
-    color: #333;
+    color: var(--text-main);
     text-decoration: none !important;
 }
 
 .btn-outline:hover {
-    background: #f8f9fa;
-    border-color: #000;
+    background: var(--card-bg-alt);
+    border-color: var(--primary);
 }
 
 .btn-pill {
-    background: #e2e8f0;
-    color: #000;
-    border: 1px solid #000;
+    background: var(--card-bg-alt);
+    color: var(--text-main);
+    border: 1px solid var(--text-main);
     border-radius: 50px;
     padding: 0.7rem 1.8rem;
     font-weight: 700;
@@ -85,7 +85,7 @@
 }
 
 .btn-pill:hover {
-    background: #cbd5e1;
+    background: var(--border-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
@@ -107,11 +107,11 @@
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    background: #f8f9fa;
+    background: var(--card-bg-alt);
     padding: 0.4rem;
     border-radius: 30px;
     width: fit-content;
-    border: 1px solid #eee;
+    border: 1px solid var(--border-color);
 }
 
 .qty-btn {
@@ -119,8 +119,8 @@
     height: 28px;
     border-radius: 50%;
     border: none;
-    background: #fff;
-    color: var(--dark);
+    background: var(--card-bg);
+    color: var(--text-main);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,12 +133,12 @@
 
 .qty-btn:hover {
     background: var(--primary);
-    color: #fff;
+    color: var(--secondary);
     transform: scale(1.1);
 }
 
 .qty-btn.delete:hover {
-    background: #fff;
+    background: var(--card-bg);
     color: var(--accent);
     transform: scale(1.05);
     text-decoration: underline;

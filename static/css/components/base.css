@@ -1,17 +1,39 @@
 :root {
     --primary: #000;
+    --primary-hover: #222;
     --secondary: #fff;
     --accent: #ff4d4d;
+    --accent-text: #ffffff;
     --bg-color: #f4f4f4;
     --card-bg: #fff;
+    --card-bg-alt: #f8f9fa;
     --text-main: #333;
     --text-muted: #666;
+    --border-color: #eee;
+    --border-color-dark: #ddd;
     --glass-bg: rgba(255, 255, 255, 0.8);
     --border-radius: 12px;
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     --transition-fast: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
     --radius-pill: 50px;
+}
+
+[data-theme="dark"] {
+    --primary: #fff;
+    --primary-hover: #ddd;
+    --secondary: #000;
+    --accent: #00ffcc;
+    --accent-text: #000000;
+    --bg-color: #0a0a0a;
+    --card-bg: #1a1a1a;
+    --card-bg-alt: #222;
+    --text-main: #f0f0f0;
+    --text-muted: #a0a0a0;
+    --border-color: #333;
+    --border-color-dark: #444;
+    --glass-bg: rgba(10, 10, 10, 0.8);
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -121,8 +143,8 @@ a {
 }
 
 .toast {
-    background: #000;
-    color: #fff;
+    background: var(--primary);
+    color: var(--secondary);
     padding: 1rem 1.5rem;
     border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);

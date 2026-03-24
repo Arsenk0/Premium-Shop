@@ -7,4 +7,7 @@ import './modules/wishlist.js';
 import './modules/search.js';
 import './modules/filters.js';
 
+import { initTheme } from './modules/theme.js';
+
+initTheme();
 console.log('App modules loaded successfully.');

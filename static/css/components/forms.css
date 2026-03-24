@@ -16,12 +16,13 @@
     width: 100%;
     padding: 1rem 1.2rem;
     border-radius: var(--radius-pill);
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
+    border: 1px solid var(--border-color-dark);
+    background: var(--card-bg-alt);
     transition: var(--transition);
     outline: none;
     font-size: 1rem;
     appearance: none;
+    color: var(--text-main);
 }
 
 .form-group select,
@@ -39,7 +40,7 @@
 .filter-select:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
-    background: #fff;
+    background: var(--card-bg);
 }
 
 .form-group input::placeholder {
@@ -115,16 +116,16 @@
     flex-direction: column;
     align-items: center;
     padding: 1rem;
-    border: 2px solid #eee;
+    border: 2px solid var(--border-color);
     border-radius: 12px;
     transition: var(--transition);
     cursor: pointer;
-    background: #fff;
+    background: var(--card-bg);
 }
 
 .contact-method-option input:checked+.contact-method-card {
     border-color: var(--primary);
-    background: #f8fafc;
+    background: var(--card-bg-alt);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
@@ -135,7 +136,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    background: #f8fafc;
+    background: var(--card-bg-alt);
     margin-bottom: 0.75rem;
     transition: var(--transition);
 }
@@ -145,7 +146,7 @@
 }
 
 .contact-method-option input:checked+.contact-method-card .method-icon-wrapper i {
-    color: #fff !important;
+    color: var(--secondary) !important;
 }
 
 .fa-telegram { color: #0088cc; }
