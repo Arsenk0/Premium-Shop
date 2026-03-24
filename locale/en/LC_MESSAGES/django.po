@@ -1136,8 +1136,8 @@ msgstr ""
 "Nothing here yet. Be the first to leave a review for one of our products!"
 
 #: templates/store/wishlist.html:9
-msgid "Ваш список бажань 💖"
-msgstr "Your Wishlist 💖"
+msgid "Ваш список бажань"
+msgstr "Your Wishlist"
 
 #: templates/store/wishlist.html:10
 msgid "Товари, які ви зберегли."

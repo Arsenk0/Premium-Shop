@@ -1123,7 +1123,7 @@ msgid ""
 msgstr ""
 
 #: templates/store/wishlist.html:9
-msgid "Ваш список бажань 💖"
+msgid "Ваш список бажань"
 msgstr ""
 
 #: templates/store/wishlist.html:10

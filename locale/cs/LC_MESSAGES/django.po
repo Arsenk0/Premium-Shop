@@ -1145,8 +1145,8 @@ msgstr ""
 "produktů!"
 
 #: templates/store/wishlist.html:9
-msgid "Ваш список бажань 💖"
-msgstr "Váš seznam přání 💖"
+msgid "Ваш список бажань"
+msgstr "Váš seznam přání"
 
 #: templates/store/wishlist.html:10
 msgid "Товари, які ви зберегли."
