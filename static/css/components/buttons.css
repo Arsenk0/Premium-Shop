@@ -1,0 +1,151 @@
+/* Premium Button Styling */
+.btn-more {
+    min-width: 120px !important;
+    height: 44px !important;
+    font-size: 0.85rem !important;
+    padding: 0 1.2rem !important;
+    border-radius: var(--radius-pill) !important;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff !important;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 1rem;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    min-width: 160px;
+    height: 54px;
+    text-decoration: none !important;
+}
+
+.btn:after {
+    display: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--secondary);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background: #e0e0e0;
+    color: var(--primary);
+}
+
+.btn:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(-2px) scale(1.01);
+}
+
+.btn-primary:hover {
+    background: #222;
+}
+
+.btn-outline {
+    border: 1px solid #ddd;
+    background: transparent;
+    color: #333;
+    text-decoration: none !important;
+}
+
+.btn-outline:hover {
+    background: #f8f9fa;
+    border-color: #000;
+}
+
+.btn-pill {
+    background: #e2e8f0;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 50px;
+    padding: 0.7rem 1.8rem;
+    font-weight: 700;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.btn-pill:hover {
+    background: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-wishlist {
+    transition: var(--transition);
+}
+
+.btn-wishlist:hover {
+    transform: scale(1.2);
+}
+
+.btn-wishlist.active {
+    color: var(--accent) !important;
+}
+
+/* Quantity Controls */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: #f8f9fa;
+    padding: 0.4rem;
+    border-radius: 30px;
+    width: fit-content;
+    border: 1px solid #eee;
+}
+
+.qty-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.qty-btn:hover {
+    background: var(--primary);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.qty-btn.delete:hover {
+    background: #fff;
+    color: var(--accent);
+    transform: scale(1.05);
+    text-decoration: underline;
+}
+
+.qty-val {
+    font-weight: 600;
+    min-width: 1.5rem;
+    text-align: center;
+}

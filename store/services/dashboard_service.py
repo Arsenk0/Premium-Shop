@@ -41,7 +41,7 @@ def get_recent_activity(user, limit=5):
             'date': order.created,
             'title': _('Замовлення') + f' #{order.id}',
             'description': f"{_('Статус')}: <span style='color: {color}; font-weight: 600;'>{status_display}</span>",
-            'icon': '📦'
+            'icon': '<i class="fas fa-box" style="color: var(--accent);"></i>'
         })
         
     # Recent Reviews
@@ -52,7 +52,7 @@ def get_recent_activity(user, limit=5):
             'date': review.created_at,
             'title': _('Відгук на') + f' {escape(review.product.name)}',
             'description': _('Оцінка:') + f' {review.rating}/5',
-            'icon': '⭐'
+            'icon': '<i class="fas fa-star" style="color: var(--accent);"></i>'
         })
         
     # Recent Wishlist additions
@@ -63,7 +63,7 @@ def get_recent_activity(user, limit=5):
             'date': item.added_at,
             'title': _('Додано в обране:') + f' {escape(item.product.name)}',
             'description': _('Будемо чекати на ваше замовлення!'),
-            'icon': '❤️'
+            'icon': '<i class="fas fa-heart" style="color: var(--accent);"></i>'
         })
         
     # Sort activities by date descending

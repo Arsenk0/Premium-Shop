@@ -12,7 +12,7 @@
                 {{ request.user.username|slice:":1"|upper }}
             </div>
             <div>
-                <h1>{% trans "Вітаємо," %} {{ request.user.username }}! 👋</h1>
+                <h1>{% trans "Вітаємо," %} {{ request.user.username }}! <i class="fas fa-hand-paper" style="color: #ffc107;"></i></h1>
                 <p class="user-email">{{ request.user.email }}</p>
             </div>
         </div>
@@ -25,28 +25,28 @@
     <!-- Stats Grid -->
     <div class="stats-grid">
         <div class="stat-card hover-lift">
-            <div class="stat-icon">📦</div>
+            <div class="stat-icon"><i class="fas fa-box" style="color: var(--accent);"></i></div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Замовлення" %}</span>
                 <span class="stat-value">{{ stats.total_orders }}</span>
             </div>
         </div>
         <div class="stat-card hover-lift">
-            <div class="stat-icon">💰</div>
+            <div class="stat-icon"><i class="fas fa-wallet" style="color: var(--accent);"></i></div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Витрачено" %}</span>
                 <span class="stat-value">{{ stats.total_spent|currency:selected_currency }}</span>
             </div>
         </div>
         <div class="stat-card hover-lift">
-            <div class="stat-icon">❤️</div>
+            <div class="stat-icon"><i class="fas fa-heart" style="color: var(--accent);"></i></div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Обране" %}</span>
                 <span class="stat-value">{{ stats.wishlist_count }}</span>
             </div>
         </div>
         <div class="stat-card hover-lift">
-            <div class="stat-icon">⭐</div>
+            <div class="stat-icon"><i class="fas fa-star" style="color: var(--accent);"></i></div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Відгуки" %}</span>
                 <span class="stat-value">{{ stats.reviews_count }}</span>
@@ -61,16 +61,16 @@
                 <h3>{% trans "Швидкі дії" %}</h3>
                 <nav class="quick-actions">
                     <a href="{% url 'store:wishlist_list' %}" class="action-link">
-                        <span>❤️</span> {% trans "Список бажань" %}
+                        <span><i class="fas fa-heart" style="color: var(--accent);"></i></span> {% trans "Список бажань" %}
                     </a>
                     <a href="{% url 'store:order_list' %}" class="action-link">
-                        <span>🔍</span> {% trans "Відстежити замовлення" %}
+                        <span><i class="fas fa-search"></i></span> {% trans "Відстежити замовлення" %}
                     </a>
                     <a href="{% url 'store:profile_edit' %}" class="action-link">
-                        <span>👤</span> {% trans "Редагувати профіль" %}
+                        <span><i class="fas fa-user"></i></span> {% trans "Редагувати профіль" %}
                     </a>
                     <a href="{% url 'password_change' %}" class="action-link">
-                        <span>🔒</span> {% trans "Змінити пароль" %}
+                        <span><i class="fas fa-lock"></i></span> {% trans "Змінити пароль" %}
                     </a>
                 </nav>
             </div>

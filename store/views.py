@@ -11,6 +11,7 @@ from django.http import JsonResponse
 from store.models import Category, Product, Order, OrderItem, Size, Review, Wishlist
 from store.forms import OrderCreateForm, UserSignupForm, ReviewForm, UserUpdateForm, ProfileUpdateForm
 from store.services import NovaPoshtaService, OrderService
+from store.services.product_service import ProductFilterService
 from store.services import dashboard_service
 from store.tasks import send_order_confirmation_email, send_welcome_email
 from store.cart import Cart
@@ -38,57 +39,11 @@ class ProductListView(ListView):
         else:
             self.category = None
 
-        # Filtering
-        min_price = self.request.GET.get('min_price')
-        max_price = self.request.GET.get('max_price')
-        size_filter = self.request.GET.get('size')
-        
-        if min_price or max_price:
-            try:
-                # Use session currency if available, else language-based default
-                selected_currency = self.request.session.get('currency')
-                language = get_language()
-                
-                if selected_currency:
-                    # Find currency settings by currency code (e.g., 'USD')
-                    currency_settings = next((v for v in settings.CURRENCIES.values() if v['code'] == selected_currency), None)
-                else:
-                    currency_settings = settings.CURRENCIES.get(language, settings.CURRENCIES.get('uk'))
-                
-                if not currency_settings:
-                    currency_settings = settings.CURRENCIES.get('uk')
-
-                rate = Decimal(str(currency_settings['rate']))
-                
-                if min_price and min_price.strip():
-                    converted_min = Decimal(min_price) / rate
-                    queryset = queryset.filter(price__gte=converted_min)
-                if max_price and max_price.strip():
-                    converted_max = Decimal(max_price) / rate
-                    queryset = queryset.filter(price__lte=converted_max)
-            except (ValueError, decimal.InvalidOperation, TypeError):
-                # If invalid price is provided, we just don't filter by price
-                pass
-        
-        if size_filter:
-            queryset = queryset.filter(sizes__name=size_filter)
-
-        in_stock = self.request.GET.get('in_stock')
-        if in_stock == '1':
-            queryset = queryset.filter(stock__gt=0)
-
-        # Sorting
-        sort = self.request.GET.get('sort')
-        if sort == 'price_asc':
-            queryset = queryset.order_by('price')
-        elif sort == 'price_desc':
-            queryset = queryset.order_by('-price')
-        elif sort == 'name_asc':
-            queryset = queryset.order_by('name')
-        elif sort == 'name_desc':
-            queryset = queryset.order_by('-name')
-        else:
-            queryset = queryset.order_by('-created')
+        queryset = ProductFilterService.apply_filters(
+            queryset=queryset,
+            request_data=self.request.GET,
+            session=self.request.session
+        )
             
         return queryset
 
