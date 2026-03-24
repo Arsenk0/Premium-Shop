@@ -24,10 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (modal && titleEl && descEl) {
             if (context === 'wishlist') {
-                titleEl.textContent = body.dataset.modalWishlistTitle || 'Бажаєте додати в список бажань? 😉';
+                titleEl.innerHTML = body.dataset.modalWishlistTitle || 'Бажаєте додати в список бажань? <i class="fas fa-smile-wink" style="color: var(--accent);"></i>';
                 descEl.textContent = body.dataset.modalWishlistDesc || 'Увійдіть або зареєструйтесь, щоб ваші улюблені товари завжди були під рукою!';
             } else {
-                titleEl.textContent = body.dataset.modalCartTitle || 'Бажаєте додати в кошик? 😉';
+                titleEl.innerHTML = body.dataset.modalCartTitle || 'Бажаєте додати в кошик? <i class="fas fa-smile-wink" style="color: var(--accent);"></i>';
                 descEl.textContent = body.dataset.modalCartDesc || 'Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в особистому кабінеті та ви отримували бонуси!';
             }
             modal.style.display = 'flex';

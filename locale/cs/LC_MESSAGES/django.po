@@ -420,8 +420,8 @@ msgid "Видалено зі списку бажань"
 msgstr "Odstraněno ze seznamu přání"
 
 #: templates/base.html:30
-msgid "Бажаєте додати в список бажань? 😉"
-msgstr "Chcete přidat do seznamu přání? 😉"
+msgid "Бажаєте додати в список бажань?"
+msgstr "Chcete přidat do seznamu přání?"
 
 #: templates/base.html:31
 msgid ""
@@ -431,8 +431,8 @@ msgstr ""
 "ruce!"
 
 #: templates/base.html:32 templates/base.html:132
-msgid "Бажаєте додати в кошик? 😉"
-msgstr "Chcete přidat do košíku? 😉"
+msgid "Бажаєте додати в кошик?"
+msgstr "Chcete přidat do košíku?"
 
 #: templates/base.html:33 templates/base.html:133
 msgid ""

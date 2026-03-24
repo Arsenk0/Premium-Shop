@@ -418,8 +418,8 @@ msgid "Видалено зі списку бажань"
 msgstr "Removed from wishlist"
 
 #: templates/base.html:30
-msgid "Бажаєте додати в список бажань? 😉"
-msgstr "Want to add to your wishlist? 😉"
+msgid "Бажаєте додати в список бажань?"
+msgstr "Want to add to your wishlist?"
 
 #: templates/base.html:31
 msgid ""
@@ -427,8 +427,8 @@ msgid ""
 msgstr "Log in or sign up to keep your favorite items always at hand!"
 
 #: templates/base.html:32 templates/base.html:132
-msgid "Бажаєте додати в кошик? 😉"
-msgstr "Want to add to cart? 😉"
+msgid "Бажаєте додати в кошик?"
+msgstr "Want to add to cart?"
 
 #: templates/base.html:33 templates/base.html:133
 msgid ""

@@ -410,7 +410,7 @@ msgid "Видалено зі списку бажань"
 msgstr ""
 
 #: templates/base.html:30
-msgid "Бажаєте додати в список бажань? 😉"
+msgid "Бажаєте додати в список бажань?"
 msgstr ""
 
 #: templates/base.html:31
@@ -419,7 +419,7 @@ msgid ""
 msgstr ""
 
 #: templates/base.html:32 templates/base.html:132
-msgid "Бажаєте додати в кошик? 😉"
+msgid "Бажаєте додати в кошик?"
 msgstr ""
 
 #: templates/base.html:33 templates/base.html:133
