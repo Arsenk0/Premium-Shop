@@ -11,14 +11,18 @@
             <div id="slider-track" style="display: flex; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform;">
                 <div class="slider-item" style="flex: 0 0 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
                     {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; height: 100%; object-fit: contain;">
+                    <div class="zoom-container" style="width: 100%; height: 100%; overflow: hidden; cursor: zoom-in; display: flex; align-items: center; justify-content: center;">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="zoom-image" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease-out;">
+                    </div>
                     {% else %}
                     <img src="https://via.placeholder.com/600x800" alt="{% trans 'Немає зображення' %}">
                     {% endif %}
                 </div>
                 {% for extra_img in product.images.all %}
                 <div class="slider-item" style="flex: 0 0 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                    <img src="{{ extra_img.image.url }}" alt="{{ product.name }}" style="width: 100%; height: 100%; object-fit: contain;">
+                    <div class="zoom-container" style="width: 100%; height: 100%; overflow: hidden; cursor: zoom-in; display: flex; align-items: center; justify-content: center;">
+                        <img src="{{ extra_img.image.url }}" alt="{{ product.name }}" class="zoom-image" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease-out;">
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -224,6 +228,22 @@
     function moveSlider(direction) {
         goToSlide(currentSlide + direction);
     }
+
+    // Zoom effect
+    document.querySelectorAll('.zoom-container').forEach(container => {
+        const img = container.querySelector('img');
+        
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            img.style.transformOrigin = `${x}% ${y}%`;
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            img.style.transformOrigin = 'center center';
+        });
+    });
 </script>
 
 <style>
@@ -246,6 +266,10 @@
         background: var(--card-bg);
         height: 550px;
         border: 1px solid var(--border-color);
+    }
+
+    .zoom-container:hover .zoom-image {
+        transform: scale(2);
     }
 
     /* Responsiveness for Detail Page */
@@ -336,22 +360,42 @@
         transform: translateY(-3px);
     }
 
-    .hover-red-line::after {
-        content: '';
-        position: absolute;
+    /* Fixed Review Form Textarea */
+    .form-group textarea {
         width: 100%;
-        height: 2px;
-        bottom: -1px;
-        left: 0;
-        background-color: var(--accent);
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        padding: 1.2rem 1.8rem;
+        border-radius: 20px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        font-family: inherit;
+        resize: vertical;
+        transition: all 0.3s ease;
+        margin-top: 0.5rem;
     }
 
-    .hover-red-line:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1);
+    }
+
+    /* Fix for multi-line underlines in reviews */
+    .hover-red-line {
+        position: relative;
+        text-decoration: none;
+        background-image: linear-gradient(var(--accent), var(--accent));
+        background-position: 0% 100%;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+        transition: background-size 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+        padding-bottom: 2px;
+    }
+
+    .hover-red-line:hover {
+        background-size: 100% 2px;
     }
 
     .slider-nav-btn:hover {

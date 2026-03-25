@@ -14,7 +14,6 @@
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:title" content="{% block og_title %}{% trans 'Premium Shop - Твій Стиль' %}{% endblock %}">
     <meta property="og:description" content="{% trans 'Найкращий вибір преміального одягу та взуття.' %}">
-    <meta property="og:image" content="{% static 'img/og-image.jpg' %}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#000000">
     <meta name="format-detection" content="telephone=no">
@@ -58,6 +57,16 @@
     {% include 'includes/modals.html' %}
 
     <script type="module" src="{% static 'js/main.js' %}"></script>
+    <script type="module">
+        import { showToast } from "{% static 'js/modules/utils.js' %}";
+        document.addEventListener('DOMContentLoaded', () => {
+            {% if messages %}
+                {% for message in messages %}
+                    showToast("{{ message|escapejs }}");
+                {% endfor %}
+            {% endif %}
+        });
+    </script>
 </body>
 
 </html>

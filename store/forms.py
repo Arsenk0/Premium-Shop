@@ -104,13 +104,13 @@ class OrderCreateForm(forms.ModelForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get('first_name')
-        if len(first_name) < 2:
+        if not first_name or len(first_name) < 2:
             raise forms.ValidationError(_("Ім'я занадто коротке"))
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get('last_name')
-        if len(last_name) < 2:
+        if not last_name or len(last_name) < 2:
             raise forms.ValidationError(_("Прізвище занадто коротке"))
         return last_name
 

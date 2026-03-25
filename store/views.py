@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -11,6 +12,7 @@ from django.http import JsonResponse
 from store.models import Category, Product, Order, OrderItem, Size, Review, Wishlist
 from store.forms import OrderCreateForm, UserSignupForm, ReviewForm, UserUpdateForm, ProfileUpdateForm
 from store.services import NovaPoshtaService, OrderService
+from store.services.core import InsufficientStockError
 from store.services.product_service import ProductFilterService
 from store.services import dashboard_service
 from store.tasks import send_order_confirmation_email, send_welcome_email
@@ -82,7 +84,10 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             # Trigger welcome email
-            send_welcome_email.delay(user.id)
+            language = get_language()
+            currency = request.session.get('currency', 'UAH')
+            base_url = request.build_absolute_uri('/')[:-1]
+            send_welcome_email.delay(user.id, language=language, currency=currency, base_url=base_url)
             login(request, user, backend='store.auth_backends.EmailOrUsernameModelBackend')
             return redirect('store:product_list')
     else:
@@ -148,6 +153,12 @@ class ProductDetailView(DetailView):
 @login_required
 def add_review(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    
+    # Check if user already reviewed this product
+    if Review.objects.filter(user=request.user, product=product).exists():
+        messages.warning(request, _("Ви вже залишили відгук на цей товар."))
+        return redirect('store:product_detail', pk=product.id, slug=product.slug)
+    
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -155,7 +166,12 @@ def add_review(request, product_id):
             review.product = product
             review.user = request.user
             review.save()
+            messages.success(request, _("Дякуємо! Ваш відгук успішно додано."))
             return redirect('store:product_detail', pk=product.id, slug=product.slug)
+        else:
+            for error in form.errors.values():
+                messages.error(request, error)
+            
     return redirect('store:product_detail', pk=product.id, slug=product.slug)
 
 
@@ -186,6 +202,16 @@ def cart_add(request, product_id):
     if product.stock <= 0:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'status': 'error', 'message': _('Товар відсутній на складі!')}, status=400)
+        return redirect('store:product_detail', pk=product.id, slug=product.slug)
+
+    # Check if adding would exceed available stock
+    current_in_cart = sum(
+        item['quantity'] for item in cart.cart.values()
+        if item['product_id'] == product.id
+    )
+    if current_in_cart >= product.stock:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'error', 'message': _('Досягнуто максимальну кількість цього товару!')}, status=400)
         return redirect('store:product_detail', pk=product.id, slug=product.slug)
 
     cart.add(product, size)
@@ -227,6 +253,7 @@ def cart_detail(request):
     return render(request, 'store/cart/detail.html', {'cart_items': cart, 'total_price': cart.get_total_price()})
 
 
+@require_GET
 def cart_sidebar_data(request):
     cart = Cart(request)
     cart_items = []
@@ -259,10 +286,17 @@ def order_create(request):
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
-            order = OrderService.create_order(cart, request.user, form.cleaned_data)
+            try:
+                order = OrderService.create_order(cart, request.user, form.cleaned_data)
+            except InsufficientStockError as e:
+                messages.error(request, str(e))
+                return render(request, 'store/order/create.html', {'cart': cart, 'form': form})
             
             # Trigger asynchronous email
-            send_order_confirmation_email.delay(order.id)
+            language = get_language()
+            currency = request.session.get('currency', 'UAH')
+            base_url = request.build_absolute_uri('/')[:-1]
+            send_order_confirmation_email.delay(order.id, language=language, currency=currency, base_url=base_url)
             
             cart.clear()
             
@@ -296,7 +330,7 @@ def order_success(request, order_id):
     return render(request, 'store/order/success.html', {'order': order})
 
 
-@rate_limit('np_api', 5, 60)
+@rate_limit('np_api', 30, 60)
 def nova_poshta_cities(request):
     query = request.GET.get('q', '')
     if len(query) < 2:
@@ -305,7 +339,7 @@ def nova_poshta_cities(request):
     return JsonResponse({'data': cities})
 
 
-@rate_limit('np_api', 10, 60)
+@rate_limit('np_api', 30, 60)
 def nova_poshta_warehouses(request):
     city_ref = request.GET.get('city_ref', '')
     if not city_ref:
@@ -330,6 +364,8 @@ def contact(request):
 @rate_limit('search_api', 20, 60)
 def search_autocomplete(request):
     query = request.GET.get('q', '')
+    if len(query) < 2:
+        return JsonResponse({'results': []})
     products = Product.objects.filter(
         Q(name__icontains=query) | Q(article__icontains=query),
         available=True

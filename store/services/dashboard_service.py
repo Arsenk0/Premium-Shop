@@ -2,7 +2,6 @@ from django.db.models import Sum, Count, F
 from ..models import Order, Review, Wishlist
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
-from django.utils.html import escape
 
 def get_user_dashboard_stats(user):
     """
@@ -24,24 +23,24 @@ def get_recent_activity(user, limit=5):
     """
     activities = []
     
+    STATUS_COLORS = {
+        'New': '#17a2b8',
+        'Processing': '#ffc107',
+        'Shipped': '#007bff',
+        'Completed': '#28a745',
+        'Canceled': '#dc3545'
+    }
+    
     # Recent Orders
     orders = Order.objects.filter(user=user).order_by('-created')[:limit]
     for order in orders:
-        status_colors = {
-            'New': '#17a2b8',
-            'Processing': '#ffc107',
-            'Shipped': '#007bff',
-            'Completed': '#28a745',
-            'Canceled': '#dc3545'
-        }
-        color = status_colors.get(order.status, '#6c757d')
-        status_display = escape(order.get_status_display())
         activities.append({
             'type': 'order',
             'date': order.created,
             'title': _('Замовлення') + f' #{order.id}',
-            'description': f"{_('Статус')}: <span style='color: {color}; font-weight: 600;'>{status_display}</span>",
-            'icon': '<i class="fas fa-box" style="color: var(--accent);"></i>'
+            'description': _('Статус') + ': ' + order.get_status_display(),
+            'status_color': STATUS_COLORS.get(order.status, '#6c757d'),
+            'icon_class': 'fas fa-box',
         })
         
     # Recent Reviews
@@ -50,9 +49,9 @@ def get_recent_activity(user, limit=5):
         activities.append({
             'type': 'review',
             'date': review.created_at,
-            'title': _('Відгук на') + f' {escape(review.product.name)}',
+            'title': _('Відгук на') + f' {review.product.name}',
             'description': _('Оцінка:') + f' {review.rating}/5',
-            'icon': '<i class="fas fa-star" style="color: var(--accent);"></i>'
+            'icon_class': 'fas fa-star',
         })
         
     # Recent Wishlist additions
@@ -61,9 +60,9 @@ def get_recent_activity(user, limit=5):
         activities.append({
             'type': 'wishlist',
             'date': item.added_at,
-            'title': _('Додано в обране:') + f' {escape(item.product.name)}',
+            'title': _('Додано в обране:') + f' {item.product.name}',
             'description': _('Будемо чекати на ваше замовлення!'),
-            'icon': '<i class="fas fa-heart" style="color: var(--accent);"></i>'
+            'icon_class': 'fas fa-heart',
         })
         
     # Sort activities by date descending

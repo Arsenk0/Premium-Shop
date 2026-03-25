@@ -1188,8 +1188,6 @@ msgstr "Add items you like so you don't lose them."
 #~ msgid "У вас поки немає замовлень."
 #~ msgstr "You have no orders yet."
 
-#~ msgid "Почати шопінг"
-#~ msgstr "Start shopping"
 
 #~ msgid "Email (для підтвердження)"
 #~ msgstr "Email (for confirmation)"
@@ -1241,3 +1239,84 @@ msgstr "Start shopping now and find something special for yourself!"
 
 msgid "Всього до сплати:"
 msgstr "Total to pay:"
+
+msgid "Ви вже залишили відгук на цей товар."
+msgstr "You have already left a review for this product."
+
+msgid "Дякуємо! Ваш відгук успішно додано."
+msgstr "Thank you! Your review has been successfully added."
+
+msgid "Підтвердження замовлення"
+msgstr "Order Confirmation"
+
+msgid "Дякуємо за вибір!"
+msgstr "Thank you for choosing us!"
+
+msgid "Привіт"
+msgstr "Hello"
+
+msgid "Ми вже готуємо ваше замовлення до відправлення. Ось деталі вашої покупки:"
+msgstr "We are already preparing your order for shipping. Here are the details of your purchase:"
+
+msgid "Номер замовлення"
+msgstr "Order Number"
+
+msgid "Адреса доставки"
+msgstr "Shipping Address"
+
+msgid "Ваші товари"
+msgstr "Your Items"
+
+msgid "Разом"
+msgstr "Total"
+
+msgid "Ви отримали цей лист, оскільки зробили замовлення на нашому сайті."
+msgstr "You received this email because you placed an order on our site."
+
+msgid "Вітаємо у сім'ї!"
+msgstr "Welcome to the family!"
+
+msgid "Ви зробили перший крок до виняткового стилю. Ми раді, що ви тепер з нами."
+msgstr "You've taken the first step toward exceptional style. We're glad you're with us."
+
+msgid "Почати шопінг"
+msgstr "Start Shopping"
+
+msgid "Що на вас чекає:"
+msgstr "What awaits you:"
+
+msgid "Ексклюзивні новинки раніше за всіх"
+msgstr "Exclusive new arrivals before anyone else"
+
+msgid "Преміальна якість кожного товару"
+msgstr "Premium quality of every product"
+
+msgid "Швидка та надійна доставка"
+msgstr "Fast and reliable delivery"
+
+msgid "Ви отримали цей лист, оскільки зареєструвалися на нашому сайті."
+msgstr "You received this email because you registered on our site."
+
+msgid "Оновлення статусу"
+msgstr "Status Update"
+
+msgid "Статус вашого замовлення"
+msgstr "Your order status"
+
+msgid "змінено на:"
+msgstr "has been changed to:"
+
+msgid "Ви отримаєте ще одне повідомлення при подальших змінах."
+msgstr "You will receive another notification upon further changes."
+
+msgid "Переглянути замовлення"
+msgstr "View Order"
+
+msgid "Замовлення №%(order_id)s - Підтвердження"
+msgstr "Order №%(order_id)s - Confirmation"
+
+msgid "Ласкаво просимо до нашого магазину, %(username)s!"
+msgstr "Welcome to our shop, %(username)s!"
+
+msgid "Оновлення статусу замовлення №%(order_id)s"
+msgstr "Order Status Update №%(order_id)s"

@@ -12,8 +12,9 @@ def rate_limit(key_prefix, limit, period):
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
-            # Use IP address as part of the key
-            ip = request.META.get('REMOTE_ADDR')
+            # Use X-Forwarded-For if behind proxy, fall back to REMOTE_ADDR
+            forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR', '')
+            ip = forwarded_for.split(',')[0].strip() if forwarded_for else request.META.get('REMOTE_ADDR')
             key = f"rate_limit:{key_prefix}:{ip}"
             
             requests = cache.get(key, [])
