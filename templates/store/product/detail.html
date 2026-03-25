@@ -76,9 +76,9 @@
 
         {% if product.sizes.all %}
         <div style="margin-bottom: 1.5rem;" id="size-selection-area">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3 style="margin: 0;">{% trans "Оберіть розмір" %} <span style="color: var(--accent);">*</span></h3>
-                <button type="button" onclick="openSizeGuide()" class="link-underline" style="background: none; border: none; color: var(--text-muted); font-size: 0.85rem; cursor: pointer; font-weight: 600;">
+            <div style="display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 1rem;">
+                <h3 style="margin: 0; white-space: nowrap;">{% trans "Оберіть розмір" %} <span style="color: var(--accent);">*</span></h3>
+                <button type="button" onclick="openSizeGuide()" class="link-underline" style="background: none; border: none; color: var(--text-muted); font-size: 0.85rem; cursor: pointer; font-weight: 600; padding: 0; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap;">
                     <i class="fas fa-ruler-combined"></i> {% trans "Таблиця розмірів" %}
                 </button>
             </div>
