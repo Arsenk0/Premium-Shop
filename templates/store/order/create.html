@@ -4,23 +4,21 @@
 {% block title %}{% trans "Оформлення замовлення" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in" style="margin-top: 2rem; margin-bottom: 5rem;">
-    <div style="text-align: center; margin-bottom: 3rem;">
-        <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;">{% trans "Оформлення" %}</h1>
-        <p style="color: var(--text-muted); font-size: 1.1rem;">{% trans "Заповніть дані для доставки" %}</p>
+<div class="container fade-in" style="margin-top: 2rem; margin-bottom: 5rem; max-width: 900px;">
+    <div style="text-align: center; margin-bottom: 4rem;">
+        <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px;">{% trans "Оформлення" %}</h1>
+        <p style="color: var(--text-muted); font-size: 1.2rem;">{% trans "Заповніть дані для доставки вашого замовлення" %}</p>
     </div>
 
-    <div
-        style="background: var(--card-bg); padding: 3rem; border-radius: 32px; box-shadow: 0 30px 60px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.03);">
+    <div style="background: var(--card-bg); padding: 4rem; border-radius: 40px; box-shadow: var(--shadow); border: 1px solid var(--border-color);">
         <form action="." method="post" id="checkout-form">
             {% csrf_token %}
-
+            
             {% if form.errors %}
-            <div class="error-banner">
-                <p>{% trans "Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують вашої уваги." %}
-                </p>
+            <div class="error-banner" style="margin-bottom: 3rem;">
+                <p style="font-weight: 700;">{% trans "Упс! Знайдено помилки:" %}</p>
                 {% if form.non_field_errors %}
-                <ul class="errorlist shake">
+                <ul class="errorlist">
                     {% for error in form.non_field_errors %}
                     <li>{{ error }}</li>
                     {% endfor %}
@@ -29,110 +27,129 @@
             </div>
             {% endif %}
 
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <div class="form-group">
-                    <label>{% trans "Ім'я" %}</label>
-                    <input type="text" name="{{ form.first_name.html_name }}" id="{{ form.first_name.id_for_label }}"
-                        class="{% if form.first_name.errors %}input-error shake{% endif %}" required 
-                        {% if form.first_name.value %}value="{{ form.first_name.value }}"{% endif %}>
-                    {% if form.first_name.errors %}
-                        <div class="error-msg">{{ form.first_name.errors.0 }}</div>
+            <!-- Section: Personal Info -->
+            <div style="margin-bottom: 4rem;">
+                <h3 style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 12px; font-size: 1.5rem;">
+                        <span style="background: var(--accent); color: var(--accent-text); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem;">1</span>
+                        <span>{% trans "Контактна інформація" %}</span>
+                    </div>
+                    {% if user.is_authenticated and user.first_name and user.last_name and user.email and user.profile.phone %}
+                    <button type="button" class="btn btn-outline hover-scale" id="use-profile-data"
+                        data-first-name="{{ user.first_name }}"
+                        data-last-name="{{ user.last_name }}"
+                        data-email="{{ user.email }}"
+                        data-phone="{{ user.profile.phone }}"
+                        data-social-handle="{{ user.profile.social_handle }}"
+                        data-city="{{ user.profile.city }}"
+                        data-city-ref="{{ user.profile.city_ref }}"
+                        data-warehouse="{{ user.profile.warehouse }}"
+                        data-warehouse-ref="{{ user.profile.warehouse_ref }}"
+                        style="padding: 0.6rem 1.2rem; font-size: 0.85rem; border-radius: 10px; gap: 8px; display: inline-flex; align-items: center; background: var(--card-bg-alt); color: var(--text-main); font-weight: 600; border: 1px solid var(--border-color);">
+                        <i class="fas fa-magic" style="color: var(--accent);"></i> {% trans "Використати дані з профілю" %}
+                    </button>
                     {% endif %}
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div class="form-group">
+                        <label>{% trans "Ім'я" %}</label>
+                        <input type="text" name="{{ form.first_name.html_name }}" id="{{ form.first_name.id_for_label }}"
+                            class="{% if form.first_name.errors %}input-error shake{% endif %}" required value="">
+                        {% if form.first_name.errors %}<div class="error-msg">{{ form.first_name.errors.0 }}</div>{% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label>{% trans "Прізвище" %}</label>
+                        <input type="text" name="{{ form.last_name.html_name }}" id="{{ form.last_name.id_for_label }}"
+                            class="{% if form.last_name.errors %}input-error shake{% endif %}" required value="">
+                        {% if form.last_name.errors %}<div class="error-msg">{{ form.last_name.errors.0 }}</div>{% endif %}
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>{% trans "Прізвище" %}</label>
-                    <input type="text" name="{{ form.last_name.html_name }}" id="{{ form.last_name.id_for_label }}"
-                        class="{% if form.last_name.errors %}input-error shake{% endif %}" required 
-                        {% if form.last_name.value %}value="{{ form.last_name.value }}"{% endif %}>
-                    {% if form.last_name.errors %}
-                        <div class="error-msg">{{ form.last_name.errors.0 }}</div>
-                    {% endif %}
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                    <div class="form-group">
+                        <label>{% trans "Номер телефону" %}</label>
+                        <input type="text" name="{{ form.phone.html_name }}" id="{{ form.phone.id_for_label }}"
+                            class="{% if form.phone.errors %}input-error shake{% endif %}" required value="">
+                        {% if form.phone.errors %}<div class="error-msg">{{ form.phone.errors.0 }}</div>{% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label>{% trans "Email" %}</label>
+                        <input type="email" name="{{ form.email.html_name }}" id="{{ form.email.id_for_label }}"
+                            class="{% if form.email.errors %}input-error shake{% endif %}" value="">
+                        {% if form.email.errors %}<div class="error-msg">{{ form.email.errors.0 }}</div>{% endif %}
+                    </div>
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <!-- Section: Contact Method -->
+            <div style="margin-bottom: 4rem;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;">
+                    <span style="background: var(--accent); color: var(--accent-text); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem;">2</span>
+                    {% trans "Спосіб зв'язку" %}
+                </h3>
                 <div class="form-group">
-                    <label>{% trans "Номер телефону" %}</label>
-                    <input type="text" name="{{ form.phone.html_name }}" id="{{ form.phone.id_for_label }}"
-                        class="{% if form.phone.errors %}input-error shake{% endif %}" required 
-                        {% if form.phone.value %}value="{{ form.phone.value }}"{% endif %}>
-                    {% if form.phone.errors %}
-                        <div class="error-msg">{{ form.phone.errors.0 }}</div>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label>{% trans "Email" %}</label>
-                    <input type="email" name="{{ form.email.html_name }}" id="{{ form.email.id_for_label }}"
-                        class="{% if form.email.errors %}input-error shake{% endif %}" 
-                        {% if form.email.value %}value="{{ form.email.value }}"{% endif %}>
-                    {% if form.email.errors %}
-                        <div class="error-msg">{{ form.email.errors.0 }}</div>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label style="margin-bottom: 1rem; display: block;">{% trans "Як з вами зручніше зв'язатися?" %}</label>
-                <div class="contact-methods">
-                    {% for radio in form.contact_method %}
-                    <label class="contact-method-option">
-                        {{ radio.tag }}
-                        <div class="contact-method-card">
-                            <div class="method-icon-wrapper">
-                                {% if radio.choice_label == "Telegram" %}
-                                <i class="fab fa-telegram"></i>
-                                {% elif radio.choice_label == "Instagram" %}
-                                <i class="fab fa-instagram"></i>
-                                {% elif radio.choice_label == "WhatsApp" %}
-                                <i class="fab fa-whatsapp"></i>
-                                {% else %}
-                                <i class="fas fa-comment"></i>
-                                {% endif %}
+                    <div class="contact-methods">
+                        {% for radio in form.contact_method %}
+                        <label class="contact-method-option">
+                            {{ radio.tag }}
+                            <div class="contact-method-card">
+                                <div class="method-icon-wrapper">
+                                    {% if radio.choice_label == "Telegram" %}
+                                    <i class="fab fa-telegram"></i>
+                                    {% elif radio.choice_label == "Instagram" %}
+                                    <i class="fab fa-instagram"></i>
+                                    {% elif radio.choice_label == "WhatsApp" %}
+                                    <i class="fab fa-whatsapp"></i>
+                                    {% else %}
+                                    <i class="fas fa-comment"></i>
+                                    {% endif %}
+                                </div>
+                                <span>{{ radio.choice_label }}</span>
                             </div>
-                            <span>{{ radio.choice_label }}</span>
-                        </div>
-                    </label>
-                    {% endfor %}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 2rem;">
+                    <label>{% trans "Ваш нікнейм або номер (ми напишемо вам сюди)" %}</label>
+                    <input type="text" name="{{ form.social_handle.html_name }}" id="{{ form.social_handle.id_for_label }}"
+                        class="{% if form.social_handle.errors %}input-error shake{% endif %}" required value="">
+                    {% if form.social_handle.errors %}<div class="error-msg">{{ form.social_handle.errors.0 }}</div>{% endif %}
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>{% trans "Ваш нікнейм або номер (ми напишемо вам сюди)" %}</label>
-                <input type="text" name="{{ form.social_handle.html_name }}" id="{{ form.social_handle.id_for_label }}"
-                    class="{% if form.social_handle.errors %}input-error shake{% endif %}" required {% if form.social_handle.value %}value="{{ form.social_handle.value }}"{% endif %}>
-                {% if form.social_handle.errors %}<div class="error-msg">{{ form.social_handle.errors.0 }}</div>{% endif %}
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
-                    {% trans "Наприклад: @nickname або номер телефону для WhatsApp" %}
-                </p>
+            <!-- Section: Delivery -->
+            <div style="margin-bottom: 4rem;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;">
+                    <span style="background: var(--accent); color: var(--accent-text); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem;">3</span>
+                    {% trans "Доставка" %}
+                </h3>
+                <div class="form-group" style="position: relative;">
+                    <label>{% trans "Місто доставки" %}</label>
+                    <input type="text" name="{{ form.city.html_name }}" id="{{ form.city.id_for_label }}"
+                        class="{% if form.city.errors %}input-error shake{% endif %}" required value="" autocomplete="off">
+                    <input type="hidden" name="{{ form.city_ref.html_name }}" id="{{ form.city_ref.id_for_label }}" value="">
+                    {% if form.city.errors %}<div class="error-msg">{{ form.city.errors.0 }}</div>{% endif %}
+                    <div id="city-results" class="autocomplete-results"></div>
+                </div>
+
+                <div class="form-group" style="margin-top: 2rem;">
+                    <label>{% trans "Відділення Нової Пошти" %}</label>
+                    <select name="{{ form.warehouse.html_name }}" id="{{ form.warehouse.id_for_label }}"
+                        class="{% if form.warehouse.errors %}input-error shake{% endif %}" required>
+                        <option value="">{% trans "Спочатку оберіть місто" %}</option>
+                    </select>
+                    <input type="hidden" name="{{ form.warehouse_ref.html_name }}" id="{{ form.warehouse_ref.id_for_label }}" value="">
+                    {% if form.warehouse.errors %}<div class="error-msg">{{ form.warehouse.errors.0 }}</div>{% endif %}
+                    <p id="warehouse-loading" style="display: none; font-size: 0.8rem; color: var(--accent); margin-top: 0.5rem; font-weight: 600;">
+                        <i class="fas fa-spinner fa-spin"></i> {% trans "Завантаження відділень..." %}
+                    </p>
+                </div>
             </div>
 
-            <div class="form-group" style="position: relative;">
-                <label>{% trans "Місто доставки" %}</label>
-                <input type="text" name="{{ form.city.html_name }}" id="{{ form.city.id_for_label }}"
-                    class="{% if form.city.errors %}input-error shake{% endif %}" required {% if form.city.value %}value="{{ form.city.value }}"{% endif %} autocomplete="off">
-                <input type="hidden" name="{{ form.city_ref.html_name }}" id="{{ form.city_ref.id_for_label }}" {% if form.city_ref.value %}value="{{ form.city_ref.value }}"{% endif %}>
-                {% if form.city.errors %}<div class="error-msg">{{ form.city.errors.0 }}</div>{% endif %}
-                <div id="city-results" class="autocomplete-results"></div>
-            </div>
-
-            <div class="form-group">
-                <label>{% trans "Відділення Нової Пошти" %}</label>
-                <select name="{{ form.warehouse.html_name }}" id="{{ form.warehouse.id_for_label }}"
-                    class="{% if form.warehouse.errors %}input-error shake{% endif %}" required>
-                    <option value="">{% trans "Спочатку оберіть місто" %}</option>
-                    {% if form.warehouse.value %}
-                    <option value="{{ form.warehouse.value }}" selected>{{ form.warehouse.value }}</option>
-                    {% endif %}
-                </select>
-                <input type="hidden" name="{{ form.warehouse_ref.html_name }}" id="{{ form.warehouse_ref.id_for_label }}" {% if form.warehouse_ref.value %}value="{{ form.warehouse_ref.value }}"{% endif %}>
-                {% if form.warehouse.errors %}<div class="error-msg">{{ form.warehouse.errors.0 }}</div>{% endif %}
-                <p id="warehouse-loading" style="display: none; font-size: 0.8rem; color: var(--accent);">{% trans "Завантаження відділень..." %}</p>
-            </div>
-
-            <br>
-            <button type="submit" class="btn btn-primary hover-scale"
-                style="width: 100%; padding: 1.5rem; font-size: 1.3rem; border-radius: 16px; display: flex; align-items: center; justify-content: center; gap: 12px;">
+            <button type="submit" class="btn btn-primary hover-scale checkout-btn-shadow"
+                style="width: 100%; padding: 1.8rem; font-size: 1.4rem; border-radius: 20px; display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: 800;">
                 {% trans "Підтвердити замовлення" %}<i class="fas fa-paper-plane"></i>
             </button>
         </form>
@@ -140,46 +157,93 @@
 </div>
 
 <style>
+    @keyframes slideInDown {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
     .autocomplete-results {
         position: absolute;
         top: 100%;
         left: 0;
         right: 0;
         background: var(--card-bg);
-        border: 1px solid #eee;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        box-shadow: var(--shadow-lg);
         z-index: 1000;
         max-height: 250px;
         overflow-y: auto;
         display: none;
+        margin-top: 4px;
+        backdrop-filter: blur(10px);
     }
 
     .autocomplete-item {
-        padding: 12px 16px;
+        padding: 14px 20px;
         cursor: pointer;
-        transition: background 0.2s;
-        border-bottom: 1px solid #f8fafc;
+        transition: all 0.2s ease;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--text-main);
+        font-weight: 500;
     }
 
     .autocomplete-item:hover {
-        background: #f8fafc;
+        background: var(--card-bg-alt);
+        padding-left: 25px;
+        color: var(--accent);
     }
 
     .error-banner {
-        background: rgba(225, 29, 72, 0.1);
-        border-left: 4px solid #e11d48;
-        padding: 1.5rem;
-        border-radius: 12px;
+        background: rgba(225, 29, 72, 0.08);
+        border: 1px solid rgba(225, 29, 72, 0.2);
+        padding: 1.5rem 2rem;
+        border-radius: 20px;
         margin-bottom: 2rem;
-        color: #9f1239;
+        color: #ff4d6d;
+        backdrop-filter: blur(5px);
     }
 
     .error-msg {
-        color: #e11d48;
+        color: #ff4d6d;
         font-size: 0.85rem;
-        margin-top: 0.4rem;
+        margin-top: 0.5rem;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .error-msg::before {
+        content: '\f06a';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.8rem;
+        font-weight: 700;
+        color: var(--text-main);
+        font-size: 0.95rem;
+        opacity: 0.9;
+    }
+    
+    .form-group input, .form-group select {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    .form-group input:focus, .form-group select:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .checkout-btn-shadow {
+        box-shadow: 0 20px 40px rgba(225, 29, 72, 0.2);
+    }
+
+    [data-theme="dark"] .checkout-btn-shadow {
+        box-shadow: 0 20px 40px rgba(0, 255, 204, 0.2);
     }
 </style>
 
@@ -215,6 +279,7 @@
                                 div.className = 'autocomplete-item';
                                 // ВИПРАВЛЕНО: використовуємо city.name замість city.text
                                 div.textContent = city.name;
+                                div.style.color = 'var(--text-main)'; // Забезпечуємо читабельність
                                 div.addEventListener('click', () => {
                                     // ВИПРАВЛЕНО: використовуємо city.name та city.ref
                                     cityInput.value = city.name;
@@ -234,7 +299,9 @@
             }, 300);
         });
 
-        function loadWarehouses(cityRef) {
+        function loadWarehouses(cityRef, selectedValue = '') {
+            if (!cityRef) return;
+            
             loadingMsg.style.display = 'block';
             warehouseSelect.innerHTML = '<option value="">{% trans "Завантаження..." %}</option>';
             warehouseSelect.disabled = true;
@@ -245,27 +312,68 @@
                     const data = res.data || res;
                     loadingMsg.style.display = 'none';
                     warehouseSelect.disabled = false;
-                    warehouseSelect.innerHTML = '<option value="">{% trans "Оберіть відділення" %}</option>';
-
+                    
+                    // Оптимізація: будуємо один великий рядок HTML замість багатьох appendChild
+                    let optionsHtml = '<option value="">{% trans "Оберіть відділення" %}</option>';
                     data.forEach(w => {
-                        const opt = document.createElement('option');
-                        // ВИПРАВЛЕНО: використовуємо w.name замість w.text
-                        opt.value = w.name;
-                        opt.textContent = w.name;
-                        opt.dataset.ref = w.ref; // ВИПРАВЛЕНО: w.ref замість w.id
-                        warehouseSelect.appendChild(opt);
+                        const isSelected = (selectedValue && w.name === selectedValue);
+                        if (isSelected) {
+                            warehouseRefInput.value = w.ref;
+                        }
+                        optionsHtml += `<option value="${w.name}" data-ref="${w.ref}" ${isSelected ? 'selected' : ''}>${w.name}</option>`;
                     });
+                    
+                    warehouseSelect.innerHTML = optionsHtml;
                 })
                 .catch(err => {
                     loadingMsg.style.display = 'none';
+                    warehouseSelect.disabled = false;
                     warehouseSelect.innerHTML = '<option value="">{% trans "Помилка завантаження" %}</option>';
                 });
         }
 
         warehouseSelect.addEventListener('change', function () {
             const selectedOption = this.options[this.selectedIndex];
-            warehouseRefInput.value = selectedOption.dataset.ref || '';
+            warehouseRefInput.value = selectedOption ? (selectedOption.dataset.ref || '') : '';
         });
+
+        // Use Profile Data Logic
+        const useProfileBtn = document.getElementById('use-profile-data');
+        const profileConnector = document.getElementById('profile-data-connector');
+
+        if (useProfileBtn) {
+            useProfileBtn.addEventListener('click', function() {
+                const data = this.dataset;
+                
+                // Fill basic info
+                const firstNameInput = document.getElementById('{{ form.first_name.id_for_label }}');
+                const lastNameInput = document.getElementById('{{ form.last_name.id_for_label }}');
+                const emailInput = document.getElementById('{{ form.email.id_for_label }}');
+                const phoneInput = document.getElementById('id_phone'); // Corrected from form syntax to match direct ID
+                const socialInput = document.getElementById('{{ form.social_handle.id_for_label }}');
+                
+                if (firstNameInput && data.firstName) firstNameInput.value = data.firstName;
+                if (lastNameInput && data.lastName) lastNameInput.value = data.lastName;
+                if (emailInput && data.email) emailInput.value = data.email;
+                if (phoneInput && data.phone) phoneInput.value = data.phone;
+                if (socialInput && data.socialHandle) socialInput.value = data.socialHandle;
+                
+                // Fill City & Trigger Warehouses
+                if (data.city && data.cityRef) {
+                    cityInput.value = data.city;
+                    cityRefInput.value = data.cityRef;
+                    loadWarehouses(data.cityRef, data.warehouse);
+                }
+                
+                // Permanent state change
+                this.disabled = true;
+                this.style.opacity = '0.7';
+                this.style.cursor = 'not-allowed';
+                this.style.borderColor = 'var(--accent)';
+                this.style.background = 'transparent';
+                this.innerHTML = '<i class="fas fa-check-circle"></i> {% trans "Дані використано" %}';
+            });
+        }
 
         // Close results when clicking outside
         document.addEventListener('click', function (e) {
