@@ -1241,3 +1241,9 @@ msgstr "Start shopping now and find something special for yourself!"
 
 msgid "Всього до сплати:"
 msgstr "Total to pay:"
+
+msgid "Ви вже залишили відгук на цей товар."
+msgstr "You have already left a review for this product."
+
+msgid "Дякуємо! Ваш відгук успішно додано."
+msgstr "Thank you! Your review has been successfully added."

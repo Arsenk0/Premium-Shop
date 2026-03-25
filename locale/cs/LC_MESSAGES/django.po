@@ -1249,3 +1249,9 @@ msgstr "Začněte nakupovat právě teď a najděte pro sebe něco speciálního
 
 msgid "Всього до сплати:"
 msgstr "Celkem k úhradě:"
+
+msgid "Ви вже залишили відгук на цей товар."
+msgstr "Již jste na tento produkt napsali recenzi."
+
+msgid "Дякуємо! Ваш відгук успішно додано."
+msgstr "Děkujeme! Vaše recenze byla úspěšně přidána."
