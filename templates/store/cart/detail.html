@@ -4,45 +4,59 @@
 {% block title %}{% trans "Ваш кошик" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in">
-    <h1>{% trans "Ваш кошик" %} 🛒</h1>
+<style>
+    .btn-glow-shadow {
+        box-shadow: 0 10px 25px rgba(255, 77, 77, 0.2);
+    }
+    [data-theme="dark"] .btn-glow-shadow {
+        box-shadow: 0 10px 25px rgba(0, 255, 204, 0.3);
+    }
+</style>
+<div class="container fade-in" style="min-height: 60vh; padding: 4rem 5%;">
     {% csrf_token %}
-    <br>
+    
     {% if cart_items %}
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 3rem;">
+    <h1 style="margin-bottom: 2.5rem; font-weight: 800; letter-spacing: -1px; padding-left: 1rem;">{% trans "Ваш кошик" %} 🛒</h1>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 3.5rem;">
         <thead>
-            <tr style="border-bottom: 2px solid #000; text-align: left;">
-                <th style="padding: 1rem;">{% trans "Товар" %}</th>
-                <th style="padding: 1rem;">{% trans "Кількість" %}</th>
-                <th style="padding: 1rem;">{% trans "Ціна" %}</th>
-                <th style="padding: 1rem;">{% trans "Усього" %}</th>
-                <th style="padding: 1rem;">{% trans "Дія" %}</th>
+            <tr style="border-bottom: 2.5px solid var(--text-main); text-align: left;">
+                <th style="padding: 1.2rem; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">{% trans "Товар" %}</th>
+                <th style="padding: 1.2rem; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">{% trans "Кількість" %}</th>
+                <th style="padding: 1.2rem; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">{% trans "Ціна" %}</th>
+                <th style="padding: 1.2rem; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">{% trans "Усього" %}</th>
+                <th style="padding: 1.2rem; text-align: right;">{% trans "Дія" %}</th>
             </tr>
         </thead>
         <tbody>
             {% for item in cart_items %}
-            <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 1rem; display: flex; align-items: center; gap: 1rem;">
+            <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 1.5rem 1rem; display: flex; align-items: center; gap: 1.5rem;">
                     {% if item.product.image %}
-                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
-                        style="width: 80px; border-radius: 8px;">
+                    <div style="background: var(--card-bg-alt); padding: 5px; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 85px; border-radius: 6px; display: block;">
+                    </div>
                     {% endif %}
                     <div>
-                        <strong>{{ item.product.name }}</strong><br>
-                        <small>{% trans "Арт:" %} {{ item.product.article }}</small>
-                        {% if item.size %}<br><small>{% trans "Розмір:" %} {{ item.size }}</small>{% endif %}
+                        <strong style="font-size: 1.1rem; display: block; margin-bottom: 0.4rem;">{{ item.product.name }}</strong>
+                        <div style="display: flex; gap: 12px; font-size: 0.85rem; color: var(--text-muted);">
+                            <span>{% trans "Арт:" %} <span style="color: var(--text-main); font-weight: 600;">{{ item.product.article }}</span></span>
+                            {% if item.size %}<span>{% trans "Розмір:" %} <span style="color: var(--text-main); font-weight: 600;">{{ item.size }}</span></span>{% endif %}
+                        </div>
                     </div>
                 </td>
-                <td style="padding: 1rem;">
-                    <div class="quantity-controls" data-item-key="{{ item.item_key }}"
-                        data-url="{% url 'store:cart_update' item.item_key %}">
-                        <button class="qty-btn subtract" type="button">−</button>
-                        <span class="qty-val">{{ item.quantity }}</span> <button class="qty-btn add" type="button">+</button> </div> </td> <td style="padding: 1rem;">{{ item.product.price|currency:selected_currency }}</td>
-                <td style="padding: 1rem;"><span class="item-total">{{ item.total_price|currency:selected_currency }}</span></td>
-                <td style="padding: 1rem;">
-                    <button class="qty-btn delete hover-scale" data-item-key="{{ item.item_key }}"
-                        data-url="{% url 'store:cart_update' item.item_key %}"
-                        style="background: none; border: none; color: var(--accent); cursor: pointer; padding: 0; font-size: 0.9rem;">
+                <td style="padding: 1.5rem 1rem;">
+                    <div class="quantity-controls" data-item-key="{{ item.item_key }}" data-url="{% url 'store:cart_update' item.item_key %}" style="background: var(--card-bg-alt); border-radius: 10px; padding: 4px; display: inline-flex; align-items: center; border: 1px solid var(--border-color);">
+                        <button class="qty-btn subtract" type="button" style="width: 30px; height: 30px; border: none; background: transparent; color: var(--text-main); cursor: pointer; font-size: 1.1rem;">−</button>
+                        <span class="qty-val" style="width: 35px; text-align: center; font-weight: 700;">{{ item.quantity }}</span>
+                        <button class="qty-btn add" type="button" style="width: 30px; height: 30px; border: none; background: transparent; color: var(--text-main); cursor: pointer; font-size: 1.1rem;">+</button>
+                    </div>
+                </td>
+                <td style="padding: 1.5rem 1rem; font-weight: 600; font-size: 1rem;">{{ item.product.price|currency:selected_currency }}</td>
+                <td style="padding: 1.5rem 1rem; font-weight: 800; font-size: 1.1rem; color: var(--accent);">
+                    <span class="item-total">{{ item.total_price|currency:selected_currency }}</span>
+                </td>
+                <td style="padding: 1.5rem 1rem; text-align: right;">
+                    <button class="qty-btn delete hover-scale" data-item-key="{{ item.item_key }}" data-url="{% url 'store:cart_update' item.item_key %}" style="color: #ff4d6d; background: rgba(255, 77, 109, 0.1); border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px;">
                         <i class="fa-solid fa-trash-can"></i> {% trans "Видалити" %}
                     </button>
                 </td>
@@ -51,18 +65,33 @@
         </tbody>
     </table>
 
-    <div style="text-align: right; padding: 2rem; background: var(--card-bg); border-radius: 12px; box-shadow: var(--shadow);">
-        <h2 style="font-size: 2.5rem;">{% trans "Разом:" %} {{ total_price|currency:selected_currency }}</h2>
-        <br>
-        <div style="display: flex; justify-content: flex-end; gap: 1rem; align-items: center;">
-            <a href="{% url 'store:product_list' %}" class="btn btn-pill hover-scale">← {% trans "Продовжити покупки" %}</a>
-            <a href="{% url 'store:order_create' %}" class="btn btn-primary hover-scale">{% trans "Оформити замовлення" %}</a>
+    <div style="padding: 2.5rem; background: var(--card-bg); border-radius: 12px; box-shadow: var(--shadow); width: 100%; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+        <div>
+            <span style="font-size: 1.1rem; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">{% trans "Всього до сплати:" %}</span>
+            <h2 style="font-size: 2.8rem; font-weight: 900; color: var(--accent); margin-bottom: 0; letter-spacing: -1.5px;">{{ total_price|currency:selected_currency }}</h2>
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+            <a href="{% url 'store:product_list' %}" class="btn btn-outline hover-scale" style="border: 1px solid var(--border-color); color: var(--text-muted); border-radius: 10px; font-size: 1rem; padding: 1.2rem 2rem; font-weight: 600; display: inline-flex; align-items: center; white-space: nowrap;">
+                <i class="fas fa-shopping-bag" style="margin-right: 8px;"></i> {% trans "Продовжити покупки" %}
+            </a>
+            <a href="{% url 'store:order_create' %}" class="btn btn-primary hover-scale btn-glow-shadow" style="padding: 1.2rem 2.5rem; font-size: 1.1rem; border-radius: 10px; font-weight: 800; display: inline-flex; align-items: center; white-space: nowrap;">
+                {% trans "Оформити замовлення" %} <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+            </a>
         </div>
     </div>
     {% else %}
-    <p>{% trans "Ваш кошик порожній." %}</p>
-    <br>
-    <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale">{% trans "Перейти до покупок" %}</a>
+    <div style="text-align: center; padding: 2rem 0; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div style="background: var(--card-bg-alt); width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <i class="fas fa-shopping-bag" style="font-size: 3rem; color: var(--accent); opacity: 0.8;"></i>
+        </div>
+        <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px;">{% trans "Ваш кошик порожній" %}</h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 3rem; max-width: 450px; line-height: 1.6;">
+            {% trans "Схоже, ви ще не додали жодного товару. Почніть покупки зараз та знайдіть щось особливе для себе!" %}
+        </p>
+        <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale btn-glow-shadow" style="padding: 1.2rem 2.5rem; border-radius: 14px; font-weight: 700; font-size: 1.1rem;">
+            <i class="fas fa-shopping-cart" style="margin-right: 10px;"></i> {% trans "Перейти до покупок" %}
+        </a>
+    </div>
     {% endif %}
 </div>
 {% endblock %}
