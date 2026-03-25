@@ -84,7 +84,10 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             # Trigger welcome email
-            send_welcome_email.delay(user.id)
+            language = get_language()
+            currency = request.session.get('currency', 'UAH')
+            base_url = request.build_absolute_uri('/')[:-1]
+            send_welcome_email.delay(user.id, language=language, currency=currency, base_url=base_url)
             login(request, user, backend='store.auth_backends.EmailOrUsernameModelBackend')
             return redirect('store:product_list')
     else:
@@ -290,7 +293,10 @@ def order_create(request):
                 return render(request, 'store/order/create.html', {'cart': cart, 'form': form})
             
             # Trigger asynchronous email
-            send_order_confirmation_email.delay(order.id)
+            language = get_language()
+            currency = request.session.get('currency', 'UAH')
+            base_url = request.build_absolute_uri('/')[:-1]
+            send_order_confirmation_email.delay(order.id, language=language, currency=currency, base_url=base_url)
             
             cart.clear()
             

@@ -1,150 +1,150 @@
-<!DOCTYPE html>
+{% load i18n %}<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Premium Shop</title>
+    <title>{% trans "Ласкаво просимо до Premium Shop" %}</title>
     <style>
-        :root {
-            --primary: #000000;
-            --accent: #ff4757;
-            --bg: #ffffff;
-            --text: #1d1d1f;
-            --muted: #86868b;
-        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f5f5f7;
             margin: 0;
             padding: 0;
+            color: #1d1d1f;
             -webkit-font-smoothing: antialiased;
         }
         .wrapper {
             width: 100%;
-            table-layout: fixed;
             background-color: #f5f5f7;
             padding-bottom: 40px;
         }
         .main {
             background-color: #ffffff;
             margin: 0 auto;
-            width: 100%;
             max-width: 600px;
-            border-spacing: 0;
-            color: #1d1d1f;
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
-            margin-top: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            margin-top: 40px;
         }
         .header {
-            padding: 40px 0;
+            padding: 40px 20px;
             text-align: center;
             background: #000;
         }
         .logo {
             font-size: 24px;
             font-weight: 900;
-            letter-spacing: -1px;
             color: #fff;
             text-decoration: none;
+            letter-spacing: -1px;
         }
-        .logo span {
-            color: #ff4757;
-        }
+        .logo span { color: #ff4757; }
         .hero {
-            padding: 0;
-            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         .hero img {
             width: 100%;
-            max-width: 600px;
-            height: auto;
             display: block;
+            height: 200px;
+            object-fit: cover;
         }
         .content {
-            padding: 40px 50px;
+            padding: 50px 60px;
             text-align: center;
         }
         h1 {
-            font-size: 32px;
-            font-weight: 700;
+            font-size: 36px;
+            font-weight: 800;
             margin-bottom: 20px;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
+            color: #1d1d1f;
         }
         p {
-            font-size: 17px;
+            font-size: 18px;
             line-height: 1.6;
             color: #424245;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         .btn {
             display: inline-block;
             background-color: #000;
             color: #ffffff !important;
-            padding: 18px 34px;
-            border-radius: 30px;
+            padding: 20px 40px;
+            border-radius: 40px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 17px;
-            transition: transform 0.2s ease;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .benefits {
+            margin-top: 50px;
+            padding: 30px;
+            background: #ececed;
+            border-radius: 20px;
+            text-align: left;
+        }
+        .benefit-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .benefit-item {
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: #86868b;
         }
         .footer {
-            padding: 40px 50px;
+            padding: 40px;
             text-align: center;
             font-size: 13px;
             color: #86868b;
-        }
-        .social-links {
-            margin-bottom: 20px;
-        }
-        .social-links a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #86868b;
-            font-size: 18px;
+            line-height: 1.5;
         }
         @media screen and (max-width: 600px) {
-            .content {
-                padding: 30px 20px;
-            }
-            h1 {
-                font-size: 26px;
-            }
+            .content { padding: 40px 30px; }
+            h1 { font-size: 28px; }
+            .main { margin-top: 0; border-radius: 0; }
         }
     </style>
 </head>
 <body>
     <div class="wrapper">
-        <table class="main" width="100%">
-            <tr>
-                <td class="header">
-                    <a href="#" class="logo">PREMIUM<span>SHOP</span></a>
-                </td>
-            </tr>
-            <tr>
-                <td class="hero">
-                    <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1200&auto=format&fit=crop" alt="Welcome Hero">
-                </td>
-            </tr>
-            <tr>
-                <td class="content">
-                    <h1>Ласкаво просимо, {{ user.username }}!</h1>
-                    <p>Ми раді вітати вас у сім'ї Premium Shop. Тепер у вас є доступ до найкращих кросівок та стрітвіру з винятковим сервісом.</p>
-                    <a href="https://example.com/shop" class="btn">Перейти до шопінгу</a>
-                </td>
-            </tr>
-            <tr>
-                <td class="footer">
-                    <div class="social-links">
-                        <a href="#">Instagram</a>
-                        <a href="#">Telegram</a>
-                        <a href="#">TikTok</a>
-                    </div>
-                    <p style="font-size: 12px; margin-bottom: 0;">&copy; 2026 Premium Shop. Всі права захищені.</p>
-                    <p style="font-size: 12px; margin-top: 5px;">Ви отримали цей лист, оскільки зареєструвалися на нашому сайті.</p>
-                </td>
-            </tr>
-        </table>
+        <center>
+        <div class="main">
+            <div class="header">
+                <a href="{{ base_url }}" class="logo">PREMIUM<span>SHOP</span></a>
+            </div>
+            <div class="content" style="padding: 40px 50px;">
+                <h1 style="margin-top: 0; margin-bottom: 20px;">{% trans "Вітаємо у сім'ї!" %}</h1>
+                <p style="margin-bottom: 30px;">{% trans "Привіт" %}, {{ user.username }}! {% trans "Ви зробили перший крок до виняткового стилю. Ми раді, що ви тепер з нами." %}</p>
+                <a href="{{ base_url }}{% url 'store:product_list' %}" class="btn">{% trans "Почати шопінг" %}</a>
+                
+                <div class="benefits" style="margin-top: 40px;">
+                    <div class="benefit-title">{% trans "Що на вас чекає:" %}</div>
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td style="padding-bottom: 12px; font-size: 15px; color: #86868b; padding-right: 15px;"><span style="color: #ff4757; font-weight: bold;">✓</span></td>
+                            <td style="padding-bottom: 12px; font-size: 15px; color: #86868b;">{% trans "Ексклюзивні новинки раніше за всіх" %}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 12px; font-size: 15px; color: #86868b; padding-right: 15px;"><span style="color: #ff4757; font-weight: bold;">✓</span></td>
+                            <td style="padding-bottom: 12px; font-size: 15px; color: #86868b;">{% trans "Преміальна якість кожного товару" %}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom: 0px; font-size: 15px; color: #86868b; padding-right: 15px;"><span style="color: #ff4757; font-weight: bold;">✓</span></td>
+                            <td style="padding-bottom: 0px; font-size: 15px; color: #86868b;">{% trans "Швидка та надійна доставка" %}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="footer">
+                <p>&copy; 2026 Premium Shop. {% trans "Всі права захищені." %}</p>
+                <p>{% trans "Ви отримали цей лист, оскільки зареєструвалися на нашому сайті." %}</p>
+            </div>
+        </div>
+        </center>
     </div>
 </body>
 </html>
