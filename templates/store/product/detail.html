@@ -76,8 +76,12 @@
 
         {% if product.sizes.all %}
         <div style="margin-bottom: 1.5rem;" id="size-selection-area">
-            <h3 style="margin-bottom: 1rem;">{% trans "Оберіть розмір" %} <span style="color: var(--accent);">*</span>
-            </h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">{% trans "Оберіть розмір" %} <span style="color: var(--accent);">*</span></h3>
+                <button type="button" onclick="openSizeGuide()" class="link-underline" style="background: none; border: none; color: var(--text-muted); font-size: 0.85rem; cursor: pointer; font-weight: 600;">
+                    <i class="fas fa-ruler-combined"></i> {% trans "Таблиця розмірів" %}
+                </button>
+            </div>
             <div class="size-selector" style="display: flex; gap: 10px; flex-wrap: wrap;">
                 {% for size in product.sizes.all %}
                 <label class="size-option">
@@ -244,7 +248,105 @@
             img.style.transformOrigin = 'center center';
         });
     });
+
+    // Size Guide Modal Logic
+    function openSizeGuide() {
+        document.getElementById('size-guide-modal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSizeGuide() {
+        document.getElementById('size-guide-modal').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    // Close on click outside
+    const sizeModal = document.getElementById('size-guide-modal');
+    if (sizeModal) {
+        sizeModal.addEventListener('click', (e) => {
+            if (e.target === sizeModal) closeSizeGuide();
+        });
+    }
 </script>
+
+<!-- Size Guide Modal -->
+<div id="size-guide-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 700px; max-height: 90vh; padding: 2.5rem; display: flex; flex-direction: column;">
+        <button class="modal-close" onclick="closeSizeGuide()">&times;</button>
+        
+        <div style="text-align: center; margin-bottom: 2rem; flex-shrink: 0;">
+            <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem;">{% trans "Таблиця розмірів" %}</h2>
+            <p style="color: var(--text-muted);">{% trans "Знайдіть свій ідеальний розмір" %}</p>
+        </div>
+
+        {% with size_type=product.sizes.all.0.type %}
+        <div class="size-guide-tabs" style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; flex-shrink: 0;">
+            <button onclick="showTab('shoes-table')" class="tab-btn {% if size_type == 'shoes' or not size_type %}active{% endif %}" id="btn-shoes-table">{% trans "Взуття" %}</button>
+            <button onclick="showTab('apparel-table')" class="tab-btn {% if size_type == 'apparel' %}active{% endif %}" id="btn-apparel-table">{% trans "Одяг" %}</button>
+        </div>
+
+        <div id="shoes-table" class="size-table-container" style="{% if size_type == 'apparel' %}display: none;{% endif %} overflow-y: auto; flex-grow: 1;">
+            <table class="size-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "EU" %}</th>
+                        <th>{% trans "US (Men)" %}</th>
+                        <th>{% trans "US (Women)" %}</th>
+                        <th>{% trans "CM" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>36</td><td>4</td><td>5.5</td><td>22.5</td></tr>
+                    <tr><td>37</td><td>5</td><td>6.5</td><td>23.5</td></tr>
+                    <tr><td>38</td><td>6</td><td>7.5</td><td>24.5</td></tr>
+                    <tr><td>39</td><td>6.5</td><td>8</td><td>25</td></tr>
+                    <tr><td>40</td><td>7</td><td>9</td><td>25.5</td></tr>
+                    <tr><td>41</td><td>8</td><td>10</td><td>26.5</td></tr>
+                    <tr><td>42</td><td>8.5</td><td>10.5</td><td>27</td></tr>
+                    <tr><td>43</td><td>9.5</td><td>11.5</td><td>28</td></tr>
+                    <tr><td>44</td><td>10</td><td>12</td><td>28.5</td></tr>
+                    <tr><td>45</td><td>11</td><td>13</td><td>29.5</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="apparel-table" class="size-table-container" style="{% if size_type != 'apparel' %}display: none;{% endif %} overflow-y: auto; flex-grow: 1;">
+            <table class="size-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Розмір" %}</th>
+                        <th>{% trans "Груди (см)" %}</th>
+                        <th>{% trans "Талія (см)" %}</th>
+                        <th>{% trans "Стегна (см)" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>XS</td><td>80-88</td><td>65-73</td><td>80-88</td></tr>
+                    <tr><td>S</td><td>88-96</td><td>73-81</td><td>88-96</td></tr>
+                    <tr><td>M</td><td>96-104</td><td>81-89</td><td>96-104</td></tr>
+                    <tr><td>L</td><td>104-112</td><td>89-97</td><td>104-112</td></tr>
+                    <tr><td>XL</td><td>112-124</td><td>97-109</td><td>112-120</td></tr>
+                    <tr><td>XXL</td><td>124-136</td><td>109-121</td><td>120-128</td></tr>
+                </tbody>
+            </table>
+        </div>
+        {% endwith %}
+
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1.5rem; font-style: italic;">
+            * {% trans "Це стандартна розмірна сітка. Заміри можуть дещо відрізнятися в залежності від бренду та моделі." %}
+        </p>
+
+        <script>
+            function showTab(tabId) {
+                document.querySelectorAll('.size-table-container').forEach(t => t.style.display = 'none');
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                
+                document.getElementById(tabId).style.display = 'block';
+                document.getElementById('btn-' + tabId).classList.add('active');
+            }
+        </script>
+    </div>
+</div>
 
 <style>
     .product-container {
@@ -401,6 +503,68 @@
     .slider-nav-btn:hover {
         background: var(--secondary) !important;
         transform: translateY(-50%) scale(1.1) !important;
+    }
+
+    /* Size Guide Table Styles */
+    .tab-btn {
+        background: none;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+    }
+
+    .tab-btn.active {
+        color: var(--primary);
+    }
+
+    .tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: -1rem;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--accent);
+    }
+
+    .size-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+        background: var(--card-bg-alt);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .size-table th, .size-table td {
+        padding: 1rem;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .size-table th {
+        background: var(--card-bg-alt);
+        font-weight: 800;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        box-shadow: 0 2px 0 var(--border-color);
+    }
+
+    .size-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .size-table tr:hover td {
+        background: rgba(var(--accent-rgb, 225, 29, 72), 0.05);
+        color: var(--accent);
     }
 </style>
 {% endblock %}
