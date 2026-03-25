@@ -13,30 +13,28 @@
 
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
         {% for review in reviews %}
-        <div class="review-card"
-            style="background: var(--card-bg); padding: 2rem; border-radius: 24px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.03); transition: transform 0.3s ease;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                <div>
-                    <strong style="display: block; font-size: 1.1rem; margin-bottom: 0.2rem;">{{ review.user.username }}</strong>
-                    <span style="font-size: 0.8rem; color: #888;">{% trans "на" %} <a
-                            href="{% url 'store:product_detail' review.product.id review.product.slug %}"
-                            class="hover-red-line"
-                            style="color: var(--primary); font-weight: 600; text-decoration: none; position: relative; display: inline-block; padding-bottom: 2px;">{{ review.product.name }}</a></span>
-                </div>
-                <div style="color: #ffc107; white-space: nowrap;">
-                    {% for i in "12345" %}
-                    {% if forloop.counter <= review.rating %} <i class="fas fa-star"></i>
-                        {% else %}
-                        <i class="far fa-star"></i>
-                        {% endif %}
+        <div class="review-card">
+            <div class="review-card-header">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <strong style="font-size: 1.1rem;">{{ review.user.username }}</strong>
+                    <div style="color: #ffc107; white-space: nowrap; flex-shrink: 0;">
+                        {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
                         {% endfor %}
+                    </div>
+                </div>
+                <!-- Назва товару тепер має 100% ширини карточки і може переноситись, якщо надто довга -->
+                <div style="font-size: 0.8rem; color: #888; margin-top: 0.2rem;">
+                    {% trans "на" %} <a href="{% url 'store:product_detail' review.product.id review.product.slug %}"
+                       class="hover-red-line"
+                       style="color: var(--primary); font-weight: 600; text-decoration: none; position: relative; display: inline; padding-bottom: 2px;">{{ review.product.name }}</a>
                 </div>
             </div>
             <div class="review-comment">
                 <i class="fas fa-quote-right quote-icon"></i>
                 <p>"{{ review.comment }}"</p>
             </div>
-            <div style="font-size: 0.8rem; color: var(--text-muted); text-align: right;"> {{ review.created_at|date:"d.m.Y" }} </div>
+            <div class="review-card-date">{{ review.created_at|date:"d.m.Y" }}</div>
         </div>
         {% empty %}
         <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; background: var(--card-bg); border-radius: 24px;">
@@ -51,36 +49,75 @@
 </div>
 
 <style>
+    .review-card {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(0,0,0,0.03);
+        transition: transform 0.3s ease;
+        height: 320px;
+        display: flex;
+        flex-direction: column;
+    }
+
     .review-card:hover {
         transform: translateY(-5px);
     }
 
-    .hover-red-line::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: var(--accent);
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    .review-card-header {
+        margin-bottom: 1rem;
+        flex-shrink: 0;
     }
 
-    .hover-red-line:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
+    .review-card-date {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-align: right;
+        flex-shrink: 0;
+        margin-top: auto;
+        padding-top: 0.75rem;
+    }
+
+    .hover-red-line {
+        position: relative;
+        text-decoration: none;
+        background-image: linear-gradient(var(--accent), var(--accent));
+        background-position: 0% 100%;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+        transition: background-size 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+    }
+
+    .hover-red-line:hover {
+        background-size: 100% 2px;
     }
 
     .review-comment {
         background: var(--card-bg-alt);
         padding: 1.5rem;
         border-radius: 16px;
-        margin-bottom: 1.5rem;
         position: relative;
         border-left: 4px solid var(--accent);
-        overflow: hidden;
+        overflow-y: auto;
+        flex: 1;
+        min-height: 0;
+    }
+
+    .review-comment::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .review-comment::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .review-comment::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        border-radius: 4px;
+        opacity: 0.5;
     }
 
     .quote-icon {

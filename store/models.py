@@ -157,6 +157,9 @@ class Review(models.Model):
         ordering = ('-created_at',)
         verbose_name = _("Відгук")
         verbose_name_plural = _("Відгуки")
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'product'], name='unique_review_per_product')
+        ]
 
     def __str__(self):
         return f'{_("Відгук від")} {self.user.username} {_("на")} {self.product.name}'
