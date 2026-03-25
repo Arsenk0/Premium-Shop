@@ -2,9 +2,17 @@ import requests
 import json
 import logging
 from django.conf import settings
+from django.db import transaction
+from django.db.models import F
 from ..models import OrderItem
 
 logger = logging.getLogger(__name__)
+
+
+class InsufficientStockError(Exception):
+    """Raised when there is not enough stock to fulfill an order."""
+    pass
+
 
 class NovaPoshtaService:
     API_URL = "https://api.novaposhta.ua/v2.0/json/"
@@ -22,7 +30,7 @@ class NovaPoshtaService:
             }
         }
         try:
-            response = requests.post(cls.API_URL, json=payload)
+            response = requests.post(cls.API_URL, json=payload, timeout=10)
             data = response.json()
             if data.get('success'):
                 return [{
@@ -44,7 +52,7 @@ class NovaPoshtaService:
             }
         }
         try:
-            response = requests.post(cls.API_URL, json=payload)
+            response = requests.post(cls.API_URL, json=payload, timeout=10)
             data = response.json()
             if data.get('success'):
                 return [{
@@ -55,39 +63,46 @@ class NovaPoshtaService:
             logger.error(f"NP Error in get_warehouses: {e}")
         return []
 
+
 class OrderService:
     @staticmethod
     def create_order(cart, user, form_data):
         from ..models import Order, Product
-        
-        # Create the order object
-        order = Order(**form_data)
-        if user.is_authenticated:
-            order.user = user
-        order.save()
 
-        # Create order items with current prices and decrement stock
-        for item in cart:
-            product = item['product']
-            # Refresh product from DB to get current price and stock
-            product.refresh_from_db()
-            
-            order_item = OrderItem(
-                order=order,
-                product=product,
-                price=product.price,  # Use current DB price
-                quantity=item['quantity'],
-                size=item.get('size')
-            )
-            order_item.full_clean()  # Validates size selection
-            order_item.save()
-            
-            # Decrement stock
-            if product.stock >= item['quantity']:
-                product.stock -= item['quantity']
-                product.save(update_fields=['stock'])
-            else:
-                # Should have been caught by cart validation, but safeguard here
-                logger.error(f"Stock error for {product.name} during order creation")
-            
+        with transaction.atomic():
+            # Create the order object
+            order = Order(**form_data)
+            if user.is_authenticated:
+                order.user = user
+            order.save()
+
+            # Create order items with current prices and decrement stock
+            for item in cart:
+                product = item['product']
+                # Refresh product from DB to get current price and stock
+                product.refresh_from_db()
+                quantity = item['quantity']
+
+                order_item = OrderItem(
+                    order=order,
+                    product=product,
+                    price=product.price,  # Use current DB price
+                    quantity=quantity,
+                    size=item.get('size')
+                )
+                order_item.full_clean()  # Validates size selection
+                order_item.save()
+
+                # Atomically decrement stock using F() to prevent race conditions
+                updated = Product.objects.filter(
+                    id=product.id,
+                    stock__gte=quantity
+                ).update(stock=F('stock') - quantity)
+
+                if not updated:
+                    raise InsufficientStockError(
+                        f"Недостатньо товару '{product.name}' на складі. "
+                        f"Доступно: {product.stock}, потрібно: {quantity}"
+                    )
+
         return order

@@ -4,6 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib.auth.models import User
+from django.utils.translation import gettext as _
 from .models import Order
 
 @shared_task
@@ -13,7 +14,7 @@ def send_order_confirmation_email(order_id):
     """
     try:
         order = Order.objects.get(id=order_id)
-        subject = f'Замовлення №{order.id} - Підтвердження'
+        subject = _('Замовлення №%(order_id)s - Підтвердження') % {'order_id': order.id}
         from_email = settings.DEFAULT_FROM_EMAIL
         to = order.email
 
@@ -34,7 +35,7 @@ def send_welcome_email(user_id):
     """
     try:
         user = User.objects.get(id=user_id)
-        subject = f'Ласкаво просимо до нашого магазину, {user.username}!'
+        subject = _('Ласкаво просимо до нашого магазину, %(username)s!') % {'username': user.username}
         from_email = settings.DEFAULT_FROM_EMAIL
         to = user.email
 
@@ -58,7 +59,7 @@ def send_order_status_update_email(order_id):
     """
     try:
         order = Order.objects.get(id=order_id)
-        subject = f'Оновлення статусу замовлення №{order.id}'
+        subject = _('Оновлення статусу замовлення №%(order_id)s') % {'order_id': order.id}
         from_email = settings.DEFAULT_FROM_EMAIL
         to = order.email
 

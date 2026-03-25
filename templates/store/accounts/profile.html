@@ -86,13 +86,17 @@
                 <div class="activity-feed">
                     {% for activity in activities %}
                     <div class="activity-item">
-                        <div class="activity-icon">{{ activity.icon|safe }}</div>
+                        <div class="activity-icon"><i class="{{ activity.icon_class }}" style="color: var(--accent);"></i></div>
                         <div class="activity-info">
                             <div class="activity-header" style="gap: 1rem;">
                                 <strong>{{ activity.title }}</strong>
                                 <span class="activity-date">{{ activity.date|date:"d.m.Y" }}</span>
                             </div>
-                            <p class="activity-desc">{{ activity.description|safe }}</p>
+                            {% if activity.status_color %}
+                            <p class="activity-desc"><span style="color: {{ activity.status_color }}; font-weight: 600;">{{ activity.description }}</span></p>
+                            {% else %}
+                            <p class="activity-desc">{{ activity.description }}</p>
+                            {% endif %}
                         </div>
                     </div>
                     {% endfor %}
