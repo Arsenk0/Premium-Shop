@@ -273,26 +273,7 @@ def order_create(request):
             
             return redirect('store:order_success', order_id=order.id)
     else:
-        initial_data = {}
-        if request.user.is_authenticated:
-            initial_data = {
-                'first_name': request.user.first_name,
-                'last_name': request.user.last_name,
-                'email': request.user.email,
-            }
-            try:
-                profile = request.user.profile
-                initial_data.update({
-                    'phone': profile.phone,
-                    'social_handle': profile.social_handle,
-                    'city': profile.city,
-                    'city_ref': profile.city_ref,
-                    'warehouse': profile.warehouse,
-                    'warehouse_ref': profile.warehouse_ref,
-                })
-            except AttributeError:
-                pass
-        form = OrderCreateForm(initial=initial_data)
+        form = OrderCreateForm()
     return render(request, 'store/order/create.html', {'cart': cart, 'form': form})
 
 

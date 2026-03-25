@@ -22,12 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const sizeInput = document.querySelector('input[name="size"]:checked');
-            if (sizeInput) {
+            const sizeOptions = document.querySelectorAll('input[type="radio"][name="size"]');
+            const selectedSize = document.querySelector('input[type="radio"][name="size"]:checked');
+
+            if (selectedSize) {
                 const cartUrl = new URL(url, window.location.origin);
-                cartUrl.searchParams.set('size', sizeInput.value);
+                cartUrl.searchParams.set('size', selectedSize.value);
                 url = cartUrl.toString();
-            } else if (document.querySelector('input[name="size"]')) {
+            } else if (sizeOptions.length > 0) {
                 showToast(`<i class="fas fa-exclamation-triangle" style="color: var(--accent);"></i> <span>${TRANSLATIONS.toastSelectSize}</span>`);
                 return;
             }

@@ -1221,3 +1221,23 @@ msgstr "Add items you like so you don't lose them."
 
 #~ msgid "В кабінет"
 #~ msgstr "Dashboard"
+
+msgid "Ваш кошик порожній"
+msgstr "Your cart is empty"
+
+msgid "Схоже, ви ще не додали жодного товару. Почніть покупки зараз!"
+msgstr "It seems you haven't added any products yet. Start shopping now!"
+
+msgid "Використати дані з профілю"
+msgstr "Use profile data"
+
+msgid "Дані використано"
+msgstr "Data used"
+
+msgid "Заповніть дані для доставки вашого замовлення"
+msgstr "Fill in the delivery details for your order"
+msgid "Схоже, ви ще не додали жодного товару. Почніть покупки зараз та знайдіть щось особливе для себе!"
+msgstr "Start shopping now and find something special for yourself!"
+
+msgid "Всього до сплати:"
+msgstr "Total to pay:"

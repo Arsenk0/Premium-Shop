@@ -1229,3 +1229,23 @@ msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."
 
 #~ msgid "В кабінет"
 #~ msgstr "Na účet"
+
+msgid "Ваш кошик порожній"
+msgstr "Váš košík je prázdný"
+
+msgid "Схоже, ви ще не додали жодного товару. Почніть покупки зараз!"
+msgstr "Vypadá to, že jste ještě nepřidali žádné produkty. Začněte nakupovat hned!"
+
+msgid "Використати дані з профілю"
+msgstr "Použít údaje z profilu"
+
+msgid "Дані використано"
+msgstr "Údaje použity"
+
+msgid "Заповніть дані для доставки вашого замовлення"
+msgstr "Vyplňte dodací údaje pro svou objednávku"
+msgid "Схоже, ви ще не додали жодного товару. Почніть покупки зараз та знайдіть щось особливе для себе!"
+msgstr "Začněte nakupovat právě teď a najděte pro sebe něco speciálního!"
+
+msgid "Всього до сплати:"
+msgstr "Celkem k úhradě:"

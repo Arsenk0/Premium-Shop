@@ -60,7 +60,11 @@
 
 .input-error {
     border-color: #e11d48 !important;
-    background-color: #fff1f2 !important;
+    background-color: rgba(225, 29, 72, 0.05) !important;
+}
+
+[data-theme="dark"] .input-error {
+    background-color: rgba(225, 29, 72, 0.15) !important;
 }
 
 .input-error:focus {
@@ -84,6 +88,12 @@
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
     animation: shake 0.5s ease-in-out;
+}
+
+[data-theme="dark"] .error-banner {
+    background: rgba(225, 29, 72, 0.1);
+    border-color: rgba(225, 29, 72, 0.2);
+    color: #ff4d6d;
 }
 
 .error-msg {

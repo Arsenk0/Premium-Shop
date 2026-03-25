@@ -8,7 +8,7 @@
     <div style="background: var(--card-bg); padding: 3rem; border-radius: 20px; box-shadow: var(--shadow);">
         <h1 style="text-align: center; margin-bottom: 2rem;">{% trans "Створити аккаунт" %}</h1>
 
-        <form method="post" class="premium-form">
+        <form method="post" class="premium-form" autocomplete="off">
             {% csrf_token %}
 
             {% if form.non_field_errors %}
@@ -25,13 +25,13 @@
 
                 {% if field.name == 'password1' or field.name == 'password2' %}
                 <div class="password-wrapper" style="position: relative;">
-                    <input type="password" name="{{ field.name }}" id="{{ field.id_for_label }}" class="{% if field.errors or form.non_field_errors %}input-error shake{% endif %}" {% if field.field.required %}required{% endif %} {% if field.value %}value="{{ field.value }}"{% endif %}>
-                    <span class="toggle-password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #666; padding: 5px;">
+                    <input type="password" name="{{ field.name }}" id="{{ field.id_for_label }}" class="{% if field.errors or form.non_field_errors %}input-error shake{% endif %}" {% if field.field.required %}required{% endif %} {% if field.value %}value="{{ field.value }}"{% endif %} autocomplete="new-password">
+                    <span class="toggle-password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted); padding: 5px; transition: all 0.2s ease;">
                         <i class="fas fa-eye"></i>
                     </span>
                 </div>
                 {% else %}
-                <input type="{{ field.field.widget.input_type|default:'text' }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="{% if field.errors or form.non_field_errors %}input-error shake{% endif %}" {% if field.field.required %}required{% endif %} {% if field.value %}value="{{ field.value }}"{% endif %}>
+                <input type="{{ field.field.widget.input_type|default:'text' }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="{% if field.errors or form.non_field_errors %}input-error shake{% endif %}" {% if field.field.required %}required{% endif %} {% if field.value %}value="{{ field.value }}"{% endif %} autocomplete="off">
                 {% endif %}
 
                 {% if field.name == 'password1' %}
@@ -70,13 +70,13 @@
             .password-checklist {
                 margin-top: 12px;
                 font-size: 0.85rem;
-                color: #64748b;
+                color: var(--text-muted);
                 display: none;
                 /* Приховано за замовчуванням */
-                background: #f8fafc;
+                background: var(--card-bg-alt);
                 padding: 1rem;
                 border-radius: 12px;
-                border: 1px solid #e2e8f0;
+                border: 1px solid var(--border-color);
                 transition: all 0.3s ease;
             }
 
@@ -114,6 +114,14 @@
 
             .req-item.valid i.fa-check {
                 display: inline-block;
+            }
+
+            .toggle-password:hover {
+                transform: translateY(-50%) scale(1.15) !important;
+                color: #ff4d4d !important;
+            }
+            [data-theme="dark"] .toggle-password:hover {
+                color: #00ffcc !important;
             }
         </style>
 
@@ -171,8 +179,8 @@
             });
         </script>
 
-        <div style="text-align: center; margin-top: 2rem; color: #666;">
-            {% trans "Вже є аккаунт?" %} <a href="{% url 'login' %}" class="hover-scale" style="color: var(--primary); font-weight: 600;">{% trans "Увійти" %}</a>
+        <div style="text-align: center; margin-top: 2rem; color: var(--text-muted);">
+            {% trans "Вже є аккаунт?" %} <a href="{% url 'login' %}" class="link-underline" style="color: var(--primary); font-weight: 600; margin-left: 5px;">{% trans "Увійти" %}</a>
         </div>
     </div>
 </div>
