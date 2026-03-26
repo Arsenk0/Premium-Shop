@@ -9,8 +9,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from django.http import JsonResponse
-from store.models import Category, Product, Order, OrderItem, Size, Review, Wishlist
-from store.forms import OrderCreateForm, UserSignupForm, ReviewForm, UserUpdateForm, ProfileUpdateForm
+from store.models import Category, Product, Order, OrderItem, Size, Review, Wishlist, Coupon
+from store.forms import OrderCreateForm, UserSignupForm, ReviewForm, UserUpdateForm, ProfileUpdateForm, CouponApplyForm
 from store.services import NovaPoshtaService, OrderService
 from store.services.core import InsufficientStockError
 from store.services.product_service import ProductFilterService
@@ -21,6 +21,7 @@ from django.utils.translation import gettext as _, get_language
 from django.utils import translation
 from django.urls import translate_url
 from django.conf import settings
+from django.utils import timezone
 from .utils import rate_limit
 import decimal
 from decimal import Decimal
@@ -250,7 +251,45 @@ def cart_update(request, item_key):
 
 def cart_detail(request):
     cart = Cart(request)
-    return render(request, 'store/cart/detail.html', {'cart_items': cart, 'total_price': cart.get_total_price()})
+    coupon_apply_form = CouponApplyForm()
+    cart_items = list(cart)
+    return render(request, 'store/cart/detail.html', {
+        'cart': cart,
+        'cart_items': cart_items,
+        'coupon_apply_form': coupon_apply_form
+    })
+
+@require_POST
+def coupon_apply(request):
+    now = timezone.now()
+    form = CouponApplyForm(request.POST)
+    if form.is_valid():
+        code = form.cleaned_data['code']
+        try:
+            coupon = Coupon.objects.get(code__iexact=code,
+                                       valid_from__lte=now,
+                                       valid_to__gte=now,
+                                       active=True)
+            
+            # Check if user has already used this coupon
+            if request.user.is_authenticated:
+                if Order.objects.filter(user=request.user, coupon=coupon).exists():
+                    messages.error(request, _("Ви вже використовували цей промокод."))
+                    return redirect('store:cart_detail')
+
+            request.session['coupon_id'] = coupon.id
+            messages.success(request, _("Промокод успішно застосовано!"))
+        except Coupon.DoesNotExist:
+            request.session['coupon_id'] = None
+            messages.error(request, _("Недійсний промокод."))
+    return redirect('store:cart_detail')
+
+
+@require_POST
+def coupon_remove(request):
+    request.session['coupon_id'] = None
+    messages.success(request, _("Промокод видалено."))
+    return redirect('store:cart_detail')
 
 
 @require_GET

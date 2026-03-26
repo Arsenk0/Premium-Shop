@@ -187,3 +187,6 @@ class ProfileUpdateForm(forms.ModelForm):
             'warehouse': forms.Select(attrs={'class': 'form-control', 'id': 'warehouse-select'}),
             'warehouse_ref': forms.HiddenInput(),
         }
+
+class CouponApplyForm(forms.Form):
+    code = forms.CharField(label=_("Промокод"), widget=forms.TextInput(attrs={'placeholder': _('Введіть промокод'), 'class': 'form-control'}))
