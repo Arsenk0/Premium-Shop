@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
 
 class Category(models.Model):
@@ -92,9 +93,27 @@ class Profile(models.Model):
         return f'{_("Профіль")} {self.user.username}'
 
 
+class Coupon(models.Model):
+    code = models.CharField(max_length=50, unique=True, verbose_name=_("Промокод"))
+    valid_from = models.DateTimeField(verbose_name=_("Дійсний з"))
+    valid_to = models.DateTimeField(verbose_name=_("Дійсний до"))
+    discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name=_("Знижка (%)"))
+    active = models.BooleanField(default=True, verbose_name=_("Активний"))
+
+    class Meta:
+        verbose_name = _("Купон")
+        verbose_name_plural = _("Купони")
+
+    def __str__(self):
+        return self.code
+
+
 class Order(models.Model):
     user = models.ForeignKey(User, related_name='orders', on_delete=models.SET_NULL, null=True, blank=True,
                              verbose_name=_("Користувач"))
+    coupon = models.ForeignKey(Coupon, related_name='orders', on_delete=models.SET_NULL, null=True, blank=True,
+                               verbose_name=_("Купон"))
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name=_("Сума знижки"))
     first_name = models.CharField(max_length=50, verbose_name=_("Ім'я"))
     last_name = models.CharField(max_length=50, verbose_name=_("Прізвище"))
     phone = models.CharField(max_length=20, verbose_name=_("Телефон"))
@@ -129,7 +148,8 @@ class Order(models.Model):
         return f'Order {self.id}'
 
     def get_total_cost(self):
-        return sum(item.price * item.quantity for item in self.items.all())
+        total = sum(item.price * item.quantity for item in self.items.all())
+        return total - self.discount_amount
 
 
 class OrderItem(models.Model):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Order, OrderItem, Size, ProductImage, Profile, Review
+from .models import Category, Product, Order, OrderItem, Size, ProductImage, Profile, Review, Coupon
 from modeltranslation.admin import TranslationAdmin
 
 @admin.register(Category)
@@ -40,6 +40,9 @@ class OrderAdmin(admin.ModelAdmin):
         ('Прив\'язка до користувача', {
             'fields': ('user',)
         }),
+        ('Промокод та Знижка', {
+            'fields': ('coupon', 'discount_amount')
+        }),
         ('Дані Клієнта', {
             'fields': ('first_name', 'last_name', 'phone', 'contact_method', 'social_handle')
         }),
@@ -56,6 +59,12 @@ class OrderAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('created', 'updated')
     inlines = [OrderItemInline]
+
+@admin.register(Coupon)
+class CouponAdmin(admin.ModelAdmin):
+    list_display = ['code', 'valid_from', 'valid_to', 'discount', 'active']
+    list_filter = ['active', 'valid_from', 'valid_to']
+    search_fields = ['code']
 
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
