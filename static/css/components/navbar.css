@@ -198,7 +198,7 @@
     color: var(--accent);
     margin-bottom: 0.8rem;
     display: block;
-    animation: fadeInDown 0.8s ease-out;
+    animation: fadeInDown 0.8s ease-out forwards;
 }
 
 .hero h1 {
@@ -208,7 +208,7 @@
     letter-spacing: -1px;
     text-transform: uppercase;
     line-height: 1.1;
-    animation: fadeInUp 0.8s ease-out;
+    animation: fadeInUp 0.8s ease-out forwards;
 }
 
 .hero-description {
@@ -217,11 +217,11 @@
     font-weight: 500;
     max-width: 600px;
     margin: 0 auto;
-    animation: fadeInUp 1s ease-out;
+    animation: fadeInUpMuted 1s ease-out forwards;
 }
 
 .hero-actions {
-    animation: fadeInUp 1.2s ease-out;
+    animation: fadeInUp 1.2s ease-out forwards;
 }
 
 @keyframes fadeInDown {
@@ -232,4 +232,9 @@
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUpMuted {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 0.7; transform: translateY(0); }
 }
