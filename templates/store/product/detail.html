@@ -237,15 +237,30 @@
     document.querySelectorAll('.zoom-container').forEach(container => {
         const img = container.querySelector('img');
         
-        container.addEventListener('mousemove', (e) => {
+        container.addEventListener('click', (e) => {
+            img.classList.toggle('zoomed');
+            container.style.cursor = img.classList.contains('zoomed') ? 'zoom-out' : 'zoom-in';
+            
+            // Initial position on click
             const rect = container.getBoundingClientRect();
             const x = ((e.clientX - rect.left) / rect.width) * 100;
             const y = ((e.clientY - rect.top) / rect.height) * 100;
             img.style.transformOrigin = `${x}% ${y}%`;
         });
         
+        container.addEventListener('mousemove', (e) => {
+            if (img.classList.contains('zoomed')) {
+                const rect = container.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                img.style.transformOrigin = `${x}% ${y}%`;
+            }
+        });
+        
         container.addEventListener('mouseleave', () => {
+            img.classList.remove('zoomed');
             img.style.transformOrigin = 'center center';
+            container.style.cursor = 'zoom-in';
         });
     });
 
@@ -370,8 +385,8 @@
         border: 1px solid var(--border-color);
     }
 
-    .zoom-container:hover .zoom-image {
-        transform: scale(2);
+    .zoom-image.zoomed {
+        transform: scale(2.5);
     }
 
     /* Responsiveness for Detail Page */

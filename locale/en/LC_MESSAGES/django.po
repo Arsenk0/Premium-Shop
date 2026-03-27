@@ -1532,3 +1532,9 @@ msgstr "Total:"
 
 msgid "Ви вже використовували цей промокод."
 msgstr "You have already used this promo code."
+
+msgid "Ваше замовлення:"
+msgstr "Your order:"
+
+msgid "Усього до оплати:"
+msgstr "Total to pay:"

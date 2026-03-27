@@ -2,6 +2,7 @@ from django.db.models import Sum, Count, F
 from ..models import Order, Review, Wishlist
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
+from django.urls import reverse
 
 def get_user_dashboard_stats(user):
     """
@@ -41,6 +42,7 @@ def get_recent_activity(user, limit=5):
             'description': _('Статус') + ': ' + order.get_status_display(),
             'status_color': STATUS_COLORS.get(order.status, '#6c757d'),
             'icon_class': 'fas fa-box',
+            'url': reverse('store:order_success', kwargs={'order_id': order.id}),
         })
         
     # Recent Reviews
@@ -52,6 +54,7 @@ def get_recent_activity(user, limit=5):
             'title': _('Відгук на') + f' {review.product.name}',
             'description': _('Оцінка:') + f' {review.rating}/5',
             'icon_class': 'fas fa-star',
+            'url': reverse('store:product_detail', kwargs={'pk': review.product.id, 'slug': review.product.slug}),
         })
         
     # Recent Wishlist additions
@@ -63,6 +66,7 @@ def get_recent_activity(user, limit=5):
             'title': _('Додано в обране:') + f' {item.product.name}',
             'description': _('Будемо чекати на ваше замовлення!'),
             'icon_class': 'fas fa-heart',
+            'url': reverse('store:product_detail', kwargs={'pk': item.product.id, 'slug': item.product.slug}),
         })
         
     # Sort activities by date descending

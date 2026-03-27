@@ -85,7 +85,7 @@
                 {% if activities %}
                 <div class="activity-feed">
                     {% for activity in activities %}
-                    <div class="activity-item">
+                    <a href="{{ activity.url }}" class="activity-item clickable-activity">
                         <div class="activity-icon"><i class="{{ activity.icon_class }}" style="color: var(--accent);"></i></div>
                         <div class="activity-info">
                             <div class="activity-header" style="gap: 1rem;">
@@ -98,7 +98,10 @@
                             <p class="activity-desc">{{ activity.description }}</p>
                             {% endif %}
                         </div>
-                    </div>
+                        <div class="activity-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
                     {% endfor %}
                 </div>
                 {% else %}
@@ -284,8 +287,36 @@
     .activity-item {
         display: flex;
         gap: 1rem;
-        padding-bottom: 1.5rem;
+        padding: 1.25rem;
         border-bottom: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        align-items: center;
+        border-radius: 12px;
+    }
+
+    .clickable-activity:hover {
+        background: var(--card-bg-alt);
+        transform: translateX(5px);
+    }
+
+    .activity-info {
+        flex: 1;
+    }
+
+    .activity-arrow {
+        color: var(--text-muted);
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s ease;
+    }
+
+    .clickable-activity:hover .activity-arrow {
+        opacity: 1;
+        transform: translateX(0);
+        color: var(--accent);
     }
 
     .activity-item:last-child {

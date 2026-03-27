@@ -1546,3 +1546,9 @@ msgstr "Celkem:"
 
 msgid "Ви вже використовували цей промокод."
 msgstr "Tento slevový kód jste již použili."
+
+msgid "Ваше замовлення:"
+msgstr "Vaše objednávka:"
+
+msgid "Усього до оплати:"
+msgstr "Celkem k úhradě:"
