@@ -1250,6 +1250,9 @@ msgstr "Katalog oblečení a tenisek"
 msgid "Нова Колекція 2026"
 msgstr "Nová kolekce 2026"
 
+msgid "Нова Колекція"
+msgstr "Nová Kolekce"
+
 #: templates/store/product/list.html:16
 msgid "Знайди свій ідеальний стиль сьогодні"
 msgstr "Najděte svůj dokonalý styl ještě dnes"
@@ -1408,9 +1411,6 @@ msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."
 #~ msgid "Підтвердити"
 #~ msgstr "Potvrdit objednávku"
 
-#~ msgid "Разом:"
-#~ msgstr "Celkem:"
-
 #~ msgid "Ваш кошик порожній."
 #~ msgstr "Váš košík je prázdný."
 
@@ -1494,3 +1494,55 @@ msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."
 #~ msgid "Схоже, ви ще не додали жодного товару. Почніть покупки зараз!"
 #~ msgstr ""
 #~ "Vypadá to, že jste ještě nepřidali žádné produkty. Začněte nakupovat hned!"
+
+msgid "Промокод"
+msgstr "Slevový kód"
+
+#, python-format
+msgid "Промокод \"%(code)s\" активовано (-%(discount)s%%)"
+msgstr "Slevový kód \"%(code)s\" aktivován (-%(discount)s%%)"
+
+msgid "У магазин"
+msgstr "Do obchodu"
+
+msgid "Оформити"
+msgstr "K pokladně"
+
+msgid "Деталі замовлення:"
+msgstr "Podrobnosti objednávky:"
+
+msgid "Усього:"
+msgstr "Celkem:"
+
+msgid "Промокод успішно застосовано!"
+msgstr "Slevový kód byl úspěšně uplatněn!"
+
+msgid "Недійсний промокод."
+msgstr "Neplatný slevový kód."
+
+msgid "Введіть промокод"
+msgstr "Zadejte slevový kód"
+
+msgid "Промокод видалено."
+msgstr "Slevový kód byl odstraněn."
+
+msgid "Видалити промокод"
+msgstr "Odstranit slevový kód"
+
+msgid "Сума:"
+msgstr "Mezisoučet:"
+
+msgid "Знижка:"
+msgstr "Sleva:"
+
+msgid "Усього до сплати:"
+msgstr "Celkem k úhradě:"
+
+msgid "Кількість:"
+msgstr "Množství:"
+ 
+msgid "Разом:"
+msgstr "Celkem:"
+
+msgid "Ви вже використовували цей промокод."
+msgstr "Tento slevový kód jste již použili."

@@ -1,22 +1,33 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n currency_tags %}
 
 {% block title %}{% trans "Замовлення підтверджено!" %}{% endblock %}
 
 {% block content %}
 <div class="container fade-in" style="max-width: 600px; text-align: center; padding-top: 3rem; padding-bottom: 3rem;">
     <div style="background: var(--card-bg); padding: 2.5rem; border-radius: 24px; box-shadow: var(--shadow);">
-        <div style="font-size: 5rem; margin-bottom: 2rem;"><i class="fas fa-grin-stars" style="color: #ffc107;"></i></div>
+        <div style="font-size: 6rem; margin-bottom: 2rem; color: var(--accent);"><i class="fa-solid fa-circle-check"></i></div>
         <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">{% trans "Дякуємо за замовлення!" %}</h1>
         <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2.5rem;">
             {% blocktrans with order_id=order.id contact_method=order.contact_method %}Ваше замовлення <strong>#{{ order_id }}</strong> успішно прийнято в обробку. Ми зв'яжемося з вами через <strong>{{ contact_method }}</strong> найближчим часом.{% endblocktrans %}
         </p>
 
         <div style="text-align: left; background: var(--card-bg-alt); color: var(--text-main); padding: 1.5rem; border-radius: 16px; margin-bottom: 2.5rem;">
-            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">{% trans "Деталі доставки:" %}</h3>
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">{% trans "Деталі замовлення:" %}</h3>
             <p style="margin-bottom: 0.5rem;"><strong>{% trans "Отримувач:" %}</strong> {{ order.first_name }} {{ order.last_name }}</p>
             <p style="margin-bottom: 0.5rem;"><strong>{% trans "Місто:" %}</strong> {{ order.city }}</p>
-            <p><strong>{% trans "Відділення:" %}</strong> {{ order.warehouse }}</p>
+            <p style="margin-bottom: 0.5rem;"><strong>{% trans "Відділення:" %}</strong> {{ order.warehouse }}</p>
+            
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                {% if order.discount_amount > 0 %}
+                <p style="margin-bottom: 0.5rem; color: var(--accent); font-weight: 600;">
+                    <strong>{% trans "Знижка:" %}</strong> -{{ order.discount_amount|currency:selected_currency }}
+                </p>
+                {% endif %}
+                <p style="font-size: 1.2rem; font-weight: 800; color: var(--accent); margin-bottom: 0;">
+                    <strong>{% trans "Усього:" %}</strong> {{ order.get_total_cost|currency:selected_currency }}
+                </p>
+            </div>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 1rem;">

@@ -181,9 +181,12 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['phone', 'social_handle', 'city', 'city_ref', 'warehouse', 'warehouse_ref']
         widgets = {
             'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _("Телефон")}),
-            'social_handle': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _("Нікнейм або номер")}),
+            'social_handle': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _("Нікнейм або номер"), 'autocomplete': 'off'}),
             'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _("Місто"), 'id': 'city-search', 'autocomplete': 'off'}),
             'city_ref': forms.HiddenInput(),
             'warehouse': forms.Select(attrs={'class': 'form-control', 'id': 'warehouse-select'}),
             'warehouse_ref': forms.HiddenInput(),
         }
+
+class CouponApplyForm(forms.Form):
+    code = forms.CharField(label=_("Промокод"), widget=forms.TextInput(attrs={'placeholder': _('Введіть промокод'), 'class': 'form-control'}))

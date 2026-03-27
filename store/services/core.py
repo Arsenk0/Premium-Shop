@@ -3,7 +3,8 @@ import json
 import logging
 from django.conf import settings
 from django.db import transaction
-from django.db.models import F
+from django.db.models import F, Q
+from django.utils.translation import gettext as _
 from ..models import OrderItem
 
 logger = logging.getLogger(__name__)
@@ -74,6 +75,24 @@ class OrderService:
             order = Order(**form_data)
             if user.is_authenticated:
                 order.user = user
+            
+            # Apply coupon and discount from cart
+            if cart.coupon:
+                coupon = cart.coupon
+                email = form_data.get('email')
+                
+                # Check if coupon was already used by this user or email
+                usage_filter = Q(coupon=coupon)
+                user_filter = Q(user=user) if user.is_authenticated else Q(pk__isnull=True)
+                email_filter = Q(email=email)
+                
+                # We check for any successful/existing orders with this coupon
+                if Order.objects.filter(usage_filter & (user_filter | email_filter)).exists():
+                    raise ValueError(_("Ви вже використовували цей промокод."))
+                
+                order.coupon = coupon
+                order.discount_amount = cart.get_discount()
+            
             order.save()
 
             # Create order items with current prices and decrement stock

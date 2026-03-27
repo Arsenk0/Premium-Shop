@@ -21,6 +21,8 @@ urlpatterns = [
     path('cart/update/<str:item_key>/', views.cart_update, name='cart_update'),
     path('cart/sidebar-data/', views.cart_sidebar_data, name='cart_sidebar_data'),
     path('cart/detail/', views.cart_detail, name='cart_detail'),
+    path('coupon/apply/', views.coupon_apply, name='coupon_apply'),
+    path('coupon/remove/', views.coupon_remove, name='coupon_remove'),
     
     # Orders
     path('order/create/', views.order_create, name='order_create'),

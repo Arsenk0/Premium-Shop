@@ -1241,6 +1241,9 @@ msgstr "Clothing and sneakers catalog"
 msgid "Нова Колекція 2026"
 msgstr "New Collection 2026"
 
+msgid "Нова Колекція"
+msgstr "New Collection"
+
 #: templates/store/product/list.html:16
 msgid "Знайди свій ідеальний стиль сьогодні"
 msgstr "Find your perfect style today"
@@ -1394,9 +1397,6 @@ msgstr "Add items you like so you don't lose them."
 #~ msgid "Підтвердити"
 #~ msgstr "Confirm"
 
-#~ msgid "Разом:"
-#~ msgstr "Total:"
-
 #~ msgid "Ваш кошик порожній."
 #~ msgstr "Your cart is empty."
 
@@ -1480,3 +1480,55 @@ msgstr "Add items you like so you don't lose them."
 
 #~ msgid "Схоже, ви ще не додали жодного товару. Почніть покупки зараз!"
 #~ msgstr "It seems you haven't added any products yet. Start shopping now!"
+
+msgid "Промокод"
+msgstr "Promo code"
+
+#, python-format
+msgid "Промокод \"%(code)s\" активовано (-%(discount)s%%)"
+msgstr "Promo code \"%(code)s\" activated (-%(discount)s%%)"
+
+msgid "У магазин"
+msgstr "To shop"
+
+msgid "Оформити"
+msgstr "Checkout"
+
+msgid "Деталі замовлення:"
+msgstr "Order Details:"
+
+msgid "Усього:"
+msgstr "Total:"
+
+msgid "Промокод успішно застосовано!"
+msgstr "Promo code applied successfully!"
+
+msgid "Недійсний промокод."
+msgstr "Invalid promo code."
+
+msgid "Введіть промокод"
+msgstr "Enter promo code"
+
+msgid "Промокод видалено."
+msgstr "Promo code removed."
+
+msgid "Видалити промокод"
+msgstr "Remove promo code"
+
+msgid "Сума:"
+msgstr "Subtotal:"
+
+msgid "Знижка:"
+msgstr "Discount:"
+
+msgid "Усього до сплати:"
+msgstr "Total to pay:"
+
+msgid "Кількість:"
+msgstr "Quantity:"
+
+msgid "Разом:"
+msgstr "Total:"
+
+msgid "Ви вже використовували цей промокод."
+msgstr "You have already used this promo code."

@@ -1225,7 +1225,10 @@ msgstr ""
 
 #: templates/store/product/list.html:15
 msgid "Нова Колекція 2026"
-msgstr ""
+msgstr "Нова Колекція 2026"
+
+msgid "Нова Колекція"
+msgstr "Нова Колекція"
 
 #: templates/store/product/list.html:16
 msgid "Знайди свій ідеальний стиль сьогодні"
@@ -1360,3 +1363,56 @@ msgstr ""
 #: templates/store/wishlist.html:46
 msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
 msgstr ""
+
+
+msgid "Промокод"
+msgstr "Промокод"
+
+#, python-format
+msgid "Промокод \"%(code)s\" активовано (-%(discount)s%%)"
+msgstr "Промокод \"%(code)s\" активовано (-%(discount)s%%)"
+
+msgid "У магазин"
+msgstr "У магазин"
+
+msgid "Оформити"
+msgstr "Оформити"
+
+msgid "Деталі замовлення:"
+msgstr "Деталі замовлення:"
+
+msgid "Усього:"
+msgstr "Усього:"
+
+msgid "Промокод успішно застосовано!"
+msgstr "Промокод успішно застосовано!"
+
+msgid "Недійсний промокод."
+msgstr "Недійсний промокод."
+
+msgid "Введіть промокод"
+msgstr "Введіть промокод"
+
+msgid "Промокод видалено."
+msgstr "Промокод видалено."
+
+msgid "Видалити промокод"
+msgstr "Видалити промокод"
+
+msgid "Сума:"
+msgstr "Сума:"
+
+msgid "Знижка:"
+msgstr "Знижка:"
+
+msgid "Усього до сплати:"
+msgstr "Усього до сплати:"
+
+msgid "Разом:"
+msgstr "Разом:"
+
+msgid "Кількість:"
+msgstr "Кількість:"
+ 
+msgid "Ви вже використовували цей промокод."
+msgstr "Ви вже використовували цей промокод."

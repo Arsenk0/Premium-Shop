@@ -15,8 +15,115 @@
 <div class="container fade-in" style="min-height: 60vh; padding: 4rem 5%;">
     {% csrf_token %}
     
+    <style>
+        .checkout-card {
+            padding: 2.5rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .checkout-card {
+            background: #121212;
+            border-color: #222;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .checkout-card > div {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .checkout-card > div > div:first-child {
+                padding-right: 0 !important;
+                border-right: none !important;
+                padding-bottom: 2rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+        .promo-input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .promo-input-group input {
+            flex: 1;
+            background: var(--card-bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+        }
+        .promo-input-group input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.1);
+        }
+        [data-theme="dark"] .promo-input-group input:focus {
+            box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.1);
+        }
+        .promo-status-msg {
+            margin-top: 1rem;
+            color: #10b981;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 10px 15px;
+            border-radius: 10px;
+        }
+        [data-theme="dark"] .promo-status-msg {
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--accent);
+        }
+        .original-price-crossed {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+        .checkout-total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .checkout-btn-main {
+            background: var(--accent);
+            color: var(--accent-text);
+            padding: 1.2rem;
+            font-size: 1.1rem;
+            border-radius: 14px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: none;
+            box-shadow: 0 8px 25px rgba(255, 77, 77, 0.2);
+        }
+        [data-theme="dark"] .checkout-btn-main {
+            box-shadow: 0 8px 25px rgba(0, 255, 204, 0.2);
+        }
+        .checkout-btn-secondary {
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            border-radius: 14px;
+            font-size: 0.95rem;
+            padding: 1rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+        }
+    </style>
+
     {% if cart_items %}
-    <h1 style="margin-bottom: 2.5rem; font-weight: 800; letter-spacing: -1px; padding-left: 1rem;">{% trans "Ваш кошик" %} 🛒</h1>
+    <h1 style="margin-bottom: 2.5rem; font-weight: 800; letter-spacing: -1px; padding-left: 1rem;">{% trans "Ваш кошик" %} <i class="fa-solid fa-cart-shopping"></i></h1>
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 3.5rem;">
         <thead>
             <tr style="border-bottom: 2.5px solid var(--text-main); text-align: left;">
@@ -56,7 +163,7 @@
                     <span class="item-total">{{ item.total_price|currency:selected_currency }}</span>
                 </td>
                 <td style="padding: 1.5rem 1rem; text-align: right;">
-                    <button class="qty-btn delete hover-scale" data-item-key="{{ item.item_key }}" data-url="{% url 'store:cart_update' item.item_key %}" style="color: #ff4d6d; background: rgba(255, 77, 109, 0.1); border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px;">
+                    <button class="qty-btn delete hover-scale" data-item-key="{{ item.item_key }}" data-url="{% url 'store:cart_update' item.item_key %}" style="color: #ff4d6d; background: transparent; border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px;">
                         <i class="fa-solid fa-trash-can"></i> {% trans "Видалити" %}
                     </button>
                 </td>
@@ -65,31 +172,88 @@
         </tbody>
     </table>
 
-    <div style="padding: 2.5rem; background: var(--card-bg); border-radius: 12px; box-shadow: var(--shadow); width: 100%; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
-        <div>
-            <span style="font-size: 1.1rem; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">{% trans "Всього до сплати:" %}</span>
-            <h2 style="font-size: 2.8rem; font-weight: 900; color: var(--accent); margin-bottom: 0; letter-spacing: -1.5px;">{{ total_price|currency:selected_currency }}</h2>
-        </div>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
-            <a href="{% url 'store:product_list' %}" class="btn btn-outline hover-scale" style="border: 1px solid var(--border-color); color: var(--text-muted); border-radius: 10px; font-size: 1rem; padding: 1.2rem 2rem; font-weight: 600; display: inline-flex; align-items: center; white-space: nowrap;">
-                <i class="fas fa-shopping-bag" style="margin-right: 8px;"></i> {% trans "Продовжити покупки" %}
-            </a>
-            <a href="{% url 'store:order_create' %}" class="btn btn-primary hover-scale btn-glow-shadow" style="padding: 1.2rem 2.5rem; font-size: 1.1rem; border-radius: 10px; font-weight: 800; display: inline-flex; align-items: center; white-space: nowrap;">
-                {% trans "Оформити замовлення" %} <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
-            </a>
+    <div style="margin-top: 3rem;">
+        <div class="checkout-card" style="max-width: none;">
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start;">
+                <!-- Left Column: Promo & Info -->
+                <div style="padding-right: 2rem; border-right: 1px solid var(--border-color);">
+                    <div style="margin-bottom: 2rem;">
+                        <label style="display: block; margin-bottom: 1.2rem; font-weight: 700; font-size: 0.95rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px;">
+                            <i class="fa-solid fa-ticket" style="margin-right: 10px; color: var(--accent);"></i> {% trans "Промокод" %}
+                        </label>
+                        <form action="{% url 'store:coupon_apply' %}" method="post" class="promo-input-group" style="height: 54px;">
+                            {% csrf_token %}
+                            {{ coupon_apply_form.code }}
+                            <button type="submit" class="btn btn-primary hover-scale" style="padding: 0 2rem; border-radius: 12px; font-weight: 700; height: 100%; font-size: 0.95rem;">
+                                {% trans "Застосувати" %}
+                            </button>
+                        </form>
+                        {% if cart.coupon %}
+                            <div class="promo-status-msg" style="margin-top: 1.5rem; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i class="fas fa-check-circle"></i> 
+                                    {% blocktrans with code=cart.coupon.code discount=cart.coupon.discount %}Промокод "{{ code }}" активовано (-{{ discount }}%){% endblocktrans %}
+                                </div>
+                                <form action="{% url 'store:coupon_remove' %}" method="post" style="margin: 0;">
+                                    {% csrf_token %}
+                                    <button type="submit" style="background: transparent; border: none; color: inherit; cursor: pointer; padding: 4px; opacity: 0.6; transition: var(--transition);" class="hover-scale" title="{% trans 'Видалити промокод' %}">
+                                        <i class="fas fa-times-circle"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Right Column: Totals & Checkout -->
+                <div>
+                    <div style="margin-bottom: 2.5rem;">
+                        <div class="checkout-total-row">
+                            <span style="color: var(--text-muted); font-size: 1.1rem;">{% trans "Сума:" %}</span>
+                            <span style="font-size: 1.2rem;" class="{% if cart.coupon %}original-price-crossed{% endif %}">
+                                {{ cart.get_total_price|currency:selected_currency }}
+                            </span>
+                        </div>
+                        
+                        {% if cart.coupon %}
+                        <div class="checkout-total-row" style="color: var(--accent); font-weight: 600;">
+                            <span style="font-size: 1.1rem;">{% trans "Знижка:" %}</span>
+                            <span style="font-size: 1.2rem;">-{{ cart.get_discount|currency:selected_currency }}</span>
+                        </div>
+                        {% endif %}
+
+                        <div style="display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); align-items: baseline;">
+                            <span style="font-size: 1.3rem; font-weight: 700; color: var(--text-main);">{% trans "Усього до сплати:" %}</span>
+                            <h2 style="font-size: 3.2rem; font-weight: 900; color: var(--accent); margin: 0; letter-spacing: -2px;">
+                                {{ cart.get_total_price_after_discount|currency:selected_currency }}
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+                        <a href="{% url 'store:order_create' %}" class="checkout-btn-main hover-scale" style="padding: 1.3rem;">
+                            {% trans "Оформити" %} <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="{% url 'store:product_list' %}" class="checkout-btn-secondary hover-scale" style="padding: 1rem;">
+                             <i class="fa-solid fa-basket-shopping"></i> {% trans "У магазин" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    
     {% else %}
     <div style="text-align: center; padding: 2rem 0; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
         <div style="background: var(--card-bg-alt); width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-            <i class="fas fa-shopping-bag" style="font-size: 3rem; color: var(--accent); opacity: 0.8;"></i>
+            <i class="fa-solid fa-basket-shopping" style="font-size: 3rem; color: var(--accent); opacity: 0.8;"></i>
         </div>
         <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px;">{% trans "Ваш кошик порожній" %}</h1>
         <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 3rem; max-width: 450px; line-height: 1.6;">
             {% trans "Схоже, ви ще не додали жодного товару. Почніть покупки зараз та знайдіть щось особливе для себе!" %}
         </p>
         <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale btn-glow-shadow" style="padding: 1.2rem 2.5rem; border-radius: 14px; font-weight: 700; font-size: 1.1rem;">
-            <i class="fas fa-shopping-cart" style="margin-right: 10px;"></i> {% trans "Перейти до покупок" %}
+            <i class="fa-solid fa-cart-shopping" style="margin-right: 10px;"></i> {% trans "Перейти до покупок" %}
         </a>
     </div>
     {% endif %}
