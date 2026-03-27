@@ -1250,6 +1250,9 @@ msgstr "Katalog oblečení a tenisek"
 msgid "Нова Колекція 2026"
 msgstr "Nová kolekce 2026"
 
+msgid "Нова Колекція"
+msgstr "Nová Kolekce"
+
 #: templates/store/product/list.html:16
 msgid "Знайди свій ідеальний стиль сьогодні"
 msgstr "Najděte svůj dokonalý styl ještě dnes"

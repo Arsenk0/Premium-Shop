@@ -1225,7 +1225,10 @@ msgstr ""
 
 #: templates/store/product/list.html:15
 msgid "Нова Колекція 2026"
-msgstr ""
+msgstr "Нова Колекція 2026"
+
+msgid "Нова Колекція"
+msgstr "Нова Колекція"
 
 #: templates/store/product/list.html:16
 msgid "Знайди свій ідеальний стиль сьогодні"

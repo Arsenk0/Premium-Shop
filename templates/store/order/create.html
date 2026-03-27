@@ -114,7 +114,7 @@
                 <div class="form-group" style="margin-top: 2rem;">
                     <label>{% trans "Ваш нікнейм або номер (ми напишемо вам сюди)" %}</label>
                     <input type="text" name="{{ form.social_handle.html_name }}" id="{{ form.social_handle.id_for_label }}"
-                        class="{% if form.social_handle.errors %}input-error shake{% endif %}" required value="">
+                        class="{% if form.social_handle.errors %}input-error shake{% endif %}" required value="" autocomplete="off">
                     {% if form.social_handle.errors %}<div class="error-msg">{{ form.social_handle.errors.0 }}</div>{% endif %}
                 </div>
             </div>
