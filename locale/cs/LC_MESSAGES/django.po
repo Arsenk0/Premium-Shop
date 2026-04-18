@@ -14,8 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
-"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #: shop_project/settings.py:132
 msgid "Ukrainian"
@@ -722,8 +721,8 @@ msgstr "O"
 
 #: templates/store/about.html:13
 msgid ""
-"Ми — команда фанатів вуличної моди, які вірять, що одяг — це не просто речі, "
-"а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок та "
+"Ми — команда фанатів вуличної моди, які вірять, що одяг — це не просто речі,"
+" а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок та "
 "худі, щоб ви отримували лише найкращу якість та найсвіжіші релізи."
 msgstr ""
 "Jsme tým fanoušků pouliční módy, kteří věří, že oblečení nejsou jen věci, "
@@ -1385,116 +1384,6 @@ msgstr "Váš seznam přání je prázdný"
 msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
 msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."
 
-#~ msgid "Дзвінок по телефону"
-#~ msgstr "Telefonní hovor"
-
-#~ msgid "Кросівки"
-#~ msgstr "Tenisky"
-
-#~ msgid "Аксесуари"
-#~ msgstr "Doplňky"
-
-#~ msgid "Виберіть мову та валюту"
-#~ msgstr "Vyberte jazyk a měnu"
-
-#~ msgid "Налаштуйте сайт для зручного перегляду"
-#~ msgstr "Upravte web pro pohodlné prohlížení"
-
-#~ msgid "Мова"
-#~ msgstr "Jazyk"
-
-#~ msgid "Валюта"
-#~ msgstr "Měna"
-
-#, fuzzy
-#~| msgid "Підтвердити замовлення"
-#~ msgid "Підтвердити"
-#~ msgstr "Potvrdit objednávku"
-
-#~ msgid "Ваш кошик порожній."
-#~ msgstr "Váš košík je prázdný."
-
-#~ msgid "Заповніть дані для доставки"
-#~ msgstr "Vyplňte dodací údaje"
-
-#~ msgid ""
-#~ "Будь ласка, перевірте правильність заповнення полів. Деякі дані "
-#~ "потребують вашої уваги."
-#~ msgstr ""
-#~ "Zkontrolujte prosím správnost vyplněných polí. Některé údaje vyžadují "
-#~ "vaši pozornost."
-
-#~ msgid "Як з вами зручніше зв'язатися?"
-#~ msgstr "Jak vás máme kontaktovat?"
-
-#~ msgid "Наприклад: @nickname або номер телефону для WhatsApp"
-#~ msgstr "Například: @nickname nebo telefonní číslo pro WhatsApp"
-
-#~ msgid "грн"
-#~ msgstr "Kč"
-
-#~ msgid "За назвою (А-Я)"
-#~ msgstr "Podle názvu (A-Z)"
-
-#~ msgid "Ваші дані"
-#~ msgstr "Vaše údaje"
-
-#~ msgid "Username:"
-#~ msgstr "Uživatelské jméno:"
-
-#~ msgid "Email:"
-#~ msgstr "E-mail:"
-
-#~ msgid "не вказано"
-#~ msgstr "neuvedeno"
-
-#~ msgid ""
-#~ "Дані для доставки підтягуються автоматично з ваших попередніх замовлень."
-#~ msgstr ""
-#~ "Údaje pro doručení se automaticky načítají z vašich předchozích "
-#~ "objednávek."
-
-#~ msgid "Історія замовлень"
-#~ msgstr "Historie objednávek"
-
-#~ msgid "Замовлення #"
-#~ msgstr "Objednávka #"
-
-#~ msgid "У вас поки немає замовлень."
-#~ msgstr "Zatím nemáte žádné objednávky."
-
-#~ msgid "Email (для підтвердження)"
-#~ msgstr "E-mail (pro potvrzení)"
-
-#~ msgid "Твій стиль починається тут"
-#~ msgstr "Váš styl začíná zde"
-
-#~ msgid ""
-#~ "Ексклюзивні колекції преміального одягу та взуття від провідних брендів "
-#~ "світу."
-#~ msgstr ""
-#~ "Exkluzivní kolekce prémiového oblečení a obuvi od předních světových "
-#~ "značek."
-
-#~ msgid "Увійти до кабінету"
-#~ msgstr "Přihlásit se k účtu"
-
-#~ msgid "Тільки оригінал"
-#~ msgstr "Pouze originál"
-
-#~ msgid "Швидка доставка"
-#~ msgstr "Rychlé doručení"
-
-#~ msgid "Програма лояльності"
-#~ msgstr "Věrnostní program"
-
-#~ msgid "В кабінет"
-#~ msgstr "Na účet"
-
-#~ msgid "Схоже, ви ще не додали жодного товару. Почніть покупки зараз!"
-#~ msgstr ""
-#~ "Vypadá to, že jste ještě nepřidali žádné produkty. Začněte nakupovat hned!"
-
 msgid "Промокод"
 msgstr "Slevový kód"
 
@@ -1540,7 +1429,7 @@ msgstr "Celkem k úhradě:"
 
 msgid "Кількість:"
 msgstr "Množství:"
- 
+
 msgid "Разом:"
 msgstr "Celkem:"
 
@@ -1552,3 +1441,138 @@ msgstr "Vaše objednávka:"
 
 msgid "Усього до оплати:"
 msgstr "Celkem k úhradě:"
+
+#: store/models.py:96
+msgid "Coupon Code"
+msgstr "Slevový kód"
+
+#: store/models.py:96
+msgid "Valid From"
+msgstr "Platí od"
+
+#: store/models.py:96
+msgid "Valid To"
+msgstr "Platí do"
+
+#: store/models.py:96
+msgid "Discount (%)"
+msgstr "Sleva (%)"
+
+#: store/models.py:96
+msgid "Active"
+msgstr "Aktivní"
+
+#: store/models.py:96
+msgid "Coupon"
+msgstr "Kupón"
+
+#: store/models.py:96
+msgid "Coupons"
+msgstr "Kupóny"
+
+#~ msgid "Дзвінок по телефону"
+#~ msgstr "Telefonní hovor"
+
+#~ msgid "Кросівки"
+#~ msgstr "Tenisky"
+
+#~ msgid "Аксесуари"
+#~ msgstr "Doplňky"
+
+#~ msgid "Виберіть мову та валюту"
+#~ msgstr "Vyberte jazyk a měnu"
+
+#~ msgid "Налаштуйте сайт для зручного перегляду"
+#~ msgstr "Upravte web pro pohodlné prohlížení"
+
+#~ msgid "Мова"
+#~ msgstr "Jazyk"
+
+#~ msgid "Валюта"
+#~ msgstr "Měna"
+
+#, fuzzy
+#~ msgid "Підтвердити"
+#~ msgstr "Potvrdit objednávku"
+
+#~ msgid "Ваш кошик порожній."
+#~ msgstr "Váš košík je prázdný."
+
+#~ msgid "Заповніть дані для доставки"
+#~ msgstr "Vyplňte dodací údaje"
+
+#~ msgid ""
+#~ "Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують "
+#~ "вашої уваги."
+#~ msgstr ""
+#~ "Zkontrolujte prosím správnost vyplněných polí. Některé údaje vyžadují vaši "
+#~ "pozornost."
+
+#~ msgid "Як з вами зручніше зв'язатися?"
+#~ msgstr "Jak vás máme kontaktovat?"
+
+#~ msgid "Наприклад: @nickname або номер телефону для WhatsApp"
+#~ msgstr "Například: @nickname nebo telefonní číslo pro WhatsApp"
+
+#~ msgid "грн"
+#~ msgstr "Kč"
+
+#~ msgid "За назвою (А-Я)"
+#~ msgstr "Podle názvu (A-Z)"
+
+#~ msgid "Ваші дані"
+#~ msgstr "Vaše údaje"
+
+#~ msgid "Username:"
+#~ msgstr "Uživatelské jméno:"
+
+#~ msgid "Email:"
+#~ msgstr "E-mail:"
+
+#~ msgid "не вказано"
+#~ msgstr "neuvedeno"
+
+#~ msgid ""
+#~ "Дані для доставки підтягуються автоматично з ваших попередніх замовлень."
+#~ msgstr ""
+#~ "Údaje pro doručení se automaticky načítají z vašich předchozích objednávek."
+
+#~ msgid "Історія замовлень"
+#~ msgstr "Historie objednávek"
+
+#~ msgid "Замовлення #"
+#~ msgstr "Objednávka #"
+
+#~ msgid "У вас поки немає замовлень."
+#~ msgstr "Zatím nemáte žádné objednávky."
+
+#~ msgid "Email (для підтвердження)"
+#~ msgstr "E-mail (pro potvrzení)"
+
+#~ msgid "Твій стиль починається тут"
+#~ msgstr "Váš styl začíná zde"
+
+#~ msgid ""
+#~ "Ексклюзивні колекції преміального одягу та взуття від провідних брендів "
+#~ "світу."
+#~ msgstr ""
+#~ "Exkluzivní kolekce prémiového oblečení a obuvi od předních světových značek."
+
+#~ msgid "Увійти до кабінету"
+#~ msgstr "Přihlásit se k účtu"
+
+#~ msgid "Тільки оригінал"
+#~ msgstr "Pouze originál"
+
+#~ msgid "Швидка доставка"
+#~ msgstr "Rychlé doručení"
+
+#~ msgid "Програма лояльності"
+#~ msgstr "Věrnostní program"
+
+#~ msgid "В кабінет"
+#~ msgstr "Na účet"
+
+#~ msgid "Схоже, ви ще не додали жодного товару. Почніть покупки зараз!"
+#~ msgstr ""
+#~ "Vypadá to, že jste ještě nepřidali žádné produkty. Začněte nakupovat hned!"

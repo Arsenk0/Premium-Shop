@@ -16,10 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
-"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
-"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
-"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #: shop_project/settings.py:132
 msgid "Ukrainian"
@@ -705,8 +702,8 @@ msgstr "До"
 
 #: templates/store/about.html:13
 msgid ""
-"Ми — команда фанатів вуличної моди, які вірять, що одяг — це не просто речі, "
-"а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок та "
+"Ми — команда фанатів вуличної моди, які вірять, що одяг — це не просто речі,"
+" а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок та "
 "худі, щоб ви отримували лише найкращу якість та найсвіжіші релізи."
 msgstr ""
 
@@ -1364,7 +1361,6 @@ msgstr ""
 msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
 msgstr ""
 
-
 msgid "Промокод"
 msgstr "Промокод"
 
@@ -1413,6 +1409,34 @@ msgstr "Разом:"
 
 msgid "Кількість:"
 msgstr "Кількість:"
- 
+
 msgid "Ви вже використовували цей промокод."
 msgstr "Ви вже використовували цей промокод."
+
+#: store/models.py:96
+msgid "Coupon Code"
+msgstr "Промокод"
+
+#: store/models.py:96
+msgid "Valid From"
+msgstr "Дійсний з"
+
+#: store/models.py:96
+msgid "Valid To"
+msgstr "Дійсний до"
+
+#: store/models.py:96
+msgid "Discount (%)"
+msgstr "Знижка (%)"
+
+#: store/models.py:96
+msgid "Active"
+msgstr "Активний"
+
+#: store/models.py:96
+msgid "Coupon"
+msgstr "Купон"
+
+#: store/models.py:96
+msgid "Coupons"
+msgstr "Купони"
