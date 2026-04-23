@@ -108,8 +108,8 @@ msgid ""
 "Вкажіть ваш Instagram або Telegram. Якщо ви обрали \"WhatsApp\", це поле "
 "можна залишити порожнім."
 msgstr ""
-"Enter your Instagram or Telegram. If you selected \"Phone call\", this field "
-"can be left empty."
+"Enter your Instagram or Telegram. If you selected \"Phone call\", this field"
+" can be left empty."
 
 #: store/forms.py:108
 msgid "Ім'я занадто коротке"
@@ -584,8 +584,8 @@ msgstr "Welcome to the family!"
 msgid ""
 "Ви зробили перший крок до виняткового стилю. Ми раді, що ви тепер з нами."
 msgstr ""
-"You've taken the first step toward exceptional style. We're glad you're with "
-"us."
+"You've taken the first step toward exceptional style. We're glad you're with"
+" us."
 
 #: templates/emails/welcome.html:122
 msgid "Почати шопінг"
@@ -717,8 +717,8 @@ msgstr "About"
 
 #: templates/store/about.html:13
 msgid ""
-"Ми — команда фанатів вуличної моди, які вірять, що одяг — це не просто речі, "
-"а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок та "
+"Ми — команда фанатів вуличної моди, які вірять, що одяг — це не просто речі,"
+" а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок та "
 "худі, щоб ви отримували лише найкращу якість та найсвіжіші релізи."
 msgstr ""
 "We are a team of streetwear fans who believe that clothing is not just "
@@ -1080,8 +1080,8 @@ msgid ""
 "Ми зв'яжемося з вами через <strong>%(contact_method)s</strong> найближчим "
 "часом."
 msgstr ""
-"Your order <strong>#%(order_id)s</strong> has been successfully accepted for "
-"processing. We will contact you via <strong>%(contact_method)s</strong> "
+"Your order <strong>#%(order_id)s</strong> has been successfully accepted for"
+" processing. We will contact you via <strong>%(contact_method)s</strong> "
 "shortly."
 
 #: templates/store/order/success.html:16
@@ -1373,6 +1373,92 @@ msgstr "Your wishlist is empty"
 msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
 msgstr "Add items you like so you don't lose them."
 
+msgid "Промокод"
+msgstr "Promo code"
+
+#, python-format
+msgid "Промокод \"%(code)s\" активовано (-%(discount)s%%)"
+msgstr "Promo code \"%(code)s\" activated (-%(discount)s%%)"
+
+msgid "У магазин"
+msgstr "To shop"
+
+msgid "Оформити"
+msgstr "Checkout"
+
+msgid "Деталі замовлення:"
+msgstr "Order Details:"
+
+msgid "Усього:"
+msgstr "Total:"
+
+msgid "Промокод успішно застосовано!"
+msgstr "Promo code applied successfully!"
+
+msgid "Недійсний промокод."
+msgstr "Invalid promo code."
+
+msgid "Введіть промокод"
+msgstr "Enter promo code"
+
+msgid "Промокод видалено."
+msgstr "Promo code removed."
+
+msgid "Видалити промокод"
+msgstr "Remove promo code"
+
+msgid "Сума:"
+msgstr "Subtotal:"
+
+msgid "Знижка:"
+msgstr "Discount:"
+
+msgid "Усього до сплати:"
+msgstr "Total to pay:"
+
+msgid "Кількість:"
+msgstr "Quantity:"
+
+msgid "Разом:"
+msgstr "Total:"
+
+msgid "Ви вже використовували цей промокод."
+msgstr "You have already used this promo code."
+
+msgid "Ваше замовлення:"
+msgstr "Your order:"
+
+msgid "Усього до оплати:"
+msgstr "Total to pay:"
+
+#: store/models.py:96
+msgid "Coupon Code"
+msgstr "Coupon Code"
+
+#: store/models.py:96
+msgid "Valid From"
+msgstr "Valid From"
+
+#: store/models.py:96
+msgid "Valid To"
+msgstr "Valid To"
+
+#: store/models.py:96
+msgid "Discount (%)"
+msgstr "Discount (%)"
+
+#: store/models.py:96
+msgid "Active"
+msgstr "Active"
+
+#: store/models.py:96
+msgid "Coupon"
+msgstr "Coupon"
+
+#: store/models.py:96
+msgid "Coupons"
+msgstr "Coupons"
+
 #~ msgid "Дзвінок по телефону"
 #~ msgstr "Phone call"
 
@@ -1404,8 +1490,8 @@ msgstr "Add items you like so you don't lose them."
 #~ msgstr "Fill in your delivery details"
 
 #~ msgid ""
-#~ "Будь ласка, перевірте правильність заповнення полів. Деякі дані "
-#~ "потребують вашої уваги."
+#~ "Будь ласка, перевірте правильність заповнення полів. Деякі дані потребують "
+#~ "вашої уваги."
 #~ msgstr ""
 #~ "Please check the correctness of the completed fields. Some data requires "
 #~ "your attention."
@@ -1480,61 +1566,3 @@ msgstr "Add items you like so you don't lose them."
 
 #~ msgid "Схоже, ви ще не додали жодного товару. Почніть покупки зараз!"
 #~ msgstr "It seems you haven't added any products yet. Start shopping now!"
-
-msgid "Промокод"
-msgstr "Promo code"
-
-#, python-format
-msgid "Промокод \"%(code)s\" активовано (-%(discount)s%%)"
-msgstr "Promo code \"%(code)s\" activated (-%(discount)s%%)"
-
-msgid "У магазин"
-msgstr "To shop"
-
-msgid "Оформити"
-msgstr "Checkout"
-
-msgid "Деталі замовлення:"
-msgstr "Order Details:"
-
-msgid "Усього:"
-msgstr "Total:"
-
-msgid "Промокод успішно застосовано!"
-msgstr "Promo code applied successfully!"
-
-msgid "Недійсний промокод."
-msgstr "Invalid promo code."
-
-msgid "Введіть промокод"
-msgstr "Enter promo code"
-
-msgid "Промокод видалено."
-msgstr "Promo code removed."
-
-msgid "Видалити промокод"
-msgstr "Remove promo code"
-
-msgid "Сума:"
-msgstr "Subtotal:"
-
-msgid "Знижка:"
-msgstr "Discount:"
-
-msgid "Усього до сплати:"
-msgstr "Total to pay:"
-
-msgid "Кількість:"
-msgstr "Quantity:"
-
-msgid "Разом:"
-msgstr "Total:"
-
-msgid "Ви вже використовували цей промокод."
-msgstr "You have already used this promo code."
-
-msgid "Ваше замовлення:"
-msgstr "Your order:"
-
-msgid "Усього до оплати:"
-msgstr "Total to pay:"

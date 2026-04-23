@@ -94,15 +94,15 @@ class Profile(models.Model):
 
 
 class Coupon(models.Model):
-    code = models.CharField(max_length=50, unique=True, verbose_name=_("Промокод"))
-    valid_from = models.DateTimeField(verbose_name=_("Дійсний з"))
-    valid_to = models.DateTimeField(verbose_name=_("Дійсний до"))
-    discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name=_("Знижка (%)"))
-    active = models.BooleanField(default=True, verbose_name=_("Активний"))
+    code = models.CharField(max_length=50, unique=True, verbose_name=_("Coupon Code"))
+    valid_from = models.DateTimeField(verbose_name=_("Valid From"))
+    valid_to = models.DateTimeField(verbose_name=_("Valid To"))
+    discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name=_("Discount (%)"))
+    active = models.BooleanField(default=True, verbose_name=_("Active"))
 
     class Meta:
-        verbose_name = _("Купон")
-        verbose_name_plural = _("Купони")
+        verbose_name = _("Coupon")
+        verbose_name_plural = _("Coupons")
 
     def __str__(self):
         return self.code
