@@ -1,34 +1,32 @@
 {% load static i18n %}
-<footer style="background: var(--card-bg-alt); color: var(--text-main); padding: 1.5rem 0 0.8rem; border-top: 1px solid var(--border-color); margin-top: auto;">
-    <div class="container" style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 3rem; text-align: left;">
-        <div>
-            <h2 style="margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.5px; font-size: 1.5rem;">PREMIUM SHOP</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">
-                {% trans "Найкращий стрітвір та кросівки в Україні. Тільки оригінальна якість та преміальний сервіс." %}
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h2 class="footer-logo">PREMIUM<span>SHOP</span></h2>
+            <p class="footer-description">
+                {% trans "Найкращий преміум одяг та кросівки в Україні. Тільки оригінальна якість та преміальний сервіс." %}
             </p>
         </div>
-        <div>
-            <h4 style="margin-bottom: 1rem; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: var(--text-muted);">
-                {% trans "Навігація" %}
-            </h4>
-            <ul style="list-style: none; padding: 0;">
-                <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:about' %}" class="link-underline" style="font-size: 0.95rem;">{% trans "Про нас" %}</a></li>
-                <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:reviews_page' %}" class="link-underline" style="font-size: 0.95rem;">{% trans "Відгуки" %}</a></li>
-                <li style="margin-bottom: 0.5rem;"><a href="{% url 'store:contact' %}" class="link-underline" style="font-size: 0.95rem;">{% trans "Контакти" %}</a></li>
+        <div class="footer-nav">
+            <h4 class="footer-heading">{% trans "Навігація" %}</h4>
+            <ul class="footer-nav-list">
+                <li class="footer-nav-item"><a href="{% url 'store:about' %}" class="footer-link link-underline">{% trans "Про нас" %}</a></li>
+                <li class="footer-nav-item"><a href="{% url 'store:reviews_page' %}" class="footer-link link-underline">{% trans "Відгуки" %}</a></li>
+                <li class="footer-nav-item"><a href="{% url 'store:contact' %}" class="footer-link link-underline">{% trans "Контакти" %}</a></li>
             </ul>
         </div>
-        <div>
-            <h4 style="margin-bottom: 1rem; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: var(--text-muted);">
-                {% trans "Соцмережі" %}
-            </h4>
-            <div style="display: flex; gap: 1.2rem; font-size: 1.4rem;">
-                <a href="#" class="hover-scale" style="color: #E4405F;"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="hover-scale" style="color: #0088cc;"><i class="fab fa-telegram"></i></a>
-                <a href="#" class="hover-scale" style="color: var(--text-main);"><i class="fab fa-tiktok"></i></a>
+        <div class="footer-social">
+            <h4 class="footer-heading">{% trans "Соцмережі" %}</h4>
+            <div class="footer-socials">
+                <a href="#" class="social-icon instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon telegram" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="#" class="social-icon tiktok" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
             </div>
         </div>
     </div>
-    <div style="text-align: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.8rem;">
-        &copy; 2026 Premium Shop. {% trans "Всі права захищені." %}
+    <div class="footer-bottom">
+        <div class="container">
+            &copy; 2026 Premium Shop. {% trans "Всі права захищені." %}
+        </div>
     </div>
 </footer>
