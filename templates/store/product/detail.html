@@ -21,7 +21,7 @@
                 {% for extra_img in product.images.all %}
                 <div class="slider-item" style="flex: 0 0 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
                     <div class="zoom-container" style="width: 100%; height: 100%; overflow: hidden; cursor: zoom-in; display: flex; align-items: center; justify-content: center;">
-                        <img src="{{ extra_img.image.url }}" alt="{{ product.name }}" class="zoom-image" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease-out;">
+                        <img src="{{ extra_img.image.url }}" alt="{{ product.name }}" loading="lazy" class="zoom-image" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease-out;">
                     </div>
                 </div>
                 {% endfor %}
@@ -42,11 +42,11 @@
         {% if product.images.exists %}
         <div class="custom-thumbnails" style="display: flex; gap: 12px; margin-top: 1rem; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; -ms-overflow-style: none;">
             <div class="thumb-item active" onclick="goToSlide(0)" style="flex: 0 0 80px; height: 80px; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all 0.3s ease; background: var(--card-bg);">
-                <img src="{{ product.image.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="{{ product.image.url }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             {% for extra_img in product.images.all %}
             <div class="thumb-item" onclick="goToSlide({{ forloop.counter }})" style="flex: 0 0 80px; height: 80px; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all 0.3s ease; background: var(--card-bg);">
-                <img src="{{ extra_img.image.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="{{ extra_img.image.url }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             {% endfor %}
         </div>
