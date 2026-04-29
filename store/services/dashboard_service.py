@@ -1,5 +1,5 @@
 from django.db.models import Sum, Count, F
-from ..models import Order, Review, Wishlist
+from ..models import Order, Review, Wishlist, LoyaltyTransaction
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 from django.urls import reverse
@@ -18,7 +18,7 @@ def get_user_dashboard_stats(user):
     }
     return stats
 
-def get_recent_activity(user, limit=5):
+def get_recent_activity(user, limit=10):
     """
     Returns a combined list of recent activities for the user.
     """
@@ -32,13 +32,20 @@ def get_recent_activity(user, limit=5):
         'Canceled': '#dc3545'
     }
     
+    LOYALTY_ICONS = {
+        'registration': 'fas fa-user-plus',
+        'purchase': 'fas fa-shopping-bag',
+        'review': 'fas fa-comment-alt',
+        'conversion': 'fas fa-ticket-alt',
+    }
+    
     # Recent Orders
     orders = Order.objects.filter(user=user).order_by('-created')[:limit]
     for order in orders:
         activities.append({
             'type': 'order',
             'date': order.created,
-            'title': _('Замовлення') + f' #{order.id}',
+            'title': _('Order') + f' #{order.id}',
             'description': _('Статус') + ': ' + order.get_status_display(),
             'status_color': STATUS_COLORS.get(order.status, '#6c757d'),
             'icon_class': 'fas fa-box',
@@ -69,7 +76,39 @@ def get_recent_activity(user, limit=5):
             'url': reverse('store:product_detail', kwargs={'pk': item.product.id, 'slug': item.product.slug}),
         })
         
+    # Recent Loyalty Transactions
+    loyalty_txs = LoyaltyTransaction.objects.filter(user=user).order_by('-created_at')[:limit]
+    for tx in loyalty_txs:
+        points_str = f"{'+' if tx.amount > 0 else ''}{tx.amount} " + _('балів')
+        activities.append({
+            'type': 'loyalty',
+            'date': tx.created_at,
+            'title': tx.get_action_display(),
+            'description': tx.description,
+            'points': tx.amount,
+            'points_display': points_str,
+            'icon_class': LOYALTY_ICONS.get(tx.action, 'fas fa-gem'),
+            'url': reverse('store:loyalty_details'),
+        })
+
     # Sort activities by date descending
     activities.sort(key=lambda x: x['date'], reverse=True)
     
     return activities[:limit]
+
+
+def get_spending_data(user):
+    """
+    Returns monthly spending data for the user.
+    """
+    spending_data = Order.objects.filter(
+        user=user, 
+        status='Completed'
+    ).annotate(
+        month=F('created__month'),
+        year=F('created__year')
+    ).values('month', 'year').annotate(
+        total=Sum(F('items__price') * F('items__quantity'))
+    ).order_by('year', 'month')
+    
+    return list(spending_data)

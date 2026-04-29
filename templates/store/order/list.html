@@ -4,21 +4,26 @@
 {% block title %}{% trans "Мої замовлення" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in premium-dashboard">
-    <div class="dashboard-header">
-        <h1>{% trans "Мої замовлення" %} <i class="fas fa-box" style="color: var(--accent);"></i></h1>
-        <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">← {% trans "Назад" %}</a>
+<div class="container fade-in premium-dashboard" style="max-width: 1000px; padding: 2rem 20px;">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+        <h1 class="page-title" style="margin: 0;">{% trans "Мої замовлення" %} <i class="fas fa-box" style="color: var(--accent);"></i></h1>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">{% trans "Історія та статус ваших покупок у нашому магазині." %}</p>
+        <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">
+            <i class="fas fa-arrow-left"></i> {% trans "Назад до кабінету" %}
+        </a>
     </div>
 
-    <div class="orders-list">
+    <div class="orders-scroll-container custom-scrollbar">
+        <div class="orders-list">
         {% for order in orders %}
         <div class="card order-card hover-lift">
             <div class="order-header">
-                <div>
+                <div class="order-meta">
                     <span class="order-number">{% trans "Замовлення" %} #{{ order.id }}</span>
-                    <span class="order-date">{{ order.created|date:"d.m.Y" }}</span>
+                    <span class="order-date"><i class="far fa-calendar-alt"></i> {{ order.created|date:"d.m.Y" }}</span>
                 </div>
-                <div class="order-status status-{{ order.status|lower }}">
+                <div class="order-status-badge status-{{ order.status|lower }}">
+                    <span class="status-dot"></span>
                     {{ order.get_status_display }}
                 </div>
             </div>
@@ -27,117 +32,173 @@
                 <div class="order-items">
                     {% for item in order.items.all %}
                     <div class="order-item-mini">
-                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                        <div>
+                        <div class="item-image-wrapper">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                        </div>
+                        <div class="item-details">
                             <p class="item-name">{{ item.product.name }}</p>
-                            <span>{{ item.price|currency:selected_currency }}</span>
-                            <p class="item-meta">{{ item.quantity }} x {{ item.price|currency:selected_currency }}</p>
+                            <div class="item-pricing">
+                                <span class="item-qty">{{ item.quantity }} x </span>
+                                <span class="item-unit-price">{{ item.price|currency:selected_currency }}</span>
+                            </div>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
                 
-                <div class="order-total">
-                    <p class="total-label">{% trans "Загальна сума" %}</p>
-                    <span>{{ order.get_total_cost|currency:selected_currency }}</span>
+                <div class="order-summary">
+                    <p class="total-label">{% trans "Разом до сплати" %}</p>
+                    <p class="total-value">{{ order.get_total_cost|currency:selected_currency }}</p>
                 </div>
             </div>
 
             <div class="order-footer">
-                <div class="delivery-info">
-                    <span>📍 {{ order.city }}, {{ order.warehouse }}</span>
+                <div class="delivery-badge">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>{{ order.city }}, {{ order.warehouse }}</span>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="card empty-state">
-            <div class="empty-icon">🛒</div>
+            <div class="empty-icon-wrapper">
+                <i class="fas fa-shopping-bag"></i>
+            </div>
             <h2>{% trans "У вас ще немає замовлень" %}</h2>
             <p>{% trans "Ваші покупки з'являться тут після оформлення замовлення." %}</p>
-            <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale">{% trans "До покупок" %}</a>
+            <a href="{% url 'store:product_list' %}" class="btn btn-primary btn-lg hover-scale">{% trans "Перейти до магазину" %}</a>
         </div>
         {% endfor %}
+        </div>
     </div>
 </div>
 
 <style>
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin: 0;
+    }
+
+    .orders-scroll-container {
+        max-height: 75vh;
+        overflow-y: auto;
+        padding: 1rem;
+        margin: -1rem;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 10px;
+    }
+
     .orders-list {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
-        max-width: 800px;
-        margin: 0 auto;
     }
 
     .order-card {
-        padding: 1.5rem;
-        border-radius: 20px;
-        position: relative;
-        overflow: hidden;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+        padding: 2rem;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     }
 
-    .order-card::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 3px;
-        background: var(--accent);
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    }
-
-    .order-card:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
+    .order-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        transform: translateY(-8px);
     }
 
     .order-header {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid #f0f0f0;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .order-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
     }
 
     .order-number {
         font-weight: 800;
-        font-size: 1.1rem;
-        display: block;
+        font-size: 1.25rem;
+        color: var(--text-main);
     }
 
     .order-date {
-        font-size: 0.85rem;
-        color: #888;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
-    .order-status {
-        padding: 0.4rem 1rem;
+    .order-status-badge {
+        padding: 0.6rem 1.2rem;
         border-radius: 50px;
         font-size: 0.85rem;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
     }
 
     .status-new { background: #e3f2fd; color: #1976d2; }
-    .status-processing { background: var(--card-bg);3e0; color: #f57c00; }
+    .status-new .status-dot { background: #1976d2; }
+    
+    .status-processing { background: #fff3e0; color: #f57c00; }
+    .status-processing .status-dot { background: #f57c00; }
+    
     .status-shipped { background: #f3e5f5; color: #7b1fa2; }
+    .status-shipped .status-dot { background: #7b1fa2; }
+    
     .status-completed { background: #e8f5e9; color: #388e3c; }
+    .status-completed .status-dot { background: #388e3c; }
+    
     .status-canceled { background: #ffebee; color: #d32f2f; }
+    .status-canceled .status-dot { background: #d32f2f; }
 
     .order-body {
         display: flex;
         justify-content: space-between;
-        gap: 2rem;
+        align-items: center;
+        gap: 3rem;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
         .order-body {
             flex-direction: column;
+            align-items: stretch;
+            gap: 1.5rem;
+        }
+        .order-summary {
+            text-align: left !important;
+            padding-top: 1.5rem;
+            border-top: 1px dashed var(--border-color);
         }
     }
 
@@ -145,62 +206,116 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.25rem;
     }
 
     .order-item-mini {
         display: flex;
-        gap: 1rem;
+        gap: 1.25rem;
         align-items: center;
     }
 
-    .order-item-mini img {
-        width: 50px;
-        height: 50px;
+    .item-image-wrapper {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        flex-shrink: 0;
+    }
+
+    .item-image-wrapper img {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        border-radius: 8px;
     }
 
     .item-name {
         margin: 0;
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--text-main);
+    }
+
+    .item-pricing {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    .item-unit-price {
         font-weight: 600;
-        font-size: 0.95rem;
+        color: var(--text-main);
     }
 
-    .item-meta {
-        margin: 0;
-        font-size: 0.85rem;
-        color: #666;
-    }
-
-    .order-total {
+    .order-summary {
         text-align: right;
-        min-width: 150px;
+        min-width: 200px;
     }
 
     .total-label {
-        font-size: 0.8rem;
-        color: #888;
-        margin: 0;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.25rem;
     }
 
     .total-value {
-        font-size: 1.25rem;
-        font-weight: 800;
+        font-size: 1.75rem;
+        font-weight: 900;
+        color: var(--accent);
         margin: 0;
     }
 
     .order-footer {
-        margin-top: 1.5rem;
-        padding-top: 1rem;
-        border-top: 1px solid #f0f0f0;
-        font-size: 0.9rem;
-        color: #666;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
     }
 
-    .empty-icon {
+    .delivery-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: var(--card-bg-alt);
+        padding: 0.75rem 1.25rem;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        border: 1px solid var(--border-color);
+    }
+
+    .delivery-badge i {
+        color: var(--accent);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 5rem 2rem;
+        background: var(--card-bg);
+        border: 2px dashed var(--border-color);
+        border-radius: 32px;
+    }
+
+    .empty-icon-wrapper {
         font-size: 4rem;
+        color: var(--border-color);
         margin-bottom: 2rem;
+        background: var(--card-bg-alt);
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-lg {
+        padding: 1rem 2.5rem;
+        font-weight: 700;
+        border-radius: 16px;
     }
 </style>
 {% endblock %}
