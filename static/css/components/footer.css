@@ -1,0 +1,119 @@
+.site-footer {
+    background: var(--card-bg-alt);
+    color: var(--text-main);
+    padding: 5rem 0 2rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 4rem;
+}
+
+.footer-logo {
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+}
+
+.footer-logo span {
+    color: var(--accent);
+}
+
+.footer-description {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 320px;
+    line-height: 1.7;
+}
+
+.footer-heading {
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+}
+
+.footer-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-nav-item {
+    margin-bottom: 0.8rem;
+}
+
+.footer-link {
+    font-size: 1rem;
+    color: var(--text-main);
+    transition: var(--transition);
+    opacity: 0.8;
+}
+
+.footer-link:hover {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.footer-socials {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.social-icon {
+    transition: var(--transition);
+    color: var(--text-muted);
+}
+
+.social-icon:hover {
+    transform: translateY(-5px);
+}
+
+.social-icon.instagram:hover { color: #E4405F; }
+.social-icon.telegram:hover { color: #0088cc; }
+.social-icon.tiktok:hover { color: var(--text-main); }
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+@media (max-width: 992px) {
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 4rem 0 2rem;
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+    .footer-description {
+        margin: 0 auto;
+    }
+    .footer-socials {
+        justify-content: center;
+    }
+}

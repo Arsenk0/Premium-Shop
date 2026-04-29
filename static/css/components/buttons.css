@@ -73,21 +73,27 @@
 .btn-pill {
     background: var(--card-bg-alt);
     color: var(--text-main);
-    border: 1px solid var(--text-main);
+    border: 1px solid var(--border-color);
     border-radius: 50px;
-    padding: 0.7rem 1.8rem;
+    padding: 0.6rem 1.6rem;
     font-weight: 700;
     text-decoration: none !important;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    transition: all 0.2s;
+    gap: 0.6rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: auto;
+    height: auto;
+    font-size: 0.95rem;
+    cursor: pointer;
 }
 
 .btn-pill:hover {
-    background: var(--border-color);
+    background: var(--card-bg-alt);
+    color: var(--accent);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: var(--accent);
 }
 
 .btn-wishlist {
