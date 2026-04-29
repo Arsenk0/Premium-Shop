@@ -13,7 +13,11 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('signup/', views.signup, name='signup'),
     path('profile/', views.profile, name='profile'),
-    path('profile/edit/', views.profile_edit, name='profile_edit'),
+    path('profile/settings/', views.account_settings, name='settings'),
+    path('profile/loyalty/', views.loyalty_details, name='loyalty_details'),
+    path('profile/reviews/', views.user_reviews, name='user_reviews'),
+    path('profile/spending/', views.spending_stats, name='spending_stats'),
+    path('profile/convert-points/', views.convert_points, name='convert_points'),
 
     # Cart
     path('cart/add/<int:product_id>/', views.cart_add, name='cart_add'),

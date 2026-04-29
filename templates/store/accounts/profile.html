@@ -4,7 +4,7 @@
 {% block title %}{% trans "Мій кабінет" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in premium-dashboard">
+<div class="container fade-in premium-dashboard" style="max-width: 1200px; padding: 2rem 20px;">
     <!-- Header Section -->
     <div class="dashboard-header">
         <div class="user-info">
@@ -16,66 +16,92 @@
                 <p class="user-email">{{ request.user.email }}</p>
             </div>
         </div>
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-pill hover-scale">{% trans "Вийти" %}</button>
-        </form>
+        <div class="header-actions" style="display: flex; gap: 1rem;">
+            <a href="{% url 'store:settings' %}" class="btn btn-pill hover-scale" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-cog"></i> {% trans "Налаштування" %}
+            </a>
+            <form action="{% url 'logout' %}" method="post" style="margin: 0; display: inline-flex;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-pill hover-scale" style="display: inline-flex; align-items: center; gap: 0.5rem; outline: none;">
+                    <i class="fas fa-sign-out-alt"></i> {% trans "Вийти" %}
+                </button>
+            </form>
+        </div>
     </div>
 
     <!-- Stats Grid -->
     <div class="stats-grid">
-        <div class="stat-card hover-lift">
+        <a href="{% url 'store:loyalty_details' %}" class="stat-card">
+            <div class="stat-icon"><i class="fas fa-gem" style="color: var(--accent);"></i></div>
+            <div class="stat-content">
+                <span class="stat-label">{% trans "Мої бали" %}</span>
+                <span class="stat-value">{{ request.user.profile.points }}</span>
+            </div>
+        </a>
+        <a href="{% url 'store:order_list' %}" class="stat-card">
             <div class="stat-icon"><i class="fas fa-box" style="color: var(--accent);"></i></div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Замовлення" %}</span>
                 <span class="stat-value">{{ stats.total_orders }}</span>
             </div>
-        </div>
-        <div class="stat-card hover-lift">
+        </a>
+        <a href="{% url 'store:spending_stats' %}" class="stat-card">
             <div class="stat-icon"><i class="fas fa-wallet" style="color: var(--accent);"></i></div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Витрачено" %}</span>
                 <span class="stat-value">{{ stats.total_spent|currency:selected_currency }}</span>
             </div>
-        </div>
-        <div class="stat-card hover-lift">
+        </a>
+        <a href="{% url 'store:wishlist_list' %}" class="stat-card">
             <div class="stat-icon"><i class="fas fa-heart" style="color: var(--accent);"></i></div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Обране" %}</span>
                 <span class="stat-value">{{ stats.wishlist_count }}</span>
             </div>
-        </div>
-        <div class="stat-card hover-lift">
+        </a>
+        <a href="{% url 'store:user_reviews' %}" class="stat-card">
             <div class="stat-icon"><i class="fas fa-star" style="color: var(--accent);"></i></div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Відгуки" %}</span>
                 <span class="stat-value">{{ stats.reviews_count }}</span>
             </div>
+        </a>
+    </div>
+
+    <!-- Loyalty Widget -->
+    <div class="card loyalty-widget" style="margin-bottom: 2rem; padding: 2rem; border-radius: 20px; border: 1px solid var(--border-color); background: var(--card-bg); box-shadow: var(--shadow);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h3 style="margin: 0; font-size: 1.25rem;">{% trans "Ваш рівень лояльності" %} <i class="fas fa-crown" style="color: #fbbf24;"></i></h3>
+                {% if loyalty_next_tier %}
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0;">
+                    {% trans "Зберіть ще" %} <strong style="color: var(--text-main);">{{ loyalty_next_tier|add:"-"|add:loyalty_points }}</strong> {% trans "балів для знижки" %} <strong style="color: var(--accent);">{{ loyalty_discount }}%</strong>
+                </p>
+                {% else %}
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0;">
+                    {% trans "Ви досягли максимального рівня знижки!" %} (<strong style="color: var(--accent);">{{ loyalty_discount }}%</strong>)
+                </p>
+                {% endif %}
+            </div>
+            <div style="text-align: right;">
+                <span style="font-size: 1.8rem; font-weight: 800; color: var(--text-main);">{{ loyalty_points }}</span>
+                <span style="color: var(--text-muted); font-size: 0.9rem; font-weight: 600;">/ {% if loyalty_next_tier %}{{ loyalty_next_tier }}{% else %}MAX{% endif %}</span>
+            </div>
         </div>
+        <div class="progress-bar-bg" style="width: 100%; height: 12px; background: var(--card-bg-alt); border-radius: 10px; overflow: hidden; border: 1px inset rgba(0,0,0,0.05);">
+            <div class="progress-bar-fill" style="width: {{ loyalty_progress|floatformat:0 }}%; height: 100%; background: linear-gradient(90deg, #fbbf24, #f59e0b); border-radius: 10px; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent); background-size: 20px 20px; animation: progress-stripes 2s linear infinite;"></div>
+            </div>
+        </div>
+        <style>
+            @keyframes progress-stripes {
+                from { background-position: 20px 0; }
+                to { background-position: 0 0; }
+            }
+        </style>
     </div>
 
     <div class="dashboard-main">
-        <!-- Sidebar: Quick Actions -->
-        <aside class="dashboard-sidebar">
-            <div class="card">
-                <h3>{% trans "Швидкі дії" %}</h3>
-                <nav class="quick-actions">
-                    <a href="{% url 'store:wishlist_list' %}" class="action-link">
-                        <span><i class="fas fa-heart" style="color: var(--accent);"></i></span> {% trans "Список бажань" %}
-                    </a>
-                    <a href="{% url 'store:order_list' %}" class="action-link">
-                        <span><i class="fas fa-search"></i></span> {% trans "Відстежити замовлення" %}
-                    </a>
-                    <a href="{% url 'store:profile_edit' %}" class="action-link">
-                        <span><i class="fas fa-user"></i></span> {% trans "Редагувати профіль" %}
-                    </a>
-                    <a href="{% url 'password_change' %}" class="action-link">
-                        <span><i class="fas fa-lock"></i></span> {% trans "Змінити пароль" %}
-                    </a>
-                </nav>
-            </div>
-        </aside>
-
         <!-- Main Content: Recent Activity -->
         <main class="dashboard-content">
             <div class="card">
@@ -85,15 +111,22 @@
                 {% if activities %}
                 <div class="activity-feed">
                     {% for activity in activities %}
-                    <a href="{{ activity.url }}" class="activity-item clickable-activity">
-                        <div class="activity-icon"><i class="{{ activity.icon_class }}" style="color: var(--accent);"></i></div>
+                    <a href="{{ activity.url }}" class="activity-item clickable-activity activity-type-{{ activity.type }}">
+                        <div class="activity-icon"><i class="{{ activity.icon_class }}"></i></div>
                         <div class="activity-info">
-                            <div class="activity-header" style="gap: 1rem;">
-                                <strong>{{ activity.title }}</strong>
-                                <span class="activity-date">{{ activity.date|date:"d.m.Y" }}</span>
+                            <div class="activity-header">
+                                <div class="activity-title-group">
+                                    <strong>{{ activity.title }}</strong>
+                                    {% if activity.points_display %}
+                                    <span class="activity-points {% if activity.points > 0 %}points-gain{% else %}points-loss{% endif %}">
+                                        {{ activity.points_display }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <span class="activity-date">{{ activity.date|date:"d M, H:i" }}</span>
                             </div>
                             {% if activity.status_color %}
-                            <p class="activity-desc"><span style="color: {{ activity.status_color }}; font-weight: 600;">{{ activity.description }}</span></p>
+                            <p class="activity-desc"><span class="activity-status-tag" style="--status-color: {{ activity.status_color }};">{{ activity.description }}</span></p>
                             {% else %}
                             <p class="activity-desc">{{ activity.description }}</p>
                             {% endif %}
@@ -106,8 +139,9 @@
                 </div>
                 {% else %}
                 <div class="empty-state">
+                    <div class="empty-icon"><i class="fas fa-ghost"></i></div>
                     <p>{% trans "У вас поки немає активності. Почніть шопінг вже зараз!" %}</p>
-                    <a href="{% url 'store:product_list' %}" class="btn btn-primary hover-scale">{% trans "Перейти до покупок" %}</a>
+                    <a href="{% url 'store:product_list' %}" class="btn btn-primary btn-pill hover-scale">{% trans "Перейти до покупок" %}</a>
                 </div>
                 {% endif %}
             </div>
@@ -126,6 +160,19 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 3rem;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .header-actions {
+            width: 100%;
+            justify-content: flex-start;
+        }
     }
 
     .user-info {
@@ -160,6 +207,13 @@
         margin-bottom: 3rem;
     }
 
+    @media (max-width: 480px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+    }
+
     .stat-card {
         background: var(--card-bg);
         padding: 1.5rem;
@@ -168,7 +222,17 @@
         display: flex;
         align-items: center;
         gap: 1rem;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+        border: 1px solid transparent;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        border-color: var(--accent);
     }
 
     .stat-icon {
@@ -199,8 +263,20 @@
     /* Dashboard Layout */
     .dashboard-main {
         display: grid;
-        grid-template-columns: 280px 1fr;
+        grid-template-columns: 1fr;
         gap: 2rem;
+    }
+
+    .dashboard-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .dashboard-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
     }
 
     @media (max-width: 992px) {
@@ -214,7 +290,7 @@
         padding: 2rem;
         border-radius: 24px;
         box-shadow: var(--shadow);
-        height: 100%;
+        height: auto;
     }
 
     .card h3 {
@@ -259,102 +335,198 @@
         background: var(--card-bg-alt);
     }
 
-    .action-link::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 1px;
-        bottom: 0;
-        left: 0;
-        background-color: var(--accent);
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    }
-
-    .action-link:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
-    }
-
     /* Activity Feed */
     .activity-feed {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 0.75rem;
     }
-
+    
     .activity-item {
         display: flex;
-        gap: 1rem;
+        gap: 1.25rem;
         padding: 1.25rem;
-        border-bottom: 1px solid var(--border-color);
-        transition: all 0.3s ease;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         text-decoration: none;
         color: inherit;
-        position: relative;
         align-items: center;
-        border-radius: 12px;
+    }
+    
+    .activity-item:hover {
+        transform: translateY(-3px) scale(1.01);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+        border-color: var(--act-color, var(--accent));
+    }
+    
+    .activity-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        color: var(--act-color, var(--accent));
+        position: relative;
+        z-index: 1;
     }
 
-    .clickable-activity:hover {
-        background: var(--card-bg-alt);
-        transform: translateX(5px);
+    .activity-icon::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: currentColor;
+        opacity: 0.1;
+        border-radius: inherit;
+        z-index: -1;
     }
 
+    [data-theme="dark"] .activity-icon::after {
+        opacity: 0.15;
+    }
+    
     .activity-info {
         flex: 1;
+        min-width: 0;
     }
-
-    .activity-arrow {
-        color: var(--text-muted);
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all 0.3s ease;
-    }
-
-    .clickable-activity:hover .activity-arrow {
-        opacity: 1;
-        transform: translateX(0);
-        color: var(--accent);
-    }
-
-    .activity-item:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
-    }
-
-    .activity-icon {
-        font-size: 1.25rem;
-        margin-top: 0.25rem;
-    }
-
+    
     .activity-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.35rem;
+        gap: 1rem;
     }
 
+    .activity-title-group {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+    
     .activity-date {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         color: var(--text-muted);
+        white-space: nowrap;
+    }
+    
+    .activity-points {
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        text-transform: uppercase;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    }
+    
+    .activity-points::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: currentColor;
+        opacity: 0.12;
+        z-index: -1;
+    }
+    
+    .points-gain {
+        color: #28a745;
+    }
+    
+    [data-theme="dark"] .points-gain {
+        color: #34d399;
+    }
+    
+    .points-loss {
+        color: #dc3545;
+    }
+    
+    [data-theme="dark"] .points-loss {
+        color: #f87171;
+    }
+    
+    .activity-status-tag {
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.25rem 0.75rem;
+        border-radius: 6px;
+        text-transform: uppercase;
+        display: inline-block;
+        color: var(--status-color, #6c757d);
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        border: 1px solid transparent;
+        transition: all 0.2s;
     }
 
+    .activity-status-tag::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: currentColor;
+        opacity: 0.12;
+        z-index: -1;
+    }
+
+    [data-theme="dark"] .activity-status-tag::before {
+        opacity: 0.18;
+    }
+
+    .activity-item:hover .activity-status-tag {
+        border-color: currentColor;
+    }
+    
     .activity-desc {
         margin: 0;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         color: var(--text-muted);
+        line-height: 1.4;
     }
-
+    
+    .activity-arrow {
+        color: var(--text-muted);
+        transition: all 0.3s ease;
+        opacity: 0.3;
+    }
+    
+    .activity-item:hover .activity-arrow {
+        transform: translateX(3px);
+        color: var(--accent);
+        opacity: 1;
+    }
+    
     .empty-state {
         text-align: center;
-        padding: 3rem 0;
+        padding: 4rem 2rem;
         color: var(--text-muted);
     }
 
-    .hover-lift:hover {
-        transform: translateY(-5px);
+    .empty-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.2;
     }
+
+    /* Activity Type Variations */
+    .activity-type-order { --act-color: #2563eb; }
+    .activity-type-review { --act-color: #d97706; }
+    .activity-type-wishlist { --act-color: #db2777; }
+    .activity-type-loyalty { --act-color: #7c3aed; }
+
+    [data-theme="dark"] .activity-type-order { --act-color: #60a5fa; }
+    [data-theme="dark"] .activity-type-review { --act-color: #fbbf24; }
+    [data-theme="dark"] .activity-type-wishlist { --act-color: #f472b6; }
+    [data-theme="dark"] .activity-type-loyalty { --act-color: #a78bfa; }
 </style>
+
 {% endblock %}

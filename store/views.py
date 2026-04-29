@@ -1,3 +1,5 @@
+import string
+import random
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST, require_GET
 from django.contrib import messages
@@ -9,7 +11,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from django.http import JsonResponse
-from store.models import Category, Product, Order, OrderItem, Size, Review, Wishlist, Coupon
+from store.models import Category, Product, Order, OrderItem, Size, Review, Wishlist, Coupon, LoyaltyTransaction
+from django.db import transaction
 from store.forms import OrderCreateForm, UserSignupForm, ReviewForm, UserUpdateForm, ProfileUpdateForm, CouponApplyForm
 from store.services import NovaPoshtaService, OrderService
 from store.services.core import InsufficientStockError
@@ -100,26 +103,116 @@ def signup(request):
 def profile(request):
     stats = dashboard_service.get_user_dashboard_stats(request.user)
     activities = dashboard_service.get_recent_activity(request.user)
+    loyalty_transactions = LoyaltyTransaction.objects.filter(user=request.user)[:10]
+    
+    # Loyalty progress calculation
+    points = request.user.profile.points
+    if points < 250:
+        next_tier = 250
+        discount = 5
+        progress_percent = (points / 250) * 100
+    elif points < 600:
+        next_tier = 600
+        discount = 10
+        progress_percent = ((points - 250) / (600 - 250)) * 100
+    else:
+        next_tier = None
+        discount = 10
+        progress_percent = 100
+        
     return render(request, 'store/accounts/profile.html', {
         'stats': stats,
-        'activities': activities
+        'activities': activities,
+        'loyalty_transactions': loyalty_transactions[:5],  # Only show 5 in dashboard
+        'loyalty_next_tier': next_tier,
+        'loyalty_discount': discount,
+        'loyalty_progress': progress_percent,
+        'loyalty_points': points,
+    })
+
+@login_required
+def loyalty_details(request):
+    loyalty_transactions = LoyaltyTransaction.objects.filter(user=request.user)
+    return render(request, 'store/accounts/loyalty.html', {
+        'loyalty_transactions': loyalty_transactions,
+    })
+
+@login_required
+def user_reviews(request):
+    reviews = Review.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'store/accounts/user_reviews.html', {
+        'reviews': reviews,
+    })
+@login_required
+def spending_stats(request):
+    from django.conf import settings
+    from django.utils import translation
+    
+    from django.utils import timezone
+    spending_data = dashboard_service.get_spending_data(request.user)
+    
+    # Get currency rate for chart
+    selected_currency = request.session.get('currency')
+    if not selected_currency:
+        language = translation.get_language()
+        currency_settings = settings.CURRENCIES.get(language, settings.CURRENCIES.get('uk'))
+    else:
+        currency_settings = next((v for v in settings.CURRENCIES.values() if v['code'] == selected_currency), None)
+        if not currency_settings:
+            language = translation.get_language()
+            currency_settings = settings.CURRENCIES.get(language, settings.CURRENCIES.get('uk'))
+    
+    rate = float(currency_settings['rate'])
+    
+    # Pre-calculate converted values for JS and find total
+    total_spent_base = 0
+    max_spent_base = 0
+    peak_month_data = None
+    current_month = timezone.now().month
+    current_year = timezone.now().year
+    current_month_spent = 0
+
+    for item in spending_data:
+        total = float(item['total'])
+        total_spent_base += total
+        if total >= max_spent_base:
+            max_spent_base = total
+            peak_month_data = item
+        if item['month'] == current_month and item['year'] == current_year:
+            current_month_spent = total
+        item['total_converted'] = total * rate
+        
+    avg_spent_base = total_spent_base / len(spending_data) if spending_data else 0
+    
+    first_order = Order.objects.filter(user=request.user, status='Completed').order_by('created').first()
+    first_order_date = first_order.created if first_order else None
+        
+    return render(request, 'store/accounts/spending.html', {
+        'spending_data': spending_data,
+        'total_spent_base': total_spent_base,
+        'avg_spent_base': avg_spent_base,
+        'max_spent_base': max_spent_base,
+        'current_month_spent': current_month_spent,
+        'first_order_date': first_order_date,
+        'peak_month_data': peak_month_data,
     })
 
 
 @login_required
-def profile_edit(request):
+def account_settings(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return redirect('store:profile')
+            messages.success(request, _("Налаштування успішно збережено!"))
+            return redirect('store:settings')
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.profile)
     
-    return render(request, 'store/accounts/edit_profile.html', {
+    return render(request, 'store/accounts/settings.html', {
         'user_form': user_form,
         'profile_form': profile_form
     })
@@ -167,7 +260,19 @@ def add_review(request, product_id):
             review.product = product
             review.user = request.user
             review.save()
-            messages.success(request, _("Дякуємо! Ваш відгук успішно додано."))
+            
+            with transaction.atomic():
+                profile = request.user.profile
+                profile.points += 10
+                profile.save(update_fields=['points'])
+                LoyaltyTransaction.objects.create(
+                    user=request.user,
+                    amount=10,
+                    action='review',
+                    description=_("Відгук на товар") + f" {product.name}"
+                )
+                
+            messages.success(request, _("Дякуємо! Ваш відгук успішно додано. Вам нараховано 10 балів!"))
             return redirect('store:product_detail', pk=product.id, slug=product.slug)
         else:
             for error in form.errors.values():
@@ -271,8 +376,12 @@ def coupon_apply(request):
                                        valid_to__gte=now,
                                        active=True)
             
-            # Check if user has already used this coupon
+            # Check if user has already used this coupon or if the coupon belongs to someone else
             if request.user.is_authenticated:
+                if coupon.user and coupon.user != request.user:
+                    messages.error(request, _("Цей промокод належить іншому користувачу."))
+                    return redirect('store:cart_detail')
+                
                 if Order.objects.filter(user=request.user, coupon=coupon).exists():
                     messages.error(request, _("Ви вже використовували цей промокод."))
                     return redirect('store:cart_detail')
@@ -481,3 +590,57 @@ def set_preferences(request):
     
     request.session['selection_made'] = True
     return response
+
+@login_required
+@require_POST
+def convert_points(request):
+    tier = request.POST.get('tier')
+    
+    # 250 points = 5%, 600 points = 10%
+    conversion_rules = {
+        '5': {'points': 250, 'discount': 5},
+        '10': {'points': 600, 'discount': 10},
+    }
+    
+    if tier not in conversion_rules:
+        messages.error(request, _("Невірний варіант конвертації."))
+        return redirect('store:profile')
+        
+    rule = conversion_rules[tier]
+    points_needed = rule['points']
+    discount = rule['discount']
+    
+    with transaction.atomic():
+        profile = request.user.profile
+        
+        if profile.points < points_needed:
+            messages.error(request, _("Недостатньо балів для конвертації."))
+            return redirect('store:profile')
+            
+        profile.points -= points_needed
+        profile.save(update_fields=['points'])
+        
+        code = f"LOYALTY-{''.join(random.choices(string.ascii_uppercase + string.digits, k=8))}"
+        
+        # Valid for 30 days
+        valid_from = timezone.now()
+        valid_to = valid_from + timezone.timedelta(days=30)
+        
+        coupon = Coupon.objects.create(
+            code=code,
+            valid_from=valid_from,
+            valid_to=valid_to,
+            discount=discount,
+            active=True,
+            user=request.user
+        )
+        
+        LoyaltyTransaction.objects.create(
+            user=request.user,
+            amount=-points_needed,
+            action='conversion',
+            description=_("Конвертація в купон") + f" {code} ({discount}%)"
+        )
+        
+    messages.success(request, _(f"Успішно конвертовано! Ваш промокод: {code}"))
+    return redirect('store:profile')

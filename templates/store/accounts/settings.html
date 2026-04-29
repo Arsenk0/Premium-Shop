@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Редагувати профіль" %}{% endblock %}
+{% block title %}{% trans "Налаштування акаунта" %}{% endblock %}
 
 {% block content %}
 <div class="container fade-in premium-dashboard">
-    <div class="dashboard-header">
-        <h1>{% trans "Редагувати профіль" %} <i class="fas fa-user"></i></h1>
-        <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">← {% trans "Назад" %}</a>
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+        <h1 style="margin: 0;">{% trans "Налаштування акаунта" %} <i class="fas fa-cog"></i></h1>
+        <p style="color: var(--text-muted); margin: 0;">{% trans "Керуйте своїми персональними даними та налаштуваннями безпеки." %}</p>
+        <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">
+            <i class="fas fa-arrow-left"></i> {% trans "Назад до кабінету" %}
+        </a>
     </div>
 
     <div class="card premium-card">
@@ -63,10 +66,20 @@
                         <p id="warehouse-loading" style="display: none; font-size: 0.8rem; color: var(--accent);">{% trans "Завантаження відділень..." %}</p>
                     </div>
                 </div>
+
+                <div class="form-section">
+                    <h3>{% trans "Безпека" %}</h3>
+                    <div class="security-box">
+                        <p>{% trans "Ви можете змінити свій пароль для захисту акаунта." %}</p>
+                        <a href="{% url 'password_change' %}" class="btn btn-outline hover-scale" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-lock"></i> {% trans "Змінити пароль" %}
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-lg hover-scale">{% trans "Зберегти зміни" %}</button>
+                <button type="submit" class="btn btn-primary btn-lg hover-scale">{% trans "Зберегти всі налаштування" %}</button>
             </div>
         </form>
     </div>
@@ -92,6 +105,12 @@
         }
     }
 
+    .form-section {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
     .form-section h3 {
         margin-bottom: 1.5rem;
         font-size: 1.1rem;
@@ -100,6 +119,7 @@
         color: #888;
         border-bottom: 1px solid var(--border-color);
         padding-bottom: 0.5rem;
+        text-align: center;
     }
 
     .form-group {
@@ -127,6 +147,21 @@
         border-color: var(--primary);
         box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
         outline: none;
+    }
+
+    .security-box {
+        background: var(--card-bg-alt);
+        padding: 1.5rem;
+        border-radius: 16px;
+        border: 1px dashed var(--border-color);
+        text-align: center;
+        margin: auto 0;
+    }
+
+    .security-box p {
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
     }
 
     .form-actions {

@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Мої відгуки" %}{% endblock %}
+
+{% block content %}
+<div class="container fade-in premium-dashboard" style="max-width: 1000px; padding: 2rem 20px;">
+    <div style="margin-bottom: 3rem;">
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <h1 class="page-title">{% trans "Мої відгуки" %} <i class="fas fa-star" style="color: var(--accent);"></i></h1>
+            <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">
+                <i class="fas fa-arrow-left"></i> {% trans "Назад до кабінету" %}
+            </a>
+        </div>
+    </div>
+
+    <div class="reviews-list">
+        {% for review in reviews %}
+        <div class="card review-card hover-lift">
+            <div class="review-header">
+                <div class="product-info-wrapper">
+                    <div class="product-image">
+                        {% if review.product.image %}
+                            <img src="{{ review.product.image.url }}" alt="{{ review.product.name }}">
+                        {% endif %}
+                    </div>
+                    <div class="product-meta">
+                        <a href="{{ review.product.get_absolute_url }}" class="product-name-link">
+                            {{ review.product.name }}
+                        </a>
+                        <div class="review-rating">
+                            {% for i in "12345"|make_list %}
+                                <i class="fa{% if forloop.counter <= review.rating %}s{% else %}r{% endif %} fa-star star-icon"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="review-date-badge">
+                    <i class="far fa-clock"></i> {{ review.created_at|date:"d.m.Y H:i" }}
+                </div>
+            </div>
+            
+            <div class="review-content-wrapper custom-scrollbar">
+                <p class="review-text">{{ review.comment }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <div class="card empty-state">
+            <div class="empty-icon-wrapper">
+                <i class="fas fa-comment-slash"></i>
+            </div>
+            <h2>{% trans "Ви ще не залишили відгуків" %}</h2>
+            <p>{% trans "Ваші відгуки допоможуть іншим покупцям зробити правильний вибір." %}</p>
+            <a href="{% url 'store:product_list' %}" class="btn btn-primary btn-lg hover-scale">{% trans "До каталогу товарів" %}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin: 0;
+    }
+
+    .reviews-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .review-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+        padding: 2rem;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+
+    .review-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        transform: translateY(-8px);
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        gap: 1rem;
+    }
+
+    .product-info-wrapper {
+        display: flex;
+        gap: 1.25rem;
+        align-items: center;
+    }
+
+    .product-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        flex-shrink: 0;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .product-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .product-name-link {
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--text-main);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .product-name-link:hover {
+        color: var(--accent);
+    }
+
+    .review-rating {
+        display: flex;
+        gap: 2px;
+    }
+
+    .star-icon {
+        color: #ffc107;
+        font-size: 0.85rem;
+    }
+
+    .review-date-badge {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        background: var(--card-bg-alt);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .review-content-wrapper {
+        max-height: 200px;
+        overflow-y: auto;
+        padding-right: 1rem;
+    }
+
+    .review-text {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-main);
+        white-space: pre-line;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 10px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 5rem 2rem;
+        background: var(--card-bg);
+        border: 2px dashed var(--border-color);
+        border-radius: 32px;
+    }
+
+    .empty-icon-wrapper {
+        font-size: 4rem;
+        color: var(--border-color);
+        margin-bottom: 2rem;
+        background: var(--card-bg-alt);
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-lg {
+        padding: 1rem 2.5rem;
+        font-weight: 700;
+        border-radius: 16px;
+    }
+</style>
+{% endblock %}

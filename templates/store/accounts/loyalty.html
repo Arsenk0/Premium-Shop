@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Програма лояльності" %}{% endblock %}
+
+{% block content %}
+<div class="container fade-in premium-dashboard" style="max-width: 1200px; padding: 2rem 20px;">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+        <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0;">{% trans "Програма лояльності" %} <i class="fas fa-gift" style="color: var(--accent);"></i></h1>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">{% trans "Обмінюйте ваші бали на унікальні промокоди та знижки." %}</p>
+        <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">
+            <i class="fas fa-arrow-left"></i> {% trans "Назад до кабінету" %}
+        </a>
+    </div>
+
+    <div class="dashboard-main" style="grid-template-columns: 1fr 2fr; align-items: start; gap: 3rem;">
+        <!-- Left: Conversion Form -->
+        <aside class="dashboard-sidebar">
+            <div class="card">
+                <h3 class="mb-3"><i class="fas fa-gift" style="color: var(--accent);"></i> {% trans "Програма лояльності" %}</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">{% trans "Обмінюйте бали на унікальні промокоди!" %}</p>
+                
+                <div class="points-balance mb-4 text-center">
+                    <span class="stat-label">{% trans "Вільні бали" %}</span>
+                    <h2 class="stat-value" style="font-size: 3.5rem; color: var(--accent); margin: 0.5rem 0;">{{ request.user.profile.points }}</h2>
+                </div>
+
+                <form action="{% url 'store:convert_points' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <label class="mb-2 small text-muted">{% trans "Оберіть купон" %}</label>
+                        <select name="tier" class="form-control" required style="width: 100%; padding: 0.85rem; border-radius: 12px; border: 1px solid var(--border-color); background: var(--card-bg-alt); color: var(--text-main);">
+                            <option value="">{% trans "Оберіть варіант..." %}</option>
+                            <option value="5" {% if request.user.profile.points < 250 %}disabled{% endif %}>
+                                {% blocktrans %}250 балів = знижка 5%{% endblocktrans %}
+                            </option>
+                            <option value="10" {% if request.user.profile.points < 600 %}disabled{% endif %}>
+                                {% blocktrans %}600 балів = знижка 10%{% endblocktrans %}
+                            </option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary hover-scale" style="width: 100%; border-radius: 12px; padding: 0.85rem; font-weight: 700;">{% trans "Конвертувати" %}</button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Right: Points History -->
+        <main class="dashboard-content">
+            <div class="card">
+                <div class="mb-5">
+                    <h3>{% trans "Історія балів" %}</h3>
+                </div>
+                {% if loyalty_transactions %}
+                <div class="activity-feed">
+                    {% for trans in loyalty_transactions %}
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            {% if trans.amount > 0 %}
+                            <i class="fas fa-arrow-up" style="color: #28a745;"></i>
+                            {% else %}
+                            <i class="fas fa-arrow-down" style="color: #dc3545;"></i>
+                            {% endif %}
+                        </div>
+                        <div class="activity-info">
+                            <div class="activity-header">
+                                <strong>{{ trans.get_action_display }}</strong>
+                                <span class="activity-date">{{ trans.created_at|date:"d.m.Y H:i" }}</span>
+                            </div>
+                            <p class="activity-desc">{{ trans.description }}
+                                <span class="points-badge {% if trans.amount > 0 %}points-positive{% else %}points-negative{% endif %}">
+                                    {% if trans.amount > 0 %}+{% endif %}{{ trans.amount }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <p>{% trans "У вас поки немає історії балів." %}</p>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+</div>
+
+<style>
+    .premium-dashboard { padding: 2rem 0; color: var(--text-main); }
+    .dashboard-main { display: grid; gap: 4rem; align-items: start; }
+    .card { background: var(--card-bg); padding: 2.5rem; border-radius: 32px; box-shadow: var(--shadow); height: auto; border: none; }
+    .activity-feed { display: flex; flex-direction: column; gap: 0.5rem; }
+    .activity-item { display: flex; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border-color); }
+    .activity-icon { font-size: 1.25rem; margin-top: 0.25rem; }
+    .activity-info { flex: 1; min-width: 0; }
+    .activity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem; }
+    .activity-date { font-size: 0.8rem; color: var(--text-muted); }
+    .activity-desc { margin: 0; font-size: 0.9rem; color: var(--text-muted); }
+    .points-badge { font-weight: 700; margin-left: 0.5rem; }
+    .points-positive { color: #28a745; }
+    .points-negative { color: #dc3545; }
+    .stat-label { display: block; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    @media (max-width: 992px) { .dashboard-main { grid-template-columns: 1fr !important; } }
+</style>
+{% endblock %}

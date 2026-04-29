@@ -4,10 +4,13 @@
 {% block title %}{% trans "Список бажань" %}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div style="margin-bottom: 2rem;">
-        <h1 style="font-size: 2.5rem; font-weight: 800;">{% trans "Ваш список бажань" %} <i class="fas fa-heart" style="color: var(--accent);"></i></h1>
-        <p style="color: var(--text-muted);">{% trans "Товари, які ви зберегли." %}</p>
+<div class="container fade-in premium-dashboard" style="max-width: 1200px; padding: 2rem 20px;">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+        <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0;">{% trans "Ваш список бажань" %} <i class="fas fa-heart" style="color: var(--accent);"></i></h1>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">{% trans "Товари, які ви зберегли." %}</p>
+        <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">
+            <i class="fas fa-arrow-left"></i> {% trans "Назад до кабінету" %}
+        </a>
     </div>
 
     {% if wishlist_items %}
@@ -48,4 +51,6 @@
     </div>
     {% endif %}
 </div>
+
+
 {% endblock %}

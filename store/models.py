@@ -88,6 +88,7 @@ class Profile(models.Model):
     city_ref = models.CharField(max_length=100, blank=True)
     warehouse = models.CharField(max_length=255, blank=True, verbose_name=_("Відділення"))
     warehouse_ref = models.CharField(max_length=100, blank=True)
+    points = models.IntegerField(default=0, verbose_name=_("Бали"))
 
     def __str__(self):
         return f'{_("Профіль")} {self.user.username}'
@@ -99,6 +100,7 @@ class Coupon(models.Model):
     valid_to = models.DateTimeField(verbose_name=_("Valid To"))
     discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name=_("Discount (%)"))
     active = models.BooleanField(default=True, verbose_name=_("Active"))
+    user = models.ForeignKey(User, related_name='coupons', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Користувач"))
 
     class Meta:
         verbose_name = _("Coupon")
@@ -198,3 +200,24 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.product.name}"
+
+class LoyaltyTransaction(models.Model):
+    ACTION_CHOICES = [
+        ('registration', _('Реєстрація')),
+        ('purchase', _('Покупка')),
+        ('review', _('Відгук')),
+        ('conversion', _('Конвертація в купон')),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='loyalty_transactions')
+    amount = models.IntegerField(verbose_name=_("Кількість балів"))
+    action = models.CharField(max_length=20, choices=ACTION_CHOICES, verbose_name=_("Дія"))
+    description = models.CharField(max_length=255, blank=True, verbose_name=_("Опис"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Дата"))
+
+    class Meta:
+        verbose_name = _('Транзакція балів')
+        verbose_name_plural = _('Транзакції балів')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.action} ({self.amount})"

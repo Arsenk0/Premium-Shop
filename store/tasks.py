@@ -28,6 +28,19 @@ def send_order_confirmation_email(order_id, language='uk', currency='UAH', base_
 
             msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
+            
+            # Generate PDF
+            import weasyprint
+            pdf_html = render_to_string('emails/invoice_pdf.html', {
+                'order': order,
+                'currency': currency,
+                'base_url': base_url
+            })
+            pdf = weasyprint.HTML(string=pdf_html).write_pdf()
+            
+            # Attach PDF
+            msg.attach(f'invoice_{order.id}.pdf', pdf, 'application/pdf')
+            
             msg.send()
         return True
     except Order.DoesNotExist:
