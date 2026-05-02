@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 from django.db.models import Q, Min, Max
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -103,8 +104,9 @@ def signup(request):
 def profile(request):
     stats = dashboard_service.get_user_dashboard_stats(request.user)
     activities = dashboard_service.get_recent_activity(request.user)
-    loyalty_transactions = LoyaltyTransaction.objects.filter(user=request.user)[:10]
-    
+    # Bug #8 fix: fetch only 5 directly instead of 10 then slicing in template
+    loyalty_transactions = LoyaltyTransaction.objects.filter(user=request.user)[:5]
+
     # Loyalty progress calculation
     points = request.user.profile.points
     if points < 250:
@@ -119,11 +121,11 @@ def profile(request):
         next_tier = None
         discount = 10
         progress_percent = 100
-        
+
     return render(request, 'store/accounts/profile.html', {
         'stats': stats,
         'activities': activities,
-        'loyalty_transactions': loyalty_transactions[:5],  # Only show 5 in dashboard
+        'loyalty_transactions': loyalty_transactions,
         'loyalty_next_tier': next_tier,
         'loyalty_discount': discount,
         'loyalty_progress': progress_percent,
@@ -145,12 +147,8 @@ def user_reviews(request):
     })
 @login_required
 def spending_stats(request):
-    from django.conf import settings
-    from django.utils import translation
-    
-    from django.utils import timezone
     spending_data = dashboard_service.get_spending_data(request.user)
-    
+
     # Get currency rate for chart
     selected_currency = request.session.get('currency')
     if not selected_currency:
@@ -161,32 +159,36 @@ def spending_stats(request):
         if not currency_settings:
             language = translation.get_language()
             currency_settings = settings.CURRENCIES.get(language, settings.CURRENCIES.get('uk'))
-    
+
     rate = float(currency_settings['rate'])
-    
+
     # Pre-calculate converted values for JS and find total
-    total_spent_base = 0
-    max_spent_base = 0
+    total_spent_base = Decimal('0')
+    max_spent_base = Decimal('0')
     peak_month_data = None
     current_month = timezone.now().month
     current_year = timezone.now().year
-    current_month_spent = 0
+    current_month_spent = Decimal('0')
 
     for item in spending_data:
-        total = float(item['total'])
+        # item['total'] comes from Sum() — may be Decimal or None
+        total = Decimal(str(item['total'] or '0'))
         total_spent_base += total
         if total >= max_spent_base:
             max_spent_base = total
             peak_month_data = item
         if item['month'] == current_month and item['year'] == current_year:
             current_month_spent = total
-        item['total_converted'] = total * rate
-        
-    avg_spent_base = total_spent_base / len(spending_data) if spending_data else 0
-    
+        item['total_converted'] = float(total) * rate
+
+    avg_spent_base = total_spent_base / len(spending_data) if spending_data else Decimal('0')
+
+    # Bug #1 fix: pass real completed order count separately
+    total_orders_count = Order.objects.filter(user=request.user, status='Completed').count()
+
     first_order = Order.objects.filter(user=request.user, status='Completed').order_by('created').first()
     first_order_date = first_order.created if first_order else None
-        
+
     return render(request, 'store/accounts/spending.html', {
         'spending_data': spending_data,
         'total_spent_base': total_spent_base,
@@ -195,7 +197,62 @@ def spending_stats(request):
         'current_month_spent': current_month_spent,
         'first_order_date': first_order_date,
         'peak_month_data': peak_month_data,
+        'total_orders_count': total_orders_count,
     })
+
+
+@login_required
+def spending_export_csv(request):
+    """Export the user's spending data as a CSV file."""
+    import csv
+    from django.http import HttpResponse
+
+    # Resolve currency
+    selected_currency = request.session.get('currency')
+    if not selected_currency:
+        lang = translation.get_language()
+        currency_settings = settings.CURRENCIES.get(lang, settings.CURRENCIES.get('uk'))
+    else:
+        currency_settings = next(
+            (v for v in settings.CURRENCIES.values() if v['code'] == selected_currency), None
+        )
+        if not currency_settings:
+            lang = translation.get_language()
+            currency_settings = settings.CURRENCIES.get(lang, settings.CURRENCIES.get('uk'))
+
+    rate = Decimal(str(currency_settings['rate']))
+    symbol = currency_settings['symbol']
+    currency_code = currency_settings['code']
+
+    MONTH_NAMES = [
+        _('Січень'), _('Лютий'), _('Березень'), _('Квітень'),
+        _('Травень'), _('Червень'), _('Липень'), _('Серпень'),
+        _('Вересень'), _('Жовтень'), _('Листопад'), _('Грудень'),
+    ]
+
+    spending_data = dashboard_service.get_spending_data(request.user)
+
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = f'attachment; filename="spending_{request.user.username}.csv"'
+    # BOM for Excel UTF-8 compatibility
+    response.write('\ufeff')
+
+    writer = csv.writer(response)
+    writer.writerow([_('Місяць'), _('Рік'), f'{_("Витрати")} ({currency_code})'])
+
+    grand_total = Decimal('0')
+    for item in spending_data:
+        month_name = MONTH_NAMES[item['month'] - 1]
+        total_base = Decimal(str(item['total'] or '0'))
+        converted = (total_base * rate).quantize(Decimal('0.01'))
+        grand_total += converted
+        writer.writerow([month_name, item['year'], str(converted)])
+
+    # Summary row
+    writer.writerow([])
+    writer.writerow([_('Загалом'), '', str(grand_total)])
+
+    return response
 
 
 @login_required
@@ -297,7 +354,7 @@ def cart_add(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     size = request.POST.get('size') or request.GET.get('size')
-    
+
     # Enforce size selection if product has sizes
     if product.sizes.exists() and not size:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -310,11 +367,10 @@ def cart_add(request, product_id):
             return JsonResponse({'status': 'error', 'message': _('Товар відсутній на складі!')}, status=400)
         return redirect('store:product_detail', pk=product.id, slug=product.slug)
 
-    # Check if adding would exceed available stock
-    current_in_cart = sum(
-        item['quantity'] for item in cart.cart.values()
-        if item['product_id'] == product.id
-    )
+    # Bug #4 fix: check stock per specific size (item_key), not across all sizes of the product.
+    # Different sizes are independent SKUs — stock is shared at the product level.
+    item_key = f"{product.id}_{size}" if size else str(product.id)
+    current_in_cart = cart.cart.get(item_key, {}).get('quantity', 0)
     if current_in_cart >= product.stock:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'status': 'error', 'message': _('Досягнуто максимальну кількість цього товару!')}, status=400)
@@ -430,7 +486,7 @@ def order_create(request):
     cart = Cart(request)
     if len(cart) == 0:
         return redirect('store:product_list')
-        
+
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
@@ -439,20 +495,31 @@ def order_create(request):
             except InsufficientStockError as e:
                 messages.error(request, str(e))
                 return render(request, 'store/order/create.html', {'cart': cart, 'form': form})
-            
+            except ValidationError as e:
+                # Bug #3 fix: full_clean() in OrderService can raise ValidationError
+                # (e.g. size required) — catch it gracefully instead of 500.
+                error_msg = '; '.join(
+                    str(m) for msgs in e.message_dict.values() for m in msgs
+                ) if hasattr(e, 'message_dict') else str(e.message)
+                messages.error(request, error_msg)
+                return render(request, 'store/order/create.html', {'cart': cart, 'form': form})
+            except ValueError as e:
+                messages.error(request, str(e))
+                return render(request, 'store/order/create.html', {'cart': cart, 'form': form})
+
             # Trigger asynchronous email
             language = get_language()
             currency = request.session.get('currency', 'UAH')
             base_url = request.build_absolute_uri('/')[:-1]
             send_order_confirmation_email.delay(order.id, language=language, currency=currency, base_url=base_url)
-            
+
             cart.clear()
-            
-            # Store order ID in session for guest access (IDOR protection)
+
+            # Bug #9 fix: cap session list to last 20 entries to prevent unbounded growth
             permitted_orders = request.session.get('permitted_orders', [])
             permitted_orders.append(order.id)
-            request.session['permitted_orders'] = permitted_orders
-            
+            request.session['permitted_orders'] = permitted_orders[-20:]
+
             return redirect('store:order_success', order_id=order.id)
     else:
         form = OrderCreateForm()
@@ -642,5 +709,10 @@ def convert_points(request):
             description=_("Конвертація в купон") + f" {code} ({discount}%)"
         )
         
-    messages.success(request, _(f"Успішно конвертовано! Ваш промокод: {code}"))
+    # Bug #7 fix: _(f"...") is untranslatable — gettext cannot extract f-strings.
+    # Use %(key)s interpolation instead.
+    messages.success(
+        request,
+        _("Успішно конвертовано! Ваш промокод: %(code)s") % {'code': code}
+    )
     return redirect('store:profile')

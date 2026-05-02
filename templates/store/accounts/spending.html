@@ -29,7 +29,8 @@
             <div class="stat-icon"><i class="fas fa-shopping-bag" style="color: var(--accent);"></i></div>
             <div class="stat-content">
                 <span class="stat-label">{% trans "Замовлень" %}</span>
-                <span class="stat-value">{{ spending_data|length }}</span>
+                {# Bug #1 fix: show actual completed order count, not number of months #}
+                <span class="stat-value">{{ total_orders_count }}</span>
             </div>
         </div>
 
@@ -59,9 +60,9 @@
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <p class="card-subtitle-premium" style="margin: 0;">{% trans "Ваша активність за останні місяці" %}</p>
                         <div class="chart-actions">
-                            <button class="btn btn-pill-sm hover-scale">
+                            <a href="{% url 'store:spending_export' %}" class="btn btn-pill-sm hover-scale" download>
                                 <i class="fas fa-file-export"></i> {% trans "Експорт" %}
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -570,11 +571,6 @@
         }
     }
 
-    /* Skeleton Loading Animations */
-    .skeleton-overlay {
-        transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-    
     /* Skeleton Loading Animations */
     .skeleton-overlay {
         transition: opacity 0.5s ease, visibility 0.5s ease;

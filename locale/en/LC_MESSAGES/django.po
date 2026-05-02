@@ -684,6 +684,12 @@ msgstr "Loading..."
 msgid "Загалом"
 msgstr "Total"
 
+msgid "Місяць"
+msgstr "Month"
+
+msgid "Рік"
+msgstr "Year"
+
 #: templates/store/order/list.html:46
 msgid "Загальна сума"
 msgstr "Total amount"

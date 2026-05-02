@@ -10,6 +10,10 @@ class EmailOrUsernameModelBackend(ModelBackend):
             # Allow login with either username or email
             user = User.objects.get(Q(username__iexact=username) | Q(email__iexact=username))
         except User.DoesNotExist:
+            # Run the hasher to mitigate timing attacks.
+            # Without this, response time is shorter for non-existent users,
+            # allowing attackers to enumerate valid usernames/emails.
+            User().set_password(password)
             return None
         except User.MultipleObjectsReturned:
             # Multiple users found — check password for each one

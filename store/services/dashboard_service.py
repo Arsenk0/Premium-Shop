@@ -80,11 +80,20 @@ def get_recent_activity(user, limit=10):
     loyalty_txs = LoyaltyTransaction.objects.filter(user=user).order_by('-created_at')[:limit]
     for tx in loyalty_txs:
         points_str = f"{'+' if tx.amount > 0 else ''}{tx.amount} " + _('балів')
+
+        # Purchase descriptions are stored as static 'Order #N' (language-agnostic key
+        # used for deduplication). Reconstruct the translated version at display time.
+        if tx.action == 'purchase' and tx.description.startswith('Order #'):
+            order_num = tx.description[len('Order #'):]
+            display_description = _('Order') + f' #{order_num}'
+        else:
+            display_description = tx.description
+
         activities.append({
             'type': 'loyalty',
             'date': tx.created_at,
             'title': tx.get_action_display(),
-            'description': tx.description,
+            'description': display_description,
             'points': tx.amount,
             'points_display': points_str,
             'icon_class': LOYALTY_ICONS.get(tx.action, 'fas fa-gem'),
@@ -99,16 +108,28 @@ def get_recent_activity(user, limit=10):
 
 def get_spending_data(user):
     """
-    Returns monthly spending data for the user.
+    Returns monthly spending data for the user (after discounts).
+    Uses Python-side aggregation to correctly apply discount_amount,
+    keeping consistency with Order.get_total_cost().
     """
-    spending_data = Order.objects.filter(
-        user=user, 
+    from django.db.models import Sum, F
+    from decimal import Decimal
+
+    orders = Order.objects.filter(
+        user=user,
         status='Completed'
-    ).annotate(
-        month=F('created__month'),
-        year=F('created__year')
-    ).values('month', 'year').annotate(
-        total=Sum(F('items__price') * F('items__quantity'))
-    ).order_by('year', 'month')
-    
-    return list(spending_data)
+    ).prefetch_related('items').order_by('created__year', 'created__month')
+
+    # Aggregate by (year, month) in Python to correctly subtract discount_amount
+    monthly = {}
+    for order in orders:
+        key = (order.created.year, order.created.month)
+        if key not in monthly:
+            monthly[key] = Decimal('0')
+        monthly[key] += order.get_total_cost()
+
+    result = [
+        {'year': year, 'month': month, 'total': total}
+        for (year, month), total in sorted(monthly.items())
+    ]
+    return result

@@ -666,6 +666,12 @@ msgstr "Načítání..."
 msgid "Загалом"
 msgstr "Celkem"
 
+msgid "Місяць"
+msgstr "Měsíc"
+
+msgid "Рік"
+msgstr "Rok"
+
 #: templates/store/order/list.html:46
 msgid "Загальна сума"
 msgstr "Celková částka"
