@@ -318,18 +318,20 @@ def add_review(request, product_id):
             review.user = request.user
             review.save()
             
+            points_earned = 5
+            
             with transaction.atomic():
                 profile = request.user.profile
-                profile.points += 10
+                profile.points += points_earned
                 profile.save(update_fields=['points'])
                 LoyaltyTransaction.objects.create(
                     user=request.user,
-                    amount=10,
+                    amount=points_earned,
                     action='review',
                     description=_("Відгук на товар") + f" {product.name}"
                 )
                 
-            messages.success(request, _("Дякуємо! Ваш відгук успішно додано. Вам нараховано 10 балів!"))
+            messages.success(request, _("Дякуємо! Ваш відгук успішно додано. Вам нараховано %(points)s балів!") % {'points': points_earned})
             return redirect('store:product_detail', pk=product.id, slug=product.slug)
         else:
             for error in form.errors.values():

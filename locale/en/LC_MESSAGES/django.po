@@ -635,8 +635,8 @@ msgid "Дякуємо за замовлення!"
 msgstr "Thank you for your order!"
 
 #: store/views.py:207
-msgid "Дякуємо! Ваш відгук успішно додано. Вам нараховано 10 балів!"
-msgstr "Thank you! Your review has been added. You earned 10 points!"
+msgid "Дякуємо! Ваш відгук успішно додано. Вам нараховано %(points)s балів!"
+msgstr "Thank you! Your review has been added. You earned %(points)s points!"
 
 #: store/models.py:213 templates/store/cart/detail.html:134
 msgid "Дія"

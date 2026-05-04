@@ -8,10 +8,10 @@ from django.utils.translation import gettext as _
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        profile = Profile.objects.create(user=instance, points=50)
+        profile = Profile.objects.create(user=instance, points=25)
         LoyaltyTransaction.objects.create(
             user=instance,
-            amount=50,
+            amount=25,
             action='registration',
             description=_('Бонус за реєстрацію')
         )
@@ -27,8 +27,8 @@ def order_completed(sender, instance, **kwargs):
             user=instance.user, action='purchase', description=description_key
         ).exists():
             total_cost = instance.get_total_cost()
-            # 5 points for every 100 UAH
-            points_to_add = int(total_cost // 100) * 5
+            # 2 points for every 100 UAH
+            points_to_add = int(total_cost // 100) * 2
 
             if points_to_add > 0:
                 with transaction.atomic():
