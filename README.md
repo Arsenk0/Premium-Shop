@@ -1,32 +1,45 @@
 # Premium Shop 👟✨
 
-A modern, high-performance Django e-commerce platform designed for selling premium footwear and apparel. This project features a sleek UI, robust checkout flow, and seamless integration with the Nova Poshta API.
+A modern, high-performance Django e-commerce platform designed for selling premium footwear and apparel. This project features a sleek UI, robust checkout flow, advanced analytics, and seamless integration with the Nova Poshta API and Telegram.
 
 ## 🚀 Key Features
 
 *   **Premium UI/UX**: Designed with a focus on aesthetics, featuring glassmorphism, smooth animations, and a responsive layout.
+*   **Telegram Bot Integration**: Real-time order status notifications and secure account linking via OTP.
+*   **Gamified Loyalty Program**: Earn points for registration, reviews, and purchases. Includes a dedicated spending analytics dashboard.
+*   **Professional Admin Panel**: Powered by `django-jazzmin` with a custom analytics dashboard, English-only interface, and streamlined management.
 *   **Multi-language Support**: Full localization for **Ukrainian**, **English**, and **Czech** languages.
-*   **Real-time Search**: Instant product search with autocomplete functionality.
-*   **AJAX Filtering & Sorting**: Smooth, non-reloading product filtering (by price, size, stock) and sorting.
-*   **Smart Cart & Sidebar**: Real-time cart updates with a sleek sidebar for easy access and session management.
-*   **Wishlist**: Integrated wishlist for authenticated users to save favorite products.
-*   **User Dashboard**: Personal profile with order statistics and recent activity tracking.
-*   **Nova Poshta Integration**: Automatic city search (autocomplete) and dynamic warehouse selection for reliable shipping in Ukraine.
+*   **Real-time Search & Filtering**: Instant product search with autocomplete and non-reloading AJAX filtering.
+*   **Nova Poshta Integration**: Automatic city search (autocomplete) and dynamic warehouse selection for reliable shipping.
+*   **Smart Cart & Wishlist**: Real-time cart updates with a sleek sidebar and personal wishlist for authenticated users.
 *   **Secure Checkout**: Implementation of the PRG (Post/Redirect/Get) pattern to prevent duplicate orders.
-*   **Dynamic Size Selection**: Enforced size selection supporting both footwear and apparel.
-*   **Product Reviews**: Integrated rating system (1-5 stars) with user comments.
 *   **Async Task Processing**: Celery & Redis integration for background tasks like order confirmation and welcome emails.
+
+## 🤖 Telegram Bot Features
+
+The integrated Telegram bot (@PremiumShopBot) provides:
+- **Order Tracking**: Get instant updates when your order status changes.
+- **Account Linking**: Securely link your website account using a one-time password (OTP).
+- **Interactive Commands**: `/start`, `/help`, and status checks directly from Telegram.
+
+## 📊 Loyalty & Analytics
+
+Our custom loyalty system rewards active customers:
+- **Point Accrual**: Earn points for every action (buying, reviewing, registering).
+- **Spending Dashboard**: Visualize your shopping habits with glassmorphism-styled charts and stats.
+- **Tiered Benefits**: Unlock exclusive discounts as you accumulate points.
 
 ## 🛠️ Tech Stack
 
 *   **Backend**: Python 3.10+, Django 6.0.2
-*   **Database**: SQLite (Development)
+*   **Bot**: Python Telegram Bot (PTB) 22.7
+*   **Database**: SQLite (Development) / PostgreSQL (Production ready)
 *   **Async/Tasks**: Celery, Redis
-*   **Internationalization**: `django-modeltranslation`, `gettext`
+*   **Admin UI**: Django Jazzmin (Customized)
 *   **Frontend**: HTML5, Vanilla CSS3 (Custom Design System), JavaScript (ES6+, AJAX)
 *   **API**: Nova Poshta JSON-RPC 2.0
-*   **Icons**: FontAwesome 6+
-*   **Typography**: Inter (Google Fonts)
+*   **PDF Generation**: WeasyPrint
+*   **Internationalization**: `django-modeltranslation`, `gettext`
 
 ## 📦 Installation & Setup
 
@@ -52,6 +65,8 @@ A modern, high-performance Django e-commerce platform designed for selling premi
     ```env
     DJANGO_SECRET_KEY=your_secret_key
     NOVA_POSHTA_API_KEY=your_api_key
+    TELEGRAM_BOT_TOKEN=your_bot_token
+    TELEGRAM_BOT_USERNAME=PremiumShopBot
     EMAIL_HOST_USER=your_email@gmail.com
     EMAIL_HOST_PASSWORD=your_app_password
     ```
@@ -80,22 +95,28 @@ To ensure all features work correctly, you need to run the following services in
     celery -A shop_project worker --loglevel=info
     ```
 
-3.  **Django Development Server**
+3.  **Telegram Bot**
+    ```bash
+    python manage.py run_telegram_bot
+    ```
+
+4.  **Django Development Server**
     ```bash
     python manage.py runserver
     ```
 
 ---
 > [!IMPORTANT]
-> Ensure Redis is running before starting the Celery worker for email notifications to function.
+> Ensure Redis is running before starting the Celery worker and the Telegram bot for full functionality.
 
 ## 📝 Configuration
 
 Key environment variables in `.env`:
 - `DEBUG`: Toggle development mode.
 - `NOVA_POSHTA_API_KEY`: Required for shipping lookups.
+- `TELEGRAM_BOT_TOKEN`: Token from BotFather for the shop bot.
 - `CELERY_BROKER_URL`: Connection string for Redis.
-- Email settings (`EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`) for order notifications.
+- Email settings for order notifications and OTP delivery.
 
 ---
 *Created with ❤️ by Arsen Khomiak*
