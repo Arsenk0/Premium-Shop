@@ -8,10 +8,10 @@ from django.utils.translation import gettext as _
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        profile = Profile.objects.create(user=instance, points=50)
+        profile = Profile.objects.create(user=instance, points=25)
         LoyaltyTransaction.objects.create(
             user=instance,
-            amount=50,
+            amount=25,
             action='registration',
             description=_('Бонус за реєстрацію')
         )
@@ -20,25 +20,27 @@ def create_user_profile(sender, instance, created, **kwargs):
 def order_completed(sender, instance, **kwargs):
     # Check if order is completed and user exists
     if instance.status == 'Completed' and instance.user:
-        # We need to make sure we don't grant points multiple times for the same order.
-        # Check if a transaction for this order already exists.
-        description = _('Order') + f' #{instance.id}'
-        if not LoyaltyTransaction.objects.filter(user=instance.user, action='purchase', description=description).exists():
+        # Use a static (non-translated) key for deduplication so it is
+        # language-agnostic — prevents double award if active language changes.
+        description_key = f'Order #{instance.id}'
+        if not LoyaltyTransaction.objects.filter(
+            user=instance.user, action='purchase', description=description_key
+        ).exists():
             total_cost = instance.get_total_cost()
-            # 5 points for every 100 UAH
-            points_to_add = int(total_cost // 100) * 5
-            
+            # 2 points for every 100 UAH
+            points_to_add = int(total_cost // 100) * 2
+
             if points_to_add > 0:
                 with transaction.atomic():
                     profile = instance.user.profile
                     profile.points += points_to_add
                     profile.save(update_fields=['points'])
-                    
+
                     LoyaltyTransaction.objects.create(
                         user=instance.user,
                         amount=points_to_add,
                         action='purchase',
-                        description=description
+                        description=description_key
                     )
 
 # Order status signals removed as per user request to simplify email flow.

@@ -17,6 +17,7 @@ urlpatterns = [
     path('profile/loyalty/', views.loyalty_details, name='loyalty_details'),
     path('profile/reviews/', views.user_reviews, name='user_reviews'),
     path('profile/spending/', views.spending_stats, name='spending_stats'),
+    path('profile/spending/export/', views.spending_export_csv, name='spending_export'),
     path('profile/convert-points/', views.convert_points, name='convert_points'),
 
     # Cart

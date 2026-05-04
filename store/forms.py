@@ -149,7 +149,9 @@ class OrderCreateForm(forms.ModelForm):
                     raise forms.ValidationError({'social_handle': _("Для %(method)s нікнейм зазвичай починається з @") % {'method': method}})
             cleaned_data['social_handle'] = handle
         elif method == 'WHATSAPP':
-            cleaned_data['social_handle'] = cleaned_data.get('phone')
+            # Bug #15 fix: use empty string as fallback if phone validation failed
+            # to avoid storing None in social_handle field.
+            cleaned_data['social_handle'] = cleaned_data.get('phone') or ''
         return cleaned_data
 
 

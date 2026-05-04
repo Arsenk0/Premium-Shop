@@ -150,8 +150,9 @@ class Order(models.Model):
         return f'Order {self.id}'
 
     def get_total_cost(self):
+        from decimal import Decimal
         total = sum(item.price * item.quantity for item in self.items.all())
-        return total - self.discount_amount
+        return max(total - self.discount_amount, Decimal('0'))
 
 
 class OrderItem(models.Model):
