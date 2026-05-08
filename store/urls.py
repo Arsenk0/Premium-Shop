@@ -38,6 +38,7 @@ urlpatterns = [
     path('api/nova-poshta/cities/', views.nova_poshta_cities, name='api_np_cities'),
     path('api/nova-poshta/warehouses/', views.nova_poshta_warehouses, name='api_np_warehouses'),
     path('api/search-autocomplete/', views.search_autocomplete, name='search_autocomplete'),
+    path('admin-analytics/', views.admin_analytics_data, name='admin_analytics_data'),
     
     # ==============================================================
     # ШЛЯХИ, ЯКІ МИ ПІДНЯЛИ ВИЩЕ (Wishlist та Reviews)

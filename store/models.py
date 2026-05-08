@@ -50,6 +50,7 @@ class Product(models.Model):
     sizes = models.ManyToManyField(Size, related_name='products', blank=True, verbose_name=_("Доступні розміри"))
     stock = models.PositiveIntegerField(default=0)
     available = models.BooleanField(default=True)
+    views_count = models.PositiveIntegerField(default=0, verbose_name=_("Перегляди"))
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
