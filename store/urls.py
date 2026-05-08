@@ -19,6 +19,8 @@ urlpatterns = [
     path('profile/spending/', views.spending_stats, name='spending_stats'),
     path('profile/spending/export/', views.spending_export_csv, name='spending_export'),
     path('profile/convert-points/', views.convert_points, name='convert_points'),
+    path('profile/telegram/', views.telegram_link, name='telegram_link'),
+    path('profile/telegram/unlink/', views.telegram_unlink, name='telegram_unlink'),
 
     # Cart
     path('cart/add/<int:product_id>/', views.cart_add, name='cart_add'),
@@ -38,6 +40,7 @@ urlpatterns = [
     path('api/nova-poshta/cities/', views.nova_poshta_cities, name='api_np_cities'),
     path('api/nova-poshta/warehouses/', views.nova_poshta_warehouses, name='api_np_warehouses'),
     path('api/search-autocomplete/', views.search_autocomplete, name='search_autocomplete'),
+    path('admin-analytics/', views.admin_analytics_data, name='admin_analytics_data'),
     
     # ==============================================================
     # ШЛЯХИ, ЯКІ МИ ПІДНЯЛИ ВИЩЕ (Wishlist та Reviews)

@@ -50,6 +50,7 @@ class Product(models.Model):
     sizes = models.ManyToManyField(Size, related_name='products', blank=True, verbose_name=_("Доступні розміри"))
     stock = models.PositiveIntegerField(default=0)
     available = models.BooleanField(default=True)
+    views_count = models.PositiveIntegerField(default=0, verbose_name=_("Перегляди"))
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -89,6 +90,9 @@ class Profile(models.Model):
     warehouse = models.CharField(max_length=255, blank=True, verbose_name=_("Відділення"))
     warehouse_ref = models.CharField(max_length=100, blank=True)
     points = models.IntegerField(default=0, verbose_name=_("Бали"))
+    telegram_chat_id = models.BigIntegerField(null=True, blank=True, verbose_name=_("Telegram Chat ID"))
+    telegram_link_token = models.CharField(max_length=10, blank=True, verbose_name=_("Telegram Link Token"))
+    telegram_token_created = models.DateTimeField(null=True, blank=True, verbose_name=_("Token Created At"))
 
     def __str__(self):
         return f'{_("Профіль")} {self.user.username}'

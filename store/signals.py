@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile, Order, LoyaltyTransaction
@@ -43,4 +43,32 @@ def order_completed(sender, instance, **kwargs):
                         description=description_key
                     )
 
-# Order status signals removed as per user request to simplify email flow.
+
+@receiver(pre_save, sender=Order)
+def track_order_status(sender, instance, **kwargs):
+    """Cache the previous status before saving so post_save can detect changes."""
+    if instance.pk:
+        try:
+            instance._previous_status = Order.objects.only('status').get(pk=instance.pk).status
+        except Order.DoesNotExist:
+            instance._previous_status = None
+    else:
+        instance._previous_status = None
+
+
+@receiver(post_save, sender=Order)
+def notify_order_status_change(sender, instance, created, **kwargs):
+    """Send Telegram notification when order status changes."""
+    if created:
+        return  # No notification on creation — email handles confirmation
+
+    previous_status = getattr(instance, '_previous_status', None)
+    if previous_status is None or previous_status == instance.status:
+        return  # Status didn't change
+
+    if not instance.user:
+        return  # Guest order, no Telegram notification
+
+    # Fire-and-forget via Celery (non-blocking)
+    from store.tasks import send_telegram_status_notification
+    send_telegram_status_notification.delay(instance.id)

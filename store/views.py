@@ -276,6 +276,42 @@ def account_settings(request):
 
 
 @login_required
+def telegram_link(request):
+    """Page to manage Telegram account linking. POST generates a new OTP."""
+    import random
+    from django.utils import timezone
+
+    profile = request.user.profile
+    bot_username = settings.TELEGRAM_BOT_USERNAME
+
+    if request.method == 'POST':
+        # Generate a fresh 6-digit OTP
+        otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+        profile.telegram_link_token = otp
+        profile.telegram_token_created = timezone.now()
+        profile.save(update_fields=['telegram_link_token', 'telegram_token_created'])
+        messages.success(request, _("Код згенеровано! Відправте його боту протягом 10 хвилин."))
+        return redirect('store:telegram_link')
+
+    return render(request, 'store/accounts/telegram.html', {
+        'profile': profile,
+        'bot_username': bot_username,
+    })
+
+
+@login_required
+@require_POST
+def telegram_unlink(request):
+    """Unlink Telegram from the user's profile."""
+    profile = request.user.profile
+    profile.telegram_chat_id = None
+    profile.telegram_link_token = ''
+    profile.telegram_token_created = None
+    profile.save(update_fields=['telegram_chat_id', 'telegram_link_token', 'telegram_token_created'])
+    messages.success(request, _("Telegram-акаунт успішно від'єднано."))
+    return redirect('store:telegram_link')
+
+@login_required
 def order_list(request):
     orders = Order.objects.filter(user=request.user).order_by('-created')
     return render(request, 'store/order/list.html', {'orders': orders})
@@ -290,6 +326,14 @@ class ProductDetailView(DetailView):
 
     def get_queryset(self):
         return Product.objects.filter(available=True)
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        from django.db.models import F
+        Product.objects.filter(pk=self.object.pk).update(views_count=F('views_count') + 1)
+        self.object.refresh_from_db(fields=['views_count'])
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -718,3 +762,47 @@ def convert_points(request):
         _("Успішно конвертовано! Ваш промокод: %(code)s") % {'code': code}
     )
     return redirect('store:profile')
+
+
+from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Count, Sum
+from django.db.models.functions import ExtractWeekDay
+
+@staff_member_required
+def admin_analytics_data(request):
+    """
+    API endpoint for Admin Analytics Dashboard (Chart.js)
+    """
+    # 1. Sales by day of the week
+    # ExtractWeekDay returns 1 (Sunday) to 7 (Saturday)
+    sales_by_day = Order.objects.filter(status='Completed').annotate(
+        weekday=ExtractWeekDay('created')
+    ).values('weekday').annotate(count=Count('id')).order_by('weekday')
+
+    # 2. Most popular sizes
+    popular_sizes = OrderItem.objects.exclude(size__isnull=True).exclude(size='').values('size').annotate(
+        count=Sum('quantity')
+    ).order_by('-count')[:10]
+
+    # 3. Views to purchases (conversion)
+    top_products = Product.objects.annotate(
+        purchases=Sum('order_items__quantity')
+    ).order_by('-views_count')[:10]
+
+    conversion_data = []
+    for p in top_products:
+        purchases = p.purchases or 0
+        views = p.views_count
+        conversion = (purchases / views * 100) if views > 0 else 0
+        conversion_data.append({
+            'name': p.name,
+            'views': views,
+            'purchases': purchases,
+            'conversion': round(conversion, 2)
+        })
+
+    return JsonResponse({
+        'sales_by_day': list(sales_by_day),
+        'popular_sizes': list(popular_sizes),
+        'conversion_data': conversion_data
+    })
