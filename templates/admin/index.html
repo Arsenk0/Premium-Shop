@@ -1,0 +1,231 @@
+{% extends "admin/index.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-charts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .chart-card {
+            flex: 1 1 300px;
+            padding: 15px;
+        }
+
+        .chart-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            letter-spacing: 0.5px;
+        }
+        
+        canvas {
+            width: 100% !important;
+            height: 250px !important;
+        }
+
+        /* Recent Actions Flexbox Alignment */
+        .timeline::before {
+            display: none !important; /* Hide the vertical line completely */
+        }
+        
+        .timeline > div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .timeline > div::before, .timeline > div::after {
+            display: none !important; /* Remove bootstrap clearfix which breaks flex */
+        }
+        
+        .timeline > div > i {
+            position: static !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            font-size: 18px !important;
+            width: auto !important;
+            height: auto !important;
+            line-height: 1 !important;
+            margin-right: 15px;
+        }
+        
+        /* Re-color the transparent icons based on their original background classes */
+        .timeline > div > i.bg-gray { color: #adb5bd !important; }
+        .timeline > div > i.bg-success { color: #20c997 !important; }
+        .timeline > div > i.bg-danger { color: #dc3545 !important; }
+        .timeline > div > i.bg-info { color: #0dcaf0 !important; }
+        .timeline > div > i.bg-primary { color: #0d6efd !important; }
+        .timeline > div > i.bg-warning { color: #ffc107 !important; }
+
+        .timeline > div > .timeline-item {
+            flex: 1;
+            margin: 0 !important;
+            background: var(--bs-card-bg, #2b2b2b);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-item .timeline-header {
+            margin: 0;
+            color: var(--bs-body-color, #f8f9fa);
+            border-bottom: 1px solid rgba(0,0,0,.125);
+            padding: 10px 15px;
+            font-size: 15px;
+            line-height: 1.1;
+        }
+        
+        body[data-bs-theme="dark"] .timeline-item .timeline-header {
+            border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+        
+        .timeline-item .timeline-body {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+        
+        .timeline-item .time {
+            color: #999;
+            float: right;
+            padding: 10px 15px;
+            font-size: 12px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-chart-line mr-2"></i> Analytics Dashboard</h3>
+            </div>
+            <div class="card-body">
+                <div class="dashboard-charts">
+                    <div class="chart-card">
+                        <div class="chart-title">Sales by Day of Week</div>
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">Popular Sizes</div>
+                        <canvas id="sizesChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">Conversion: Views / Purchases</div>
+                        <canvas id="conversionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartColors = {
+                primary: 'rgba(54, 162, 235, 0.7)',
+                primaryBorder: 'rgba(54, 162, 235, 1)',
+                secondary: 'rgba(255, 159, 64, 0.7)',
+                tertiary: 'rgba(75, 192, 192, 0.7)',
+                palette: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(153, 102, 255, 0.8)',
+                    'rgba(255, 159, 64, 0.8)'
+                ]
+            };
+
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const textColor = isDarkMode ? '#e0e0e0' : '#666';
+            
+            Chart.defaults.color = textColor;
+            Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+
+            fetch('{% url "store:admin_analytics_data" %}')
+                .then(response => {
+                    if (!response.ok) {
+                        return fetch('/admin-analytics/');
+                    }
+                    return response;
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // 1. Sales by day
+                    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                    const salesData = new Array(7).fill(0);
+                    data.sales_by_day.forEach(item => {
+                        salesData[item.weekday - 1] = item.count;
+                    });
+                    
+                    new Chart(document.getElementById('salesChart'), {
+                        type: 'bar',
+                        data: {
+                            labels: days,
+                            datasets: [{
+                                label: 'Orders',
+                                data: salesData,
+                                backgroundColor: chartColors.primary,
+                                borderColor: chartColors.primaryBorder,
+                                borderWidth: 1,
+                                borderRadius: 6
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                        }
+                    });
+
+                    // 2. Popular sizes
+                    new Chart(document.getElementById('sizesChart'), {
+                        type: 'doughnut',
+                        data: {
+                            labels: data.popular_sizes.map(i => i.size),
+                            datasets: [{
+                                data: data.popular_sizes.map(i => i.count),
+                                backgroundColor: chartColors.palette,
+                                borderWidth: 0,
+                                hoverOffset: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { position: 'right' } },
+                            cutout: '65%'
+                        }
+                    });
+
+                    // 3. Conversion
+                    new Chart(document.getElementById('conversionChart'), {
+                        type: 'bar',
+                        data: {
+                            labels: data.conversion_data.map(i => i.name.length > 15 ? i.name.substring(0, 15) + '...' : i.name),
+                            datasets: [
+                                { label: 'Views', data: data.conversion_data.map(i => i.views), backgroundColor: chartColors.primary, borderRadius: 6 },
+                                { label: 'Purchases', data: data.conversion_data.map(i => i.purchases), backgroundColor: chartColors.tertiary, borderRadius: 6 }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            interaction: { mode: 'index', intersect: false },
+                            scales: { y: { beginAtZero: true } }
+                        }
+                    });
+                })
+                .catch(err => console.error('Error fetching analytics data:', err));
+        });
+    </script>
+    
+    <!-- Render the Jazzmin standard dashboard below our analytics -->
+    {{ block.super }}
+{% endblock %}
