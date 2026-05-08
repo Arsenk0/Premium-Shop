@@ -1,0 +1,499 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Telegram — Premium Shop{% endblock %}
+
+{% block content %}
+<div class="container fade-in premium-dashboard">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+        <h1 style="margin: 0;">Telegram <i class="fab fa-telegram"></i></h1>
+        <p style="color: var(--text-muted); margin: 0;">Прив'яжіть Telegram для отримання сповіщень про замовлення та керування акаунтом прямо в месенджері.</p>
+        <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">
+            <i class="fas fa-arrow-left"></i> Назад до кабінету
+        </a>
+    </div>
+
+    {% if messages %}
+    <div style="max-width: 680px; margin: 0 auto 2rem;">
+        {% for message in messages %}
+        <div class="tg-alert tg-alert--{{ message.tags }}">
+            {% if message.tags == 'success' %}<i class="fas fa-check-circle"></i>{% else %}<i class="fas fa-info-circle"></i>{% endif %}
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="tg-wrapper">
+        {% if profile.telegram_chat_id %}
+        <!-- === LINKED STATE === -->
+        <div class="tg-card tg-card--linked">
+            <div class="tg-card__icon">
+                <div class="tg-icon-circle tg-icon-circle--green">
+                    <i class="fab fa-telegram"></i>
+                </div>
+            </div>
+            <div class="tg-card__body">
+                <div class="tg-badge tg-badge--success">
+                    <i class="fas fa-check-circle"></i> Прив'язано
+                </div>
+                <h2 class="tg-card__title">Telegram під'єднано!</h2>
+                <p class="tg-card__desc">
+                    Ваш акаунт успішно прив'язано до Telegram. Ви будете отримувати сповіщення 
+                    про зміну статусів замовлень прямо у месенджері.
+                </p>
+
+                <div class="tg-features">
+                    <div class="tg-feature-item">
+                        <i class="fas fa-bell"></i>
+                        <span>Сповіщення про статуси замовлень</span>
+                    </div>
+                    <div class="tg-feature-item">
+                        <i class="fas fa-box"></i>
+                        <span>Перегляд замовлень через /orders</span>
+                    </div>
+                    <div class="tg-feature-item">
+                        <i class="fas fa-coins"></i>
+                        <span>Баланс балів через /loyalty</span>
+                    </div>
+                    <div class="tg-feature-item">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Генерація промокодів через /promo</span>
+                    </div>
+                </div>
+
+                {% if bot_username %}
+                <a href="https://t.me/{{ bot_username }}" target="_blank" class="btn btn-primary hover-scale" style="margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.6rem;">
+                    <i class="fab fa-telegram"></i> Відкрити бота
+                </a>
+                {% endif %}
+
+                <form method="post" action="{% url 'store:telegram_unlink' %}" style="margin-top: 1rem;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline hover-scale tg-unlink-btn"
+                        onclick="return confirm('Ви впевнені, що хочете від\'єднати Telegram?')">
+                        <i class="fas fa-unlink"></i> Від'єднати Telegram
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        {% else %}
+        <!-- === UNLINKED STATE === -->
+        <div class="tg-layout">
+            <!-- Left: Instructions -->
+            <div class="tg-card tg-card--how">
+                <div class="tg-card__icon">
+                    <div class="tg-icon-circle tg-icon-circle--blue">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                </div>
+                <h2 class="tg-card__title">Як прив'язати Telegram?</h2>
+
+                <div class="tg-steps">
+                    <div class="tg-step">
+                        <div class="tg-step__num">1</div>
+                        <div class="tg-step__text">
+                            {% if bot_username %}
+                            Відкрийте бота <a href="https://t.me/{{ bot_username }}" target="_blank" class="tg-link">@{{ bot_username }}</a> у Telegram
+                            {% else %}
+                            Знайдіть нашого бота у Telegram
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="tg-step">
+                        <div class="tg-step__num">2</div>
+                        <div class="tg-step__text">Відправте боту команду <code>/start</code></div>
+                    </div>
+                    <div class="tg-step">
+                        <div class="tg-step__num">3</div>
+                        <div class="tg-step__text">Натисніть кнопку <strong>«Ввести код прив'язки»</strong></div>
+                    </div>
+                    <div class="tg-step">
+                        <div class="tg-step__num">4</div>
+                        <div class="tg-step__text">Отримайте код нижче і введіть його в боті. Код дійсний <strong>10 хвилин</strong>.</div>
+                    </div>
+                </div>
+
+                {% if bot_username %}
+                <a href="https://t.me/{{ bot_username }}" target="_blank" class="btn btn-outline hover-scale" style="margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.6rem;">
+                    <i class="fab fa-telegram"></i> Відкрити бота @{{ bot_username }}
+                </a>
+                {% endif %}
+            </div>
+
+            <!-- Right: OTP card -->
+            <div class="tg-card tg-card--otp">
+                <div class="tg-card__icon">
+                    <div class="tg-icon-circle tg-icon-circle--purple">
+                        <i class="fas fa-key"></i>
+                    </div>
+                </div>
+                <h2 class="tg-card__title">Ваш код прив'язки</h2>
+
+                {% if profile.telegram_link_token %}
+                <div class="tg-otp-display">
+                    <div class="tg-otp-code" id="otp-code">{{ profile.telegram_link_token }}</div>
+                    <button class="tg-copy-btn" onclick="copyOtp()" title="Скопіювати">
+                        <i class="fas fa-copy" id="copy-icon"></i>
+                    </button>
+                </div>
+                <p class="tg-otp-hint">
+                    <i class="fas fa-clock"></i> Код дійсний 10 хвилин
+                </p>
+                {% else %}
+                <div class="tg-otp-placeholder">
+                    <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+                    <p style="color: var(--text-muted); margin: 0 0 1.5rem;">Натисніть кнопку, щоб отримати одноразовий код</p>
+                </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-lg hover-scale" style="width: 100%;">
+                        {% if profile.telegram_link_token %}
+                        <i class="fas fa-sync-alt"></i> Оновити код
+                        {% else %}
+                        <i class="fas fa-key"></i> Отримати код
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Features banner -->
+        <div class="tg-features-banner">
+            <div class="tg-features-banner__title">
+                <i class="fas fa-star"></i> Що дає прив'язка Telegram?
+            </div>
+            <div class="tg-features-grid">
+                <div class="tg-feature-card">
+                    <i class="fas fa-bell"></i>
+                    <strong>Сповіщення</strong>
+                    <span>Миттєві повідомлення про зміну статусу замовлення</span>
+                </div>
+                <div class="tg-feature-card">
+                    <i class="fas fa-box"></i>
+                    <strong>Замовлення</strong>
+                    <span>Перегляд усіх замовлень через /orders</span>
+                </div>
+                <div class="tg-feature-card">
+                    <i class="fas fa-coins"></i>
+                    <strong>Бонуси</strong>
+                    <span>Баланс балів і прогрес до наступного рівня</span>
+                </div>
+                <div class="tg-feature-card">
+                    <i class="fas fa-ticket-alt"></i>
+                    <strong>Промокоди</strong>
+                    <span>Генерація промокодів з балів прямо в боті</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .tg-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* Alert */
+    .tg-alert {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.5rem;
+        border-radius: 14px;
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+    .tg-alert--success {
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        color: #22c55e;
+    }
+    .tg-alert--info {
+        background: rgba(99, 102, 241, 0.12);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        color: #818cf8;
+    }
+
+    /* Cards */
+    .tg-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+        padding: 2.5rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .tg-card--linked {
+        display: flex;
+        gap: 2.5rem;
+        align-items: flex-start;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        background: linear-gradient(135deg, var(--card-bg) 0%, rgba(34, 197, 94, 0.04) 100%);
+    }
+
+    .tg-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 700px) {
+        .tg-layout { grid-template-columns: 1fr; }
+        .tg-card--linked { flex-direction: column; align-items: center; text-align: center; }
+    }
+
+    .tg-card__icon {
+        flex-shrink: 0;
+    }
+
+    .tg-icon-circle {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+    .tg-icon-circle--green { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+    .tg-icon-circle--blue  { background: rgba(37, 160, 234, 0.15); color: #25A0EA; }
+    .tg-icon-circle--purple{ background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+
+    .tg-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0.3rem 0.9rem;
+        border-radius: 100px;
+        margin-bottom: 0.8rem;
+    }
+    .tg-badge--success {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+    }
+
+    .tg-card__title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 0 0 0.75rem;
+    }
+
+    .tg-card__desc {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin: 0 0 1.5rem;
+    }
+
+    .tg-card__body {
+        flex: 1;
+    }
+
+    /* Features list (linked) */
+    .tg-features {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    .tg-feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+    .tg-feature-item i {
+        color: var(--primary);
+        width: 18px;
+        text-align: center;
+    }
+
+    /* Unlink button */
+    .tg-unlink-btn {
+        font-size: 0.85rem;
+        padding: 0.5rem 1.2rem;
+        color: #ef4444;
+        border-color: rgba(239, 68, 68, 0.3);
+    }
+    .tg-unlink-btn:hover {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: #ef4444;
+    }
+
+    /* Steps */
+    .tg-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+    .tg-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .tg-step__num {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .tg-step__text {
+        padding-top: 0.35rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+    .tg-step__text code {
+        background: var(--card-bg-alt);
+        padding: 0.1rem 0.4rem;
+        border-radius: 6px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.85rem;
+    }
+    .tg-link {
+        color: #25A0EA;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .tg-link:hover { text-decoration: underline; }
+
+    /* OTP Display */
+    .tg-otp-display {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1.5rem 0 0.5rem;
+    }
+    .tg-otp-code {
+        font-size: 2.8rem;
+        font-weight: 900;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.4rem;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        user-select: all;
+    }
+    .tg-copy-btn {
+        background: var(--card-bg-alt);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 0.5rem 0.75rem;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: all 0.2s;
+        font-size: 1rem;
+    }
+    .tg-copy-btn:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+    }
+    .tg-otp-hint {
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+    }
+    .tg-otp-placeholder {
+        text-align: center;
+        padding: 1.5rem 0;
+    }
+
+    /* Features banner */
+    .tg-features-banner {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+        padding: 2rem;
+    }
+    .tg-features-banner__title {
+        font-weight: 700;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+    }
+    .tg-features-banner__title i { color: var(--primary); margin-right: 0.4rem; }
+    .tg-features-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+    @media (max-width: 700px) {
+        .tg-features-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .tg-feature-card {
+        background: var(--card-bg-alt);
+        border-radius: 16px;
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        transition: transform 0.2s;
+    }
+    .tg-feature-card:hover { transform: translateY(-3px); }
+    .tg-feature-card i {
+        font-size: 1.4rem;
+        color: var(--primary);
+    }
+    .tg-feature-card strong {
+        font-size: 0.9rem;
+    }
+    .tg-feature-card span {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+
+    .btn-lg {
+        padding: 0.9rem 2rem;
+        font-size: 1rem;
+    }
+</style>
+
+<script>
+function copyOtp() {
+    const code = document.getElementById('otp-code');
+    if (!code) return;
+    const text = code.textContent.trim();
+
+    navigator.clipboard.writeText(text).then(() => {
+        const icon = document.getElementById('copy-icon');
+        if (icon) {
+            icon.className = 'fas fa-check';
+            setTimeout(() => { icon.className = 'fas fa-copy'; }, 2000);
+        }
+    }).catch(() => {
+        // Fallback
+        const range = document.createRange();
+        range.selectNode(code);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+    });
+}
+</script>
+{% endblock %}

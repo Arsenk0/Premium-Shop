@@ -66,6 +66,19 @@
                 <span class="stat-value">{{ stats.reviews_count }}</span>
             </div>
         </a>
+        <a href="{% url 'store:telegram_link' %}" class="stat-card">
+            <div class="stat-icon"><i class="fab fa-telegram" style="color: #25A0EA;"></i></div>
+            <div class="stat-content">
+                <span class="stat-label">Telegram</span>
+                <span class="stat-value" style="font-size: 1rem;">
+                    {% if request.user.profile.telegram_chat_id %}
+                    <span style="color: #22c55e; font-size: 0.9rem; font-weight: 700;">✓ Прив'язано</span>
+                    {% else %}
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">Прив'язати</span>
+                    {% endif %}
+                </span>
+            </div>
+        </a>
     </div>
 
     <!-- Loyalty Widget -->

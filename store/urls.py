@@ -19,6 +19,8 @@ urlpatterns = [
     path('profile/spending/', views.spending_stats, name='spending_stats'),
     path('profile/spending/export/', views.spending_export_csv, name='spending_export'),
     path('profile/convert-points/', views.convert_points, name='convert_points'),
+    path('profile/telegram/', views.telegram_link, name='telegram_link'),
+    path('profile/telegram/unlink/', views.telegram_unlink, name='telegram_unlink'),
 
     # Cart
     path('cart/add/<int:product_id>/', views.cart_add, name='cart_add'),
