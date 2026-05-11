@@ -18,7 +18,7 @@ async def orders_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     profile = await _get_profile(chat_id)
 
     if not profile:
-        await update.message.reply_html(msg.NOT_LINKED)
+        await update.message.reply_html(str(msg.NOT_LINKED))
         return
 
     await _send_orders_list(update, context, profile, use_edit=False)
@@ -30,7 +30,7 @@ async def order_detail_command(update: Update, context: ContextTypes.DEFAULT_TYP
     profile = await _get_profile(chat_id)
 
     if not profile:
-        await update.message.reply_html(msg.NOT_LINKED)
+        await update.message.reply_html(str(msg.NOT_LINKED))
         return
 
     if not context.args:
@@ -54,7 +54,7 @@ async def orders_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     profile = await _get_profile(chat_id)
 
     if not profile:
-        await query.edit_message_text(msg.NOT_LINKED, parse_mode='HTML')
+        await query.edit_message_text(str(msg.NOT_LINKED), parse_mode='HTML')
         return
 
     await _send_orders_list(update, context, profile, use_edit=True)
@@ -70,7 +70,7 @@ async def order_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     profile = await _get_profile(chat_id)
 
     if not profile:
-        await query.edit_message_text(msg.NOT_LINKED, parse_mode='HTML')
+        await query.edit_message_text(str(msg.NOT_LINKED), parse_mode='HTML')
         return
 
     await _send_order_detail(update, context, profile, order_id, use_edit=True)
@@ -107,7 +107,7 @@ async def _send_orders_list(update, context, profile, use_edit: bool):
     orders = await _fetch_orders(profile.user)
 
     if not orders:
-        text = msg.NO_ORDERS
+        text = str(msg.NO_ORDERS)
         keyboard = get_main_menu_keyboard()
         if use_edit:
             await update.callback_query.edit_message_text(text, parse_mode='HTML', reply_markup=keyboard)
@@ -115,12 +115,12 @@ async def _send_orders_list(update, context, profile, use_edit: bool):
             await update.message.reply_html(text, reply_markup=keyboard)
         return
 
-    text = msg.ORDER_LIST_HEADER
+    text = str(msg.ORDER_LIST_HEADER)
     for order in orders:
         icon = msg.ORDER_STATUS_ICONS.get(order['status'], '📦')
         status_name = msg.ORDER_STATUS_NAMES.get(order['status'], order['status'])
         total = await _get_total(order['id'])
-        text += msg.ORDER_LIST_ITEM.format(
+        text += str(msg.ORDER_LIST_ITEM).format(
             icon=icon,
             order_id=order['id'],
             status=status_name,
@@ -151,7 +151,7 @@ async def _send_order_detail(update, context, profile, order_id: int, use_edit: 
     order = await _fetch_order(profile.user, order_id)
 
     if not order:
-        text = msg.ORDER_NOT_FOUND.format(order_id=order_id)
+        text = str(msg.ORDER_NOT_FOUND).format(order_id=order_id)
         keyboard = get_orders_keyboard([])
         if use_edit:
             await update.callback_query.edit_message_text(text, parse_mode='HTML', reply_markup=keyboard)
@@ -166,14 +166,14 @@ async def _send_order_detail(update, context, profile, order_id: int, use_edit: 
     items_text = ""
     for item in order.items.all():
         size_str = f" ({item.size})" if item.size else ""
-        items_text += msg.ORDER_ITEM_LINE.format(
+        items_text += str(msg.ORDER_ITEM_LINE).format(
             name=item.product.name,
             size=size_str,
             qty=item.quantity,
             price=item.price * item.quantity,
         )
 
-    text = msg.ORDER_DETAIL.format(
+    text = str(msg.ORDER_DETAIL).format(
         order_id=order.id,
         icon=icon,
         status=status_name,

@@ -182,7 +182,7 @@ def send_telegram_notification_sync(order_id):
             status=status_name,
             total=total_str,
             updated=local_updated.strftime('%d.%m.%Y %H:%M'),
-            extra_message=extra,
+            extra_message=str(extra),
         )
 
     import asyncio
