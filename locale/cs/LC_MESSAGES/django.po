@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 12:08+0300\n"
+"POT-Creation-Date: 2026-05-11 13:02+0300\n"
 "Language: \n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -369,7 +369,7 @@ msgstr "Datum"
 msgid "Відгук"
 msgstr "Recenze"
 
-#: store/models.py:186 templates/includes/footer.html:14
+#: store/models.py:186 templates/includes/footer.html:24
 #: templates/includes/navbar.html:8 templates/store/accounts/profile.html:65
 msgid "Відгуки"
 msgstr "Recenze"
@@ -382,8 +382,7 @@ msgstr "Recenze od"
 msgid "на"
 msgstr "na"
 
-#: store/models.py:203 templates/includes/navbar.html:51
-#: templates/store/wishlist.html:4
+#: store/models.py:203 templates/store/wishlist.html:4
 msgid "Список бажань"
 msgstr "Seznam přání"
 
@@ -997,7 +996,7 @@ msgstr "Sledovat objednávku"
 
 #: templates/emails/order_confirmation.html:191
 #: templates/emails/order_status_update.html:108
-#: templates/emails/welcome.html:143 templates/includes/footer.html:30
+#: templates/emails/welcome.html:143 templates/includes/footer.html:64
 msgid "Всі права захищені."
 msgstr "Všechna práva vyhrazena."
 
@@ -1076,20 +1075,49 @@ msgstr ""
 "Nejlepší prémiové oblečení a tenisky na Ukrajině. Pouze originální kvalita a "
 "prémiový servis."
 
-#: templates/includes/footer.html:11
-msgid "Навігація"
-msgstr "Navigace"
+#: templates/includes/footer.html:10
+msgid "Підпишіться на новини"
+msgstr "Přihlaste se k odběru novinek"
 
-#: templates/includes/footer.html:13 templates/includes/navbar.html:7
+#: templates/includes/footer.html:20
+msgid "Магазин"
+msgstr "Obchod"
+
+#: templates/includes/footer.html:22
+msgid "Каталог"
+msgstr "Katalog"
+
+#: templates/includes/footer.html:23 templates/includes/navbar.html:7
 msgid "Про нас"
 msgstr "O nás"
 
-#: templates/includes/footer.html:15 templates/includes/navbar.html:9
+#: templates/includes/footer.html:25 templates/includes/footer.html:41
+#: templates/includes/navbar.html:9
 msgid "Контакти"
 msgstr "Kontakty"
 
-#: templates/includes/footer.html:19
-msgid "Соцмережі"
+#: templates/includes/footer.html:30
+msgid "Допомога"
+msgstr "Pomoc"
+
+#: templates/includes/footer.html:32
+msgid "Доставка та оплата"
+msgstr "Doprava a platba"
+
+#: templates/includes/footer.html:33
+msgid "Повернення"
+msgstr "Vrácení zboží"
+
+#: templates/includes/footer.html:34
+msgid "FAQ"
+msgstr "FAQ"
+
+#: templates/includes/footer.html:35
+msgid "Політика конфіденційності"
+msgstr "Zásady ochrany osobních údajů"
+
+#: templates/includes/footer.html:51 templates/store/contact.html:23
+msgid "Ми в соцмережах"
 msgstr "Sociální sítě"
 
 #: templates/includes/modals.html:11 templates/registration/login.html:44
@@ -1325,7 +1353,9 @@ msgstr "Úspěšně!"
 msgid ""
 "Ваш пароль було успішно змінено. Тепер ви можете використовувати новий "
 "пароль для входу."
-msgstr "Vaše heslo bylo úspěšně změněno. Nyní můžete k přihlášení používat nové heslo."
+msgstr ""
+"Vaše heslo bylo úspěšně změněno. Nyní můžete k přihlášení používat nové "
+"heslo."
 
 #: templates/store/accounts/password_change_done.html:12
 msgid "До кабінету"
@@ -1605,7 +1635,9 @@ msgid "Відкрити бота"
 msgstr "Otevřít bota"
 
 #: templates/store/accounts/telegram.html:73
-msgid "Ви впевнені, що хочете від'єднати Telegram?"
+#, fuzzy
+#| msgid "Ви впевнені, що хочете від'єднати Telegram?"
+msgid "Ви впевнені, що хочете від\\'єднати Telegram?"
 msgstr "Opravdu chcete odpojit Telegram?"
 
 #: templates/store/accounts/telegram.html:74
@@ -1796,10 +1828,6 @@ msgstr "NÁS"
 #: templates/store/contact.html:12
 msgid "Ми завжди на зв'язку — оберіть зручний спосіб."
 msgstr "Jsme tu vždy pro vás:"
-
-#: templates/store/contact.html:23
-msgid "Ми в соцмережах"
-msgstr "Sociální sítě"
 
 #: templates/store/contact.html:24
 msgid "Ми завжди на зв'язку тут:"
@@ -2197,3 +2225,9 @@ msgstr "Váš seznam přání je prázdný"
 #: templates/store/wishlist.html:51
 msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
 msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."
+
+#~ msgid "Навігація"
+#~ msgstr "Navigace"
+
+#~ msgid "Соцмережі"
+#~ msgstr "Sociální sítě"

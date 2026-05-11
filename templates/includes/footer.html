@@ -6,28 +6,64 @@
             <p class="footer-description">
                 {% trans "Найкращий преміум одяг та кросівки в Україні. Тільки оригінальна якість та преміальний сервіс." %}
             </p>
+            <div class="footer-newsletter">
+                <h4 class="footer-heading-small">{% trans "Підпишіться на новини" %}</h4>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Email" required>
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
         </div>
-        <div class="footer-nav">
-            <h4 class="footer-heading">{% trans "Навігація" %}</h4>
-            <ul class="footer-nav-list">
-                <li class="footer-nav-item"><a href="{% url 'store:about' %}" class="footer-link link-underline">{% trans "Про нас" %}</a></li>
-                <li class="footer-nav-item"><a href="{% url 'store:reviews_page' %}" class="footer-link link-underline">{% trans "Відгуки" %}</a></li>
-                <li class="footer-nav-item"><a href="{% url 'store:contact' %}" class="footer-link link-underline">{% trans "Контакти" %}</a></li>
-            </ul>
+
+        <div class="footer-nav-group">
+            <div class="footer-nav-col">
+                <h4 class="footer-heading">{% trans "Магазин" %}</h4>
+                <ul class="footer-nav-list">
+                    <li><a href="{% url 'store:product_list' %}" class="footer-link link-underline">{% trans "Каталог" %}</a></li>
+                    <li><a href="{% url 'store:about' %}" class="footer-link link-underline">{% trans "Про нас" %}</a></li>
+                    <li><a href="{% url 'store:reviews_page' %}" class="footer-link link-underline">{% trans "Відгуки" %}</a></li>
+                    <li><a href="{% url 'store:contact' %}" class="footer-link link-underline">{% trans "Контакти" %}</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-nav-col">
+                <h4 class="footer-heading">{% trans "Допомога" %}</h4>
+                <ul class="footer-nav-list">
+                    <li><a href="#" class="footer-link link-underline">{% trans "Доставка та оплата" %}</a></li>
+                    <li><a href="#" class="footer-link link-underline">{% trans "Повернення" %}</a></li>
+                    <li><a href="#" class="footer-link link-underline">{% trans "FAQ" %}</a></li>
+                    <li><a href="#" class="footer-link link-underline">{% trans "Політика конфіденційності" %}</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="footer-social">
-            <h4 class="footer-heading">{% trans "Соцмережі" %}</h4>
-            <div class="footer-socials">
-                <a href="#" class="social-icon instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-icon telegram" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-                <a href="#" class="social-icon tiktok" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="#" class="social-icon whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+        <div class="footer-contact">
+            <h4 class="footer-heading">{% trans "Контакти" %}</h4>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:info@premium-shop.com.ua" class="link-underline">info@premium-shop.com.ua</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <a href="tel:+380999999999" class="link-underline">+38 (099) 999-99-99</a>
+            </div>
+            <div class="footer-social-box">
+                <h4 class="footer-heading-small">{% trans "Ми в соцмережах" %}</h4>
+                <div class="footer-socials">
+                    <a href="#" class="social-icon instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon telegram" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-icon tiktok" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" class="social-icon whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="footer-bottom">
-        <div class="container">
-            &copy; 2026 Premium Shop. {% trans "Всі права захищені." %}
+        <div class="footer-bottom-content">
+            <div class="copyright">
+                &copy; 2026 Premium Shop. {% trans "Всі права захищені." %}
+            </div>
         </div>
     </div>
 </footer>
