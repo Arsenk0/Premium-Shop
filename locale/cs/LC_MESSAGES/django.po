@@ -1299,7 +1299,7 @@ msgstr "O"
 
 #: templates/store/about.html:12
 msgid "A team of premium fashion enthusiasts dedicated to quality and style."
-msgstr ""
+msgstr "Tým nadšenců do prémiové módy, který se věnuje kvalitě a stylu."
 
 #: templates/store/about.html:14 templates/store/contact.html:14
 #: templates/store/reviews.html:14
