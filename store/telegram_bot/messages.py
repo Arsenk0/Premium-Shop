@@ -1,10 +1,11 @@
+from django.utils.translation import gettext_lazy as _
+
 """
 Telegram message text templates for Premium Shop Bot.
-All messages are in Ukrainian.
 """
 
 # ─── Common ───────────────────────────────────────────────────────────────────
-WELCOME_UNLINKED = (
+WELCOME_UNLINKED = _(
     "👋 Вітаємо в боті <b>Premium Shop</b>!\n\n"
     "Тут ви можете:\n"
     "📦 Переглядати свої замовлення\n"
@@ -14,7 +15,7 @@ WELCOME_UNLINKED = (
     "Натисніть кнопку нижче та введіть отриманий код:"
 )
 
-WELCOME_LINKED = (
+WELCOME_LINKED = _(
     "👋 З поверненням, <b>{username}</b>!\n\n"
     "Ваш акаунт прив'язано ✅\n\n"
     "Доступні команди:\n"
@@ -24,7 +25,7 @@ WELCOME_LINKED = (
     "/help — допомога"
 )
 
-HELP_TEXT = (
+HELP_TEXT = _(
     "🛍 <b>Premium Shop Bot — Команди</b>\n\n"
     "/orders — переглянути останні замовлення\n"
     "/order <i>ID</i> — деталі замовлення\n"
@@ -35,44 +36,44 @@ HELP_TEXT = (
     "💬 <i>Потрібна допомога? Напишіть нам на сайті.</i>"
 )
 
-NOT_LINKED = (
+NOT_LINKED = _(
     "❌ Ваш Telegram не прив'язаний до жодного акаунта.\n\n"
     "Зайдіть на сайт → Кабінет → Telegram і отримайте код."
 )
 
 # ─── Auth ─────────────────────────────────────────────────────────────────────
-ENTER_OTP = (
+ENTER_OTP = _(
     "🔐 Введіть 6-значний код, який ви отримали на сайті\n"
     "у розділі <b>Кабінет → Telegram</b>:"
 )
 
-LINK_SUCCESS = (
+LINK_SUCCESS = _(
     "✅ <b>Акаунт успішно прив'язано!</b>\n\n"
     "Вітаємо, <b>{username}</b>! 🎉\n"
     "Тепер ви будете отримувати сповіщення про ваші замовлення прямо тут.\n\n"
     "/help — список команд"
 )
 
-LINK_INVALID_TOKEN = (
+LINK_INVALID_TOKEN = _(
     "❌ Невірний або застарілий код. Спробуйте ще раз.\n\n"
     "Отримайте новий код на сайті у розділі <b>Кабінет → Telegram</b>."
 )
 
-ALREADY_LINKED = (
+ALREADY_LINKED = _(
     "ℹ️ Ваш Telegram вже прив'язано до акаунта <b>{username}</b>.\n\n"
     "Щоб від'єднати — використайте /unlink"
 )
 
-UNLINK_CONFIRM = (
+UNLINK_CONFIRM = _(
     "⚠️ Ви впевнені, що хочете від'єднати Telegram від акаунта <b>{username}</b>?\n\n"
     "Ви більше не будете отримувати сповіщення про замовлення."
 )
 
-UNLINK_SUCCESS = "✅ Акаунт від'єднано. Щоб прив'язати знову — зайдіть на сайт."
-UNLINK_CANCELLED = "↩️ Від'єднання скасовано."
+UNLINK_SUCCESS = _("✅ Акаунт від'єднано. Щоб прив'язати знову — зайдіть на сайт.")
+UNLINK_CANCELLED = _("↩️ Від'єднання скасовано.")
 
 # ─── Orders ───────────────────────────────────────────────────────────────────
-NO_ORDERS = "📭 У вас ще немає замовлень."
+NO_ORDERS = _("📭 У вас ще немає замовлень.")
 
 ORDER_STATUS_ICONS = {
     'New': '🆕',
@@ -83,23 +84,23 @@ ORDER_STATUS_ICONS = {
 }
 
 ORDER_STATUS_NAMES = {
-    'New': 'Нове',
-    'Processing': 'В обробці',
-    'Shipped': 'Відправлено',
-    'Completed': 'Виконано',
-    'Canceled': 'Скасовано',
+    'New': _('Нове'),
+    'Processing': _('В обробці'),
+    'Shipped': _('Відправлено'),
+    'Completed': _('Виконано'),
+    'Canceled': _('Скасовано'),
 }
 
-ORDER_LIST_HEADER = "📦 <b>Ваші останні замовлення:</b>\n\n"
+ORDER_LIST_HEADER = _("📦 <b>Ваші останні замовлення:</b>\n\n")
 
-ORDER_LIST_ITEM = (
+ORDER_LIST_ITEM = _(
     "{icon} <b>Замовлення #{order_id}</b>\n"
     "   Статус: {status}\n"
     "   Сума: {total} грн\n"
     "   Дата: {date}\n"
 )
 
-ORDER_DETAIL = (
+ORDER_DETAIL = _(
     "📦 <b>Замовлення #{order_id}</b>\n\n"
     "{icon} Статус: <b>{status}</b>\n"
     "💰 Сума: <b>{total} грн</b>\n"
@@ -108,12 +109,12 @@ ORDER_DETAIL = (
     "<b>Товари:</b>\n{items}"
 )
 
-ORDER_ITEM_LINE = "  • {name}{size} × {qty} — {price} грн\n"
+ORDER_ITEM_LINE = _("  • {name}{size} × {qty} — {price} грн\n")
 
-ORDER_NOT_FOUND = "❌ Замовлення #{order_id} не знайдено або не належить вашому акаунту."
+ORDER_NOT_FOUND = _("❌ Замовлення #{order_id} не знайдено або не належить вашому акаунту.")
 
 # ─── Loyalty ──────────────────────────────────────────────────────────────────
-LOYALTY_INFO = (
+LOYALTY_INFO = _(
     "🎁 <b>Ваші бонусні бали</b>\n\n"
     "💎 Поточний баланс: <b>{points} балів</b>\n"
     "🏆 Рівень: <b>{tier}</b>\n"
@@ -122,25 +123,25 @@ LOYALTY_INFO = (
     "💡 /promo — отримати промокод за бали"
 )
 
-LOYALTY_TIER_BRONZE = "🥉 Бронзовий (до 250 балів)"
-LOYALTY_TIER_SILVER = "🥈 Срібний (250–600 балів)"
-LOYALTY_TIER_GOLD = "🥇 Золотий (600+ балів)"
+LOYALTY_TIER_BRONZE = _("🥉 Бронзовий (до 250 балів)")
+LOYALTY_TIER_SILVER = _("🥈 Срібний (250–600 балів)")
+LOYALTY_TIER_GOLD = _("🥇 Золотий (600+ балів)")
 
-PROMO_NOT_ENOUGH = (
+PROMO_NOT_ENOUGH = _(
     "❌ Недостатньо балів для генерації промокоду.\n\n"
     "Вам потрібно мінімум <b>250 балів</b> для знижки 5%\n"
     "або <b>600 балів</b> для знижки 10%.\n\n"
     "Поточний баланс: <b>{points} балів</b>"
 )
 
-PROMO_CHOOSE_TIER = (
+PROMO_CHOOSE_TIER = _(
     "🎟 <b>Оберіть варіант промокоду:</b>\n\n"
     "🥈 250 балів → знижка 5%\n"
     "🥇 600 балів → знижка 10%\n\n"
     "Поточний баланс: <b>{points} балів</b>"
 )
 
-PROMO_GENERATED = (
+PROMO_GENERATED = _(
     "🎉 <b>Ваш промокод готовий!</b>\n\n"
     "🎟 Код: <code>{code}</code>\n"
     "💸 Знижка: <b>{discount}%</b>\n"
@@ -149,7 +150,7 @@ PROMO_GENERATED = (
 )
 
 # ─── Status Notifications ─────────────────────────────────────────────────────
-STATUS_NOTIFICATION = (
+STATUS_NOTIFICATION = _(
     "🔔 <b>Оновлення замовлення #{order_id}</b>\n\n"
     "{icon} Новий статус: <b>{status}</b>\n"
     "💰 Сума: {total} грн\n"
@@ -158,8 +159,8 @@ STATUS_NOTIFICATION = (
 )
 
 STATUS_EXTRA = {
-    'Processing': "⚙️ Ваше замовлення прийнято в обробку.",
-    'Shipped': "🚚 Ваше замовлення відправлено! Очікуйте доставку.",
-    'Completed': "✅ Замовлення виконано. Дякуємо за покупку! 🛍",
-    'Canceled': "❌ Ваше замовлення скасовано. Зверніться до підтримки.",
+    'Processing': _("⚙️ Ваше замовлення прийнято в обробку."),
+    'Shipped': _("🚚 Ваше замовлення відправлено! Очікуйте доставку."),
+    'Completed': _("✅ Замовлення виконано. Дякуємо за покупку! 🛍"),
+    'Canceled': _("❌ Ваше замовлення скасовано. Зверніться до підтримки."),
 }

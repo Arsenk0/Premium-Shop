@@ -58,7 +58,7 @@ def track_order_status(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Order)
 def notify_order_status_change(sender, instance, created, **kwargs):
-    """Send Telegram notification when order status changes."""
+    """Send Telegram notification when order status changes after transaction commit."""
     if created:
         return  # No notification on creation — email handles confirmation
 
@@ -69,6 +69,21 @@ def notify_order_status_change(sender, instance, created, **kwargs):
     if not instance.user:
         return  # Guest order, no Telegram notification
 
-    # Fire-and-forget via Celery (non-blocking)
-    from store.tasks import send_telegram_status_notification
-    send_telegram_status_notification.delay(instance.id)
+    from store.tasks import send_telegram_notification_sync
+    import logging
+    logger = logging.getLogger(__name__)
+
+    def send_notification():
+        try:
+            # We use a thread to not block the main request, 
+            # but we trigger it only on commit.
+            import threading
+            threading.Thread(
+                target=send_telegram_notification_sync, 
+                args=(instance.id,), 
+                daemon=True
+            ).start()
+        except Exception as exc:
+            logger.error("Error starting notification thread: %s", exc)
+
+    transaction.on_commit(send_notification)
