@@ -109,17 +109,31 @@ def profile(request):
 
     # Loyalty progress calculation
     points = request.user.profile.points
-    if points < 250:
-        next_tier = 250
+    # Loyalty progress calculation (6-tier system)
+    points = request.user.profile.points
+    if points < 200:
+        next_tier = 200
+        discount = 0
+        progress_percent = (points / 200) * 100
+    elif points < 500:
+        next_tier = 500
         discount = 5
-        progress_percent = (points / 250) * 100
-    elif points < 600:
-        next_tier = 600
+        progress_percent = ((points - 200) / (500 - 200)) * 100
+    elif points < 1000:
+        next_tier = 1000
+        discount = 7
+        progress_percent = ((points - 500) / (1000 - 500)) * 100
+    elif points < 2000:
+        next_tier = 2000
         discount = 10
-        progress_percent = ((points - 250) / (600 - 250)) * 100
+        progress_percent = ((points - 1000) / (2000 - 1000)) * 100
+    elif points < 5000:
+        next_tier = 5000
+        discount = 12
+        progress_percent = ((points - 2000) / (5000 - 2000)) * 100
     else:
         next_tier = None
-        discount = 10
+        discount = 15
         progress_percent = 100
 
     return render(request, 'store/accounts/profile.html', {
@@ -709,10 +723,13 @@ def set_preferences(request):
 def convert_points(request):
     tier = request.POST.get('tier')
     
-    # 250 points = 5%, 600 points = 10%
+    # Conversion rules based on tiers
     conversion_rules = {
-        '5': {'points': 250, 'discount': 5},
-        '10': {'points': 600, 'discount': 10},
+        '5': {'points': 200, 'discount': 5},
+        '7': {'points': 500, 'discount': 7},
+        '10': {'points': 1000, 'discount': 10},
+        '12': {'points': 2000, 'discount': 12},
+        '15': {'points': 5000, 'discount': 15},
     }
     
     if tier not in conversion_rules:
