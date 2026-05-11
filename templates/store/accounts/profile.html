@@ -4,7 +4,7 @@
 {% block title %}{% trans "Мій кабінет" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in premium-dashboard" style="max-width: 1200px; padding: 2rem 20px;">
+<div class="container fade-in premium-dashboard" style="padding: 2rem 5%; max-width: none;">
     <!-- Header Section -->
     <div class="dashboard-header">
         <div class="user-info">
@@ -31,13 +31,7 @@
 
     <!-- Stats Grid -->
     <div class="stats-grid">
-        <a href="{% url 'store:loyalty_details' %}" class="stat-card">
-            <div class="stat-icon"><i class="fas fa-gem" style="color: var(--accent);"></i></div>
-            <div class="stat-content">
-                <span class="stat-label">{% trans "Мої бали" %}</span>
-                <span class="stat-value">{{ request.user.profile.points }}</span>
-            </div>
-        </a>
+
         <a href="{% url 'store:order_list' %}" class="stat-card">
             <div class="stat-icon"><i class="fas fa-box" style="color: var(--accent);"></i></div>
             <div class="stat-content">
@@ -72,7 +66,7 @@
                 <span class="stat-label">Telegram</span>
                 <span class="stat-value" style="font-size: 1rem;">
                     {% if request.user.profile.telegram_chat_id %}
-                    <span style="color: #22c55e; font-size: 0.9rem; font-weight: 700;">✓ {% trans "Прив'язано" %}</span>
+                    <span style="color: var(--accent); font-size: 0.9rem; font-weight: 700;">✓ {% trans "Прив'язано" %}</span>
                     {% else %}
                     <span style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Прив'язати" %}</span>
                     {% endif %}

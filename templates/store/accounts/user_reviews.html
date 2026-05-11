@@ -4,14 +4,13 @@
 {% block title %}{% trans "Мої відгуки" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in premium-dashboard" style="max-width: 1000px; padding: 2rem 20px;">
-    <div style="margin-bottom: 3rem;">
-        <div class="d-flex justify-content-between align-items-center w-100">
-            <h1 class="page-title">{% trans "Мої відгуки" %} <i class="fas fa-star" style="color: var(--accent);"></i></h1>
-            <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">
-                <i class="fas fa-arrow-left"></i> {% trans "Назад до кабінету" %}
-            </a>
-        </div>
+<div class="container fade-in premium-dashboard" style="padding: 2rem 5%; max-width: none;">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start;">
+        <h1 style="margin: 0; font-size: 3rem; font-weight: 800; line-height: 1.1;">{% trans "My Reviews" %} <i class="fas fa-star" style="color: var(--accent);"></i></h1>
+        <p style="color: var(--text-muted); margin: 0.5rem 0 0 0; font-size: 1.1rem;">{% trans "History of your reviews for products." %}</p>
+        <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale" style="margin-top: 1.5rem;">
+            <i class="fas fa-arrow-left"></i> {% trans "Back to dashboard" %}
+        </a>
     </div>
 
     <div class="reviews-list">

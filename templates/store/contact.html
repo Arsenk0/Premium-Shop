@@ -4,14 +4,14 @@
 {% block title %}{% trans "Контакти - PREMIUM SHOP" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in premium-dashboard" style="max-width: 900px; padding: 2rem 20px;">
-    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
-        <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0;">
-            {% trans "ЗВ'ЯЖІТЬСЯ" %} <span style="color: var(--accent);">{% trans "З НАМИ" %}</span>
+<div class="container fade-in premium-dashboard" style="padding: 2rem 5%; max-width: none;">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start;">
+        <h1 style="margin: 0; font-size: 3rem; font-weight: 800; line-height: 1.1;">
+            {% trans "Get in Touch" %}
         </h1>
-        <p style="color: var(--text-muted); margin: 0;">{% trans "Ми завжди на зв'язку — оберіть зручний спосіб." %}</p>
-        <a href="/" class="btn btn-pill hover-scale">
-            <i class="fas fa-arrow-left"></i> {% trans "На головну" %}
+        <p style="color: var(--text-muted); margin: 0.5rem 0 0 0; font-size: 1.1rem;">{% trans "We're always here to help — choose your preferred contact method." %}</p>
+        <a href="/" class="btn btn-pill hover-scale" style="margin-top: 1.5rem;">
+            <i class="fas fa-arrow-left"></i> {% trans "Back to shop" %}
         </a>
     </div>
 
@@ -23,22 +23,30 @@
             <h3 class="contact-card__title">{% trans "Ми в соцмережах" %}</h3>
             <p class="contact-card__desc">{% trans "Ми завжди на зв'язку тут:" %}</p>
 
-            <div class="social-btns">
-                <a href="#" class="social-btn social-btn--telegram">
-                    <i class="fab fa-telegram"></i>
-                    <span>Telegram</span>
+            <div class="social-grid">
+                <a href="#" class="social-card social-card--telegram">
+                    <div class="social-card__inner">
+                        <i class="fab fa-telegram"></i>
+                        <span>Telegram</span>
+                    </div>
                 </a>
-                <a href="#" class="social-btn social-btn--instagram">
-                    <i class="fab fa-instagram"></i>
-                    <span>Instagram</span>
+                <a href="#" class="social-card social-card--instagram">
+                    <div class="social-card__inner">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </div>
                 </a>
-                <a href="#" class="social-btn social-btn--whatsapp">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp</span>
+                <a href="#" class="social-card social-card--whatsapp">
+                    <div class="social-card__inner">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </div>
                 </a>
-                <a href="#" class="social-btn social-btn--tiktok">
-                    <i class="fab fa-tiktok"></i>
-                    <span>TikTok</span>
+                <a href="#" class="social-card social-card--tiktok">
+                    <div class="social-card__inner">
+                        <i class="fab fa-tiktok"></i>
+                        <span>TikTok</span>
+                    </div>
                 </a>
             </div>
         </div>
@@ -124,52 +132,72 @@
         margin: 0 0 1.5rem;
     }
 
-    .social-btns {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
+    .social-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
     }
 
-    .social-btn {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1rem 1.5rem;
-        border-radius: 14px;
-        font-weight: 600;
-        font-size: 1rem;
+    .social-card {
         text-decoration: none;
         color: #fff;
-        transition: all 0.2s;
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .social-card:hover {
+        transform: translateY(-5px) scale(1.02);
+    }
+
+    .social-card__inner {
+        padding: 1.75rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: rgba(0, 0, 0, 0.05);
+        height: 100%;
+    }
+
+    .social-card i {
+        font-size: 1.6rem;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.25);
+        width: 54px;
+        height: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-bottom: 0.4rem;
+        transition: all 0.3s ease;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .social-btn i {
-        font-size: 1.3rem;
-        width: 40px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        transition: all 0.3s ease;
+    .social-card:hover i {
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(1.1) rotate(5deg);
     }
 
-    .social-btn:hover i {
-        background: rgba(255, 255, 255, 0.35);
-        transform: scale(1.1);
+    .social-card span {
+        font-size: 0.95rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    .social-btn:hover { opacity: 0.88; transform: translateX(4px); }
+    .social-card--telegram  { background: linear-gradient(135deg, #0088cc, #24A1DE); }
+    .social-card--instagram { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+    .social-card--whatsapp  { background: linear-gradient(135deg, #25d366, #128c7e); }
+    .social-card--tiktok    { background: linear-gradient(135deg, #010101, #333333); }
 
-    .social-btn--telegram  { background: #0088cc; }
-    .social-btn--instagram { background: linear-gradient(135deg,#e4405f,#833ab4); }
-    .social-btn--whatsapp  { background: #25d366; }
-    
-    .social-btn--tiktok    { background: #010101; }
+    @media (max-width: 480px) {
+        .social-grid { gap: 0.75rem; }
+        .social-card__inner { padding: 1.25rem 0.75rem; }
+    }
 
     .contact-details {
         display: flex;
