@@ -29,7 +29,9 @@ from store.telegram_bot.handlers.common import (
     help_command, unlink_command,
     unlink_confirm_callback, unlink_cancel_callback,
     main_menu_callback, unknown_command,
+    profile_command, support_command
 )
+from store.telegram_bot import messages as msg
 
 logger = logging.getLogger(__name__)
 
@@ -52,14 +54,23 @@ def create_application() -> Application:
     app.add_handler(CommandHandler("order", order_detail_command))
     app.add_handler(CommandHandler("loyalty", loyalty_command))
     app.add_handler(CommandHandler("promo", promo_command))
+    app.add_handler(CommandHandler("profile", profile_command))
+    app.add_handler(CommandHandler("support", support_command))
     app.add_handler(CommandHandler("unlink", unlink_command))
+
+    # ── Button Message Handlers (Reply Keyboard) ──
+    app.add_handler(MessageHandler(filters.Text(msg.BTN_ORDERS), orders_command))
+    app.add_handler(MessageHandler(filters.Text(msg.BTN_LOYALTY), loyalty_command))
+    app.add_handler(MessageHandler(filters.Text(msg.BTN_PROMO), promo_command))
+    app.add_handler(MessageHandler(filters.Text(msg.BTN_PROFILE), profile_command))
+    app.add_handler(MessageHandler(filters.Text(msg.BTN_SUPPORT), support_command))
 
     # ── Inline Callbacks ──
     app.add_handler(CallbackQueryHandler(orders_callback, pattern='^orders$'))
     app.add_handler(CallbackQueryHandler(order_callback, pattern=r'^order_\d+$'))
     app.add_handler(CallbackQueryHandler(loyalty_callback, pattern='^loyalty$'))
     app.add_handler(CallbackQueryHandler(promo_callback, pattern='^promo$'))
-    app.add_handler(CallbackQueryHandler(promo_generate_callback, pattern=r'^promo_(5|10)$'))
+    app.add_handler(CallbackQueryHandler(promo_generate_callback, pattern=r'^promo_(5|7|10|12|15)$'))
     app.add_handler(CallbackQueryHandler(unlink_confirm_callback, pattern='^unlink_confirm$'))
     app.add_handler(CallbackQueryHandler(unlink_cancel_callback, pattern='^unlink_cancel$'))
     app.add_handler(CallbackQueryHandler(main_menu_callback, pattern='^main_menu$'))
