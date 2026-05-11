@@ -1,8 +1,9 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 08:06+0000\n"
+"POT-Creation-Date: 2026-05-11 14:01+0300\n"
 "Language: \n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -95,8 +96,8 @@ msgid ""
 "Вкажіть ваш Instagram або Telegram. Якщо ви обрали \"WhatsApp\", це поле "
 "можна залишити порожнім."
 msgstr ""
-"Enter your Instagram or Telegram. If you selected \"Phone call\", this field "
-"can be left empty."
+"Enter your Instagram or Telegram. If you selected \"Phone call\", this field"
+" can be left empty."
 
 #: store/forms.py:108
 msgid "Ім'я занадто коротке"
@@ -140,7 +141,7 @@ msgid "Email"
 msgstr "Email"
 
 #: store/forms.py:185 store/models.py:86 store/models.py:125
-#: templates/store/contact.html:67
+#: templates/store/contact.html:71
 msgid "Телефон"
 msgstr "Phone"
 
@@ -318,23 +319,23 @@ msgstr "Updated"
 msgid "Оплачено"
 msgstr "Paid"
 
-#: store/models.py:141 store/telegram_bot/messages.py:85
+#: store/models.py:141 store/telegram_bot/messages.py:87
 msgid "Нове"
 msgstr "New"
 
-#: store/models.py:142 store/telegram_bot/messages.py:86
+#: store/models.py:142 store/telegram_bot/messages.py:88
 msgid "В обробці"
 msgstr "Processing"
 
-#: store/models.py:143 store/telegram_bot/messages.py:87
+#: store/models.py:143 store/telegram_bot/messages.py:89
 msgid "Відправлено"
 msgstr "Shipped"
 
-#: store/models.py:144 store/telegram_bot/messages.py:88
+#: store/models.py:144 store/telegram_bot/messages.py:90
 msgid "Виконано"
 msgstr "Completed"
 
-#: store/models.py:145 store/telegram_bot/messages.py:89
+#: store/models.py:145 store/telegram_bot/messages.py:91
 msgid "Скасовано"
 msgstr "Cancelled"
 
@@ -371,7 +372,7 @@ msgstr "Date"
 msgid "Відгук"
 msgstr "Review"
 
-#: store/models.py:186 templates/includes/footer.html:14
+#: store/models.py:186 templates/includes/footer.html:24
 #: templates/includes/navbar.html:8 templates/store/accounts/profile.html:65
 msgid "Відгуки"
 msgstr "Reviews"
@@ -384,8 +385,7 @@ msgstr "Review by"
 msgid "на"
 msgstr "on"
 
-#: store/models.py:203 templates/includes/navbar.html:51
-#: templates/store/wishlist.html:4
+#: store/models.py:203 templates/store/wishlist.html:4
 msgid "Список бажань"
 msgstr "Wishlist"
 
@@ -402,7 +402,7 @@ msgstr "Registration"
 msgid "Покупка"
 msgstr "Purchase"
 
-#: store/models.py:214 store/views.py:755
+#: store/models.py:214 store/views.py:804
 msgid "Конвертація в купон"
 msgstr "Points to coupon conversion"
 
@@ -426,7 +426,7 @@ msgstr "Points transaction"
 msgid "Транзакції балів"
 msgstr "Points transactions"
 
-#: store/services/core.py:91 store/views.py:488
+#: store/services/core.py:91 store/views.py:534
 msgid "Ви вже використовували цей промокод."
 msgstr "You have already used this promo code."
 
@@ -474,9 +474,15 @@ msgstr "Welcome to our shop, %(username)s!"
 msgid "Оновлення статусу замовлення №%(order_id)s"
 msgstr "Order status update №%(order_id)s"
 
-#: store/tasks.py:177
-msgid "грн"
-msgstr "UAH"
+#: store/telegram_bot/handlers/common.py:40
+#| msgid "Прив'язано"
+msgid "не вказано"
+msgstr "Not specified"
+
+#: store/telegram_bot/keyboards.py:35
+#| msgid "Оберіть розмір"
+msgid "Оберіть розділ меню..."
+msgstr "Select a menu section..."
 
 #: store/telegram_bot/messages.py:9
 msgid ""
@@ -566,9 +572,7 @@ msgstr ""
 "in the <b>Profile → Telegram</b> section:"
 
 #: store/telegram_bot/messages.py:51
-#| msgid ""
-#| "Ваш акаунт успішно прив'язано до Telegram. Ви будете отримувати "
-#| "сповіщення про зміну статусів замовлень прямо у месенджері."
+#, python-brace-format
 msgid ""
 "✅ <b>Акаунт успішно прив'язано!</b>\n"
 "\n"
@@ -625,12 +629,10 @@ msgid "↩️ Від'єднання скасовано."
 msgstr "↩️ Unlinking cancelled."
 
 #: store/telegram_bot/messages.py:76
-#| msgid "У вас ще немає замовлень"
 msgid "📭 У вас ще немає замовлень."
 msgstr "📭 You have no orders yet."
 
 #: store/telegram_bot/messages.py:94
-#| msgid "Відстежити замовлення"
 msgid ""
 "📦 <b>Ваші останні замовлення:</b>\n"
 "\n"
@@ -708,52 +710,87 @@ msgstr ""
 "💡 /promo — get a promo code for points"
 
 #: store/telegram_bot/messages.py:126
-msgid "🥉 Бронзовий (до 250 балів)"
-msgstr "🥉 Bronze (up to 250 points)"
+#| msgid "🥉 Бронзовий (до 250 балів)"
+msgid "🥉 Бронзовий (до 200 балів) — 0%"
+msgstr "🥉 Bronze (up to 200 points) — 0%"
 
 #: store/telegram_bot/messages.py:127
-msgid "🥈 Срібний (250–600 балів)"
-msgstr "🥈 Silver (250–600 points)"
+#| msgid "🥈 Срібний (250–600 балів)"
+msgid "🥈 Срібний (200–500 балів) — 5%"
+msgstr "🥈 Silver (200–500 points) — 5%"
 
 #: store/telegram_bot/messages.py:128
-msgid "🥇 Золотий (600+ балів)"
-msgstr "🥇 Gold (600+ points)"
+#| msgid "🥇 Золотий (600+ балів)"
+msgid "🥇 Золотий (500–1000 балів) — 7%"
+msgstr "🥇 Gold (500–1000 points) — 7%"
+
+#: store/telegram_bot/messages.py:129
+#| msgid "🥈 Срібний (250–600 балів)"
+msgid "💎 Платиновий (1000–2000 балів) — 10%"
+msgstr "💎 Platinum (1000–2000 points) — 10%"
+
+#: store/telegram_bot/messages.py:130
+#| msgid "🥈 Срібний (250–600 балів)"
+msgid "💠 Діамантовий (2000–5000 балів) — 12%"
+msgstr "💠 Diamond (2000–5000 points) — 12%"
 
 #: store/telegram_bot/messages.py:131
+msgid "👑 Elite (5000+ балів) — 15%"
+msgstr ""
+
+#: store/telegram_bot/messages.py:134
 #, python-brace-format
+#| msgid ""
+#| "❌ Недостатньо балів для генерації промокоду.\n"
+#| "\n"
+#| "Вам потрібно мінімум <b>250 балів</b> для знижки 5%\n"
+#| "або <b>600 балів</b> для знижки 10%.\n"
+#| "\n"
+#| "Поточний баланс: <b>{points} балів</b>"
 msgid ""
 "❌ Недостатньо балів для генерації промокоду.\n"
 "\n"
-"Вам потрібно мінімум <b>250 балів</b> для знижки 5%\n"
-"або <b>600 балів</b> для знижки 10%.\n"
+"Вам потрібно мінімум <b>200 балів</b> для знижки 5%.\n"
 "\n"
 "Поточний баланс: <b>{points} балів</b>"
 msgstr ""
 "❌ Not enough points to generate a promo code.\n"
 "\n"
-"You need at least <b>250 points</b> for a 5% discount\n"
-"or <b>600 points</b> for a 10% discount.\n"
+"You need at least <b>200 points</b> for a 5% discount.\n"
 "\n"
 "Current balance: <b>{points} points</b>"
 
-#: store/telegram_bot/messages.py:138
+#: store/telegram_bot/messages.py:140
 #, python-brace-format
+#| msgid ""
+#| "🎟 <b>Оберіть варіант промокоду:</b>\n"
+#| "\n"
+#| "🥈 250 балів → знижка 5%\n"
+#| "🥇 600 балів → знижка 10%\n"
+#| "\n"
+#| "Поточний баланс: <b>{points} балів</b>"
 msgid ""
 "🎟 <b>Оберіть варіант промокоду:</b>\n"
 "\n"
-"🥈 250 балів → знижка 5%\n"
-"🥇 600 балів → знижка 10%\n"
+"🥉 200 балів → знижка 5%\n"
+"🥈 500 балів → знижка 7%\n"
+"🥇 1000 балів → знижка 10%\n"
+"💎 2000 балів → знижка 12%\n"
+"👑 5000 балів → знижка 15%\n"
 "\n"
 "Поточний баланс: <b>{points} балів</b>"
 msgstr ""
 "🎟 <b>Choose a promo code option:</b>\n"
 "\n"
-"🥈 250 points → 5% discount\n"
-"🥇 600 points → 10% discount\n"
+"🥉 200 points → 5% discount\n"
+"🥈 500 points → 7% discount\n"
+"🥇 1000 points → 10% discount\n"
+"💎 2000 points → 12% discount\n"
+"👑 5000 points → 15% discount\n"
 "\n"
 "Current balance: <b>{points} points</b>"
 
-#: store/telegram_bot/messages.py:145
+#: store/telegram_bot/messages.py:150
 #, python-brace-format
 msgid ""
 "🎉 <b>Ваш промокод готовий!</b>\n"
@@ -772,159 +809,241 @@ msgstr ""
 "\n"
 "Copy the code and apply it during checkout on the website."
 
-#: store/telegram_bot/messages.py:154
+#: store/telegram_bot/messages.py:159
 #, python-brace-format
-msgid "🔔 <b>Оновлення замовлення #{order_id}</b>\n\n{icon} Новий статус: <b>{status}</b>\n💰 Сума: {total} грн\n📅 Оновлено: {updated}\n\n{extra_message}"
-msgstr "🔔 <b>Order #{order_id} update</b>\n\n{icon} New status: <b>{status}</b>\n💰 Total: {total} UAH\n📅 Updated: {updated}\n\n{extra_message}"
+msgid ""
+"🔔 <b>Оновлення замовлення #{order_id}</b>\n"
+"\n"
+"{icon} Новий статус: <b>{status}</b>\n"
+"💰 Сума: {total} грн\n"
+"📅 Оновлено: {updated}\n"
+"\n"
+"{extra_message}"
+msgstr ""
+"🔔 <b>Order #{order_id} update</b>\n"
+"\n"
+"{icon} New status: <b>{status}</b>\n"
+"💰 Total: {total} UAH\n"
+"📅 Updated: {updated}\n"
+"\n"
+"{extra_message}"
 
-#: store/telegram_bot/messages.py:162
+#: store/telegram_bot/messages.py:167
 msgid "⚙️ Ваше замовлення прийнято в обробку."
 msgstr ""
 
-#: store/telegram_bot/messages.py:163
-#| msgid ""
-#| "Ми вже готуємо ваше замовлення до відправлення. Ось деталі вашої покупки:"
+#: store/telegram_bot/messages.py:168
 msgid "🚚 Ваше замовлення відправлено! Очікуйте доставку."
 msgstr ""
 "We are already preparing your order for shipping. Here are the details of "
 "your purchase:"
 
-#: store/telegram_bot/messages.py:164
+#: store/telegram_bot/messages.py:169
 msgid "✅ Замовлення виконано. Дякуємо за покупку! 🛍"
 msgstr ""
 
-#: store/telegram_bot/messages.py:165
-#| msgid "Цей акаунт деактивовано. Зверніться до служби підтримки."
+#: store/telegram_bot/messages.py:170
 msgid "❌ Ваше замовлення скасовано. Зверніться до підтримки."
 msgstr "This account is deactivated. Please contact support."
 
-#: store/views.py:228 templates/store/accounts/spending.html:93
+#: store/telegram_bot/messages.py:175
+#, python-brace-format
+msgid ""
+"👤 <b>Ваш профіль</b>\n"
+"\n"
+"👤 Логін: <b>{username}</b>\n"
+"📞 Телефон: <code>{phone}</code>\n"
+"🎁 Баланс: <b>{points} балів</b>\n"
+"🏆 Рівень: <b>{tier}</b>\n"
+"📅 На зв'язку з: {date_joined}"
+msgstr ""
+
+#: store/telegram_bot/messages.py:184
+msgid ""
+"💬 <b>Служба підтримки Premium Shop</b>\n"
+"\n"
+"Маєте запитання щодо замовлення або товару?\n"
+"Наші менеджери радо допоможуть вам!\n"
+"\n"
+"🔹 Telegram: @premium_shop_support\n"
+"🔹 Графік роботи: Пн-Нд 10:00 - 20:00"
+msgstr ""
+
+#: store/telegram_bot/messages.py:192
+#| msgid "Мої замовлення"
+msgid "📦 Мої замовлення"
+msgstr "📦 My Orders"
+
+#: store/telegram_bot/messages.py:193
+#| msgid "Вільні бали"
+msgid "🎁 Бонусні бали"
+msgstr "🎁 Bonus Points"
+
+#: store/telegram_bot/messages.py:194
+#| msgid "Промокоди"
+msgid "🎫 Промокоди"
+msgstr "🎫 Promo Codes"
+
+#: store/telegram_bot/messages.py:195
+#| msgid "Профіль"
+msgid "👤 Профіль"
+msgstr "👤 Profile"
+
+#: store/telegram_bot/messages.py:196
+msgid "💬 Підтримка"
+msgstr ""
+
+#: store/views.py:111
+msgid "Bronze"
+msgstr "Bronze"
+
+#: store/views.py:112
+msgid "Silver"
+msgstr "Silver"
+
+#: store/views.py:113
+msgid "Gold"
+msgstr "Gold"
+
+#: store/views.py:114
+msgid "Platinum"
+msgstr "Platinum"
+
+#: store/views.py:115
+msgid "Diamond"
+msgstr "Diamond"
+
+#: store/views.py:116
+msgid "Elite"
+msgstr "Elite"
+
+#: store/views.py:274 templates/store/accounts/spending.html:93
 msgid "Січень"
 msgstr "January"
 
-#: store/views.py:228 templates/store/accounts/spending.html:94
+#: store/views.py:274 templates/store/accounts/spending.html:94
 msgid "Лютий"
 msgstr "February"
 
-#: store/views.py:228 templates/store/accounts/spending.html:95
+#: store/views.py:274 templates/store/accounts/spending.html:95
 msgid "Березень"
 msgstr "March"
 
-#: store/views.py:228 templates/store/accounts/spending.html:96
+#: store/views.py:274 templates/store/accounts/spending.html:96
 msgid "Квітень"
 msgstr "April"
 
-#: store/views.py:229 templates/store/accounts/spending.html:97
+#: store/views.py:275 templates/store/accounts/spending.html:97
 msgid "Травень"
 msgstr "May"
 
-#: store/views.py:229 templates/store/accounts/spending.html:98
+#: store/views.py:275 templates/store/accounts/spending.html:98
 msgid "Червень"
 msgstr "June"
 
-#: store/views.py:229 templates/store/accounts/spending.html:99
+#: store/views.py:275 templates/store/accounts/spending.html:99
 msgid "Липень"
 msgstr "July"
 
-#: store/views.py:229 templates/store/accounts/spending.html:100
+#: store/views.py:275 templates/store/accounts/spending.html:100
 msgid "Серпень"
 msgstr "August"
 
-#: store/views.py:230 templates/store/accounts/spending.html:101
+#: store/views.py:276 templates/store/accounts/spending.html:101
 msgid "Вересень"
 msgstr "September"
 
-#: store/views.py:230 templates/store/accounts/spending.html:102
+#: store/views.py:276 templates/store/accounts/spending.html:102
 msgid "Жовтень"
 msgstr "October"
 
-#: store/views.py:230 templates/store/accounts/spending.html:103
+#: store/views.py:276 templates/store/accounts/spending.html:103
 msgid "Листопад"
 msgstr "November"
 
-#: store/views.py:230 templates/store/accounts/spending.html:104
+#: store/views.py:276 templates/store/accounts/spending.html:104
 msgid "Грудень"
 msgstr "December"
 
-#: store/views.py:241
+#: store/views.py:287
 msgid "Місяць"
 msgstr "Month"
 
-#: store/views.py:241
+#: store/views.py:287
 msgid "Рік"
 msgstr "Year"
 
-#: store/views.py:241 templates/store/accounts/spending.html:169
+#: store/views.py:287 templates/store/accounts/spending.html:169
 msgid "Витрати"
 msgstr "Expenses"
 
-#: store/views.py:253 templates/store/accounts/spending.html:23
+#: store/views.py:299 templates/store/accounts/spending.html:23
 msgid "Загалом"
 msgstr "Total"
 
-#: store/views.py:266
+#: store/views.py:312
 msgid "Налаштування успішно збережено!"
 msgstr "Settings saved successfully!"
 
-#: store/views.py:293
+#: store/views.py:339
 msgid "Код згенеровано! Відправте його боту протягом 10 хвилин."
 msgstr "Code generated! Send it to the bot within 10 minutes."
 
-#: store/views.py:311
+#: store/views.py:357
 msgid "Telegram-акаунт успішно від'єднано."
 msgstr "Telegram account successfully unlinked."
 
-#: store/views.py:354
+#: store/views.py:400
 msgid "Ви вже залишили відгук на цей товар."
 msgstr "You have already left a review for this product."
 
-#: store/views.py:375
+#: store/views.py:421
 msgid "Відгук на товар"
 msgstr "Product review"
 
-#: store/views.py:378
+#: store/views.py:424
 #, python-format
 msgid "Дякуємо! Ваш відгук успішно додано. Вам нараховано %(points)s балів!"
 msgstr "Thank you! Your review has been added. You earned %(points)s points!"
 
-#: store/views.py:407 templates/base.html:37
+#: store/views.py:453 templates/base.html:37
 #: templates/store/product/detail.html:94
 msgid "Будь ласка, оберіть розмір!"
 msgstr "Please select a size!"
 
-#: store/views.py:413
+#: store/views.py:459
 msgid "Товар відсутній на складі!"
 msgstr "Product is out of stock!"
 
-#: store/views.py:422
+#: store/views.py:468
 msgid "Досягнуто максимальну кількість цього товару!"
 msgstr "Maximum quantity of this product reached!"
 
-#: store/views.py:484
+#: store/views.py:530
 msgid "Цей промокод належить іншому користувачу."
 msgstr "This promo code belongs to another user."
 
-#: store/views.py:492
+#: store/views.py:538
 msgid "Промокод успішно застосовано!"
 msgstr "Promo code applied successfully!"
 
-#: store/views.py:495
+#: store/views.py:541
 msgid "Недійсний промокод."
 msgstr "Invalid promo code."
 
-#: store/views.py:502
+#: store/views.py:548
 msgid "Промокод видалено."
 msgstr "Promo code removed."
 
-#: store/views.py:719
+#: store/views.py:768
 msgid "Невірний варіант конвертації."
 msgstr "Invalid conversion option."
 
-#: store/views.py:730
+#: store/views.py:779
 msgid "Недостатньо балів для конвертації."
 msgstr "Not enough points for conversion."
 
-#: store/views.py:762
+#: store/views.py:811
 #, python-format
 msgid "Успішно конвертовано! Ваш промокод: %(code)s"
 msgstr "Successfully converted! Your promo code: %(code)s"
@@ -1083,7 +1202,7 @@ msgstr "Track Order"
 
 #: templates/emails/order_confirmation.html:191
 #: templates/emails/order_status_update.html:108
-#: templates/emails/welcome.html:143 templates/includes/footer.html:29
+#: templates/emails/welcome.html:143 templates/includes/footer.html:65
 msgid "Всі права захищені."
 msgstr "All rights reserved."
 
@@ -1127,8 +1246,8 @@ msgstr "Welcome to the family!"
 msgid ""
 "Ви зробили перший крок до виняткового стилю. Ми раді, що ви тепер з нами."
 msgstr ""
-"You've taken the first step toward exceptional style. We're glad you're with "
-"us."
+"You've taken the first step toward exceptional style. We're glad you're with"
+" us."
 
 #: templates/emails/welcome.html:122
 msgid "Почати шопінг"
@@ -1159,24 +1278,53 @@ msgid ""
 "Найкращий преміум одяг та кросівки в Україні. Тільки оригінальна якість та "
 "преміальний сервіс."
 msgstr ""
-"The best premium clothing and sneakers in Ukraine. Only original quality and "
-"premium service."
+"The best premium clothing and sneakers in Ukraine. Only original quality and"
+" premium service."
 
-#: templates/includes/footer.html:11
-msgid "Навігація"
-msgstr "Navigation"
+#: templates/includes/footer.html:10
+msgid "Підпишіться на новини"
+msgstr "Subscribe to our newsletter"
 
-#: templates/includes/footer.html:13 templates/includes/navbar.html:7
+#: templates/includes/footer.html:20
+msgid "Магазин"
+msgstr "Shop"
+
+#: templates/includes/footer.html:22
+msgid "Каталог"
+msgstr "Catalog"
+
+#: templates/includes/footer.html:23 templates/includes/navbar.html:7
 msgid "Про нас"
 msgstr "About us"
 
-#: templates/includes/footer.html:15 templates/includes/navbar.html:9
+#: templates/includes/footer.html:25 templates/includes/footer.html:41
+#: templates/includes/navbar.html:9
 msgid "Контакти"
 msgstr "Contacts"
 
-#: templates/includes/footer.html:19
-msgid "Соцмережі"
-msgstr "Social media"
+#: templates/includes/footer.html:30
+msgid "Допомога"
+msgstr "Help"
+
+#: templates/includes/footer.html:32
+msgid "Доставка та оплата"
+msgstr "Shipping & Payment"
+
+#: templates/includes/footer.html:33
+msgid "Повернення"
+msgstr "Returns"
+
+#: templates/includes/footer.html:34
+msgid "FAQ"
+msgstr "FAQ"
+
+#: templates/includes/footer.html:35
+msgid "Політика конфіденційності"
+msgstr "Privacy Policy"
+
+#: templates/includes/footer.html:51 templates/store/contact.html:23
+msgid "Ми в соцмережах"
+msgstr "We are on social media"
 
 #: templates/includes/modals.html:11 templates/registration/login.html:44
 #: templates/store/accounts/signup.html:183
@@ -1344,23 +1492,43 @@ msgstr "Select option..."
 
 #: templates/store/accounts/loyalty.html:35
 #, python-format
-msgid "250 балів = знижка 5%%"
-msgstr "250 points = 5%% discount"
+#| msgid "250 балів = знижка 5%%"
+msgid "200 балів = знижка 5%%"
+msgstr "200 points = 5%% discount"
 
 #: templates/store/accounts/loyalty.html:38
 #, python-format
-msgid "600 балів = знижка 10%%"
-msgstr "600 points = 10%% discount"
+#| msgid "250 балів = знижка 5%%"
+msgid "500 балів = знижка 7%%"
+msgstr "500 points = 7%% discount"
 
-#: templates/store/accounts/loyalty.html:42
+#: templates/store/accounts/loyalty.html:41
+#, python-format
+#| msgid "600 балів = знижка 10%%"
+msgid "1000 балів = знижка 10%%"
+msgstr "1000 points = 10%% discount"
+
+#: templates/store/accounts/loyalty.html:44
+#, python-format
+#| msgid "600 балів = знижка 10%%"
+msgid "2000 балів = знижка 12%%"
+msgstr "2000 points = 12%% discount"
+
+#: templates/store/accounts/loyalty.html:47
+#, python-format
+#| msgid "250 балів = знижка 5%%"
+msgid "5000 балів = знижка 15%%"
+msgstr "5000 points = 15%% discount"
+
+#: templates/store/accounts/loyalty.html:52
 msgid "Конвертувати"
 msgstr "Convert"
 
-#: templates/store/accounts/loyalty.html:51
+#: templates/store/accounts/loyalty.html:61
 msgid "Історія балів"
 msgstr "Points History"
 
-#: templates/store/accounts/loyalty.html:80
+#: templates/store/accounts/loyalty.html:90
 msgid "У вас поки немає історії балів."
 msgstr "You have no points history yet."
 
@@ -1448,31 +1616,49 @@ msgstr "Spent"
 msgid "Обране"
 msgstr "Favorites"
 
-#: templates/store/accounts/profile.html:88
-msgid "Ваш рівень лояльності"
-msgstr "Your loyalty level"
+#: templates/store/accounts/profile.html:75
+#: templates/store/accounts/telegram.html:38
+msgid "Прив'язано"
+msgstr "Linked"
 
-#: templates/store/accounts/profile.html:91
-msgid "Зберіть ще"
-msgstr "Collect"
+#: templates/store/accounts/profile.html:77
+msgid "Прив'язати"
+msgstr "Link"
 
-#: templates/store/accounts/profile.html:91
-msgid "балів для знижки"
-msgstr "more points for a discount of"
+#: templates/store/accounts/profile.html:99
+msgid "Ще"
+msgstr "More"
 
-#: templates/store/accounts/profile.html:95
-msgid "Ви досягли максимального рівня знижки!"
-msgstr "You have reached the maximum discount level!"
+#: templates/store/accounts/profile.html:99
+msgid "балів до"
+msgstr "points to"
 
-#: templates/store/accounts/profile.html:122
+#: templates/store/accounts/profile.html:103
+msgid "Максимальний рівень!"
+msgstr "Maximum level reached!"
+
+#: templates/store/accounts/profile.html:156
+msgid "Поточна знижка"
+msgstr "Current discount"
+
+#: templates/store/accounts/profile.html:165
+#: templates/store/accounts/telegram.html:181
+msgid "Бонуси"
+msgstr "Bonuses"
+
+#: templates/store/accounts/profile.html:167
+msgid "Обміняти"
+msgstr "Exchange"
+
+#: templates/store/accounts/profile.html:238
 msgid "Остання активність"
 msgstr "Recent Activity"
 
-#: templates/store/accounts/profile.html:156
+#: templates/store/accounts/profile.html:272
 msgid "У вас поки немає активності. Почніть шопінг вже зараз!"
 msgstr "You have no activity yet. Start shopping now!"
 
-#: templates/store/accounts/profile.html:157
+#: templates/store/accounts/profile.html:273
 #: templates/store/cart/detail.html:256 templates/store/wishlist.html:52
 msgid "Перейти до покупок"
 msgstr "Go shopping"
@@ -1650,13 +1836,6 @@ msgstr ""
 "Link your Telegram to receive order notifications and manage your account "
 "directly in the messenger."
 
-#: templates/store/accounts/telegram.html:38
-msgid "Прив'язати"
-msgstr "Link"
-
-msgid "Прив'язано"
-msgstr "Linked"
-
 #: templates/store/accounts/telegram.html:40
 msgid "Telegram під'єднано!"
 msgstr "Telegram connected!"
@@ -1775,10 +1954,6 @@ msgstr "Instant notifications about order status changes"
 msgid "Перегляд усіх замовлень через /orders"
 msgstr "View all orders via /orders"
 
-#: templates/store/accounts/telegram.html:181
-msgid "Бонуси"
-msgstr "Bonuses"
-
 #: templates/store/accounts/telegram.html:182
 msgid "Баланс балів і прогрес до наступного рівня"
 msgstr "Points balance and progress to next level"
@@ -1885,35 +2060,31 @@ msgstr "WITH US"
 msgid "Ми завжди на зв'язку — оберіть зручний спосіб."
 msgstr "We are always available — choose a convenient way."
 
-#: templates/store/contact.html:23
-msgid "Ми в соцмережах"
-msgstr "We are on social media"
-
 #: templates/store/contact.html:24
 msgid "Ми завжди на зв'язку тут:"
 msgstr "We're always in touch here:"
 
-#: templates/store/contact.html:46
+#: templates/store/contact.html:50
 msgid "Наш офіс"
 msgstr "Our office"
 
-#: templates/store/contact.html:47
+#: templates/store/contact.html:51
 msgid "Де нас знайти:"
 msgstr "Where to find us:"
 
-#: templates/store/contact.html:53
+#: templates/store/contact.html:57
 msgid "Адреса"
 msgstr "Address"
 
-#: templates/store/contact.html:54
+#: templates/store/contact.html:58
 msgid "м. Київ, вул. Хрещатик, 1"
 msgstr "Kyiv, Khreshchatyk st., 1"
 
-#: templates/store/contact.html:60
+#: templates/store/contact.html:64
 msgid "Графік"
 msgstr "Schedule"
 
-#: templates/store/contact.html:61
+#: templates/store/contact.html:65
 msgid "Пн-Пт 10:00 - 19:00"
 msgstr "Mon-Fri 10:00 - 19:00"
 
@@ -2004,8 +2175,8 @@ msgid ""
 "Ми зв'яжемося з вами через <strong>%(contact_method)s</strong> найближчим "
 "часом."
 msgstr ""
-"Your order <strong>#%(order_id)s</strong> has been successfully accepted for "
-"processing. We will contact you via <strong>%(contact_method)s</strong> "
+"Your order <strong>#%(order_id)s</strong> has been successfully accepted for"
+" processing. We will contact you via <strong>%(contact_method)s</strong> "
 "shortly."
 
 #: templates/store/order/success.html:16
@@ -2276,8 +2447,8 @@ msgid ""
 msgstr ""
 "It's empty here for now. Be the first to leave a review on one of our "
 "products!It's empty here for now. Be the first to leave a review on one of "
-"our products!Nothing here yet. Be the first to leave a review for one of our "
-"products!"
+"our products!Nothing here yet. Be the first to leave a review for one of our"
+" products!"
 
 #: templates/store/wishlist.html:9
 msgid "Ваш список бажань"
@@ -2294,6 +2465,27 @@ msgstr "Your wishlist is empty"
 #: templates/store/wishlist.html:51
 msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
 msgstr "Add items you like so you don't lose them."
+
+#~ msgid "Ваш рівень лояльності"
+#~ msgstr "Your loyalty level"
+
+#~ msgid "Зберіть ще"
+#~ msgstr "Collect"
+
+#~ msgid "балів для знижки"
+#~ msgstr "more points for a discount of"
+
+#~ msgid "Ви досягли максимального рівня знижки!"
+#~ msgstr "You have reached the maximum discount level!"
+
+#~ msgid "грн"
+#~ msgstr "UAH"
+
+#~ msgid "Навігація"
+#~ msgstr "Navigation"
+
+#~ msgid "Соцмережі"
+#~ msgstr "Social media"
 
 #~ msgid "Ваша історія покупок у візуальному форматі"
 #~ msgstr "Your purchase history in visual format"

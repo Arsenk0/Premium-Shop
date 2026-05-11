@@ -6,7 +6,7 @@ from telegram import Update
 from telegram.ext import ContextTypes, ConversationHandler, CommandHandler, MessageHandler, CallbackQueryHandler, filters
 
 from store.telegram_bot import messages as msg
-from store.telegram_bot.keyboards import get_start_keyboard, get_main_menu_keyboard
+from store.telegram_bot.keyboards import get_start_keyboard, get_main_menu_keyboard, get_main_reply_keyboard
 from store.telegram_bot.utils import get_profile_by_chat_id, format_datetime
 
 logger = logging.getLogger(__name__)
@@ -21,10 +21,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     profile = await _get_profile(chat_id)
 
     if profile:
-        text = msg.WELCOME_LINKED.format(username=profile.user.username)
-        await update.message.reply_html(text, reply_markup=get_start_keyboard(linked=True))
+        text = str(msg.WELCOME_LINKED).format(username=profile.user.username)
+        await update.message.reply_html(text, reply_markup=get_main_reply_keyboard())
     else:
-        await update.message.reply_html(msg.WELCOME_UNLINKED, reply_markup=get_start_keyboard(linked=False))
+        await update.message.reply_html(str(msg.WELCOME_UNLINKED), reply_markup=get_start_keyboard(linked=False))
 
 
 async def prompt_otp(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -43,7 +43,7 @@ async def prompt_otp(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return ConversationHandler.END
 
-    await query.edit_message_text(msg.ENTER_OTP, parse_mode='HTML')
+    await query.edit_message_text(str(msg.ENTER_OTP), parse_mode='HTML')
     return WAITING_FOR_OTP
 
 
@@ -59,12 +59,12 @@ async def handle_otp(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if profile:
         await update.message.reply_html(
-            msg.LINK_SUCCESS.format(username=profile.user.username),
-            reply_markup=get_main_menu_keyboard()
+            str(msg.LINK_SUCCESS).format(username=profile.user.username),
+            reply_markup=get_main_reply_keyboard()
         )
         return ConversationHandler.END
     else:
-        await update.message.reply_html(msg.LINK_INVALID_TOKEN)
+        await update.message.reply_html(str(msg.LINK_INVALID_TOKEN))
         return WAITING_FOR_OTP
 
 

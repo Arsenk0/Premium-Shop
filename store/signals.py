@@ -27,8 +27,8 @@ def order_completed(sender, instance, **kwargs):
             user=instance.user, action='purchase', description=description_key
         ).exists():
             total_cost = instance.get_total_cost()
-            # 2 points for every 100 UAH
-            points_to_add = int(total_cost // 100) * 2
+            # 1 point for every 100 UAH
+            points_to_add = int(total_cost // 100) * 1
 
             if points_to_add > 0:
                 with transaction.atomic():

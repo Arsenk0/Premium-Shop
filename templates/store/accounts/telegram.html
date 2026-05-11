@@ -4,12 +4,12 @@
 {% block title %}Telegram — Premium Shop{% endblock %}
 
 {% block content %}
-<div class="container fade-in premium-dashboard">
-    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
-        <h1 style="margin: 0;">Telegram <i class="fab fa-telegram"></i></h1>
-        <p style="color: var(--text-muted); margin: 0;">{% trans "Прив'яжіть Telegram для отримання сповіщень про замовлення та керування акаунтом прямо в месенджері." %}</p>
-        <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">
-            <i class="fas fa-arrow-left"></i> {% trans "Назад до кабінету" %}
+<div class="container fade-in premium-dashboard" style="padding: 2rem 5%; max-width: none;">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start;">
+        <h1 style="margin: 0; font-size: 3rem; font-weight: 800; line-height: 1.1;">Telegram <i class="fab fa-telegram" style="color: var(--accent);"></i></h1>
+        <p style="color: var(--text-muted); margin: 0.5rem 0 0 0; font-size: 1.1rem;">{% trans "Link your Telegram to receive order notifications and manage your account directly in the messenger." %}</p>
+        <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale" style="margin-top: 1.5rem;">
+            <i class="fas fa-arrow-left"></i> {% trans "Back to dashboard" %}
         </a>
     </div>
 
@@ -232,8 +232,9 @@
         display: flex;
         gap: 2.5rem;
         align-items: flex-start;
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        background: linear-gradient(135deg, var(--card-bg) 0%, rgba(34, 197, 94, 0.04) 100%);
+        border: 1px solid var(--accent);
+        background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-bg-alt) 100%);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
 
     .tg-layout {
@@ -262,7 +263,7 @@
         font-size: 1.8rem;
         margin-bottom: 1.5rem;
     }
-    .tg-icon-circle--green { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+    .tg-icon-circle--green { background: var(--card-bg-alt); border: 1px solid var(--accent); color: var(--accent); }
     .tg-icon-circle--blue  { background: rgba(37, 160, 234, 0.15); color: #25A0EA; }
     .tg-icon-circle--purple{ background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
 
@@ -279,8 +280,9 @@
         margin-bottom: 0.8rem;
     }
     .tg-badge--success {
-        background: rgba(34, 197, 94, 0.15);
-        color: #22c55e;
+        background: var(--card-bg-alt);
+        border: 1px solid var(--accent);
+        color: var(--accent);
     }
 
     .tg-card__title {
@@ -496,3 +498,4 @@ function copyOtp() {
 }
 </script>
 {% endblock %}
+

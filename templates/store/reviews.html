@@ -4,143 +4,482 @@
 {% block title %}{% trans "Відгуки наших клієнтів - PREMIUM SHOP" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in premium-dashboard" style="max-width: 1000px; padding: 2rem 20px;">
-    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
-        <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0;">{% trans "ЩО ПРО НАС" %} <span style="color: var(--accent);">{% trans "КАЖУТЬ" %}</span></h1>
-        <p style="color: var(--text-muted); margin: 0;">{% trans "Ми цінуємо кожного клієнта та ваш фідбек" %}</p>
-        <a href="/" class="btn btn-pill hover-scale">
-            <i class="fas fa-arrow-left"></i> {% trans "На головну" %}
+<div class="container fade-in premium-dashboard" style="padding: 2rem 5%; max-width: none;">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start;">
+        <h1 style="margin: 0; font-size: 3rem; font-weight: 800; line-height: 1.1;">
+            {% trans "Customer Reviews" %}
+        </h1>
+        <p style="color: var(--text-muted); margin: 0.5rem 0 0 0; font-size: 1.1rem;">{% trans "We value every customer and your feedback means the world to us." %}</p>
+        <a href="/" class="btn btn-pill hover-scale" style="margin-top: 1.5rem;">
+            <i class="fas fa-arrow-left"></i> {% trans "Back to shop" %}
         </a>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
-        {% for review in reviews %}
-        <div class="review-card">
-            <div class="review-card-header">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                    <strong style="font-size: 1.1rem;">{{ review.user.username }}</strong>
-                    <div style="color: #ffc107; white-space: nowrap; flex-shrink: 0;">
-                        {% for i in "12345" %}
-                        {% if forloop.counter <= review.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
-                        {% endfor %}
+    <div class="reviews-outer-container">
+        <button class="nav-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+        
+        <div class="reviews-slider-viewport">
+            <div class="reviews-slider-track" id="reviewsTrack">
+                {% for review in reviews %}
+                <div class="review-slide">
+                    <div class="review-card-featured">
+                        <div class="review-card-inner">
+                            <div class="review-top">
+                                <div class="user-meta">
+                                    <div class="user-avatar-large">
+                                        {{ review.user.username|slice:":1"|upper }}
+                                    </div>
+                                    <div class="user-details">
+                                        <h3 class="user-name-title">{{ review.user.username }}</h3>
+                                        <div class="stars-vibrant">
+                                            {% for i in "12345" %}
+                                                <i class="fa{% if forloop.counter <= review.rating %}s{% else %}r{% endif %} fa-star"></i>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="review-date-badge">{{ review.created_at|date:"d.m.Y" }}</div>
+                            </div>
+
+                            <div class="review-content-main">
+                                <i class="fas fa-quote-left mega-quote"></i>
+                                <p class="review-text-large">{{ review.comment }}</p>
+                            </div>
+
+                            <div class="review-footer-product">
+                                {% if review.product.image %}
+                                    <img src="{{ review.product.image.url }}" alt="{{ review.product.name }}" class="product-img-featured">
+                                {% endif %}
+                                <div class="product-info-featured">
+                                    <span class="label-muted">{% trans "Verified Purchase" %}</span>
+                                    <a href="{% url 'store:product_detail' review.product.id review.product.slug %}" class="product-name-link">{{ review.product.name }}</a>
+                                </div>
+                                <a href="{% url 'store:product_detail' review.product.id review.product.slug %}" class="btn-view-product">
+                                    {% trans "View Item" %} <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Назва товару тепер має 100% ширини карточки і може переноситись, якщо надто довга -->
-                <div style="font-size: 0.8rem; color: #888; margin-top: 0.2rem;">
-                    {% trans "на" %} <a href="{% url 'store:product_detail' review.product.id review.product.slug %}"
-                       class="hover-red-line"
-                       style="color: var(--primary); font-weight: 600; text-decoration: none; position: relative; display: inline; padding-bottom: 2px;">{{ review.product.name }}</a>
-                </div>
+                {% endfor %}
             </div>
-            <div class="review-comment">
-                <i class="fas fa-quote-right quote-icon"></i>
-                <p>"{{ review.comment }}"</p>
-            </div>
-            <div class="review-card-date">{{ review.created_at|date:"d.m.Y" }}</div>
         </div>
-        {% empty %}
-        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; background: var(--card-bg); border-radius: 24px;">
-            <i class="fas fa-comment-slash"
-                style="font-size: 3rem; color: #eee; margin-bottom: 1rem; display: block;"></i>
-            <p style="color: #888;">{% trans "Тут поки порожньо. Станьте першим, хто залишить відгук на один із наших товарів!" %}</p>
-            <br>
-            <a href="{% url 'store:product_list' %}" class="btn btn-primary">{% trans "До каталогу" %}</a>
-        </div>
+
+        <button class="nav-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="slider-pagination" id="paginationDots">
+        {% for review in reviews %}
+        <div class="dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.counter0 }}"></div>
         {% endfor %}
     </div>
 </div>
 
 <style>
-    .review-card {
-        background: var(--card-bg);
-        padding: 2rem;
-        border-radius: 24px;
-        box-shadow: var(--shadow);
-        border: 1px solid rgba(0,0,0,0.03);
-        transition: transform 0.3s ease;
-        height: 320px;
+    .reviews-outer-container {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        max-width: 1300px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .reviews-slider-viewport {
+        flex: 1;
+        overflow: hidden;
+        padding: 1rem 0;
+    }
+
+    .reviews-slider-track {
+        display: flex;
+        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        width: 100%;
+    }
+
+    .review-slide {
+        flex: 0 0 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .review-card-featured {
+        background: linear-gradient(145deg, var(--card-bg), #1a1a1a);
+        border: 1px solid var(--border-color);
+        border-radius: 32px;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 1000px;
+        position: relative;
+        box-shadow: 0 40px 100px rgba(0,0,0,0.3);
         display: flex;
         flex-direction: column;
+        gap: 1.5rem;
     }
 
-    .review-card:hover {
-        transform: translateY(-5px);
+    .review-card-featured::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 5px;
+        background: linear-gradient(90deg, var(--accent), #00d1b2, var(--accent));
+        background-size: 200% auto;
+        animation: glow-flow 4s linear infinite;
+        border-radius: 32px 32px 0 0;
+        box-shadow: 0 0 15px rgba(0, 209, 178, 0.4);
     }
 
-    .review-card-header {
-        margin-bottom: 1rem;
-        flex-shrink: 0;
+    @keyframes glow-flow {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 200% 50%; }
     }
 
-    .review-card-date {
+    .review-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .user-meta {
+        display: flex;
+        gap: 1.25rem;
+        align-items: center;
+    }
+
+    .user-avatar-large {
+        width: 54px;
+        height: 54px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--accent), #00d1b2);
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 1.5rem;
+        box-shadow: 0 8px 16px rgba(0, 209, 178, 0.2);
+    }
+
+    .user-name-title {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--text-main);
+        letter-spacing: -0.5px;
+    }
+
+    .stars-vibrant {
+        color: #ffc107;
+        font-size: 0.9rem;
+        margin-top: 0.2rem;
+        display: flex;
+        gap: 4px;
+        filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.3));
+    }
+
+    .review-date-badge {
         font-size: 0.8rem;
+        font-weight: 700;
         color: var(--text-muted);
-        text-align: right;
-        flex-shrink: 0;
-        margin-top: auto;
-        padding-top: 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        border: 1px solid var(--border-color);
     }
 
-    .hover-red-line {
+    .review-content-main {
         position: relative;
-        text-decoration: none;
-        background-image: linear-gradient(var(--accent), var(--accent));
-        background-position: 0% 100%;
-        background-repeat: no-repeat;
-        background-size: 0% 2px;
-        transition: background-size 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        -webkit-box-decoration-break: clone;
-        box-decoration-break: clone;
-    }
-
-    .hover-red-line:hover {
-        background-size: 100% 2px;
-    }
-
-    .review-comment {
-        background: var(--card-bg-alt);
-        padding: 1.5rem;
-        border-radius: 16px;
-        position: relative;
-        border-left: 4px solid var(--accent);
+        min-height: 80px;
+        max-height: 250px;
         overflow-y: auto;
-        flex: 1;
-        min-height: 0;
+        padding: 0.5rem 1rem 0.5rem 0;
     }
 
-    .review-comment::-webkit-scrollbar {
+    .review-content-main::-webkit-scrollbar {
         width: 4px;
     }
-
-    .review-comment::-webkit-scrollbar-track {
-        background: transparent;
+    .review-content-main::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.02);
     }
-
-    .review-comment::-webkit-scrollbar-thumb {
+    .review-content-main::-webkit-scrollbar-thumb {
         background: var(--accent);
-        border-radius: 4px;
-        opacity: 0.5;
+        border-radius: 10px;
     }
 
-    .quote-icon {
-        position: absolute;
+    .mega-quote {
+        position: sticky;
         top: -10px;
-        right: 15px;
         font-size: 4rem;
         color: var(--accent);
-        opacity: 0.1;
-        z-index: 0;
+        opacity: 0.15;
+        height: 0;
+        margin-left: -1rem;
+        pointer-events: none;
     }
 
-    .review-comment p {
+    .review-text-large {
+        font-size: 1.2rem;
         line-height: 1.6;
         color: var(--text-main);
         font-style: italic;
-        font-size: 1.05rem;
         font-weight: 500;
         margin: 0;
-        position: relative;
-        z-index: 1;
+        text-rendering: optimizeLegibility;
+    }
+
+    .review-footer-product {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 1rem 1.5rem;
+        border-radius: 20px;
+        border: 1px solid var(--border-color);
+        margin-top: auto;
+        backdrop-filter: blur(10px);
+    }
+
+    .product-img-featured {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        object-fit: cover;
+        border: 2px solid var(--border-color);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .product-info-featured {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+
+    .label-muted {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: var(--accent);
+        font-weight: 800;
+        opacity: 0.9;
+    }
+
+    .product-name-link {
+        font-size: 1rem;
+        color: var(--text-main);
+        text-decoration: none;
+        font-weight: 700;
+        transition: color 0.2s;
+    }
+
+    .btn-view-product {
+        background: var(--accent);
+        color: #000;
+        padding: 0.65rem 1.25rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-view-product:hover {
+        transform: translateX(5px);
+        box-shadow: 0 0 20px rgba(0, 209, 178, 0.3);
+    }
+
+    /* Navigation */
+    .nav-btn {
+        flex-shrink: 0;
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-main);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .nav-btn:hover {
+        background: var(--accent);
+        color: #000;
+        border-color: var(--accent);
+        box-shadow: 0 0 25px rgba(0, 209, 178, 0.3);
+    }
+
+    .slider-pagination {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 0.5rem;
+        padding-bottom: 2rem;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transition: all 0.4s ease;
+    }
+
+    .dot.active {
+        width: 35px;
+        border-radius: 6px;
+        background: var(--accent);
+        box-shadow: 0 0 10px rgba(0, 209, 178, 0.4);
+    }
+
+    @media (max-width: 900px) {
+        .nav-btn { display: none; }
+        .reviews-outer-container { gap: 0; }
+    }
+
+    @media (max-width: 768px) {
+        .review-card-featured { padding: 1.5rem; border-radius: 24px; }
+        .review-text-large { font-size: 1.1rem; }
+        .review-footer-product { flex-direction: column; text-align: center; gap: 1rem; padding: 1.25rem; }
+        .btn-view-product { width: 100%; justify-content: center; }
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const track = document.getElementById('reviewsTrack');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let index = 0;
+        const total = dots.length;
+        let interval;
+
+        if (total === 0) return;
+
+        function updateSlider() {
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach(d => d.classList.remove('active'));
+            dots[index].classList.add('active');
+            
+            const activeSlide = track.children[index].querySelector('.review-card-inner');
+            activeSlide.style.opacity = '0';
+            activeSlide.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+                activeSlide.style.transition = 'all 0.5s ease';
+                activeSlide.style.opacity = '1';
+                activeSlide.style.transform = 'translateY(0)';
+            }, 50);
+        }
+
+        function nextSlide() {
+            index = (index + 1) % total;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            index = (index - 1 + total) % total;
+            updateSlider();
+        }
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetInterval();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetInterval();
+        });
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                index = parseInt(dot.getAttribute('data-index'));
+                updateSlider();
+                resetInterval();
+            });
+        });
+
+        function resetInterval() {
+            clearInterval(interval);
+            interval = setInterval(nextSlide, 6000);
+        }
+
+        interval = setInterval(nextSlide, 6000);
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const track = document.getElementById('reviewsTrack');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let index = 0;
+        const total = dots.length;
+        let interval;
+
+        if (total === 0) return;
+
+        function updateSlider() {
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach(d => d.classList.remove('active'));
+            dots[index].classList.add('active');
+            
+            // Add fade animation to card content
+            const activeSlide = track.children[index].querySelector('.review-card-inner');
+            activeSlide.style.opacity = '0';
+            activeSlide.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+                activeSlide.style.transition = 'all 0.5s ease';
+                activeSlide.style.opacity = '1';
+                activeSlide.style.transform = 'translateY(0)';
+            }, 50);
+        }
+
+        function nextSlide() {
+            index = (index + 1) % total;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            index = (index - 1 + total) % total;
+            updateSlider();
+        }
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetInterval();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetInterval();
+        });
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                index = parseInt(dot.getAttribute('data-index'));
+                updateSlider();
+                resetInterval();
+            });
+        });
+
+        function resetInterval() {
+            clearInterval(interval);
+            interval = setInterval(nextSlide, 6000);
+        }
+
+        interval = setInterval(nextSlide, 6000);
+    });
+</script>
 {% endblock %}
