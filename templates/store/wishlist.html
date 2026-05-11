@@ -43,14 +43,45 @@
         {% endfor %}
     </div>
     {% else %}
-    <div style="text-align: center; padding: 4rem 1rem;">
-        <i class="fas fa-heart-broken" style="font-size: 4rem; color: #ddd; margin-bottom: 1.5rem;"></i>
+    <div class="card empty-state">
+        <div class="empty-icon-wrapper">
+            <i class="fas fa-heart-broken"></i>
+        </div>
         <h2>{% trans "Ваш список бажань порожній" %}</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">{% trans "Додайте товари, які вам сподобалися, щоб не загубити їх." %}</p>
-        <a href="{% url 'store:product_list' %}" class="btn btn-primary">{% trans "Перейти до покупок" %}</a>
+        <p>{% trans "Додайте товари, які вам сподобалися, щоб не загубити їх." %}</p>
+        <a href="{% url 'store:product_list' %}" class="btn btn-primary btn-pill hover-scale">{% trans "Перейти до покупок" %}</a>
     </div>
     {% endif %}
 </div>
 
+<style>
+    .card.empty-state {
+        text-align: center;
+        padding: 5rem 2rem;
+        background: var(--card-bg);
+        border: 2px dashed var(--border-color);
+        border-radius: 32px;
+    }
 
+    .empty-icon-wrapper {
+        font-size: 4rem;
+        color: var(--border-color);
+        margin-bottom: 2rem;
+        background: var(--card-bg-alt);
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-lg {
+        padding: 1rem 2.5rem;
+        font-weight: 700;
+        border-radius: 16px;
+    }
+</style>
 {% endblock %}

@@ -37,22 +37,22 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ['id', 'first_name', 'last_name', 'phone', 'user__username']
     
     fieldsets = (
-        ('Прив\'язка до користувача', {
+        ('User Account', {
             'fields': ('user',)
         }),
-        ('Промокод та Знижка', {
+        ('Coupon & Discount', {
             'fields': ('coupon', 'discount_amount')
         }),
-        ('Дані Клієнта', {
+        ('Customer Details', {
             'fields': ('first_name', 'last_name', 'phone', 'contact_method', 'social_handle')
         }),
-        ('Доставка (Нова Пошта)', {
+        ('Shipping (Nova Poshta)', {
             'fields': ('city', 'city_ref', 'warehouse', 'warehouse_ref')
         }),
-        ('Статус Замовлення', {
+        ('Order Status', {
             'fields': ('status', 'paid')
         }),
-        ('Дати', {
+        ('Timestamps', {
             'fields': ('created', 'updated'),
             'classes': ('collapse',),
         }),

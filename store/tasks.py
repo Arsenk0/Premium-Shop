@@ -108,13 +108,22 @@ def send_order_status_update_email(order_id, language='uk', currency='UAH', base
 @shared_task
 def send_telegram_status_notification(order_id):
     """
+    Celery task wrapper — delegates to the sync helper below.
+    Kept for backwards compatibility if Celery worker is running.
+    """
+    return send_telegram_notification_sync(order_id)
+
+
+def send_telegram_notification_sync(order_id):
+    """
     Send an order status update notification via Telegram bot.
-    Called by the order post_save signal when status changes.
+    Pure synchronous function — safe to call from Django signals
+    without a running Celery worker.
     """
     try:
         order = Order.objects.select_related('user__profile').get(id=order_id)
     except Order.DoesNotExist:
-        logger.warning("send_telegram_status_notification: Order %s not found", order_id)
+        logger.warning("send_telegram_notification_sync: Order %s not found", order_id)
         return False
 
     if not order.user:
@@ -128,14 +137,14 @@ def send_telegram_status_notification(order_id):
     chat_id = profile.telegram_chat_id
     if not chat_id:
         logger.debug(
-            "send_telegram_status_notification: user %s has no telegram_chat_id",
+            "send_telegram_notification_sync: user %s has no telegram_chat_id",
             order.user.username
         )
         return False
 
     token = settings.TELEGRAM_BOT_TOKEN
     if not token:
-        logger.error("send_telegram_status_notification: TELEGRAM_BOT_TOKEN not set")
+        logger.error("send_telegram_notification_sync: TELEGRAM_BOT_TOKEN not set")
         return False
 
     from store.telegram_bot.messages import (
@@ -143,20 +152,38 @@ def send_telegram_status_notification(order_id):
         ORDER_STATUS_ICONS, ORDER_STATUS_NAMES,
     )
     from django.utils import timezone
+    from django.utils.translation import activate, gettext as _
 
-    icon = ORDER_STATUS_ICONS.get(order.status, '📦')
-    status_name = ORDER_STATUS_NAMES.get(order.status, order.status)
-    extra = STATUS_EXTRA.get(order.status, '')
+    # Determine user language
+    user_language = 'uk'
+    if order.user and hasattr(order.user, 'profile'):
+        # If you have a language field in profile, use it. 
+        # For now, let's try to get it from settings or default to 'uk'.
+        # If we want to be smart, we could store language in Profile.
+        user_language = getattr(order.user.profile, 'language', 'uk')
 
-    local_updated = timezone.localtime(order.updated)
-    text = STATUS_NOTIFICATION.format(
-        order_id=order.id,
-        icon=icon,
-        status=status_name,
-        total=order.get_total_cost(),
-        updated=local_updated.strftime('%d.%m.%Y %H:%M'),
-        extra_message=extra,
-    )
+    with translation_override(user_language):
+        icon = ORDER_STATUS_ICONS.get(order.status, '📦')
+        status_name = ORDER_STATUS_NAMES.get(order.status, order.status)
+        # Handle lazy translation for status_name if it was imported as lazy
+        if hasattr(status_name, '_proxy____args'):
+             status_name = _(str(status_name))
+        
+        extra = STATUS_EXTRA.get(order.status, '')
+        
+        local_updated = timezone.localtime(order.updated)
+        
+        # Format currency (will be followed by 'грн' in the template)
+        total_str = f"{order.get_total_cost()}"
+
+        text = str(STATUS_NOTIFICATION).format(
+            order_id=order.id,
+            icon=icon,
+            status=status_name,
+            total=total_str,
+            updated=local_updated.strftime('%d.%m.%Y %H:%M'),
+            extra_message=extra,
+        )
 
     import asyncio
     import telegram

@@ -4,30 +4,168 @@
 {% block title %}{% trans "Про нас - PREMIUM SHOP" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in" style="max-width: 900px; padding: 4rem 0;">
-    <h1 style="font-size: 4rem; margin-bottom: 2rem; text-align: center; letter-spacing: -2px;">{% trans "Про" %} <span
-            style="color: var(--accent);">PREMIUM</span></h1>
+<div class="container fade-in premium-dashboard" style="max-width: 900px; padding: 2rem 20px;">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+        <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0;">
+            {% trans "Про" %} <span style="color: var(--accent);">PREMIUM</span>
+        </h1>
+        <p style="color: var(--text-muted); margin: 0;">{% trans "Команда фанатів преміальної моди" %}</p>
+        <a href="/" class="btn btn-pill hover-scale">
+            <i class="fas fa-arrow-left"></i> {% trans "На головну" %}
+        </a>
+    </div>
 
-    <div style="background: var(--card-bg); padding: 4rem; border-radius: 24px; box-shadow: var(--shadow); line-height: 2;">
-        <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+    <div class="about-card">
+        <div class="about-icon-row">
+            <div class="about-icon-circle">
+                <i class="fas fa-store"></i>
+            </div>
+        </div>
+        <p style="font-size: 1.1rem; line-height: 1.85; margin-bottom: 2rem; color: var(--text-muted);">
             {% trans "Ми — команда фанатів преміальної моди, які вірять, що одяг — це не просто речі, а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок та худі, щоб ви отримували лише найкращу якість та найсвіжіші релізи." %}
         </p>
 
-        <h2 style="margin-bottom: 1rem;">{% trans "Наші цінності:" %}</h2>
-        <ul style="list-style: none; padding-left: 0;">
-            <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
-                <i class="fas fa-check-circle" style="color: var(--accent);"></i>
-                <strong>{% trans "Тільки оригінальна якість" %}</strong> — {% trans "ніяких компромісів." %}
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;">{% trans "Наші цінності:" %}</h2>
+        <ul style="list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 1rem;">
+            <li class="value-item">
+                <div class="value-icon"><i class="fas fa-check-circle"></i></div>
+                <div>
+                    <strong>{% trans "Тільки оригінальна якість" %}</strong>
+                    <span style="color: var(--text-muted); display: block; font-size: 0.9rem; margin-top: 0.2rem;">{% trans "Ніяких компромісів. Кожен товар проходить перевірку." %}</span>
+                </div>
             </li>
-            <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
-                <i class="fas fa-check-circle" style="color: var(--accent);"></i>
-                <strong>{% trans "Швидкий сервіс" %}</strong> — {% trans "менеджер зв'яжеться з вами протягом 15 хвилин." %}
+            <li class="value-item">
+                <div class="value-icon"><i class="fas fa-bolt"></i></div>
+                <div>
+                    <strong>{% trans "Швидкий сервіс" %}</strong>
+                    <span style="color: var(--text-muted); display: block; font-size: 0.9rem; margin-top: 0.2rem;">{% trans "Менеджер зв'яжеться з вами протягом 15 хвилин." %}</span>
+                </div>
             </li>
-            <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
-                <i class="fas fa-check-circle" style="color: var(--accent);"></i>
-                <strong>{% trans "Стиль понад усе" %}</strong> — {% trans "ми завжди в курсі останніх трендів." %}
+            <li class="value-item">
+                <div class="value-icon"><i class="fas fa-fire"></i></div>
+                <div>
+                    <strong>{% trans "Стиль понад усе" %}</strong>
+                    <span style="color: var(--text-muted); display: block; font-size: 0.9rem; margin-top: 0.2rem;">{% trans "Ми завжди в курсі останніх трендів." %}</span>
+                </div>
             </li>
         </ul>
     </div>
+
+    <div class="about-stats-grid">
+        <div class="about-stat-card">
+            <i class="fas fa-users"></i>
+            <span class="about-stat-num">1000+</span>
+            <span class="about-stat-label">{% trans "Щасливих клієнтів" %}</span>
+        </div>
+        <div class="about-stat-card">
+            <i class="fas fa-box"></i>
+            <span class="about-stat-num">500+</span>
+            <span class="about-stat-label">{% trans "Товарів в асортименті" %}</span>
+        </div>
+        <div class="about-stat-card">
+            <i class="fas fa-star"></i>
+            <span class="about-stat-num">4.9</span>
+            <span class="about-stat-label">{% trans "Середній рейтинг" %}</span>
+        </div>
+    </div>
 </div>
+
+<style>
+    .about-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+        padding: 2.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: var(--shadow);
+    }
+
+    .about-icon-row {
+        margin-bottom: 1.5rem;
+    }
+
+    .about-icon-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(var(--accent-rgb, 99,102,241), 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        color: var(--accent);
+    }
+
+    .value-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.25rem;
+        padding: 1rem 1.25rem;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        background: var(--card-bg-alt);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .value-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .value-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: rgba(99,102,241,0.12);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    .about-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+    }
+
+    @media (max-width: 600px) {
+        .about-stats-grid { grid-template-columns: 1fr; }
+    }
+
+    .about-stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+        transition: transform 0.2s;
+    }
+
+    .about-stat-card:hover { transform: translateY(-4px); }
+
+    .about-stat-card i {
+        font-size: 1.8rem;
+        color: var(--accent);
+    }
+
+    .about-stat-num {
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--text-main);
+    }
+
+    .about-stat-label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+</style>
 {% endblock %}

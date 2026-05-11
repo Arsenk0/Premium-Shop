@@ -1,233 +1,112 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-11 12:08+0300\n"
+"Language: \n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version: \n"
-"Language: \n"
 
-
-
-#: templates/store/accounts/loyalty.html:33
-#, python-format
-msgid "250 балів = знижка 5%%"
-msgstr ""
-
-#: templates/404.html:4
-msgid "404 - Сторінку не знайдено"
-msgstr "404 - Stránka nenalezena"
-
-msgid "Order"
-msgstr "Objednávka"
-
-#: templates/500.html:4
-msgid "500 - Помилка сервера"
-msgstr ""
-
-#: templates/store/accounts/loyalty.html:36
-#, python-format
-msgid "600 балів = знижка 10%%"
-msgstr ""
-
-#: store/forms.py:96
-msgid "@username або посилання"
-msgstr "@username nebo odkaz"
-
-#: store/models.py:102
-msgid "Active"
-msgstr "Aktivní"
-
-#: store/models.py:45
-msgid "Article/SKU"
-msgstr "Article/SKU"
-
-#: templates/store/product/detail.html:310
-msgid "CM"
-msgstr "cm"
-
-#: templates/includes/modals.html:26
-msgid "Choose language and currency"
-msgstr "Vyberte jazyk a měnu"
-
-#: templates/includes/modals.html:53
-msgid "Confirm"
-msgstr "Potvrdit"
-
-#: store/models.py:106
-msgid "Coupon"
-msgstr "Kupón"
-
-#: store/models.py:98
-msgid "Coupon Code"
-msgstr "Slevový kód"
-
-#: store/models.py:107
-msgid "Coupons"
-msgstr "Kupóny"
-
-#: templates/includes/modals.html:44
-msgid "Currency"
-msgstr "Měna"
-
-#: templates/includes/modals.html:27
-msgid "Customize the site for comfortable viewing"
-msgstr "Přizpůsobte si web pro pohodlné prohlížení"
-
-#: shop_project/settings.py:134
-msgid "Czech"
-msgstr "Čeština"
-
-#: store/models.py:101
-msgid "Discount (%)"
-msgstr "Sleva (%)"
-
-#: templates/store/product/detail.html:307
-msgid "EU"
-msgstr "EU"
-
-#: store/forms.py:174 store/models.py:132 templates/store/order/create.html:76
-msgid "Email"
-msgstr "E-mail"
-
-#: shop_project/settings.py:133
-msgid "English"
-msgstr "Angličtina"
-
-#: templates/includes/modals.html:35
-msgid "Language"
-msgstr "Jazyk"
-
-#: templates/base.html:15
-msgid "Premium Shop - Твій Стиль"
-msgstr "Premium Shop - Váš styl"
-
-#: store/models.py:131
-msgid "Ref відділення"
-msgstr "Ref pobočky"
-
-#: store/models.py:129
-msgid "Ref міста"
-msgstr "Ref města"
-
-#: templates/store/product/list.html:15
-msgid "SEASON 2026"
-msgstr ""
-
-#: templates/store/product/detail.html:308
-msgid "US (Men)"
-msgstr "US (Muži)"
-
-#: templates/store/product/detail.html:309
-msgid "US (Women)"
-msgstr "US (Ženy)"
-
-#: shop_project/settings.py:132
+#: shop_project/settings.py:136
 msgid "Ukrainian"
 msgstr "Ukrajinština"
 
-#: store/models.py:99
-msgid "Valid From"
-msgstr "Platí od"
+#: shop_project/settings.py:137
+msgid "English"
+msgstr "Angličtina"
 
-#: store/models.py:100
-msgid "Valid To"
-msgstr "Platí do"
+#: shop_project/settings.py:138
+msgid "Czech"
+msgstr "Čeština"
 
-#: store/forms.py:172 store/models.py:119 templates/store/order/create.html:55
-msgid "Ім'я"
-msgstr "Jméno"
-
-#: store/forms.py:108
-msgid "Ім'я занадто коротке"
-msgstr "Jméno je příliš krátké"
-
-#: templates/store/accounts/loyalty.html:49
-msgid "Історія балів"
-msgstr "Historie bodů"
-
-msgid "Історія та статус ваших покупок у нашому магазині."
-msgstr "Historie a stav vašich nákupů v našem obchodě."
-
-msgid "ЗВ'ЯЖІТЬСЯ"
-msgstr "KONTAKTUJTE"
-
-msgid "З НАМИ"
-msgstr "NÁS"
-
-msgid "Ми завжди на зв'язку тут:"
-msgstr "Jsme tu vždy pro vás:"
-
-msgid "Наш офіс"
-msgstr "Naše kancelář"
-
-msgid "Де нас знайти:"
-msgstr "Kde nás najdete:"
-
-msgid "Адреса:"
-msgstr "Adresa:"
-
-msgid "Графік:"
-msgstr "Rozvrh:"
-
-msgid "Телефон:"
-msgstr "Telefon:"
-
-#: templates/emails/order_confirmation.html:134
-msgid "Адреса доставки"
-msgstr "Dodací adresa"
-
-msgid "Аналіз активності"
-msgstr "Analýza aktivity"
-
-#: templates/store/accounts/spending.html:15
-msgid "Аналітика витрат"
-msgstr "Analytika výdajů"
-
-#: templates/store/cart/detail.html:149
-#: templates/store/product/product_list_fragment.html:51
-#: templates/store/product/search.html:26
-msgid "Арт:"
-msgstr "SKU:"
-
-#: templates/store/product/detail.html:60
-msgid "Артикул:"
-msgstr "Katalogové číslo:"
-
-#: templates/base.html:43 templates/includes/modals.html:7
-msgid "Бажаєте додати в кошик?"
-msgstr "Chcete přidat do košíku?"
-
-#: templates/base.html:41
-msgid "Бажаєте додати в список бажань?"
-msgstr "Chcete přidat do seznamu přání?"
-
-#: store/models.py:91
-msgid "Бали"
-msgstr "Body"
-
-msgid "Безпека"
-msgstr "Zabezpečení"
-
-msgid "Бер"
-msgstr "Bře"
-
-msgid "Березень"
-msgstr "Březen"
-
-#: store/signals.py:16
-msgid "Бонус за реєстрацію"
-msgstr "Bonus za registraci"
-
-#: store/services/dashboard_service.py:67
-msgid "Будемо чекати на ваше замовлення!"
-msgstr "Těšíme se na vaši objednávku!"
+#: store/forms.py:12
+msgid "Вкажіть вашу пошту (для відновлення пароля)"
+msgstr "Zadejte svůj e-mail (pro obnovu hesla)"
 
 #: store/forms.py:14
 msgid "Будь ласка, введіть вашу електронну пошту."
 msgstr "Zadejte prosím svou e-mailovou adresu."
 
+#: store/forms.py:15
+msgid "Введіть коректну адресу електронної пошти."
+msgstr "Zadejte platnou e-mailovou adresu."
+
 #: store/forms.py:26
 msgid "Будь ласка, введіть ім'я користувача."
 msgstr "Zadejte prosím uživatelské jméno."
+
+#: store/forms.py:27
+msgid "Логін може містити лише літери, цифри та символи @/./+/-/_"
+msgstr ""
+"Přihlašovací jméno může obsahovat pouze písmena, číslice a znaky @/./+/-/_."
+
+#: store/forms.py:28
+msgid "Користувач із таким іменем вже існує. Будь ласка, оберіть інше."
+msgstr "Uživatel s tímto jménem již existuje. Vyberte prosím jiné."
+
+#: store/forms.py:34
+msgid "Логін повинен містити щонайменше 3 символи."
+msgstr "Uživatelské jméno musí obsahovat alespoň 3 znaky."
+
+#: store/forms.py:41
+msgid ""
+"Цей email вже використовується в системі. Можливо, ви вже зареєстровані?"
+msgstr ""
+
+#: store/forms.py:50
+msgid "Паролі не співпадають. Будь ласка, перевірте введені дані."
+msgstr ""
+
+#: store/forms.py:55
+msgid "Неправильний логін або пароль. Спробуйте ще раз."
+msgstr ""
+
+#: store/forms.py:56
+msgid "Цей акаунт деактивовано. Зверніться до служби підтримки."
+msgstr ""
+
+#: store/forms.py:62 store/forms.py:65
+msgid "Будь ласка, введіть логін та пароль."
+msgstr "Zadejte prosím uživatelské jméno."
+
+#: store/forms.py:74
+msgid ""
+"Номер телефону повинен бути у форматі: '+380999999999'. Від 9 до 15 цифр."
+msgstr ""
+
+#: store/forms.py:94
+msgid "Олександр"
+msgstr "Alexander"
+
+#: store/forms.py:95
+msgid "Шевченко"
+msgstr "Ševčenko"
+
+#: store/forms.py:96
+msgid "@username або посилання"
+msgstr "@username nebo odkaz"
+
+#: store/forms.py:97
+msgid "Почніть вводити місто..."
+msgstr "Začněte psát město..."
+
+#: store/forms.py:102
+msgid ""
+"Вкажіть ваш Instagram або Telegram. Якщо ви обрали \"WhatsApp\", це поле "
+"можна залишити порожнім."
+msgstr ""
+
+#: store/forms.py:108
+msgid "Ім'я занадто коротке"
+msgstr "Jméno je příliš krátké"
+
+#: store/forms.py:114
+msgid "Прізвище занадто коротке"
+msgstr "Příjmení je příliš krátké"
+
+#: store/forms.py:121
+msgid "Введіть коректний номер телефону (напр. +380...)"
+msgstr "Zadejte platné telefonní číslo (např. +380...)"
 
 #: store/forms.py:127
 msgid "Будь ласка, вкажіть місто"
@@ -237,539 +116,47 @@ msgstr "Uveďte prosím město"
 msgid "Будь ласка, оберіть відділення"
 msgstr "Vyberte prosím pobočku"
 
-#: store/models.py:167
-#, python-format
-msgid "Будь ласка, оберіть розмір для товару %(product)s"
-msgstr "Vyberte prosím velikost pro produkt %(product)s"
-
-#: store/views.py:236 templates/base.html:37
-#: templates/store/product/detail.html:94
-msgid "Будь ласка, оберіть розмір!"
-msgstr "Vyberte prosím velikost!"
-
-#: templates/store/product/product_list_fragment.html:60
-#: templates/store/product/search.html:31
-msgid "Більше"
-msgstr "Více"
-
-#: templates/store/product/detail.html:107
-msgid "В наявності"
-msgstr "Skladem"
-
-#: store/models.py:138
-msgid "В обробці"
-msgstr "Zpracovává se"
-
-#: store/forms.py:162
-msgid "Ваш відгук..."
-msgstr "Vaše recenze..."
-
-#: templates/store/product/detail.html:185
-msgid "Ваш коментар"
-msgstr "Váš komentář"
-
-#: templates/store/cart/detail.html:4 templates/store/cart/detail.html:126
-msgid "Ваш кошик"
-msgstr "Váš košík"
-
-#: templates/store/cart/detail.html:251
-msgid "Ваш кошик порожній"
-msgstr "Váš košík je prázdný"
-
-#: store/models.py:122
-msgid "Ваш нікнейм / Номер"
-msgstr "Vaše přezdívka / Číslo"
-
-#: templates/store/order/create.html:115
-msgid "Ваш нікнейм або номер (ми напишемо вам сюди)"
-msgstr "Vaše přezdívka nebo číslo (sem vám napíšeme)"
-
-msgid "Ваш пароль було успішно змінено. Тепер ви можете використовувати новий пароль для входу."
-msgstr ""
-
-msgid "Ваш рівень лояльності"
-msgstr "Vaše úroveň věrnosti"
-
-#: templates/store/wishlist.html:14
-msgid "Ваш список бажань"
-msgstr "Váš seznam přání"
-
-#: templates/store/wishlist.html:50
-msgid "Ваш список бажань порожній"
-msgstr "Váš seznam přání je prázdný"
-
-msgid "Ваша активність за останні місяці"
-msgstr "Vaše aktivita za poslední měsíce"
-
-#: templates/store/product/detail.html:181
-msgid "Ваша оцінка"
-msgstr "Vaše hodnocení"
-
-#: templates/store/accounts/spending.html:16
-msgid "Ваша історія покупок у візуальному форматі"
-msgstr "Vaše historie nákupů ve vizuálním formátu"
-
-#: templates/store/order/success.html:22
-msgid "Ваше замовлення:"
-msgstr "Vaše objednávka:"
-
-msgid "Ваші відгуки допоможуть іншим покупцям зробити правильний вибір."
-msgstr "Vaše recenze pomohou ostatním kupujícím udělat správné rozhodnutí."
-
-#: templates/store/order/list.html:61
-msgid "Ваші покупки з'являться тут після оформлення замовлення."
-msgstr "Vaše nákupy se zde zobrazí po zadání objednávky."
-
-#: templates/emails/order_confirmation.html:140
-msgid "Ваші товари"
-msgstr "Vaše produkty"
-
-#: store/forms.py:121
-msgid "Введіть коректний номер телефону (напр. +380...)"
-msgstr "Zadejte platné telefonní číslo (např. +380...)"
-
-#: store/forms.py:15
-msgid "Введіть коректну адресу електронної пошти."
-msgstr "Zadejte platnou e-mailovou adresu."
-
-#: store/forms.py:192
-msgid "Введіть промокод"
-msgstr "Zadejte slevový kód"
-
-msgid "Вер"
-msgstr "Zář"
-
-msgid "Вересень"
-msgstr "Září"
-
-#: templates/store/accounts/signup.html:183
-msgid "Вже є аккаунт?"
-msgstr "Již máte účet?"
-
-#: store/models.py:27 templates/store/product/detail.html:299
-msgid "Взуття"
-msgstr "Obuv"
-
-#: store/services/core.py:91 store/views.py:318
-msgid "Ви вже використовували цей промокод."
-msgstr "Tento slevový kód jste již použili."
-
-#: store/views.py:185
-msgid "Ви вже залишили відгук на цей товар."
-msgstr "Již jste na tento produkt napsali recenzi."
-
-msgid "Ви досягли максимального рівня знижки!"
-msgstr "Dosáhli jste maximální úrovně slevy!"
-
-msgid "Ви можете змінити свій пароль для захисту акаунта."
-msgstr "Heslo můžete změnit pro zabezpečení svého účtu."
-
-#: templates/emails/welcome.html:144
-msgid "Ви отримали цей лист, оскільки зареєструвалися на нашому сайті."
-msgstr "Tento e-mail jste obdrželi, protože jste se zaregistrovali na našem webu."
-
-#: templates/emails/order_confirmation.html:192
-msgid "Ви отримали цей лист, оскільки зробили замовлення на нашому сайті."
-msgstr "Tento e-mail jste obdrželi, protože jste provedli objednávku na našem webu."
-
-#: templates/emails/order_status_update.html:104
-msgid "Ви отримаєте ще одне повідомлення при подальших змінах."
-msgstr "O dalších změnách vás budeme informovat."
-
-msgid "Ви ще не залишили відгуків"
-msgstr "Zatím jste nezanechali žádné recenze"
-
-#: templates/store/accounts/user_reviews.html:53
-msgid "Ви ще не залишили жодного відгуку."
-msgstr "Zatím jste nenapsali žádnou recenzi."
-
-#: templates/base.html:40
-msgid "Видалено зі списку бажань"
-msgstr "Odstraněno ze seznamu přání"
-
-#: templates/store/cart/detail.html:167
-msgid "Видалити"
-msgstr "Odstranit"
-
-#: templates/store/cart/detail.html:199
-msgid "Видалити промокод"
-msgstr "Odstranit slevový kód"
-
-#: templates/store/accounts/profile.html:21
-msgid "Вийти"
-msgstr "Odhlásit se"
-
-#: store/models.py:140
-msgid "Виконано"
-msgstr "Vyřízeno"
-
-#: templates/store/order/create.html:49
-msgid "Використати дані з профілю"
-msgstr "Použít údaje z profilu"
-
-#: templates/store/order/success.html:64
-msgid "Виникли питання? Напишіть нам у підтримку."
-msgstr "Máte dotazy? Kontaktujte naši podporu."
-
-#: templates/store/accounts/spending.html:59
-msgid "Витрати"
-msgstr "Výdaje"
-
-#: templates/store/accounts/profile.html:44
-msgid "Витрачено"
-msgstr "Utraceno"
-
-#: store/forms.py:12
-msgid "Вкажіть вашу пошту (для відновлення пароля)"
-msgstr "Zadejte svůj e-mail (pro obnovu hesla)"
-
-#: templates/emails/order_confirmation.html:191
-#: templates/emails/order_status_update.html:108
-#: templates/emails/welcome.html:143 templates/includes/footer.html:32
-msgid "Всі права захищені."
-msgstr "Všechna práva vyhrazena."
-
-#: templates/store/product/list.html:71
-#: templates/store/product/product_list_fragment.html:8
-msgid "Всі товари"
-msgstr "Všechny produkty"
-
-#: templates/includes/navbar.html:17 templates/registration/login.html:4
-msgid "Вхід"
-msgstr "Přihlášení"
-
-#: templates/registration/login.html:9
-msgid "Вхід у кабінет"
-msgstr "Přihlášení k účtu"
-
-#: templates/store/product/list.html:90
-msgid "Від"
-msgstr "Od"
-
-#: templates/store/accounts/password_change.html:30
-#: templates/store/accounts/signup.html:42
-msgid "Від 8 символів"
-msgstr "8 a více znaků"
-
-#: store/models.py:180 store/models.py:208
-msgid "Відгук"
-msgstr "Recenze"
-
-#: store/models.py:187
-msgid "Відгук від"
-msgstr "Recenze od"
-
-#: store/services/dashboard_service.py:54
-msgid "Відгук на"
-msgstr "Recenze na"
-
-#: store/views.py:204
-msgid "Відгук на товар"
-msgstr "Recenze produktu"
-
-#: store/models.py:181 templates/includes/footer.html:16
-#: templates/includes/navbar.html:8 templates/store/accounts/profile.html:58
-msgid "Відгуки"
-msgstr "Recenze"
-
-#: templates/store/reviews.html:4
-msgid "Відгуки наших клієнтів - PREMIUM SHOP"
-msgstr "Hodnocení zákazníků - PREMIUM SHOP"
-
-#: templates/store/product/detail.html:150
-msgid "Відгуки покупців"
-msgstr "Hodnocení zákazníků"
-
-#: templates/store/product/detail.html:170
-msgid "Відгуків поки немає. Будьте першим!"
-msgstr "Zatím žádné recenze. Buďte první!"
-
-#: store/models.py:89 store/models.py:130
-msgid "Відділення"
-msgstr "Pobočka"
-
-#: templates/store/order/create.html:138
-msgid "Відділення Нової Пошти"
-msgstr "Pobočka Nové pošty"
-
-#: templates/store/order/success.html:19
-msgid "Відділення:"
-msgstr "Pobočka:"
-
-#: templates/base.html:38
-msgid "Відділень не знайдено"
-msgstr "Žádné pobočky nenalezeny"
-
-#: store/models.py:139
-msgid "Відправлено"
-msgstr "Odesláno"
-
-#: templates/emails/order_confirmation.html:187
-#: templates/store/accounts/profile.html:74
-msgid "Відстежити замовлення"
-msgstr "Sledovat objednávku"
-
-#: templates/store/accounts/loyalty.html:22
-msgid "Вільні бали"
-msgstr "Volné body"
-
-#: templates/emails/welcome.html:120
-msgid "Вітаємо у сім'ї!"
-msgstr "Vítejte v rodině!"
-
-#: templates/store/accounts/profile.html:15
-msgid "Вітаємо,"
-msgstr "Vítejte,"
-
-msgid "Гру"
-msgstr "Pro"
-
-msgid "Грудень"
-msgstr "Prosinec"
-
-#: templates/store/product/detail.html:333
-msgid "Груди (см)"
-msgstr "Hruď (cm)"
-
-#: templates/store/order/create.html:374
-msgid "Дані використано"
-msgstr "Údaje použity"
-
-#: templates/store/accounts/spending.html:38
-msgid "Дані відсутні"
-msgstr "Údaje chybí"
-
-#: store/models.py:176 store/models.py:215
-#: templates/emails/order_confirmation.html:130
-msgid "Дата"
-msgstr "Datum"
-
-msgid "Детальний звіт про ваші покупки та активність у магазині."
-msgstr "Podrobný přehled vašich nákupů a aktivity v obchodě."
-
-#: templates/store/order/success.html:16
-msgid "Деталі замовлення:"
-msgstr "Podrobnosti objednávky:"
-
-#: templates/store/accounts/spending.html:22
-msgid "Динаміка витрат"
-msgstr "Dynamika výdajů"
-
 #: store/forms.py:149
 #, python-format
 msgid "Для %(method)s нікнейм зазвичай починається з @"
 msgstr "Pro %(method)s přezdívka obvykle začíná na @"
 
-#: templates/store/product/detail.html:194
-msgid "Для того, щоб залишити відгук, будь ласка,"
-msgstr "Chcete-li zanechat recenzi, prosím"
+#: store/forms.py:164
+msgid "Ваш відгук..."
+msgstr "Vaše recenze..."
 
-#: templates/store/product/list.html:93
-msgid "До"
-msgstr "Do"
+#: store/forms.py:174 store/models.py:123 templates/store/order/create.html:55
+msgid "Ім'я"
+msgstr "Jméno"
 
-#: templates/store/accounts/password_change_done.html:12
-msgid "До кабінету"
-msgstr "Na účet"
+#: store/forms.py:175 store/models.py:124 templates/store/order/create.html:61
+msgid "Прізвище"
+msgstr "Příjmení"
 
-#: templates/store/product/search.html:40 templates/store/reviews.html:45
-msgid "До каталогу"
-msgstr "Do katalogu"
+#: store/forms.py:176 store/models.py:136 templates/store/order/create.html:76
+msgid "Email"
+msgstr "E-mail"
 
-msgid "До каталогу товарів"
-msgstr "Do katalogu produktů"
+#: store/forms.py:185 store/models.py:86 store/models.py:125
+#: templates/store/contact.html:71
+msgid "Телефон"
+msgstr "Telefon"
 
-#: templates/store/order/list.html:62
-msgid "До покупок"
-msgstr "K nakupování"
+#: store/forms.py:186
+msgid "Нікнейм або номер"
+msgstr "Přezdívka nebo číslo"
 
-#: templates/store/wishlist.html:51
-msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
-msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."
+#: store/forms.py:187 store/models.py:88 store/models.py:132
+msgid "Місто"
+msgstr "Město"
 
-#: store/services/dashboard_service.py:66
-msgid "Додано в обране:"
-msgstr "Přidáno do oblíbených:"
+#: store/forms.py:194 templates/store/cart/detail.html:182
+msgid "Промокод"
+msgstr "Slevový kód"
 
-#: templates/base.html:36
-msgid "Додано до кошика!"
-msgstr "Přidáno do košíku!"
-
-#: templates/base.html:39
-msgid "Додано до списку бажань!"
-msgstr "Přidáno do seznamu přání!"
-
-#: templates/store/product/detail.html:123
-msgid "Додати в кошик"
-msgstr "Přidat do košíku"
-
-#: templates/store/accounts/edit_profile.html:47
-#: templates/store/order/create.html:126
-msgid "Доставка"
-msgstr "Doprava"
-
-#: store/models.py:50
-msgid "Доступні розміри"
-msgstr "Dostupné velikosti"
-
-#: store/views.py:252
-msgid "Досягнуто максимальну кількість цього товару!"
-msgstr "Bylo dosaženo maximálního množství tohoto produktu!"
-
-#: templates/emails/order_confirmation.html:120
-msgid "Дякуємо за вибір!"
-msgstr "Děkujeme za váš výběr!"
-
-#: templates/store/order/success.html:10
-msgid "Дякуємо за замовлення!"
-msgstr "Děkujeme za vaši objednávku!"
-
-#: store/views.py:207
-msgid "Дякуємо! Ваш відгук успішно додано. Вам нараховано %(points)s балів!"
-msgstr "Děkujeme! Vaše recenze byla úspěšně přidána. Získali jste %(points)s bodů!"
-
-#: store/models.py:213 templates/store/cart/detail.html:134
-msgid "Дія"
-msgstr "Akce"
-
-#: templates/emails/welcome.html:129
-msgid "Ексклюзивні новинки раніше за всіх"
-msgstr "Exkluzivní novinky dříve než u ostatních"
-
-msgid "Експорт"
-msgstr "Export"
-
-msgid "Жов"
-msgstr "Říj"
-
-msgid "Жовтень"
-msgstr "Říjen"
-
-#: templates/store/product/list.html:54
-msgid "За назвою (A-Z)"
-msgstr "Dle názvu (A-Z)"
-
-#: templates/store/product/list.html:58
-msgid "За назвою (Z-A)"
-msgstr "Dle názvu (Z-A)"
-
-#: templates/store/accounts/edit_profile.html:63
-#: templates/store/order/create.html:146
-msgid "Завантаження відділень..."
-msgstr "Načítání poboček..."
-
-#: templates/base.html:37 templates/store/accounts/edit_profile.html:233
-#: templates/store/order/create.html:306
-msgid "Завантаження..."
-msgstr "Načítání..."
-
-msgid "Загалом"
-msgstr "Celkem"
-
-msgid "Місяць"
-msgstr "Měsíc"
-
-msgid "Рік"
-msgstr "Rok"
-
-#: templates/store/order/list.html:46
-msgid "Загальна сума"
-msgstr "Celková částka"
-
-#: templates/store/product/detail.html:73
-#: templates/store/product/detail.html:176
-msgid "Залишити відгук"
-msgstr "Napsat recenzi"
-
-#: store/models.py:146 store/models.py:147
-#: store/services/dashboard_service.py:41 store/signals.py:25
-#: templates/store/accounts/profile.html:37 templates/store/order/list.html:23
-msgid "Замовлення"
-msgstr "Objednávka"
-
-#: templates/store/order/success.html:4
-msgid "Замовлення підтверджено!"
-msgstr "Objednávka byla potvrzena!"
-
-#: store/tasks.py:18
-#, python-format
-msgid "Замовлення №%(order_id)s - Підтвердження"
-msgstr "Objednávka č.%(order_id)s - Potvrzení"
-
-msgid "Замовлень"
-msgstr "Objednávek"
-
-#: templates/includes/modals.html:13 templates/registration/login.html:76
-#: templates/store/accounts/signup.html:65
-msgid "Зареєструватися"
-msgstr "Zaregistrovat se"
-
-#: templates/store/cart/detail.html:188 templates/store/product/list.html:128
-msgid "Застосувати"
-msgstr "Použít"
-
-msgid "Зберегти всі налаштування"
-msgstr "Uložit všechna nastavení"
-
-#: templates/store/accounts/edit_profile.html:69
-msgid "Зберегти зміни"
-msgstr "Uložit změny"
-
-msgid "Зберіть ще"
-msgstr "Nasbírejte ještě"
-
-msgid "Звіт за місяцями"
-msgstr "Měsíční přehled"
-
-#: templates/store/accounts/spending.html:28
-msgid "Звіт за період"
-msgstr "Zpráva za období"
-
-#: templates/store/accounts/password_change.html:4
-#: templates/store/accounts/password_change.html:9
-msgid "Зміна пароля"
-msgstr "Změnit heslo"
-
-#: templates/store/accounts/profile.html:80
-msgid "Змінити пароль"
-msgstr "Změnit heslo"
-
-#: templates/includes/navbar.html:47
-msgid "Змінити тему"
-msgstr "Změnit motiv"
-
-#: templates/store/product/list.html:17
-msgid "Знайди свій ідеальний стиль сьогодні"
-msgstr "Najděte svůj dokonalý styl ještě dnes"
-
-#: templates/store/product/detail.html:294
-msgid "Знайдіть свій ідеальний розмір"
-msgstr "Najděte svou ideální velikost"
-
-#: templates/emails/order_confirmation.html:175
-#: templates/store/cart/detail.html:220 templates/store/order/success.html:50
-msgid "Знижка:"
-msgstr "Sleva:"
-
-#: store/models.py:79
-msgid "Зображення товару"
-msgstr "Obrázek produktu"
-
-#: store/models.py:80
-msgid "Зображення товарів"
-msgstr "Obrázky produktů"
-
-#: templates/store/reviews.html:9
-msgid "КАЖУТЬ"
-msgstr "ŘÍKAJÍ"
-
-#: templates/includes/navbar.html:15
-msgid "Кабінет"
-msgstr "Můj účet"
-
-#: templates/store/product/list.html:5
-msgid "Каталог одягу та кросівок"
-msgstr "Katalog oblečení a tenisek"
+#: store/forms.py:194
+msgid "Введіть промокод"
+msgstr "Zadejte slevový kód"
 
 #: store/models.py:12
 msgid "Категорія"
@@ -779,175 +166,1929 @@ msgstr "Kategorie"
 msgid "Категорії"
 msgstr "Kategorie"
 
-msgid "Кві"
-msgstr "Dub"
+#: store/models.py:27 templates/store/product/detail.html:299
+msgid "Взуття"
+msgstr "Obuv"
 
-msgid "Квітень"
-msgstr "Duben"
+#: store/models.py:28 templates/store/product/detail.html:300
+msgid "Одяг"
+msgstr "Oblečení"
 
-msgid "Керуйте своїми персональними даними та налаштуваннями безпеки."
-msgstr "Spravujte své osobní údaje a nastavení zabezpečení."
+#: store/models.py:31
+msgid "Тип"
+msgstr "Typ"
 
-#: store/models.py:175
-msgid "Коментар"
-msgstr "Komentář"
+#: store/models.py:32
+msgid "Порядок сортування"
+msgstr "Pořadí řazení"
 
-#: store/models.py:209 store/views.py:574
-msgid "Конвертація в купон"
-msgstr "Konverze bodů na kupon"
+#: store/models.py:35 store/models.py:167
+#: templates/store/product/detail.html:332
+#: templates/store/product/list.html:100
+msgid "Розмір"
+msgstr "Velikost"
 
-#: templates/store/accounts/loyalty.html:40
-msgid "Конвертувати"
-msgstr "Konvertovat"
+#: store/models.py:36
+msgid "Розміри"
+msgstr "Velikosti"
 
-#: templates/includes/footer.html:17 templates/includes/navbar.html:9
-msgid "Контакти"
-msgstr "Kontakty"
+#: store/models.py:45
+msgid "Article/SKU"
+msgstr "Article/SKU"
 
-#: templates/store/accounts/edit_profile.html:35
-#: templates/store/order/create.html:35
-msgid "Контактна інформація"
-msgstr "Kontaktní informace"
+#: store/models.py:50
+msgid "Доступні розміри"
+msgstr "Dostupné velikosti"
 
-#: store/models.py:103 store/models.py:115
+#: store/models.py:53
+msgid "Перегляди"
+msgstr "Uložit změny"
+
+#: store/models.py:58 templates/store/cart/detail.html:130
+msgid "Товар"
+msgstr "Produkt"
+
+#: store/models.py:59
+msgid "Товари"
+msgstr "Produkty"
+
+#: store/models.py:80
+msgid "Зображення товару"
+msgstr "Obrázek produktu"
+
+#: store/models.py:81
+msgid "Зображення товарів"
+msgstr "Obrázky produktů"
+
+#: store/models.py:87
+msgid "Нікнейм"
+msgstr "Přezdívka"
+
+#: store/models.py:90 store/models.py:134
+msgid "Відділення"
+msgstr "Pobočka"
+
+#: store/models.py:92
+msgid "Бали"
+msgstr "Body"
+
+#: store/models.py:93
+msgid "Telegram Chat ID"
+msgstr ""
+
+#: store/models.py:94
+msgid "Telegram Link Token"
+msgstr ""
+
+#: store/models.py:95
+msgid "Token Created At"
+msgstr ""
+
+#: store/models.py:98
+msgid "Профіль"
+msgstr "Profil"
+
+#: store/models.py:102
+msgid "Coupon Code"
+msgstr "Slevový kód"
+
+#: store/models.py:103
+msgid "Valid From"
+msgstr "Platí od"
+
+#: store/models.py:104
+msgid "Valid To"
+msgstr "Platí do"
+
+#: store/models.py:105
+msgid "Discount (%)"
+msgstr "Sleva (%)"
+
+#: store/models.py:106
+msgid "Active"
+msgstr "Aktivní"
+
+#: store/models.py:107 store/models.py:119
 msgid "Користувач"
 msgstr "Uživatel"
 
-#: store/forms.py:28
-msgid "Користувач із таким іменем вже існує. Будь ласка, оберіть інше."
-msgstr "Uživatel s tímto jménem již existuje. Vyberte prosím jiné."
+#: store/models.py:110
+msgid "Coupon"
+msgstr "Kupón"
 
-#: store/models.py:117
+#: store/models.py:111
+msgid "Coupons"
+msgstr "Kupóny"
+
+#: store/models.py:121
 msgid "Купон"
 msgstr ""
 
-#: templates/store/cart/detail.html:131
-msgid "Кількість"
-msgstr "Množství"
+#: store/models.py:122
+msgid "Сума знижки"
+msgstr ""
+
+#: store/models.py:126
+msgid "Ваш нікнейм / Номер"
+msgstr "Vaše přezdívka / Číslo"
+
+#: store/models.py:131 templates/store/order/create.html:88
+msgid "Спосіб зв'язку"
+msgstr "Způsob kontaktu"
+
+#: store/models.py:133
+msgid "Ref міста"
+msgstr "Ref města"
+
+#: store/models.py:135
+msgid "Ref відділення"
+msgstr "Ref pobočky"
+
+#: store/models.py:137
+msgid "Створено"
+msgstr "Vytvořeno"
+
+#: store/models.py:138
+msgid "Оновлено"
+msgstr "Aktualizováno"
+
+#: store/models.py:139
+msgid "Оплачено"
+msgstr "Zaplaceno"
+
+#: store/models.py:141 store/telegram_bot/messages.py:87
+msgid "Нове"
+msgstr "Nové"
+
+#: store/models.py:142 store/telegram_bot/messages.py:88
+msgid "В обробці"
+msgstr "Zpracovává se"
+
+#: store/models.py:143 store/telegram_bot/messages.py:89
+msgid "Відправлено"
+msgstr "Odesláno"
+
+#: store/models.py:144 store/telegram_bot/messages.py:90
+msgid "Виконано"
+msgstr "Vyřízeno"
+
+#: store/models.py:145 store/telegram_bot/messages.py:91
+msgid "Скасовано"
+msgstr "Zrušeno"
+
+#: store/models.py:146 store/services/dashboard_service.py:49
+msgid "Статус"
+msgstr "Stav"
+
+#: store/models.py:150 store/models.py:151
+#: templates/store/accounts/profile.html:44
+#: templates/store/accounts/telegram.html:176
+#: templates/store/order/list.html:22
+msgid "Замовлення"
+msgstr "Objednávka"
+
+#: store/models.py:172
+#, python-format
+msgid "Будь ласка, оберіть розмір для товару %(product)s"
+msgstr "Vyberte prosím velikost pro produkt %(product)s"
+
+#: store/models.py:179
+msgid "Рейтинг"
+msgstr "Hodnocení"
+
+#: store/models.py:180
+msgid "Коментар"
+msgstr "Komentář"
+
+#: store/models.py:181 store/models.py:220
+#: templates/emails/order_confirmation.html:130
+msgid "Дата"
+msgstr "Datum"
+
+#: store/models.py:185 store/models.py:213
+msgid "Відгук"
+msgstr "Recenze"
+
+#: store/models.py:186 templates/includes/footer.html:14
+#: templates/includes/navbar.html:8 templates/store/accounts/profile.html:65
+msgid "Відгуки"
+msgstr "Recenze"
+
+#: store/models.py:192
+msgid "Відгук від"
+msgstr "Recenze od"
+
+#: store/models.py:192 templates/store/reviews.html:30
+msgid "на"
+msgstr "na"
+
+#: store/models.py:203 templates/includes/navbar.html:51
+#: templates/store/wishlist.html:4
+msgid "Список бажань"
+msgstr "Seznam přání"
+
+#: store/models.py:204
+msgid "Списки бажань"
+msgstr "Seznamy přání"
+
+#: store/models.py:211 templates/includes/navbar.html:18
+#: templates/store/accounts/signup.html:4
+msgid "Реєстрація"
+msgstr "Registrace"
 
 #: store/models.py:212
+msgid "Покупка"
+msgstr "Nákup"
+
+#: store/models.py:214 store/views.py:755
+msgid "Конвертація в купон"
+msgstr "Konverze bodů na kupon"
+
+#: store/models.py:217
 msgid "Кількість балів"
 msgstr "Počet bodů"
+
+#: store/models.py:218 templates/store/cart/detail.html:134
+msgid "Дія"
+msgstr "Akce"
+
+#: store/models.py:219 templates/store/product/detail.html:99
+msgid "Опис"
+msgstr "Popis"
+
+#: store/models.py:223
+msgid "Транзакція балів"
+msgstr "Transakce bodů"
+
+#: store/models.py:224
+msgid "Транзакції балів"
+msgstr "Transakce bodů"
+
+#: store/services/core.py:91 store/views.py:488
+msgid "Ви вже використовували цей промокод."
+msgstr "Tento slevový kód jste již použili."
+
+#: store/services/dashboard_service.py:48
+#: store/services/dashboard_service.py:88
+msgid "Order"
+msgstr "Objednávka"
+
+#: store/services/dashboard_service.py:61
+msgid "Відгук на"
+msgstr "Recenze na"
+
+#: store/services/dashboard_service.py:62
+msgid "Оцінка:"
+msgstr "Hodnocení:"
+
+#: store/services/dashboard_service.py:73
+msgid "Додано в обране:"
+msgstr "Přidáno do oblíbených:"
+
+#: store/services/dashboard_service.py:74
+msgid "Будемо чекати на ваше замовлення!"
+msgstr "Těšíme se na vaši objednávku!"
+
+#: store/services/dashboard_service.py:82
+msgid "балів"
+msgstr "bodů"
+
+#: store/signals.py:16
+msgid "Бонус за реєстрацію"
+msgstr "Bonus za registraci"
+
+#: store/tasks.py:21
+#, python-format
+msgid "Замовлення №%(order_id)s - Підтвердження"
+msgstr "Objednávka č.%(order_id)s - Potvrzení"
+
+#: store/tasks.py:60
+#, python-format
+msgid "Ласкаво просимо до нашого магазину, %(username)s!"
+msgstr "Vítejte v našem obchodě, %(username)s!"
+
+#: store/tasks.py:89
+#, python-format
+msgid "Оновлення статусу замовлення №%(order_id)s"
+msgstr "Aktualizace stavu objednávky č.%(order_id)s"
+
+#: store/telegram_bot/messages.py:9
+msgid ""
+"👋 Вітаємо в боті <b>Premium Shop</b>!\n"
+"\n"
+"Тут ви можете:\n"
+"📦 Переглядати свої замовлення\n"
+"🔔 Отримувати сповіщення про зміну статусів\n"
+"🎁 Керувати бонусними балами\n"
+"\n"
+"Щоб почати — прив'яжіть свій акаунт на сайті.\n"
+"Натисніть кнопку нижче та введіть отриманий код:"
+msgstr ""
+"👋 Vítejte v botu <b>Premium Shop</b>!\n"
+"\n"
+"Zde můžete:\n"
+"📦 Prohlížet své objednávky\n"
+"🔔 Dostávat oznámení o změnách stavu\n"
+"🎁 Spravovat bonusové body\n"
+"\n"
+"Chcete-li začít — propojte svůj účet na webu.\n"
+"Klikněte na tlačítko níže a zadejte obdržený kód:"
+
+#: store/telegram_bot/messages.py:19
+#, python-brace-format
+msgid ""
+"👋 З поверненням, <b>{username}</b>!\n"
+"\n"
+"Ваш акаунт прив'язано ✅\n"
+"\n"
+"Доступні команди:\n"
+"/orders — мої замовлення\n"
+"/loyalty — бонусні бали\n"
+"/promo — отримати промокод\n"
+"/help — допомога"
+msgstr ""
+
+#: store/telegram_bot/messages.py:29
+msgid ""
+"🛍 <b>Premium Shop Bot — Команди</b>\n"
+"\n"
+"/orders — переглянути останні замовлення\n"
+"/order <i>ID</i> — деталі замовлення\n"
+"/loyalty — баланс балів і тир\n"
+"/promo — згенерувати промокод за бали\n"
+"/unlink — від'єднати Telegram-акаунт\n"
+"/help — ця довідка\n"
+"\n"
+"💬 <i>Потрібна допомога? Напишіть нам на сайті.</i>"
+msgstr ""
+
+#: store/telegram_bot/messages.py:40
+msgid ""
+"❌ Ваш Telegram не прив'язаний до жодного акаунта.\n"
+"\n"
+"Зайдіть на сайт → Кабінет → Telegram і отримайте код."
+msgstr ""
+
+#: store/telegram_bot/messages.py:46
+msgid ""
+"🔐 Введіть 6-значний код, який ви отримали на сайті\n"
+"у розділі <b>Кабінет → Telegram</b>:"
+msgstr ""
+
+#: store/telegram_bot/messages.py:51
+#, python-brace-format
+msgid ""
+"✅ <b>Акаунт успішно прив'язано!</b>\n"
+"\n"
+"Вітаємо, <b>{username}</b>! 🎉\n"
+"Тепер ви будете отримувати сповіщення про ваші замовлення прямо тут.\n"
+"\n"
+"/help — список команд"
+msgstr ""
+
+#: store/telegram_bot/messages.py:58
+msgid ""
+"❌ Невірний або застарілий код. Спробуйте ще раз.\n"
+"\n"
+"Отримайте новий код на сайті у розділі <b>Кабінет → Telegram</b>."
+msgstr ""
+
+#: store/telegram_bot/messages.py:63
+#, python-brace-format
+msgid ""
+"ℹ️ Ваш Telegram вже прив'язано до акаунта <b>{username}</b>.\n"
+"\n"
+"Щоб від'єднати — використайте /unlink"
+msgstr ""
+
+#: store/telegram_bot/messages.py:68
+#, python-brace-format
+msgid ""
+"⚠️ Ви впевнені, що хочете від'єднати Telegram від акаунта <b>{username}</b>?\n"
+"\n"
+"Ви більше не будете отримувати сповіщення про замовлення."
+msgstr ""
+
+#: store/telegram_bot/messages.py:72
+msgid "✅ Акаунт від'єднано. Щоб прив'язати знову — зайдіть на сайт."
+msgstr ""
+
+#: store/telegram_bot/messages.py:73
+msgid "↩️ Від'єднання скасовано."
+msgstr ""
+
+#: store/telegram_bot/messages.py:76
+msgid "📭 У вас ще немає замовлень."
+msgstr "Zatím nemáte žádné objednávky"
+
+#: store/telegram_bot/messages.py:94
+msgid ""
+"📦 <b>Ваші останні замовлення:</b>\n"
+"\n"
+msgstr ""
+"📦 <b>Vaše poslední objednávky:</b>\n"
+"\n"
+
+#: store/telegram_bot/messages.py:97
+#, python-brace-format
+msgid ""
+"{icon} <b>Замовлення #{order_id}</b>\n"
+"   Статус: {status}\n"
+"   Сума: {total} грн\n"
+"   Дата: {date}\n"
+msgstr ""
+
+#: store/telegram_bot/messages.py:104
+#, python-brace-format
+msgid ""
+"📦 <b>Замовлення #{order_id}</b>\n"
+"\n"
+"{icon} Статус: <b>{status}</b>\n"
+"💰 Сума: <b>{total} грн</b>\n"
+"📅 Дата: {date}\n"
+"📍 Доставка: {city}, {warehouse}\n"
+"\n"
+"<b>Товари:</b>\n"
+"{items}"
+msgstr ""
+
+#: store/telegram_bot/messages.py:112
+#, python-brace-format
+msgid "  • {name}{size} × {qty} — {price} грн\n"
+msgstr ""
+
+#: store/telegram_bot/messages.py:114
+#, python-brace-format
+msgid "❌ Замовлення #{order_id} не знайдено або не належить вашому акаунту."
+msgstr ""
+
+#: store/telegram_bot/messages.py:118
+#, python-brace-format
+msgid ""
+"🎁 <b>Ваші бонусні бали</b>\n"
+"\n"
+"💎 Поточний баланс: <b>{points} балів</b>\n"
+"🏆 Рівень: <b>{tier}</b>\n"
+"📊 Прогрес до наступного: {progress}%\n"
+"\n"
+"<i>Бали нараховуються за покупки, відгуки та реєстрацію.</i>\n"
+"\n"
+"💡 /promo — отримати промокод за бали"
+msgstr ""
+
+#: store/telegram_bot/messages.py:126
+msgid "🥉 Бронзовий (до 250 балів)"
+msgstr ""
+
+#: store/telegram_bot/messages.py:127
+msgid "🥈 Срібний (250–600 балів)"
+msgstr ""
+
+#: store/telegram_bot/messages.py:128
+msgid "🥇 Золотий (600+ балів)"
+msgstr ""
+
+#: store/telegram_bot/messages.py:131
+#, python-brace-format
+msgid ""
+"❌ Недостатньо балів для генерації промокоду.\n"
+"\n"
+"Вам потрібно мінімум <b>250 балів</b> для знижки 5%\n"
+"або <b>600 балів</b> для знижки 10%.\n"
+"\n"
+"Поточний баланс: <b>{points} балів</b>"
+msgstr ""
+
+#: store/telegram_bot/messages.py:138
+#, python-brace-format
+msgid ""
+"🎟 <b>Оберіть варіант промокоду:</b>\n"
+"\n"
+"🥈 250 балів → знижка 5%\n"
+"🥇 600 балів → знижка 10%\n"
+"\n"
+"Поточний баланс: <b>{points} балів</b>"
+msgstr ""
+
+#: store/telegram_bot/messages.py:145
+#, python-brace-format
+msgid ""
+"🎉 <b>Ваш промокод готовий!</b>\n"
+"\n"
+"🎟 Код: <code>{code}</code>\n"
+"💸 Знижка: <b>{discount}%</b>\n"
+"⏳ Дійсний до: {valid_to}\n"
+"\n"
+"Скопіюйте код і застосуйте при оформленні замовлення на сайті."
+msgstr ""
+
+#: store/telegram_bot/messages.py:154
+#, python-brace-format
+msgid ""
+"🔔 <b>Оновлення замовлення #{order_id}</b>\n"
+"\n"
+"{icon} Новий статус: <b>{status}</b>\n"
+"💰 Сума: {total} грн\n"
+"📅 Оновлено: {updated}\n"
+"\n"
+"{extra_message}"
+msgstr ""
+"🔔 <b>Aktualizace objednávky #{order_id}</b>\n"
+"\n"
+"{icon} Nový stav: <b>{status}</b>\n"
+"💰 Celkem: {total} грн\n"
+"📅 Aktualizováno: {updated}\n"
+"\n"
+"{extra_message}"
+
+#: store/telegram_bot/messages.py:162
+msgid "⚙️ Ваше замовлення прийнято в обробку."
+msgstr "⚙️ Vaše objednávka byla přijata ke zpracování."
+
+#: store/telegram_bot/messages.py:163
+msgid "🚚 Ваше замовлення відправлено! Очікуйте доставку."
+msgstr "🚚 Vaše objednávka byla odeslána! Očekávejte doručení."
+
+#: store/telegram_bot/messages.py:164
+msgid "✅ Замовлення виконано. Дякуємо за покупку! 🛍"
+msgstr "✅ Objednávka byla vyřízena. Děkujeme za nákup! 🛍"
+
+#: store/telegram_bot/messages.py:165
+msgid "❌ Ваше замовлення скасовано. Зверніться до підтримки."
+msgstr "❌ Vaše objednávka byla zrušena. Kontaktujte podporu."
+
+#: store/views.py:228 templates/store/accounts/spending.html:93
+msgid "Січень"
+msgstr "Leden"
+
+#: store/views.py:228 templates/store/accounts/spending.html:94
+msgid "Лютий"
+msgstr "Únor"
+
+#: store/views.py:228 templates/store/accounts/spending.html:95
+msgid "Березень"
+msgstr "Březen"
+
+#: store/views.py:228 templates/store/accounts/spending.html:96
+msgid "Квітень"
+msgstr "Duben"
+
+#: store/views.py:229 templates/store/accounts/spending.html:97
+msgid "Травень"
+msgstr "Květen"
+
+#: store/views.py:229 templates/store/accounts/spending.html:98
+msgid "Червень"
+msgstr "Červen"
+
+#: store/views.py:229 templates/store/accounts/spending.html:99
+msgid "Липень"
+msgstr "Červenec"
+
+#: store/views.py:229 templates/store/accounts/spending.html:100
+msgid "Серпень"
+msgstr "Srpen"
+
+#: store/views.py:230 templates/store/accounts/spending.html:101
+msgid "Вересень"
+msgstr "Září"
+
+#: store/views.py:230 templates/store/accounts/spending.html:102
+msgid "Жовтень"
+msgstr "Říjen"
+
+#: store/views.py:230 templates/store/accounts/spending.html:103
+msgid "Листопад"
+msgstr "Listopad"
+
+#: store/views.py:230 templates/store/accounts/spending.html:104
+msgid "Грудень"
+msgstr "Prosinec"
+
+#: store/views.py:241
+msgid "Місяць"
+msgstr "Měsíc"
+
+#: store/views.py:241
+msgid "Рік"
+msgstr "Rok"
+
+#: store/views.py:241 templates/store/accounts/spending.html:169
+msgid "Витрати"
+msgstr "Výdaje"
+
+#: store/views.py:253 templates/store/accounts/spending.html:23
+msgid "Загалом"
+msgstr "Celkem"
+
+#: store/views.py:266
+msgid "Налаштування успішно збережено!"
+msgstr "Objednávka byla potvrzena!"
+
+#: store/views.py:293
+msgid "Код згенеровано! Відправте його боту протягом 10 хвилин."
+msgstr "manažer vás bude kontaktovat do 15 minut."
+
+#: store/views.py:311
+msgid "Telegram-акаунт успішно від'єднано."
+msgstr ""
+
+#: store/views.py:354
+msgid "Ви вже залишили відгук на цей товар."
+msgstr "Již jste na tento produkt napsali recenzi."
+
+#: store/views.py:375
+msgid "Відгук на товар"
+msgstr "Recenze produktu"
+
+#: store/views.py:378
+#, python-format
+msgid "Дякуємо! Ваш відгук успішно додано. Вам нараховано %(points)s балів!"
+msgstr ""
+"Děkujeme! Vaše recenze byla úspěšně přidána. Získali jste %(points)s bodů!"
+
+#: store/views.py:407 templates/base.html:37
+#: templates/store/product/detail.html:94
+msgid "Будь ласка, оберіть розмір!"
+msgstr "Vyberte prosím velikost!"
+
+#: store/views.py:413
+msgid "Товар відсутній на складі!"
+msgstr ""
+
+#: store/views.py:422
+msgid "Досягнуто максимальну кількість цього товару!"
+msgstr "Bylo dosaženo maximálního množství tohoto produktu!"
+
+#: store/views.py:484
+msgid "Цей промокод належить іншому користувачу."
+msgstr "Tento slevový kód patří jinému uživateli."
+
+#: store/views.py:492
+msgid "Промокод успішно застосовано!"
+msgstr "Slevový kód byl úspěšně uplatněn!"
+
+#: store/views.py:495
+msgid "Недійсний промокод."
+msgstr "Neplatný slevový kód."
+
+#: store/views.py:502
+msgid "Промокод видалено."
+msgstr "Slevový kód byl odstraněn."
+
+#: store/views.py:719
+msgid "Невірний варіант конвертації."
+msgstr "Neplatná možnost konverze."
+
+#: store/views.py:730
+msgid "Недостатньо балів для конвертації."
+msgstr "Nemáte dostatek bodů pro konverzi."
+
+#: store/views.py:762
+#, python-format
+msgid "Успішно конвертовано! Ваш промокод: %(code)s"
+msgstr ""
+
+#: templates/404.html:4
+msgid "404 - Сторінку не знайдено"
+msgstr "404 - Stránka nenalezena"
+
+#: templates/404.html:9
+msgid "Халепа! Здається, ви загубилися."
+msgstr ""
+
+#: templates/404.html:10 templates/500.html:10 templates/store/about.html:14
+#: templates/store/contact.html:14 templates/store/reviews.html:12
+msgid "На головну"
+msgstr "Domů"
+
+#: templates/500.html:4
+msgid "500 - Помилка сервера"
+msgstr ""
+
+#: templates/500.html:9
+msgid "Ой! На сервері сталася помилка. Ми вже працюємо над цим."
+msgstr ""
+
+#: templates/base.html:10
+msgid ""
+"Premium Shop - найкращий преміум одяг та кросівки в Україні. Тільки "
+"оригінальна якість та преміальний сервіс."
+msgstr ""
+
+#: templates/base.html:11
+msgid "кросівки, преміум одяг, одяг, Україна, купити кросівки, premium shop"
+msgstr "tenisky, premium, oblečení, Ukrajina, koupit tenisky, premium shop"
+
+#: templates/base.html:15
+msgid "Premium Shop - Твій Стиль"
+msgstr "Premium Shop - Váš styl"
+
+#: templates/base.html:16
+msgid "Найкращий вибір преміального одягу та взуття."
+msgstr "Nejlepší výběr prémiového oblečení a obuvi."
+
+#: templates/base.html:36
+msgid "Додано до кошика!"
+msgstr "Přidáno do košíku!"
+
+#: templates/base.html:36
+msgid "Халепа, щось пішло не так!"
+msgstr "Jejda, něco se nepovedlo!"
+
+#: templates/base.html:37 templates/store/accounts/settings.html:268
+#: templates/store/order/create.html:306
+msgid "Завантаження..."
+msgstr "Načítání..."
+
+#: templates/base.html:38 templates/store/accounts/settings.html:60
+#: templates/store/accounts/settings.html:277
+#: templates/store/order/create.html:317
+msgid "Оберіть відділення"
+msgstr "Vyberte pobočku"
+
+#: templates/base.html:38
+msgid "Відділень не знайдено"
+msgstr "Žádné pobočky nenalezeny"
+
+#: templates/base.html:39
+msgid "Додано до списку бажань!"
+msgstr "Přidáno do seznamu přání!"
+
+#: templates/base.html:40
+msgid "Видалено зі списку бажань"
+msgstr "Odstraněno ze seznamu přání"
+
+#: templates/base.html:41
+msgid "Бажаєте додати в список бажань?"
+msgstr "Chcete přidat do seznamu přání?"
+
+#: templates/base.html:42
+msgid ""
+"Увійдіть або зареєструйтесь, щоб ваші улюблені товари завжди були під рукою!"
+msgstr ""
+
+#: templates/base.html:43 templates/includes/modals.html:7
+msgid "Бажаєте додати в кошик?"
+msgstr "Chcete přidat do košíku?"
+
+#: templates/base.html:44 templates/includes/modals.html:8
+msgid ""
+"Увійдіть або зареєструйтесь, щоб ваші товари зберігалися в особистому "
+"кабінеті та ви отримували бонуси!"
+msgstr ""
+
+#: templates/emails/order_confirmation.html:6
+msgid "Підтвердження замовлення"
+msgstr "Potvrzení objednávky"
+
+#: templates/emails/order_confirmation.html:120
+msgid "Дякуємо за вибір!"
+msgstr "Děkujeme za váš výběr!"
+
+#: templates/emails/order_confirmation.html:121
+#: templates/emails/welcome.html:121
+msgid "Привіт"
+msgstr "Ahoj"
+
+#: templates/emails/order_confirmation.html:121
+msgid ""
+"Ми вже готуємо ваше замовлення до відправлення. Ось деталі вашої покупки:"
+msgstr ""
+
+#: templates/emails/order_confirmation.html:126
+msgid "Номер замовлення"
+msgstr "Číslo objednávky"
+
+#: templates/emails/order_confirmation.html:134
+msgid "Адреса доставки"
+msgstr "Dodací adresa"
+
+#: templates/emails/order_confirmation.html:140
+msgid "Ваші товари"
+msgstr "Vaše produkty"
+
+#: templates/emails/order_confirmation.html:155
+#: templates/store/cart/detail.html:150 templates/store/order/success.html:36
+msgid "Розмір:"
+msgstr "Velikost:"
 
 #: templates/emails/order_confirmation.html:157
 msgid "Кількість:"
 msgstr "Množství:"
 
+#: templates/emails/order_confirmation.html:170
+#: templates/store/cart/detail.html:212
+msgid "Сума:"
+msgstr "Mezisoučet:"
+
+#: templates/emails/order_confirmation.html:175
+#: templates/store/cart/detail.html:220 templates/store/order/success.html:50
+msgid "Знижка:"
+msgstr "Sleva:"
+
+#: templates/emails/order_confirmation.html:180
+msgid "Разом:"
+msgstr "Celkem:"
+
+#: templates/emails/order_confirmation.html:187
+msgid "Відстежити замовлення"
+msgstr "Sledovat objednávku"
+
+#: templates/emails/order_confirmation.html:191
+#: templates/emails/order_status_update.html:108
+#: templates/emails/welcome.html:143 templates/includes/footer.html:30
+msgid "Всі права захищені."
+msgstr "Všechna práva vyhrazena."
+
+#: templates/emails/order_confirmation.html:192
+msgid "Ви отримали цей лист, оскільки зробили замовлення на нашому сайті."
+msgstr ""
+"Tento e-mail jste obdrželi, protože jste provedli objednávku na našem webu."
+
+#: templates/emails/order_status_update.html:6
+msgid "Оновлення статусу замовлення"
+msgstr "Aktualizace stavu objednávky"
+
+#: templates/emails/order_status_update.html:101
+msgid "Оновлення статусу"
+msgstr "Aktualizace stavu"
+
+#: templates/emails/order_status_update.html:102
+msgid "Статус вашого замовлення"
+msgstr "Stav vaší objednávky"
+
+#: templates/emails/order_status_update.html:102
+msgid "змінено на:"
+msgstr "byl změněn na:"
+
+#: templates/emails/order_status_update.html:104
+msgid "Ви отримаєте ще одне повідомлення при подальших змінах."
+msgstr "O dalších změnách vás budeme informovat."
+
+#: templates/emails/order_status_update.html:105
+msgid "Переглянути замовлення"
+msgstr "Zobrazit objednávku"
+
 #: templates/emails/welcome.html:6
 msgid "Ласкаво просимо до Premium Shop"
 msgstr "Vítejte v Premium Shopu"
 
-#: store/tasks.py:57
-#, python-format
-msgid "Ласкаво просимо до нашого магазину, %(username)s!"
-msgstr "Vítejte v našem obchodě, %(username)s!"
+#: templates/emails/welcome.html:120
+msgid "Вітаємо у сім'ї!"
+msgstr "Vítejte v rodině!"
 
-msgid "Лип"
-msgstr "Čvc"
+#: templates/emails/welcome.html:121
+msgid ""
+"Ви зробили перший крок до виняткового стилю. Ми раді, що ви тепер з нами."
+msgstr ""
 
-msgid "Липень"
-msgstr "Červenec"
+#: templates/emails/welcome.html:122
+msgid "Почати шопінг"
+msgstr "Začít nakupovat"
 
-msgid "Лис"
-msgstr "Lis"
+#: templates/emails/welcome.html:125
+msgid "Що на вас чекає:"
+msgstr "Co vás čeká:"
 
-msgid "Листопад"
-msgstr "Listopad"
+#: templates/emails/welcome.html:129
+msgid "Ексклюзивні новинки раніше за всіх"
+msgstr "Exkluzivní novinky dříve než u ostatních"
+
+#: templates/emails/welcome.html:133
+msgid "Преміальна якість кожного товару"
+msgstr "Prémiová kvalita každého produktu"
+
+#: templates/emails/welcome.html:137
+msgid "Швидка та надійна доставка"
+msgstr "Rychlé a spolehlivé doručení"
+
+#: templates/emails/welcome.html:144
+msgid "Ви отримали цей лист, оскільки зареєструвалися на нашому сайті."
+msgstr ""
+"Tento e-mail jste obdrželi, protože jste se zaregistrovali na našem webu."
+
+#: templates/includes/footer.html:7
+msgid ""
+"Найкращий преміум одяг та кросівки в Україні. Тільки оригінальна якість та "
+"преміальний сервіс."
+msgstr ""
+"Nejlepší prémiové oblečení a tenisky na Ukrajině. Pouze originální kvalita a "
+"prémiový servis."
+
+#: templates/includes/footer.html:11
+msgid "Навігація"
+msgstr "Navigace"
+
+#: templates/includes/footer.html:13 templates/includes/navbar.html:7
+msgid "Про нас"
+msgstr "O nás"
+
+#: templates/includes/footer.html:15 templates/includes/navbar.html:9
+msgid "Контакти"
+msgstr "Kontakty"
+
+#: templates/includes/footer.html:19
+msgid "Соцмережі"
+msgstr "Sociální sítě"
+
+#: templates/includes/modals.html:11 templates/registration/login.html:44
+#: templates/store/accounts/signup.html:183
+msgid "Увійти"
+msgstr "Přihlásit se"
+
+#: templates/includes/modals.html:13 templates/registration/login.html:76
+#: templates/store/accounts/signup.html:65
+msgid "Зареєструватися"
+msgstr "Zaregistrovat se"
+
+#: templates/includes/modals.html:15
+msgid "Продовжити як гість"
+msgstr "Pokračovat jako host"
+
+#: templates/includes/modals.html:26
+msgid "Choose language and currency"
+msgstr "Vyberte jazyk a měnu"
+
+#: templates/includes/modals.html:27
+msgid "Customize the site for comfortable viewing"
+msgstr "Přizpůsobte si web pro pohodlné prohlížení"
+
+#: templates/includes/modals.html:35
+msgid "Language"
+msgstr "Jazyk"
+
+#: templates/includes/modals.html:44
+msgid "Currency"
+msgstr "Měna"
+
+#: templates/includes/modals.html:53
+msgid "Confirm"
+msgstr "Potvrdit"
+
+#: templates/includes/navbar.html:11
+msgid "Пошук..."
+msgstr "Hledat..."
+
+#: templates/includes/navbar.html:15
+msgid "Кабінет"
+msgstr "Můj účet"
+
+#: templates/includes/navbar.html:17 templates/registration/login.html:4
+msgid "Вхід"
+msgstr "Přihlášení"
+
+#: templates/includes/navbar.html:47
+msgid "Змінити тему"
+msgstr "Změnit motiv"
+
+#: templates/registration/login.html:9
+msgid "Вхід у кабінет"
+msgstr "Přihlášení k účtu"
 
 #: templates/registration/login.html:23
 msgid "Логін або Email"
 msgstr "Přihlašovací jméno nebo e-mail"
 
-#: store/forms.py:27
-msgid "Логін може містити лише літери, цифри та символи @/./+/-/_"
-msgstr "Přihlašovací jméno může obsahovat pouze písmena, číslice a znaky @/./+/-/_."
+#: templates/registration/login.html:31
+msgid "Пароль"
+msgstr "Heslo"
 
-#: store/forms.py:34
-msgid "Логін повинен містити щонайменше 3 символи."
-msgstr "Uživatelské jméno musí obsahovat alespoň 3 znaky."
+#: templates/registration/login.html:76
+msgid "Немає аккаунту?"
+msgstr "Nemáte účet?"
 
-msgid "Лют"
-msgstr "Úno"
+#: templates/store/about.html:4
+msgid "Про нас - PREMIUM SHOP"
+msgstr "O nás - PREMIUM SHOP"
 
-msgid "Лютий"
-msgstr "Únor"
+#: templates/store/about.html:10
+msgid "Про"
+msgstr "O"
 
-#: templates/store/accounts/password_change.html:33
+#: templates/store/about.html:12
+msgid "Команда фанатів преміальної моди"
+msgstr "Tým fanoušků prémiové módy"
+
+#: templates/store/about.html:25
+msgid ""
+"Ми — команда фанатів преміальної моди, які вірять, що одяг — це не просто "
+"речі, а спосіб самовираження. Ми ретельно відбираємо кожну модель кросівок "
+"та худі, щоб ви отримували лише найкращу якість та найсвіжіші релізи."
+msgstr ""
+"Jsme tým fanoušků prémiové módy, kteří věří, že oblečení není jen věc, ale "
+"způsob sebevyjádření. Pečlivě vybíráme každý model tenisek a mikin, abyste "
+"dostali jen tu nejlepší kvalitu a nejnovější kousky."
+
+#: templates/store/about.html:28
+msgid "Наші цінності:"
+msgstr "Naše hodnoty:"
+
+#: templates/store/about.html:33
+msgid "Тільки оригінальна якість"
+msgstr "Pouze originální kvalita"
+
+#: templates/store/about.html:34
+msgid "Ніяких компромісів. Кожен товар проходить перевірку."
+msgstr "Žádné kompromisy. Každý produkt prochází kontrolou."
+
+#: templates/store/about.html:40
+msgid "Швидкий сервіс"
+msgstr "Rychlý servis"
+
+#: templates/store/about.html:41
+msgid "Менеджер зв'яжеться з вами протягом 15 хвилин."
+msgstr "manažer vás bude kontaktovat do 15 minut."
+
+#: templates/store/about.html:47
+msgid "Стиль понад усе"
+msgstr "Styl především"
+
+#: templates/store/about.html:48
+msgid "Ми завжди в курсі останніх трендів."
+msgstr "jsme vždy informováni o nejnovějších trendech."
+
+#: templates/store/about.html:58
+msgid "Щасливих клієнтів"
+msgstr "Spokojených zákazníků"
+
+#: templates/store/about.html:63
+msgid "Товарів в асортименті"
+msgstr "Produktů v nabídce"
+
+#: templates/store/about.html:68
+msgid "Середній рейтинг"
+msgstr "Průměrné hodnocení"
+
+#: templates/store/accounts/loyalty.html:4
+#: templates/store/accounts/loyalty.html:9
+#: templates/store/accounts/loyalty.html:20
+msgid "Програма лояльності"
+msgstr "Věrnostní program"
+
+#: templates/store/accounts/loyalty.html:10
+msgid "Обмінюйте ваші бали на унікальні промокоди та знижки."
+msgstr "Vyměňte své body za unikátní promo kódy a slevy."
+
+#: templates/store/accounts/loyalty.html:12
+#: templates/store/accounts/password_change.html:11
+#: templates/store/accounts/settings.html:12
+#: templates/store/accounts/spending.html:12
+#: templates/store/accounts/telegram.html:12
+#: templates/store/accounts/user_reviews.html:12
+#: templates/store/order/list.html:12 templates/store/wishlist.html:12
+msgid "Назад до кабінету"
+msgstr "Zpět na nástěnku"
+
+#: templates/store/accounts/loyalty.html:21
+msgid "Обмінюйте бали на унікальні промокоди!"
+msgstr "Vyměňte body za unikátní slevové kódy!"
+
+#: templates/store/accounts/loyalty.html:24
+msgid "Вільні бали"
+msgstr "Volné body"
+
+#: templates/store/accounts/loyalty.html:31
+msgid "Оберіть купон"
+msgstr "Vyberte kupon"
+
+#: templates/store/accounts/loyalty.html:33
+msgid "Оберіть варіант..."
+msgstr "Vyberte možnost..."
+
+#: templates/store/accounts/loyalty.html:35
+#, python-format
+msgid "250 балів = знижка 5%%"
+msgstr "250 bodů = sleva 5%%"
+
+#: templates/store/accounts/loyalty.html:38
+#, python-format
+msgid "600 балів = знижка 10%%"
+msgstr "600 bodů = sleva 10%%"
+
+#: templates/store/accounts/loyalty.html:42
+msgid "Конвертувати"
+msgstr "Konvertovat"
+
+#: templates/store/accounts/loyalty.html:51
+msgid "Історія балів"
+msgstr "Historie bodů"
+
+#: templates/store/accounts/loyalty.html:80
+msgid "У вас поки немає історії балів."
+msgstr "Zatím nemáte žádnou historii bodů."
+
+#: templates/store/accounts/password_change.html:4
+#: templates/store/accounts/password_change.html:9
+msgid "Зміна пароля"
+msgstr "Změnit heslo"
+
+#: templates/store/accounts/password_change.html:29
+#: templates/store/accounts/signup.html:39
+msgid "Надійний пароль містить:"
+msgstr "Silné heslo obsahuje:"
+
+#: templates/store/accounts/password_change.html:32
+#: templates/store/accounts/signup.html:42
+msgid "Від 8 символів"
+msgstr "8 a více znaků"
+
+#: templates/store/accounts/password_change.html:35
 #: templates/store/accounts/signup.html:45
 msgid "Літери"
 msgstr "Písmena"
 
-msgid "Максимум"
-msgstr "Maximum"
+#: templates/store/accounts/password_change.html:38
+#: templates/store/accounts/signup.html:48
+msgid "Цифри"
+msgstr "Číslice"
 
-#: templates/store/reviews.html:10
-msgid "Ми цінуємо кожного клієнта та ваш фідбек"
-msgstr "Vážíme si každého zákazníka a vaší zpětné vazby"
+#: templates/store/accounts/password_change.html:41
+#: templates/store/accounts/signup.html:51
+#, python-format
+msgid "Спецсимвол (наприклад !@#$%%&)"
+msgstr "Speciální znak (např. !@#$%%&)"
 
-#: templates/store/accounts/profile.html:30
-msgid "Мої бали"
-msgstr "Moje body"
+#: templates/store/accounts/password_change.html:58
+msgid "Оновити пароль"
+msgstr "Aktualizovat heslo"
 
-#: templates/store/accounts/user_reviews.html:4
-#: templates/store/accounts/user_reviews.html:16
-msgid "Мої відгуки"
-msgstr "Moje recenze"
+#: templates/store/accounts/password_change_done.html:4
+msgid "Пароль змінено"
+msgstr "Heslo změněno"
 
-#: templates/store/order/list.html:4 templates/store/order/list.html:10
-msgid "Мої замовлення"
-msgstr "Moje objednávky"
+#: templates/store/accounts/password_change_done.html:10
+msgid "Успішно!"
+msgstr "Úspěšně!"
+
+#: templates/store/accounts/password_change_done.html:11
+msgid ""
+"Ваш пароль було успішно змінено. Тепер ви можете використовувати новий "
+"пароль для входу."
+msgstr "Vaše heslo bylo úspěšně změněno. Nyní můžete k přihlášení používat nové heslo."
+
+#: templates/store/accounts/password_change_done.html:12
+msgid "До кабінету"
+msgstr "Na účet"
 
 #: templates/store/accounts/profile.html:4
 msgid "Мій кабінет"
 msgstr "Můj účet"
 
-#: store/forms.py:185 store/models.py:87 store/models.py:128
-msgid "Місто"
-msgstr "Město"
+#: templates/store/accounts/profile.html:15
+msgid "Вітаємо,"
+msgstr "Vítejte,"
+
+#: templates/store/accounts/profile.html:21
+msgid "Налаштування"
+msgstr "Nastavení"
+
+#: templates/store/accounts/profile.html:26
+msgid "Вийти"
+msgstr "Odhlásit se"
+
+#: templates/store/accounts/profile.html:37
+msgid "Мої бали"
+msgstr "Moje body"
+
+#: templates/store/accounts/profile.html:51
+#: templates/store/accounts/spending.html:212
+msgid "Витрачено"
+msgstr "Utraceno"
+
+#: templates/store/accounts/profile.html:58
+msgid "Обране"
+msgstr "Oblíbené"
+
+#: templates/store/accounts/profile.html:75
+#: templates/store/accounts/telegram.html:38
+msgid "Прив'язано"
+msgstr "Propojeno"
+
+#: templates/store/accounts/profile.html:77
+msgid "Прив'язати"
+msgstr "Propojit"
+
+#: templates/store/accounts/profile.html:88
+msgid "Ваш рівень лояльності"
+msgstr "Vaše úroveň věrnosti"
+
+#: templates/store/accounts/profile.html:91
+msgid "Зберіть ще"
+msgstr "Nasbírejte ještě"
+
+#: templates/store/accounts/profile.html:91
+msgid "балів для знижки"
+msgstr "bodů pro slevu"
+
+#: templates/store/accounts/profile.html:95
+msgid "Ви досягли максимального рівня знижки!"
+msgstr "Dosáhli jste maximální úrovně slevy!"
+
+#: templates/store/accounts/profile.html:122
+msgid "Остання активність"
+msgstr "Poslední aktivita"
+
+#: templates/store/accounts/profile.html:156
+msgid "У вас поки немає активності. Почніть шопінг вже зараз!"
+msgstr "Zatím nemáte žádnou aktivitu. Začněte nakupovat právě teď!"
+
+#: templates/store/accounts/profile.html:157
+#: templates/store/cart/detail.html:256 templates/store/wishlist.html:52
+msgid "Перейти до покупок"
+msgstr "Přejít k nakupování"
+
+#: templates/store/accounts/settings.html:4
+#: templates/store/accounts/settings.html:9
+msgid "Налаштування акаунта"
+msgstr "Nastavení účtu"
+
+#: templates/store/accounts/settings.html:10
+msgid "Керуйте своїми персональними даними та налаштуваннями безпеки."
+msgstr "Spravujte své osobní údaje a nastavení zabezpečení."
+
+#: templates/store/accounts/settings.html:22
+msgid "Основні дані"
+msgstr "Základní údaje"
+
+#: templates/store/accounts/settings.html:38
+#: templates/store/order/create.html:35
+msgid "Контактна інформація"
+msgstr "Kontaktní informace"
+
+#: templates/store/accounts/settings.html:50
+#: templates/store/order/create.html:126
+msgid "Доставка"
+msgstr "Doprava"
+
+#: templates/store/accounts/settings.html:66
+#: templates/store/order/create.html:146
+msgid "Завантаження відділень..."
+msgstr "Načítání poboček..."
+
+#: templates/store/accounts/settings.html:71
+msgid "Безпека"
+msgstr "Zabezpečení"
+
+#: templates/store/accounts/settings.html:73
+msgid "Ви можете змінити свій пароль для захисту акаунта."
+msgstr "Heslo můžete změnit pro zabezpečení svého účtu."
+
+#: templates/store/accounts/settings.html:75
+msgid "Змінити пароль"
+msgstr "Změnit heslo"
+
+#: templates/store/accounts/settings.html:82
+msgid "Зберегти всі налаштування"
+msgstr "Uložit všechna nastavení"
+
+#: templates/store/accounts/settings.html:294
+#: templates/store/order/create.html:331
+msgid "Помилка завантаження"
+msgstr "Chyba načítání"
+
+#: templates/store/accounts/signup.html:9
+msgid "Створити аккаунт"
+msgstr "Vytvořit účet"
+
+#: templates/store/accounts/signup.html:183
+msgid "Вже є аккаунт?"
+msgstr "Již máte účet?"
+
+#: templates/store/accounts/spending.html:4
+msgid "Статистика витрат"
+msgstr "Statistiky výdajů"
+
+#: templates/store/accounts/spending.html:9
+msgid "Аналітика витрат"
+msgstr "Analytika výdajů"
+
+#: templates/store/accounts/spending.html:10
+msgid "Детальний звіт про ваші покупки та активність у магазині."
+msgstr "Podrobný přehled vašich nákupů a aktivity v obchodě."
+
+#: templates/store/accounts/spending.html:31
+msgid "Замовлень"
+msgstr "Objednávek"
+
+#: templates/store/accounts/spending.html:40
+msgid "Максимум"
+msgstr "Maximum"
+
+#: templates/store/accounts/spending.html:48
+msgid "Початок"
+msgstr "Začátek"
+
+#: templates/store/accounts/spending.html:57
+msgid "Динаміка витрат"
+msgstr "Dynamika výdajů"
+
+#: templates/store/accounts/spending.html:61
+msgid "Ваша активність за останні місяці"
+msgstr "Vaše aktivita za poslední měsíce"
+
+#: templates/store/accounts/spending.html:64
+msgid "Експорт"
+msgstr "Export"
+
+#: templates/store/accounts/spending.html:86
+msgid "Звіт за місяцями"
+msgstr "Měsíční přehled"
+
+#: templates/store/accounts/spending.html:110
+msgid "Покупки"
+msgstr "Nákupy"
+
+#: templates/store/accounts/spending.html:117
+msgid "Дані відсутні"
+msgstr "Údaje chybí"
+
+#: templates/store/accounts/spending.html:124
+msgid "Аналіз активності"
+msgstr "Analýza aktivity"
+
+#: templates/store/accounts/spending.html:127
+msgid "Найактивніший період"
+msgstr "Nejaktivnější období"
+
+#: templates/store/accounts/spending.html:131
+msgid "Поточні витрати (міс.)"
+msgstr "Aktuální výdaje (měs.)"
+
+#: templates/store/accounts/spending.html:152
+msgid "Січ"
+msgstr "Led"
+
+#: templates/store/accounts/spending.html:152
+msgid "Лют"
+msgstr "Úno"
+
+#: templates/store/accounts/spending.html:152
+msgid "Бер"
+msgstr "Bře"
+
+#: templates/store/accounts/spending.html:152
+msgid "Кві"
+msgstr "Dub"
+
+#: templates/store/accounts/spending.html:153
+msgid "Тра"
+msgstr "Kvě"
+
+#: templates/store/accounts/spending.html:153
+msgid "Чер"
+msgstr "Čer"
+
+#: templates/store/accounts/spending.html:153
+msgid "Лип"
+msgstr "Čvc"
+
+#: templates/store/accounts/spending.html:153
+msgid "Сер"
+msgstr "Srp"
+
+#: templates/store/accounts/spending.html:154
+msgid "Вер"
+msgstr "Zář"
+
+#: templates/store/accounts/spending.html:154
+msgid "Жов"
+msgstr "Říj"
+
+#: templates/store/accounts/spending.html:154
+msgid "Лис"
+msgstr "Lis"
+
+#: templates/store/accounts/spending.html:154
+msgid "Гру"
+msgstr "Pro"
+
+#: templates/store/accounts/telegram.html:10
+msgid ""
+"Прив'яжіть Telegram для отримання сповіщень про замовлення та керування "
+"акаунтом прямо в месенджері."
+msgstr ""
+"Propojte svůj Telegram a získávejte oznámení o objednávkách a spravujte svůj "
+"účet přímo v messengeru."
+
+#: templates/store/accounts/telegram.html:40
+msgid "Telegram під'єднано!"
+msgstr "Telegram připojen!"
+
+#: templates/store/accounts/telegram.html:42
+msgid ""
+"Ваш акаунт успішно прив'язано до Telegram. Ви будете отримувати сповіщення "
+"про зміну статусів замовлень прямо у месенджері."
+msgstr ""
+"Váš účet byl úspěšně propojen s Telegramem. Budete dostávat oznámení o "
+"změnách stavu objednávky přímo v messengeru."
+
+#: templates/store/accounts/telegram.html:48
+msgid "Сповіщення про статуси замовлень"
+msgstr "Upozornění na stav objednávky"
+
+#: templates/store/accounts/telegram.html:52
+msgid "Перегляд замовлень через /orders"
+msgstr "Zobrazení objednávek přes /orders"
+
+#: templates/store/accounts/telegram.html:56
+msgid "Баланс балів через /loyalty"
+msgstr "Zůstatek bodů přes /loyalty"
+
+#: templates/store/accounts/telegram.html:60
+msgid "Генерація промокодів через /promo"
+msgstr "Generování slevových kódů přes /promo"
+
+#: templates/store/accounts/telegram.html:66
+#: templates/store/accounts/telegram.html:119
+msgid "Відкрити бота"
+msgstr "Otevřít bota"
+
+#: templates/store/accounts/telegram.html:73
+msgid "Ви впевнені, що хочете від'єднати Telegram?"
+msgstr "Opravdu chcete odpojit Telegram?"
+
+#: templates/store/accounts/telegram.html:74
+msgid "Від'єднати Telegram"
+msgstr "Odpojit Telegram"
+
+#: templates/store/accounts/telegram.html:90
+msgid "Як прив'язати Telegram?"
+msgstr "Jak propojit Telegram?"
+
+#: templates/store/accounts/telegram.html:97
+#, python-format
+msgid ""
+"Відкрийте бота <a href=\"https://t.me/%(bot_username)s\" target=\"_blank\" "
+"class=\"tg-link\">@%(bot_username)s</a> у Telegram"
+msgstr ""
+
+#: templates/store/accounts/telegram.html:99
+msgid "Знайдіть нашого бота у Telegram"
+msgstr ""
+
+#: templates/store/accounts/telegram.html:105
+msgid "Відправте боту команду"
+msgstr ""
+
+#: templates/store/accounts/telegram.html:109
+msgid "Натисніть кнопку"
+msgstr "Vyberte kupon"
+
+#: templates/store/accounts/telegram.html:109
+msgid "Ввести код прив'язки"
+msgstr ""
+
+#: templates/store/accounts/telegram.html:113
+msgid "Отримайте код нижче і введіть його в боті. Код дійсний"
+msgstr ""
+
+#: templates/store/accounts/telegram.html:113
+msgid "хвилин"
+msgstr ""
+
+#: templates/store/accounts/telegram.html:131
+msgid "Ваш код прив'язки"
+msgstr "Váš košík"
+
+#: templates/store/accounts/telegram.html:136
+msgid "Скопіювати"
+msgstr "Použít"
+
+#: templates/store/accounts/telegram.html:141
+msgid "Код дійсний 10 хвилин"
+msgstr "Neplatný slevový kód."
+
+#: templates/store/accounts/telegram.html:146
+msgid "Натисніть кнопку, щоб отримати одноразовий код"
+msgstr ""
+
+#: templates/store/accounts/telegram.html:154
+msgid "Оновити код"
+msgstr "Aktualizovat heslo"
+
+#: templates/store/accounts/telegram.html:156
+msgid "Отримати код"
+msgstr "Příjemce:"
+
+#: templates/store/accounts/telegram.html:166
+msgid "Що дає прив'язка Telegram?"
+msgstr ""
+
+#: templates/store/accounts/telegram.html:171
+msgid "Сповіщення"
+msgstr "Objednávka"
+
+#: templates/store/accounts/telegram.html:172
+msgid "Миттєві повідомлення про зміну статусу замовлення"
+msgstr "Aktualizace stavu objednávky"
+
+#: templates/store/accounts/telegram.html:177
+msgid "Перегляд усіх замовлень через /orders"
+msgstr "Zobrazit objednávku"
+
+#: templates/store/accounts/telegram.html:181
+msgid "Бонуси"
+msgstr ""
+
+#: templates/store/accounts/telegram.html:182
+msgid "Баланс балів і прогрес до наступного рівня"
+msgstr ""
+
+#: templates/store/accounts/telegram.html:186
+msgid "Промокоди"
+msgstr "Slevový kód"
+
+#: templates/store/accounts/telegram.html:187
+msgid "Генерація промокодів з балів прямо в боті"
+msgstr ""
+
+#: templates/store/accounts/user_reviews.html:4
+#: templates/store/accounts/user_reviews.html:10
+msgid "Мої відгуки"
+msgstr "Moje recenze"
+
+#: templates/store/accounts/user_reviews.html:52
+msgid "Ви ще не залишили відгуків"
+msgstr "Zatím jste nezanechali žádné recenze"
+
+#: templates/store/accounts/user_reviews.html:53
+msgid "Ваші відгуки допоможуть іншим покупцям зробити правильний вибір."
+msgstr "Vaše recenze pomohou ostatním kupujícím udělat správné rozhodnutí."
+
+#: templates/store/accounts/user_reviews.html:54
+msgid "До каталогу товарів"
+msgstr "Do katalogu produktů"
+
+#: templates/store/cart/detail.html:4 templates/store/cart/detail.html:126
+msgid "Ваш кошик"
+msgstr "Váš košík"
+
+#: templates/store/cart/detail.html:131
+msgid "Кількість"
+msgstr "Množství"
+
+#: templates/store/cart/detail.html:132 templates/store/product/list.html:87
+msgid "Ціна"
+msgstr "Cena"
+
+#: templates/store/cart/detail.html:133
+msgid "Усього"
+msgstr "Celkem"
+
+#: templates/store/cart/detail.html:149
+#: templates/store/product/product_list_fragment.html:51
+#: templates/store/product/search.html:26
+msgid "Арт:"
+msgstr "SKU:"
+
+#: templates/store/cart/detail.html:167
+msgid "Видалити"
+msgstr "Odstranit"
+
+#: templates/store/cart/detail.html:188 templates/store/product/list.html:128
+msgid "Застосувати"
+msgstr "Použít"
+
+#: templates/store/cart/detail.html:195
+#, python-format
+msgid "Промокод \"%(code)s\" активовано (-%(discount)s%%)"
+msgstr "Slevový kód \"%(code)s\" aktivován (-%(discount)s%%)"
+
+#: templates/store/cart/detail.html:199
+msgid "Видалити промокод"
+msgstr "Odstranit slevový kód"
+
+#: templates/store/cart/detail.html:226
+msgid "Усього до сплати:"
+msgstr "Celkem k úhradě:"
+
+#: templates/store/cart/detail.html:235
+msgid "Оформити"
+msgstr "K pokladně"
+
+#: templates/store/cart/detail.html:238
+msgid "У магазин"
+msgstr "Do obchodu"
+
+#: templates/store/cart/detail.html:251
+msgid "Ваш кошик порожній"
+msgstr "Váš košík je prázdný"
+
+#: templates/store/cart/detail.html:253
+msgid ""
+"Схоже, ви ще не додали жодного товару. Почніть покупки зараз та знайдіть "
+"щось особливе для себе!"
+msgstr ""
+
+#: templates/store/contact.html:4
+msgid "Контакти - PREMIUM SHOP"
+msgstr "O nás - PREMIUM SHOP"
+
+#: templates/store/contact.html:10
+msgid "ЗВ'ЯЖІТЬСЯ"
+msgstr "KONTAKTUJTE"
+
+#: templates/store/contact.html:10
+msgid "З НАМИ"
+msgstr "NÁS"
+
+#: templates/store/contact.html:12
+msgid "Ми завжди на зв'язку — оберіть зручний спосіб."
+msgstr "Jsme tu vždy pro vás:"
+
+#: templates/store/contact.html:23
+msgid "Ми в соцмережах"
+msgstr "Sociální sítě"
+
+#: templates/store/contact.html:24
+msgid "Ми завжди на зв'язку тут:"
+msgstr "Jsme tu vždy pro vás:"
+
+#: templates/store/contact.html:50
+msgid "Наш офіс"
+msgstr "Naše kancelář"
+
+#: templates/store/contact.html:51
+msgid "Де нас знайти:"
+msgstr "Kde nás najdete:"
+
+#: templates/store/contact.html:57
+msgid "Адреса"
+msgstr "Adresa:"
+
+#: templates/store/contact.html:58
+msgid "м. Київ, вул. Хрещатик, 1"
+msgstr ""
+
+#: templates/store/contact.html:64
+msgid "Графік"
+msgstr "Rozvrh:"
+
+#: templates/store/contact.html:65
+msgid "Пн-Пт 10:00 - 19:00"
+msgstr ""
+
+#: templates/store/order/create.html:4
+msgid "Оформлення замовлення"
+msgstr "Potvrzení objednávky"
+
+#: templates/store/order/create.html:9
+msgid "Оформлення"
+msgstr "Pobočka"
+
+#: templates/store/order/create.html:10
+msgid "Заповніть дані для доставки вашого замовлення"
+msgstr "Stav vaší objednávky"
+
+#: templates/store/order/create.html:19
+msgid "Упс! Знайдено помилки:"
+msgstr ""
+
+#: templates/store/order/create.html:49
+msgid "Використати дані з профілю"
+msgstr "Použít údaje z profilu"
+
+#: templates/store/order/create.html:70
+msgid "Номер телефону"
+msgstr "Telefonní číslo"
+
+#: templates/store/order/create.html:115
+msgid "Ваш нікнейм або номер (ми напишемо вам сюди)"
+msgstr "Vaše přezdívka nebo číslo (sem vám napíšeme)"
 
 #: templates/store/order/create.html:129
 msgid "Місто доставки"
 msgstr "Město doručení"
 
+#: templates/store/order/create.html:138
+msgid "Відділення Нової Пошти"
+msgstr "Pobočka Nové pošty"
+
+#: templates/store/order/create.html:141
+msgid "Спочатку оберіть місто"
+msgstr "Nejprve vyberte město"
+
+#: templates/store/order/create.html:153
+msgid "Підтвердити замовлення"
+msgstr "Potvrdit objednávku"
+
+#: templates/store/order/create.html:374
+msgid "Дані використано"
+msgstr "Údaje použity"
+
+#: templates/store/order/list.html:4 templates/store/order/list.html:9
+msgid "Мої замовлення"
+msgstr "Moje objednávky"
+
+#: templates/store/order/list.html:10
+msgid "Історія та статус ваших покупок у нашому магазині."
+msgstr "Historie a stav vašich nákupů v našem obchodě."
+
+#: templates/store/order/list.html:50
+msgid "Разом до сплати"
+msgstr "Celkem k úhradě:"
+
+#: templates/store/order/list.html:67
+msgid "У вас ще немає замовлень"
+msgstr "Zatím nemáte žádné objednávky"
+
+#: templates/store/order/list.html:68
+msgid "Ваші покупки з'являться тут після оформлення замовлення."
+msgstr "Vaše nákupy se zde zobrazí po zadání objednávky."
+
+#: templates/store/order/list.html:69
+msgid "Перейти до магазину"
+msgstr "Přejít k nakupování"
+
+#: templates/store/order/success.html:4
+msgid "Замовлення підтверджено!"
+msgstr "Objednávka byla potvrzena!"
+
+#: templates/store/order/success.html:10
+msgid "Дякуємо за замовлення!"
+msgstr "Děkujeme za vaši objednávku!"
+
+#: templates/store/order/success.html:12
+#, python-format
+msgid ""
+"Ваше замовлення <strong>#%(order_id)s</strong> успішно прийнято в обробку. "
+"Ми зв'яжемося з вами через <strong>%(contact_method)s</strong> найближчим "
+"часом."
+msgstr ""
+
+#: templates/store/order/success.html:16
+msgid "Деталі замовлення:"
+msgstr "Podrobnosti objednávky:"
+
+#: templates/store/order/success.html:17
+msgid "Отримувач:"
+msgstr "Příjemce:"
+
 #: templates/store/order/success.html:18
 msgid "Місто:"
 msgstr "Město:"
 
-#: templates/404.html:10 templates/500.html:10
-msgid "На головну"
-msgstr ""
+#: templates/store/order/success.html:19
+msgid "Відділення:"
+msgstr "Pobočka:"
 
-#: templates/includes/footer.html:12
-msgid "Навігація"
-msgstr "Navigace"
+#: templates/store/order/success.html:22
+msgid "Ваше замовлення:"
+msgstr "Vaše objednávka:"
 
-#: templates/store/accounts/password_change.html:27
-#: templates/store/accounts/signup.html:39
-msgid "Надійний пароль містить:"
-msgstr "Silné heslo obsahuje:"
+#: templates/store/order/success.html:54
+msgid "Усього до оплати:"
+msgstr "Celkem k úhradě:"
+
+#: templates/store/order/success.html:61
+msgid "Повернутися до каталогу"
+msgstr "Zpět do katalogu"
+
+#: templates/store/order/success.html:64
+msgid "Виникли питання? Напишіть нам у підтримку."
+msgstr "Máte dotazy? Kontaktujte naši podporu."
+
+#: templates/store/product/detail.html:18
+msgid "Немає зображення"
+msgstr "Žádný obrázek"
+
+#: templates/store/product/detail.html:60
+msgid "Артикул:"
+msgstr "Katalogové číslo:"
+
+#: templates/store/product/detail.html:67
+msgid "відгуків"
+msgstr "recenzí"
+
+#: templates/store/product/detail.html:73
+#: templates/store/product/detail.html:176
+msgid "Залишити відгук"
+msgstr "Napsat recenzi"
+
+#: templates/store/product/detail.html:80
+msgid "Оберіть розмір"
+msgstr "Vyberte velikost"
+
+#: templates/store/product/detail.html:82
+#: templates/store/product/detail.html:293
+msgid "Таблиця розмірів"
+msgstr "Tabulka velikostí"
+
+#: templates/store/product/detail.html:104
+msgid "Наявність"
+msgstr "Dostupnost"
+
+#: templates/store/product/detail.html:107
+msgid "В наявності"
+msgstr "Skladem"
+
+#: templates/store/product/detail.html:109
+#: templates/store/product/detail.html:140
+msgid "Немає в наявності"
+msgstr "Není skladem"
+
+#: templates/store/product/detail.html:123
+msgid "Додати в кошик"
+msgstr "Přidat do košíku"
+
+#: templates/store/product/detail.html:150
+msgid "Відгуки покупців"
+msgstr "Hodnocení zákazníků"
+
+#: templates/store/product/detail.html:170
+msgid "Відгуків поки немає. Будьте першим!"
+msgstr "Zatím žádné recenze. Buďte první!"
+
+#: templates/store/product/detail.html:181
+msgid "Ваша оцінка"
+msgstr "Vaše hodnocení"
+
+#: templates/store/product/detail.html:185
+msgid "Ваш коментар"
+msgstr "Váš komentář"
 
 #: templates/store/product/detail.html:189
 msgid "Надіслати відгук"
 msgstr "Odeslat recenzi"
 
-#: templates/store/accounts/edit_profile.html:10
-#: templates/store/accounts/password_change.html:10
-#: templates/store/order/list.html:12
-msgid "Назад"
-msgstr "Zpět"
+#: templates/store/product/detail.html:194
+msgid "Для того, щоб залишити відгук, будь ласка,"
+msgstr "Chcete-li zanechat recenzi, prosím"
 
-msgid "Назад до кабінету"
-msgstr "Zpět na nástěnku"
+#: templates/store/product/detail.html:196
+msgid "увійдіть"
+msgstr "přihlaste se"
 
-#: templates/store/accounts/loyalty.html:10
-#: templates/store/accounts/spending.html:10
-#: templates/store/accounts/user_reviews.html:10
-#: templates/store/wishlist.html:10
-msgid "Назад до профілю"
-msgstr "Zpět na profil"
+#: templates/store/product/detail.html:198
+msgid "або"
+msgstr "nebo"
 
-msgid "Найактивніший період"
-msgstr "Nejaktivnější období"
+#: templates/store/product/detail.html:200
+msgid "зареєструйтесь"
+msgstr "zaregistrujte se"
+
+#: templates/store/product/detail.html:294
+msgid "Знайдіть свій ідеальний розмір"
+msgstr "Najděte svou ideální velikost"
+
+#: templates/store/product/detail.html:307
+msgid "EU"
+msgstr "EU"
+
+#: templates/store/product/detail.html:308
+msgid "US (Men)"
+msgstr "US (Muži)"
+
+#: templates/store/product/detail.html:309
+msgid "US (Women)"
+msgstr "US (Ženy)"
+
+#: templates/store/product/detail.html:310
+msgid "CM"
+msgstr "cm"
+
+#: templates/store/product/detail.html:333
+msgid "Груди (см)"
+msgstr "Hruď (cm)"
+
+#: templates/store/product/detail.html:334
+msgid "Талія (см)"
+msgstr "Pas (cm)"
+
+#: templates/store/product/detail.html:335
+msgid "Стегна (см)"
+msgstr "Boky (cm)"
+
+#: templates/store/product/detail.html:351
+msgid ""
+"Це стандартна розмірна сітка. Заміри можуть дещо відрізнятися в залежності "
+"від бренду та моделі."
+msgstr ""
+
+#: templates/store/product/list.html:5
+msgid "Каталог одягу та кросівок"
+msgstr "Katalog oblečení a tenisek"
+
+#: templates/store/product/list.html:15
+msgid "SEASON 2026"
+msgstr ""
+
+#: templates/store/product/list.html:16
+msgid "Нова Колекція"
+msgstr "Nová Kolekce"
+
+#: templates/store/product/list.html:17
+msgid "Знайди свій ідеальний стиль сьогодні"
+msgstr "Najděte svůj dokonalý styl ještě dnes"
+
+#: templates/store/product/list.html:37
+msgid "Сортування"
+msgstr "Třídění"
+
+#: templates/store/product/list.html:42
+msgid "Новинки"
+msgstr "Nejnovější"
 
 #: templates/store/product/list.html:46
 msgid "Найдешевші"
@@ -957,624 +2098,102 @@ msgstr "Od nejlevnějšího"
 msgid "Найдорожчі"
 msgstr "Od nejdražšího"
 
-#: templates/base.html:16
-msgid "Найкращий вибір преміального одягу та взуття."
-msgstr "Nejlepší výběr prémiového oblečení a obuvi."
-
-msgid "Налаштування"
-msgstr "Nastavení"
-
-msgid "Налаштування акаунта"
-msgstr ""
-
-#: templates/store/about.html:16
-msgid "Наші цінності:"
-msgstr "Naše hodnoty:"
-
-#: templates/store/product/detail.html:104
-msgid "Наявність"
-msgstr "Dostupnost"
-
-#: store/views.py:538
-msgid "Невірний варіант конвертації."
-msgstr "Neplatná možnost konverze."
-
-#: store/views.py:549
-msgid "Недостатньо балів для конвертації."
-msgstr "Nemáte dostatek bodů pro konverzi."
-
-#: store/views.py:325
-msgid "Недійсний промокод."
-msgstr "Neplatný slevový kód."
-
-#: templates/registration/login.html:76
-msgid "Немає аккаунту?"
-msgstr "Nemáte účet?"
-
-#: templates/store/product/detail.html:109
-#: templates/store/product/detail.html:140
-msgid "Немає в наявності"
-msgstr "Není skladem"
-
-#: templates/store/product/detail.html:18
-msgid "Немає зображення"
-msgstr "Žádný obrázek"
-
-#: templates/store/product/list.html:16
-msgid "Нова Колекція"
-msgstr "Nová Kolekce"
-
-#: store/models.py:137
-msgid "Нове"
-msgstr "Nové"
-
-#: templates/store/product/list.html:42
-msgid "Новинки"
-msgstr "Nejnovější"
-
-#: templates/emails/order_confirmation.html:126
-msgid "Номер замовлення"
-msgstr "Číslo objednávky"
-
-#: templates/store/order/create.html:70
-msgid "Номер телефону"
-msgstr "Telefonní číslo"
-
-#: store/models.py:86
-msgid "Нікнейм"
-msgstr "Přezdívka"
-
-#: store/forms.py:184
-msgid "Нікнейм або номер"
-msgstr "Přezdívka nebo číslo"
-
-#: templates/store/product/search.html:39
-msgid "Нічого не знайдено за вашим запитом."
-msgstr "Pro váš dotaz nebylo nic nalezeno."
-
-#: templates/store/accounts/loyalty.html:31
-msgid "Оберіть варіант..."
-msgstr "Vyberte možnost..."
-
-#: templates/base.html:38 templates/store/accounts/edit_profile.html:57
-#: templates/store/accounts/edit_profile.html:242
-#: templates/store/order/create.html:317
-msgid "Оберіть відділення"
-msgstr "Vyberte pobočku"
-
-#: templates/store/accounts/loyalty.html:29
-msgid "Оберіть купон"
-msgstr "Vyberte kupon"
-
-#: templates/store/product/detail.html:80
-msgid "Оберіть розмір"
-msgstr "Vyberte velikost"
-
-#: templates/store/accounts/loyalty.html:19
-msgid "Обмінюйте бали на унікальні промокоди!"
-msgstr "Vyměňte body za unikátní slevové kódy!"
-
-msgid "Обмінюйте ваші бали на унікальні промокоди та знижки."
-msgstr "Vyměňte své body za unikátní promo kódy a slevy."
-
-#: templates/store/accounts/profile.html:51
-msgid "Обране"
-msgstr "Oblíbené"
-
-#: store/models.py:28 templates/store/product/detail.html:300
-msgid "Одяг"
-msgstr "Oblečení"
-
-#: templates/500.html:9
-msgid "Ой! На сервері сталася помилка. Ми вже працюємо над цим."
-msgstr ""
-
-#: store/forms.py:94
-msgid "Олександр"
-msgstr "Alexander"
-
-#: templates/store/accounts/password_change.html:56
-msgid "Оновити пароль"
-msgstr "Aktualizovat heslo"
-
-#: templates/emails/order_status_update.html:101
-msgid "Оновлення статусу"
-msgstr "Aktualizace stavu"
-
-#: templates/emails/order_status_update.html:6
-msgid "Оновлення статусу замовлення"
-msgstr "Aktualizace stavu objednávky"
-
-#: store/tasks.py:86
-#, python-format
-msgid "Оновлення статусу замовлення №%(order_id)s"
-msgstr "Aktualizace stavu objednávky č.%(order_id)s"
-
-#: store/models.py:134
-msgid "Оновлено"
-msgstr "Aktualizováno"
-
-#: store/models.py:214 templates/store/product/detail.html:99
-msgid "Опис"
-msgstr "Popis"
-
-#: store/models.py:135
-msgid "Оплачено"
-msgstr "Zaplaceno"
-
-#: templates/store/accounts/edit_profile.html:19
-msgid "Основні дані"
-msgstr "Základní údaje"
-
-#: templates/store/accounts/profile.html:91
-msgid "Остання активність"
-msgstr "Poslední aktivita"
-
-#: templates/store/order/success.html:17
-msgid "Отримувач:"
-msgstr "Příjemce:"
-
-#: templates/store/cart/detail.html:235
-msgid "Оформити"
-msgstr "K pokladně"
-
-#: store/services/dashboard_service.py:55
-msgid "Оцінка:"
-msgstr "Hodnocení:"
-
-#: templates/store/product/list.html:134
-msgid "Очистити"
-msgstr "Vyčistit"
-
-#: templates/registration/login.html:31
-msgid "Пароль"
-msgstr "Heslo"
-
-#: templates/store/accounts/password_change_done.html:4
-msgid "Пароль змінено"
-msgstr "Heslo změněno"
-
-#: templates/emails/order_status_update.html:105
-msgid "Переглянути замовлення"
-msgstr "Zobrazit objednávku"
-
-#: templates/store/accounts/profile.html:118
-#: templates/store/cart/detail.html:256 templates/store/wishlist.html:52
-msgid "Перейти до покупок"
-msgstr "Přejít k nakupování"
-
-#: templates/store/accounts/user_reviews.html:54
-msgid "Перейти до товарів"
-msgstr "Přejít k produktům"
-
-#: templates/store/order/success.html:61
-msgid "Повернутися до каталогу"
-msgstr "Zpět do katalogu"
-
-#: store/models.py:207
-msgid "Покупка"
-msgstr "Nákup"
-
-msgid "Покупки"
-msgstr "Nákupy"
-
-#: templates/store/accounts/edit_profile.html:259
-#: templates/store/order/create.html:331
-msgid "Помилка завантаження"
-msgstr "Chyba načítání"
-
-#: store/models.py:32
-msgid "Порядок сортування"
-msgstr "Pořadí řazení"
-
-msgid "Поточні витрати (міс.)"
-msgstr "Aktuální výdaje (měs.)"
-
-#: templates/emails/welcome.html:122
-msgid "Почати шопінг"
-msgstr "Začít nakupovat"
-
-msgid "Початок"
-msgstr "Začátek"
-
-#: store/forms.py:97
-msgid "Почніть вводити місто..."
-msgstr "Začněte psát město..."
-
-#: templates/store/product/search.html:4
-msgid "Пошук"
-msgstr "Hledání"
-
-#: templates/includes/navbar.html:11
-msgid "Пошук..."
-msgstr "Hledat..."
-
-#: templates/emails/welcome.html:133
-msgid "Преміальна якість кожного товару"
-msgstr "Prémiová kvalita každého produktu"
-
-#: templates/emails/order_confirmation.html:121
-#: templates/emails/welcome.html:121
-msgid "Привіт"
-msgstr "Ahoj"
-
-#: templates/store/about.html:8
-msgid "Про"
-msgstr "O"
-
-#: templates/includes/footer.html:15 templates/includes/navbar.html:7
-msgid "Про нас"
-msgstr "O nás"
-
-#: templates/store/about.html:4
-msgid "Про нас - PREMIUM SHOP"
-msgstr "O nás - PREMIUM SHOP"
-
-#: templates/store/accounts/loyalty.html:4
-#: templates/store/accounts/loyalty.html:18
-msgid "Програма лояльності"
-msgstr "Věrnostní program"
-
-#: templates/includes/modals.html:15
-msgid "Продовжити як гість"
-msgstr "Pokračovat jako host"
-
-#: store/forms.py:192 templates/store/cart/detail.html:182
-msgid "Промокод"
-msgstr "Slevový kód"
-
-#: templates/store/cart/detail.html:195
-#, python-format
-msgid "Промокод \"%(code)s\" активовано (-%(discount)s%%)"
-msgstr "Slevový kód \"%(code)s\" aktivován (-%(discount)s%%)"
-
-#: store/views.py:332
-msgid "Промокод видалено."
-msgstr "Slevový kód byl odstraněn."
-
-#: store/views.py:322
-msgid "Промокод успішно застосовано!"
-msgstr "Slevový kód byl úspěšně uplatněn!"
-
-#: store/models.py:94
-msgid "Профіль"
-msgstr "Profil"
-
-#: store/forms.py:173 store/models.py:120 templates/store/order/create.html:61
-msgid "Прізвище"
-msgstr "Příjmení"
-
-#: store/forms.py:114
-msgid "Прізвище занадто коротке"
-msgstr "Příjmení je příliš krátké"
-
-#: templates/emails/order_confirmation.html:6
-msgid "Підтвердження замовлення"
-msgstr "Potvrzení objednávky"
-
-#: templates/store/order/create.html:153
-msgid "Підтвердити замовлення"
-msgstr "Potvrdit objednávku"
-
-#: templates/emails/order_confirmation.html:180
-msgid "Разом:"
-msgstr "Celkem:"
-
-#: templates/store/accounts/edit_profile.html:4
-#: templates/store/accounts/edit_profile.html:9
-#: templates/store/accounts/profile.html:77
-msgid "Редагувати профіль"
-msgstr "Upravit profil"
-
-#: templates/store/product/search.html:8
-msgid "Результати пошуку для"
-msgstr "Výsledky hledání pro"
-
-#: store/models.py:174
-msgid "Рейтинг"
-msgstr "Hodnocení"
-
-#: store/models.py:206 templates/includes/navbar.html:18
-#: templates/store/accounts/signup.html:4
-msgid "Реєстрація"
-msgstr "Registrace"
-
-#: store/models.py:35 store/models.py:162
-#: templates/store/product/detail.html:332
-#: templates/store/product/list.html:100
-msgid "Розмір"
-msgstr "Velikost"
-
-#: templates/emails/order_confirmation.html:155
-#: templates/store/cart/detail.html:150 templates/store/order/success.html:36
-msgid "Розмір:"
-msgstr "Velikost:"
-
-#: store/models.py:36
-msgid "Розміри"
-msgstr "Velikosti"
-
-msgid "Сер"
-msgstr "Srp"
-
-msgid "Серпень"
-msgstr "Srpen"
-
-#: store/models.py:141
-msgid "Скасовано"
-msgstr "Zrušeno"
-
-#: templates/store/product/list.html:37
-msgid "Сортування"
-msgstr "Třídění"
-
-#: templates/includes/footer.html:22
-msgid "Соцмережі"
-msgstr "Sociální sítě"
-
-#: templates/store/accounts/password_change.html:39
-#: templates/store/accounts/signup.html:51
-#, python-format
-msgid "Спецсимвол (наприклад !@#$%%&)"
-msgstr "Speciální znak (např. !@#$%%&)"
-
-msgid "Спецсимвол (наприклад !@#$%&)"
-msgstr ""
-
-#: store/models.py:199
-msgid "Списки бажань"
-msgstr "Seznamy přání"
-
-#: store/models.py:198 templates/includes/navbar.html:51
-#: templates/store/accounts/profile.html:71 templates/store/wishlist.html:4
-msgid "Список бажань"
-msgstr "Seznam přání"
-
-#: store/models.py:127 templates/store/order/create.html:88
-msgid "Спосіб зв'язку"
-msgstr "Způsob kontaktu"
-
-#: templates/store/order/create.html:141
-msgid "Спочатку оберіть місто"
-msgstr "Nejprve vyberte město"
-
-#: templates/store/accounts/spending.html:4
-msgid "Статистика витрат"
-msgstr "Statistiky výdajů"
-
-#: store/models.py:142 store/services/dashboard_service.py:42
-msgid "Статус"
-msgstr "Stav"
-
-#: templates/emails/order_status_update.html:102
-msgid "Статус вашого замовлення"
-msgstr "Stav vaší objednávky"
-
-#: store/models.py:133
-msgid "Створено"
-msgstr "Vytvořeno"
-
-#: templates/store/accounts/signup.html:9
-msgid "Створити аккаунт"
-msgstr "Vytvořit účet"
-
-#: templates/store/product/detail.html:335
-msgid "Стегна (см)"
-msgstr "Boky (cm)"
-
-#: templates/store/about.html:28
-msgid "Стиль понад усе"
-msgstr "Styl především"
-
-#: store/models.py:118
-msgid "Сума знижки"
-msgstr ""
-
-#: templates/emails/order_confirmation.html:170
-#: templates/store/cart/detail.html:212
-msgid "Сума:"
-msgstr "Mezisoučet:"
-
-msgid "Січ"
-msgstr "Led"
-
-msgid "Січень"
-msgstr "Leden"
-
-#: templates/store/product/detail.html:82
-#: templates/store/product/detail.html:293
-msgid "Таблиця розмірів"
-msgstr "Tabulka velikostí"
-
-#: templates/store/product/detail.html:334
-msgid "Талія (см)"
-msgstr "Pas (cm)"
-
-#: store/forms.py:183 store/models.py:85 store/models.py:121
-msgid "Телефон"
-msgstr "Telefon"
-
-#: store/models.py:31
-msgid "Тип"
-msgstr "Typ"
-
-#: store/models.py:57 templates/store/cart/detail.html:130
-msgid "Товар"
-msgstr "Produkt"
-
-#: store/views.py:242
-msgid "Товар відсутній на складі!"
-msgstr ""
-
-#: store/models.py:58
-msgid "Товари"
-msgstr "Produkty"
-
-#: templates/store/wishlist.html:15
-msgid "Товари, які ви зберегли."
-msgstr "Položky, které jste si uložili."
-
-#: templates/store/product/product_list_fragment.html:68
-msgid "Товарів не знайдено за вашими критеріями."
-msgstr "Podle vašich kritérií nebyly nalezeny žádné produkty."
-
-msgid "Тра"
-msgstr "Kvě"
-
-msgid "Травень"
-msgstr "Květen"
-
-#: store/models.py:218
-msgid "Транзакція балів"
-msgstr "Transakce bodů"
-
-#: store/models.py:219
-msgid "Транзакції балів"
-msgstr "Transakce bodů"
+#: templates/store/product/list.html:54
+msgid "За назвою (A-Z)"
+msgstr "Dle názvu (A-Z)"
+
+#: templates/store/product/list.html:58
+msgid "За назвою (Z-A)"
+msgstr "Dle názvu (Z-A)"
+
+#: templates/store/product/list.html:71
+#: templates/store/product/product_list_fragment.html:8
+msgid "Всі товари"
+msgstr "Všechny produkty"
+
+#: templates/store/product/list.html:90
+msgid "Від"
+msgstr "Od"
+
+#: templates/store/product/list.html:93
+msgid "До"
+msgstr "Do"
 
 #: templates/store/product/list.html:121
 msgid "Тільки в наявності"
 msgstr "Pouze skladem"
 
-#: templates/store/about.html:20
-msgid "Тільки оригінальна якість"
-msgstr "Pouze originální kvalita"
+#: templates/store/product/list.html:134
+msgid "Очистити"
+msgstr "Vyčistit"
 
-#: templates/store/accounts/profile.html:117
-msgid "У вас поки немає активності. Почніть шопінг вже зараз!"
-msgstr "Zatím nemáte žádnou aktivitu. Začněte nakupovat právě teď!"
+#: templates/store/product/product_list_fragment.html:13
+#: templates/store/product/product_list_fragment.html:20
+#, python-format
+msgid "Found %(counter)s product"
+msgid_plural "Found %(counter)s products"
+msgstr[0] ""
+msgstr[1] ""
 
-#: templates/store/accounts/loyalty.html:78
-msgid "У вас поки немає історії балів."
-msgstr "Zatím nemáte žádnou historii bodů."
+#: templates/store/product/product_list_fragment.html:60
+#: templates/store/product/search.html:31
+msgid "Більше"
+msgstr "Více"
 
-#: templates/store/order/list.html:60
-msgid "У вас ще немає замовлень"
-msgstr "Zatím nemáte žádné objednávky"
+#: templates/store/product/product_list_fragment.html:68
+msgid "Товарів не знайдено за вашими критеріями."
+msgstr "Podle vašich kritérií nebyly nalezeny žádné produkty."
 
-#: templates/store/cart/detail.html:238
-msgid "У магазин"
-msgstr "Do obchodu"
+#: templates/store/product/search.html:4
+msgid "Пошук"
+msgstr "Hledání"
 
-#: templates/includes/modals.html:11 templates/registration/login.html:44
-#: templates/store/accounts/signup.html:183
-msgid "Увійти"
-msgstr "Přihlásit se"
+#: templates/store/product/search.html:8
+msgid "Результати пошуку для"
+msgstr "Výsledky hledání pro"
 
-#: templates/store/accounts/password_change_done.html:10
-msgid "Успішно!"
-msgstr "Úspěšně!"
+#: templates/store/product/search.html:39
+msgid "Нічого не знайдено за вашим запитом."
+msgstr "Pro váš dotaz nebylo nic nalezeno."
 
-#: templates/store/cart/detail.html:133
-msgid "Усього"
-msgstr "Celkem"
+#: templates/store/product/search.html:40 templates/store/reviews.html:47
+msgid "До каталогу"
+msgstr "Do katalogu"
 
-#: templates/store/order/success.html:54
-msgid "Усього до оплати:"
-msgstr "Celkem k úhradě:"
-
-#: templates/store/cart/detail.html:226
-msgid "Усього до сплати:"
-msgstr "Celkem k úhradě:"
-
-#: templates/404.html:9
-msgid "Халепа! Здається, ви загубилися."
-msgstr ""
-
-#: templates/base.html:36
-msgid "Халепа, щось пішло не так!"
-msgstr "Jejda, něco se nepovedlo!"
-
-#: store/views.py:314
-msgid "Цей промокод належить іншому користувачу."
-msgstr "Tento slevový kód patří jinému uživateli."
-
-#: templates/store/accounts/password_change.html:36
-#: templates/store/accounts/signup.html:48
-msgid "Цифри"
-msgstr "Číslice"
-
-#: templates/store/cart/detail.html:132 templates/store/product/list.html:87
-msgid "Ціна"
-msgstr "Cena"
-
-msgid "Чер"
-msgstr "Čer"
-
-msgid "Червень"
-msgstr "Červen"
-
-#: templates/emails/welcome.html:137
-msgid "Швидка та надійна доставка"
-msgstr "Rychlé a spolehlivé doručení"
-
-#: templates/store/about.html:24
-msgid "Швидкий сервіс"
-msgstr "Rychlý servis"
-
-#: templates/store/accounts/profile.html:68
-msgid "Швидкі дії"
-msgstr "Rychlé akce"
-
-#: store/forms.py:95
-msgid "Шевченко"
-msgstr "Ševčenko"
+#: templates/store/reviews.html:4
+msgid "Відгуки наших клієнтів - PREMIUM SHOP"
+msgstr "Hodnocení zákazníků - PREMIUM SHOP"
 
 #: templates/store/reviews.html:9
 msgid "ЩО ПРО НАС"
 msgstr "CO O NÁS"
 
-#: templates/emails/welcome.html:125
-msgid "Що на вас чекає:"
-msgstr "Co vás čeká:"
+#: templates/store/reviews.html:9
+msgid "КАЖУТЬ"
+msgstr "ŘÍKAJÍ"
 
-#: templates/store/product/detail.html:198
-msgid "або"
-msgstr "nebo"
+#: templates/store/reviews.html:10
+msgid "Ми цінуємо кожного клієнта та ваш фідбек"
+msgstr "Vážíme si každého zákazníka a vaší zpětné vazby"
 
-msgid "балів"
-msgstr "bodů"
+#: templates/store/reviews.html:45
+msgid ""
+"Тут поки порожньо. Станьте першим, хто залишить відгук на один із наших "
+"товарів!"
+msgstr ""
 
-msgid "балів для знижки"
-msgstr "bodů pro slevu"
+#: templates/store/wishlist.html:9
+msgid "Ваш список бажань"
+msgstr "Váš seznam přání"
 
-#: templates/store/product/detail.html:67
-msgid "відгуків"
-msgstr "recenzí"
+#: templates/store/wishlist.html:10
+msgid "Товари, які ви зберегли."
+msgstr "Položky, které jste si uložili."
 
-#: templates/store/product/detail.html:200
-msgid "зареєструйтесь"
-msgstr "zaregistrujte se"
+#: templates/store/wishlist.html:50
+msgid "Ваш список бажань порожній"
+msgstr "Váš seznam přání je prázdný"
 
-#: templates/emails/order_status_update.html:102
-msgid "змінено на:"
-msgstr "byl změněn na:"
-
-#: templates/base.html:11
-msgid "кросівки, стрітвір, одяг, Україна, купити кросівки, premium shop"
-msgstr "tenisky, premium, oblečení, Ukrajina, koupit tenisky, premium shop"
-
-#: templates/store/about.html:24
-msgid "менеджер зв'яжеться з вами протягом 15 хвилин."
-msgstr "manažer vás bude kontaktovat do 15 minut."
-
-#: templates/store/about.html:28
-msgid "ми завжди в курсі останніх трендів."
-msgstr "jsme vždy informováni o nejnovějších trendech."
-
-#: store/models.py:187 templates/store/reviews.html:28
-msgid "на"
-msgstr "na"
-
-#: templates/store/about.html:20
-msgid "ніяких компромісів."
-msgstr "žádné kompromisy."
-
-#: templates/store/product/detail.html:196
-msgid "увійдіть"
-msgstr "přihlaste se"
-
-#: templates/store/product/detail.html:107
-msgid "шт."
-msgstr "ks."
-
+#: templates/store/wishlist.html:51
+msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
+msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."

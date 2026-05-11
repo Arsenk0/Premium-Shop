@@ -4,34 +4,216 @@
 {% block title %}{% trans "Контакти - PREMIUM SHOP" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in" style="max-width: 900px; padding: 4rem 0;">
-    <h1 style="font-size: 4rem; margin-bottom: 2rem; text-align: center; letter-spacing: -2px;">{% trans "ЗВ'ЯЖІТЬСЯ" %}
-        <span style="color: var(--accent);">{% trans "З НАМИ" %}</span></h1>
+<div class="container fade-in premium-dashboard" style="max-width: 900px; padding: 2rem 20px;">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+        <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0;">
+            {% trans "ЗВ'ЯЖІТЬСЯ" %} <span style="color: var(--accent);">{% trans "З НАМИ" %}</span>
+        </h1>
+        <p style="color: var(--text-muted); margin: 0;">{% trans "Ми завжди на зв'язку — оберіть зручний спосіб." %}</p>
+        <a href="/" class="btn btn-pill hover-scale">
+            <i class="fas fa-arrow-left"></i> {% trans "На головну" %}
+        </a>
+    </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-        <div style="background: var(--card-bg); padding: 3rem; border-radius: 24px; box-shadow: var(--shadow);">
-            <h3>{% trans "Ми в соцмережах" %}</h3>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;">{% trans "Ми завжди на зв'язку тут:" %}</p>
+    <div class="contact-grid">
+        <div class="contact-card">
+            <div class="contact-card__icon">
+                <i class="fas fa-share-alt"></i>
+            </div>
+            <h3 class="contact-card__title">{% trans "Ми в соцмережах" %}</h3>
+            <p class="contact-card__desc">{% trans "Ми завжди на зв'язку тут:" %}</p>
 
-            <a href="#" class="btn btn-primary hover-scale" style="width: 100%; margin-bottom: 1rem; background: #0088cc;">
-                <i class="fab fa-telegram"></i> Telegram
-            </a>
-            <a href="#" class="btn btn-primary hover-scale" style="width: 100%; margin-bottom: 1rem; background: #e4405f;">
-                <i class="fab fa-instagram"></i> Instagram
-            </a>
-            <a href="#" class="btn btn-primary hover-scale" style="width: 100%; background: #25d366;">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-            </a>
+            <div class="social-btns">
+                <a href="#" class="social-btn social-btn--telegram">
+                    <i class="fab fa-telegram"></i>
+                    <span>Telegram</span>
+                </a>
+                <a href="#" class="social-btn social-btn--instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="#" class="social-btn social-btn--whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="#" class="social-btn social-btn--tiktok">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </a>
+            </div>
         </div>
 
-        <div style="background: var(--card-bg); padding: 3rem; border-radius: 24px; box-shadow: var(--shadow);">
-            <h3>{% trans "Наш офіс" %}</h3>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;">{% trans "Де нас знайти:" %}</p>
+        <div class="contact-card">
+            <div class="contact-card__icon">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3 class="contact-card__title">{% trans "Наш офіс" %}</h3>
+            <p class="contact-card__desc">{% trans "Де нас знайти:" %}</p>
 
-            <p><strong>{% trans "Адреса:" %}</strong> {% trans "м. Київ, вул. Хрещатик, 1" %}</p>
-            <p><strong>{% trans "Графік:" %}</strong> {% trans "Пн-Пт 10:00 - 19:00" %}</p>
-            <p><strong>{% trans "Телефон:" %}</strong> +380 99 999 99 99</p>
+            <div class="contact-details">
+                <div class="contact-detail-item">
+                    <div class="contact-detail-icon"><i class="fas fa-location-dot"></i></div>
+                    <div>
+                        <span class="contact-detail-label">{% trans "Адреса" %}</span>
+                        <span class="contact-detail-value">{% trans "м. Київ, вул. Хрещатик, 1" %}</span>
+                    </div>
+                </div>
+                <div class="contact-detail-item">
+                    <div class="contact-detail-icon"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <span class="contact-detail-label">{% trans "Графік" %}</span>
+                        <span class="contact-detail-value">{% trans "Пн-Пт 10:00 - 19:00" %}</span>
+                    </div>
+                </div>
+                <div class="contact-detail-item">
+                    <div class="contact-detail-icon"><i class="fas fa-phone"></i></div>
+                    <div>
+                        <span class="contact-detail-label">{% trans "Телефон" %}</span>
+                        <span class="contact-detail-value">+380 99 999 99 99</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 700px) {
+        .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    .contact-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow);
+        transition: transform 0.2s;
+    }
+
+    .contact-card:hover { transform: translateY(-3px); }
+
+    .contact-card__icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        background: var(--card-bg-alt);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .contact-card__title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem;
+    }
+
+    .contact-card__desc {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin: 0 0 1.5rem;
+    }
+
+    .social-btns {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .social-btn {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        border-radius: 14px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        color: #fff;
+        transition: all 0.2s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .social-btn i {
+        font-size: 1.3rem;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+    }
+
+    .social-btn:hover i {
+        background: rgba(255, 255, 255, 0.35);
+        transform: scale(1.1);
+    }
+
+    .social-btn:hover { opacity: 0.88; transform: translateX(4px); }
+
+    .social-btn--telegram  { background: #0088cc; }
+    .social-btn--instagram { background: linear-gradient(135deg,#e4405f,#833ab4); }
+    .social-btn--whatsapp  { background: #25d366; }
+    
+    .social-btn--tiktok    { background: #010101; }
+
+    .contact-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .contact-detail-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+        border-radius: 14px;
+        background: var(--card-bg-alt);
+        border: 1px solid var(--border-color);
+    }
+
+    .contact-detail-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: rgba(99,102,241,0.1);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 0.9rem;
+    }
+
+    .contact-detail-label {
+        display: block;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.2rem;
+    }
+
+    .contact-detail-value {
+        display: block;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text-main);
+    }
+</style>
 {% endblock %}

@@ -7,9 +7,9 @@
 <div class="container fade-in premium-dashboard">
     <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
         <h1 style="margin: 0;">Telegram <i class="fab fa-telegram"></i></h1>
-        <p style="color: var(--text-muted); margin: 0;">Прив'яжіть Telegram для отримання сповіщень про замовлення та керування акаунтом прямо в месенджері.</p>
+        <p style="color: var(--text-muted); margin: 0;">{% trans "Прив'яжіть Telegram для отримання сповіщень про замовлення та керування акаунтом прямо в месенджері." %}</p>
         <a href="{% url 'store:profile' %}" class="btn btn-pill hover-scale">
-            <i class="fas fa-arrow-left"></i> Назад до кабінету
+            <i class="fas fa-arrow-left"></i> {% trans "Назад до кабінету" %}
         </a>
     </div>
 
@@ -35,44 +35,43 @@
             </div>
             <div class="tg-card__body">
                 <div class="tg-badge tg-badge--success">
-                    <i class="fas fa-check-circle"></i> Прив'язано
+                    <i class="fas fa-check-circle"></i> {% trans "Прив'язано" %}
                 </div>
-                <h2 class="tg-card__title">Telegram під'єднано!</h2>
+                <h2 class="tg-card__title">{% trans "Telegram під'єднано!" %}</h2>
                 <p class="tg-card__desc">
-                    Ваш акаунт успішно прив'язано до Telegram. Ви будете отримувати сповіщення 
-                    про зміну статусів замовлень прямо у месенджері.
+                    {% trans "Ваш акаунт успішно прив'язано до Telegram. Ви будете отримувати сповіщення про зміну статусів замовлень прямо у месенджері." %}
                 </p>
 
                 <div class="tg-features">
                     <div class="tg-feature-item">
                         <i class="fas fa-bell"></i>
-                        <span>Сповіщення про статуси замовлень</span>
+                        <span>{% trans "Сповіщення про статуси замовлень" %}</span>
                     </div>
                     <div class="tg-feature-item">
                         <i class="fas fa-box"></i>
-                        <span>Перегляд замовлень через /orders</span>
+                        <span>{% trans "Перегляд замовлень через /orders" %}</span>
                     </div>
                     <div class="tg-feature-item">
                         <i class="fas fa-coins"></i>
-                        <span>Баланс балів через /loyalty</span>
+                        <span>{% trans "Баланс балів через /loyalty" %}</span>
                     </div>
                     <div class="tg-feature-item">
                         <i class="fas fa-ticket-alt"></i>
-                        <span>Генерація промокодів через /promo</span>
+                        <span>{% trans "Генерація промокодів через /promo" %}</span>
                     </div>
                 </div>
 
                 {% if bot_username %}
                 <a href="https://t.me/{{ bot_username }}" target="_blank" class="btn btn-primary hover-scale" style="margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.6rem;">
-                    <i class="fab fa-telegram"></i> Відкрити бота
+                    <i class="fab fa-telegram"></i> {% trans "Відкрити бота" %}
                 </a>
                 {% endif %}
 
                 <form method="post" action="{% url 'store:telegram_unlink' %}" style="margin-top: 1rem;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-outline hover-scale tg-unlink-btn"
-                        onclick="return confirm('Ви впевнені, що хочете від\'єднати Telegram?')">
-                        <i class="fas fa-unlink"></i> Від'єднати Telegram
+                        onclick="return confirm('{% trans "Ви впевнені, що хочете від\'єднати Telegram?" %}')">
+                        <i class="fas fa-unlink"></i> {% trans "Від'єднати Telegram" %}
                     </button>
                 </form>
             </div>
@@ -88,36 +87,36 @@
                         <i class="fab fa-telegram"></i>
                     </div>
                 </div>
-                <h2 class="tg-card__title">Як прив'язати Telegram?</h2>
+                <h2 class="tg-card__title">{% trans "Як прив'язати Telegram?" %}</h2>
 
                 <div class="tg-steps">
                     <div class="tg-step">
                         <div class="tg-step__num">1</div>
                         <div class="tg-step__text">
                             {% if bot_username %}
-                            Відкрийте бота <a href="https://t.me/{{ bot_username }}" target="_blank" class="tg-link">@{{ bot_username }}</a> у Telegram
+                            {% blocktrans %}Відкрийте бота <a href="https://t.me/{{ bot_username }}" target="_blank" class="tg-link">@{{ bot_username }}</a> у Telegram{% endblocktrans %}
                             {% else %}
-                            Знайдіть нашого бота у Telegram
+                            {% trans "Знайдіть нашого бота у Telegram" %}
                             {% endif %}
                         </div>
                     </div>
                     <div class="tg-step">
                         <div class="tg-step__num">2</div>
-                        <div class="tg-step__text">Відправте боту команду <code>/start</code></div>
+                        <div class="tg-step__text">{% trans "Відправте боту команду" %} <code>/start</code></div>
                     </div>
                     <div class="tg-step">
                         <div class="tg-step__num">3</div>
-                        <div class="tg-step__text">Натисніть кнопку <strong>«Ввести код прив'язки»</strong></div>
+                        <div class="tg-step__text">{% trans "Натисніть кнопку" %} <strong>«{% trans "Ввести код прив'язки" %}»</strong></div>
                     </div>
                     <div class="tg-step">
                         <div class="tg-step__num">4</div>
-                        <div class="tg-step__text">Отримайте код нижче і введіть його в боті. Код дійсний <strong>10 хвилин</strong>.</div>
+                        <div class="tg-step__text">{% trans "Отримайте код нижче і введіть його в боті. Код дійсний" %} <strong>10 {% trans "хвилин" %}</strong>.</div>
                     </div>
                 </div>
 
                 {% if bot_username %}
                 <a href="https://t.me/{{ bot_username }}" target="_blank" class="btn btn-outline hover-scale" style="margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.6rem;">
-                    <i class="fab fa-telegram"></i> Відкрити бота @{{ bot_username }}
+                    <i class="fab fa-telegram"></i> {% trans "Відкрити бота" %} @{{ bot_username }}
                 </a>
                 {% endif %}
             </div>
@@ -129,22 +128,22 @@
                         <i class="fas fa-key"></i>
                     </div>
                 </div>
-                <h2 class="tg-card__title">Ваш код прив'язки</h2>
+                <h2 class="tg-card__title">{% trans "Ваш код прив'язки" %}</h2>
 
                 {% if profile.telegram_link_token %}
                 <div class="tg-otp-display">
                     <div class="tg-otp-code" id="otp-code">{{ profile.telegram_link_token }}</div>
-                    <button class="tg-copy-btn" onclick="copyOtp()" title="Скопіювати">
+                    <button class="tg-copy-btn" onclick="copyOtp()" title="{% trans 'Скопіювати' %}">
                         <i class="fas fa-copy" id="copy-icon"></i>
                     </button>
                 </div>
                 <p class="tg-otp-hint">
-                    <i class="fas fa-clock"></i> Код дійсний 10 хвилин
+                    <i class="fas fa-clock"></i> {% trans "Код дійсний 10 хвилин" %}
                 </p>
                 {% else %}
                 <div class="tg-otp-placeholder">
                     <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
-                    <p style="color: var(--text-muted); margin: 0 0 1.5rem;">Натисніть кнопку, щоб отримати одноразовий код</p>
+                    <p style="color: var(--text-muted); margin: 0 0 1.5rem;">{% trans "Натисніть кнопку, щоб отримати одноразовий код" %}</p>
                 </div>
                 {% endif %}
 
@@ -152,9 +151,9 @@
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary btn-lg hover-scale" style="width: 100%;">
                         {% if profile.telegram_link_token %}
-                        <i class="fas fa-sync-alt"></i> Оновити код
+                        <i class="fas fa-sync-alt"></i> {% trans "Оновити код" %}
                         {% else %}
-                        <i class="fas fa-key"></i> Отримати код
+                        <i class="fas fa-key"></i> {% trans "Отримати код" %}
                         {% endif %}
                     </button>
                 </form>
@@ -164,28 +163,28 @@
         <!-- Features banner -->
         <div class="tg-features-banner">
             <div class="tg-features-banner__title">
-                <i class="fas fa-star"></i> Що дає прив'язка Telegram?
+                <i class="fas fa-star"></i> {% trans "Що дає прив'язка Telegram?" %}
             </div>
             <div class="tg-features-grid">
                 <div class="tg-feature-card">
                     <i class="fas fa-bell"></i>
-                    <strong>Сповіщення</strong>
-                    <span>Миттєві повідомлення про зміну статусу замовлення</span>
+                    <strong>{% trans "Сповіщення" %}</strong>
+                    <span>{% trans "Миттєві повідомлення про зміну статусу замовлення" %}</span>
                 </div>
                 <div class="tg-feature-card">
                     <i class="fas fa-box"></i>
-                    <strong>Замовлення</strong>
-                    <span>Перегляд усіх замовлень через /orders</span>
+                    <strong>{% trans "Замовлення" %}</strong>
+                    <span>{% trans "Перегляд усіх замовлень через /orders" %}</span>
                 </div>
                 <div class="tg-feature-card">
                     <i class="fas fa-coins"></i>
-                    <strong>Бонуси</strong>
-                    <span>Баланс балів і прогрес до наступного рівня</span>
+                    <strong>{% trans "Бонуси" %}</strong>
+                    <span>{% trans "Баланс балів і прогрес до наступного рівня" %}</span>
                 </div>
                 <div class="tg-feature-card">
                     <i class="fas fa-ticket-alt"></i>
-                    <strong>Промокоди</strong>
-                    <span>Генерація промокодів з балів прямо в боті</span>
+                    <strong>{% trans "Промокоди" %}</strong>
+                    <span>{% trans "Генерація промокодів з балів прямо в боті" %}</span>
                 </div>
             </div>
         </div>

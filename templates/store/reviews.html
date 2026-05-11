@@ -4,11 +4,13 @@
 {% block title %}{% trans "Відгуки наших клієнтів - PREMIUM SHOP" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in" style="max-width: 1000px; padding: 4rem 0;">
-    <div style="text-align: center; margin-bottom: 4rem;">
-        <h1 style="font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 1rem;">{% trans "ЩО ПРО НАС" %} <span style="color: var(--accent);">{% trans "КАЖУТЬ" %}</span></h1>
-        <p style="color: var(--text-muted); font-size: 1.1rem;">{% trans "Ми цінуємо кожного клієнта та ваш фідбек" %}
-        </p>
+<div class="container fade-in premium-dashboard" style="max-width: 1000px; padding: 2rem 20px;">
+    <div class="dashboard-header" style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+        <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0;">{% trans "ЩО ПРО НАС" %} <span style="color: var(--accent);">{% trans "КАЖУТЬ" %}</span></h1>
+        <p style="color: var(--text-muted); margin: 0;">{% trans "Ми цінуємо кожного клієнта та ваш фідбек" %}</p>
+        <a href="/" class="btn btn-pill hover-scale">
+            <i class="fas fa-arrow-left"></i> {% trans "На головну" %}
+        </a>
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
