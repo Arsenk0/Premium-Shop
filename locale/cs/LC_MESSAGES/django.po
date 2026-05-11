@@ -1,8 +1,9 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 13:02+0300\n"
+"POT-Creation-Date: 2026-05-11 14:01+0300\n"
 "Language: \n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -399,7 +400,7 @@ msgstr "Registrace"
 msgid "Покупка"
 msgstr "Nákup"
 
-#: store/models.py:214 store/views.py:755
+#: store/models.py:214 store/views.py:804
 msgid "Конвертація в купон"
 msgstr "Konverze bodů na kupon"
 
@@ -423,7 +424,7 @@ msgstr "Transakce bodů"
 msgid "Транзакції балів"
 msgstr "Transakce bodů"
 
-#: store/services/core.py:91 store/views.py:488
+#: store/services/core.py:91 store/views.py:534
 msgid "Ви вже використовували цей промокод."
 msgstr "Tento slevový kód jste již použili."
 
@@ -470,6 +471,16 @@ msgstr "Vítejte v našem obchodě, %(username)s!"
 #, python-format
 msgid "Оновлення статусу замовлення №%(order_id)s"
 msgstr "Aktualizace stavu objednávky č.%(order_id)s"
+
+#: store/telegram_bot/handlers/common.py:40
+#| msgid "Прив'язано"
+msgid "не вказано"
+msgstr "Neuvedeno"
+
+#: store/telegram_bot/keyboards.py:35
+#| msgid "Оберіть розмір"
+msgid "Оберіть розділ меню..."
+msgstr "Vyberte sekci menu..."
 
 #: store/telegram_bot/messages.py:9
 msgid ""
@@ -636,40 +647,68 @@ msgid ""
 msgstr ""
 
 #: store/telegram_bot/messages.py:126
-msgid "🥉 Бронзовий (до 250 балів)"
-msgstr ""
+msgid "🥉 Бронзовий (до 200 балів) — 0%"
+msgstr "🥉 Bronzová (do 200 bodů) — 0%"
 
 #: store/telegram_bot/messages.py:127
-msgid "🥈 Срібний (250–600 балів)"
-msgstr ""
+msgid "🥈 Срібний (200–500 балів) — 5%"
+msgstr "🥈 Stříbrná (200–500 bodů) — 5%"
 
 #: store/telegram_bot/messages.py:128
-msgid "🥇 Золотий (600+ балів)"
-msgstr ""
+msgid "🥇 Золотий (500–1000 балів) — 7%"
+msgstr "🥇 Zlatá (500–1000 bodů) — 7%"
+
+#: store/telegram_bot/messages.py:129
+msgid "💎 Платиновий (1000–2000 балів) — 10%"
+msgstr "💎 Platinová (1000–2000 bodů) — 10%"
+
+#: store/telegram_bot/messages.py:130
+msgid "💠 Діамантовий (2000–5000 балів) — 12%"
+msgstr "💠 Diamantová (2000–5000 bodů) — 12%"
 
 #: store/telegram_bot/messages.py:131
+msgid "👑 Elite (5000+ балів) — 15%"
+msgstr ""
+
+#: store/telegram_bot/messages.py:134
 #, python-brace-format
 msgid ""
 "❌ Недостатньо балів для генерації промокоду.\n"
 "\n"
-"Вам потрібно мінімум <b>250 балів</b> для знижки 5%\n"
-"або <b>600 балів</b> для знижки 10%.\n"
+"Вам потрібно мінімум <b>200 балів</b> для знижки 5%.\n"
 "\n"
 "Поточний баланс: <b>{points} балів</b>"
 msgstr ""
+"❌ Nedostatek bodů k vygenerování slevového kódu.\n"
+"\n"
+"Potřebujete alespoň <b>200 bodů</b> pro slevu 5%.\n"
+"\n"
+"Aktuální zůstatek: <b>{points} bodů</b>"
 
-#: store/telegram_bot/messages.py:138
+#: store/telegram_bot/messages.py:140
 #, python-brace-format
 msgid ""
 "🎟 <b>Оберіть варіант промокоду:</b>\n"
 "\n"
-"🥈 250 балів → знижка 5%\n"
-"🥇 600 балів → знижка 10%\n"
+"🥉 200 балів → знижка 5%\n"
+"🥈 500 балів → знижка 7%\n"
+"🥇 1000 балів → знижка 10%\n"
+"💎 2000 балів → знижка 12%\n"
+"👑 5000 балів → знижка 15%\n"
 "\n"
 "Поточний баланс: <b>{points} балів</b>"
 msgstr ""
+"🎟 <b>Vyberte slevový kód:</b>\n"
+"\n"
+"🥉 200 bodů → sleva 5%\n"
+"🥈 500 bodů → sleva 7%\n"
+"🥇 1000 bodů → sleva 10%\n"
+"💎 2000 bodů → sleva 12%\n"
+"👑 5000 bodů → sleva 15%\n"
+"\n"
+"Aktuální zůstatek: <b>{points} bodů</b>"
 
-#: store/telegram_bot/messages.py:145
+#: store/telegram_bot/messages.py:150
 #, python-brace-format
 msgid ""
 "🎉 <b>Ваш промокод готовий!</b>\n"
@@ -681,7 +720,7 @@ msgid ""
 "Скопіюйте код і застосуйте при оформленні замовлення на сайті."
 msgstr ""
 
-#: store/telegram_bot/messages.py:154
+#: store/telegram_bot/messages.py:159
 #, python-brace-format
 msgid ""
 "🔔 <b>Оновлення замовлення #{order_id}</b>\n"
@@ -700,150 +739,221 @@ msgstr ""
 "\n"
 "{extra_message}"
 
-#: store/telegram_bot/messages.py:162
+#: store/telegram_bot/messages.py:167
 msgid "⚙️ Ваше замовлення прийнято в обробку."
 msgstr "⚙️ Vaše objednávka byla přijata ke zpracování."
 
-#: store/telegram_bot/messages.py:163
+#: store/telegram_bot/messages.py:168
 msgid "🚚 Ваше замовлення відправлено! Очікуйте доставку."
 msgstr "🚚 Vaše objednávka byla odeslána! Očekávejte doručení."
 
-#: store/telegram_bot/messages.py:164
+#: store/telegram_bot/messages.py:169
 msgid "✅ Замовлення виконано. Дякуємо за покупку! 🛍"
 msgstr "✅ Objednávka byla vyřízena. Děkujeme za nákup! 🛍"
 
-#: store/telegram_bot/messages.py:165
+#: store/telegram_bot/messages.py:170
 msgid "❌ Ваше замовлення скасовано. Зверніться до підтримки."
 msgstr "❌ Vaše objednávka byla zrušena. Kontaktujte podporu."
 
-#: store/views.py:228 templates/store/accounts/spending.html:93
+#: store/telegram_bot/messages.py:175
+#, python-brace-format
+msgid ""
+"👤 <b>Ваш профіль</b>\n"
+"\n"
+"👤 Логін: <b>{username}</b>\n"
+"📞 Телефон: <code>{phone}</code>\n"
+"🎁 Баланс: <b>{points} балів</b>\n"
+"🏆 Рівень: <b>{tier}</b>\n"
+"📅 На зв'язку з: {date_joined}"
+msgstr ""
+
+#: store/telegram_bot/messages.py:184
+msgid ""
+"💬 <b>Служба підтримки Premium Shop</b>\n"
+"\n"
+"Маєте запитання щодо замовлення або товару?\n"
+"Наші менеджери радо допоможуть вам!\n"
+"\n"
+"🔹 Telegram: @premium_shop_support\n"
+"🔹 Графік роботи: Пн-Нд 10:00 - 20:00"
+msgstr ""
+
+#: store/telegram_bot/messages.py:192
+#| msgid "Мої замовлення"
+msgid "📦 Мої замовлення"
+msgstr "📦 Moje objednávky"
+
+#: store/telegram_bot/messages.py:193
+#| msgid "Вільні бали"
+msgid "🎁 Бонусні бали"
+msgstr "🎁 Bonusové body"
+
+#: store/telegram_bot/messages.py:194
+#| msgid "Промокоди"
+msgid "🎫 Промокоди"
+msgstr "🎫 Slevové kódy"
+
+#: store/telegram_bot/messages.py:195
+#| msgid "Профіль"
+msgid "👤 Профіль"
+msgstr "👤 Profil"
+
+#: store/telegram_bot/messages.py:196
+msgid "💬 Підтримка"
+msgstr ""
+
+#: store/views.py:111
+msgid "Bronze"
+msgstr "Bronzová"
+
+#: store/views.py:112
+msgid "Silver"
+msgstr "Stříbrná"
+
+#: store/views.py:113
+msgid "Gold"
+msgstr "Zlatá"
+
+#: store/views.py:114
+msgid "Platinum"
+msgstr "Platinová"
+
+#: store/views.py:115
+msgid "Diamond"
+msgstr "Diamantová"
+
+#: store/views.py:116
+msgid "Elite"
+msgstr "Elite"
+
+#: store/views.py:274 templates/store/accounts/spending.html:93
 msgid "Січень"
 msgstr "Leden"
 
-#: store/views.py:228 templates/store/accounts/spending.html:94
+#: store/views.py:274 templates/store/accounts/spending.html:94
 msgid "Лютий"
 msgstr "Únor"
 
-#: store/views.py:228 templates/store/accounts/spending.html:95
+#: store/views.py:274 templates/store/accounts/spending.html:95
 msgid "Березень"
 msgstr "Březen"
 
-#: store/views.py:228 templates/store/accounts/spending.html:96
+#: store/views.py:274 templates/store/accounts/spending.html:96
 msgid "Квітень"
 msgstr "Duben"
 
-#: store/views.py:229 templates/store/accounts/spending.html:97
+#: store/views.py:275 templates/store/accounts/spending.html:97
 msgid "Травень"
 msgstr "Květen"
 
-#: store/views.py:229 templates/store/accounts/spending.html:98
+#: store/views.py:275 templates/store/accounts/spending.html:98
 msgid "Червень"
 msgstr "Červen"
 
-#: store/views.py:229 templates/store/accounts/spending.html:99
+#: store/views.py:275 templates/store/accounts/spending.html:99
 msgid "Липень"
 msgstr "Červenec"
 
-#: store/views.py:229 templates/store/accounts/spending.html:100
+#: store/views.py:275 templates/store/accounts/spending.html:100
 msgid "Серпень"
 msgstr "Srpen"
 
-#: store/views.py:230 templates/store/accounts/spending.html:101
+#: store/views.py:276 templates/store/accounts/spending.html:101
 msgid "Вересень"
 msgstr "Září"
 
-#: store/views.py:230 templates/store/accounts/spending.html:102
+#: store/views.py:276 templates/store/accounts/spending.html:102
 msgid "Жовтень"
 msgstr "Říjen"
 
-#: store/views.py:230 templates/store/accounts/spending.html:103
+#: store/views.py:276 templates/store/accounts/spending.html:103
 msgid "Листопад"
 msgstr "Listopad"
 
-#: store/views.py:230 templates/store/accounts/spending.html:104
+#: store/views.py:276 templates/store/accounts/spending.html:104
 msgid "Грудень"
 msgstr "Prosinec"
 
-#: store/views.py:241
+#: store/views.py:287
 msgid "Місяць"
 msgstr "Měsíc"
 
-#: store/views.py:241
+#: store/views.py:287
 msgid "Рік"
 msgstr "Rok"
 
-#: store/views.py:241 templates/store/accounts/spending.html:169
+#: store/views.py:287 templates/store/accounts/spending.html:169
 msgid "Витрати"
 msgstr "Výdaje"
 
-#: store/views.py:253 templates/store/accounts/spending.html:23
+#: store/views.py:299 templates/store/accounts/spending.html:23
 msgid "Загалом"
 msgstr "Celkem"
 
-#: store/views.py:266
+#: store/views.py:312
 msgid "Налаштування успішно збережено!"
 msgstr "Objednávka byla potvrzena!"
 
-#: store/views.py:293
+#: store/views.py:339
 msgid "Код згенеровано! Відправте його боту протягом 10 хвилин."
 msgstr "manažer vás bude kontaktovat do 15 minut."
 
-#: store/views.py:311
+#: store/views.py:357
 msgid "Telegram-акаунт успішно від'єднано."
 msgstr ""
 
-#: store/views.py:354
+#: store/views.py:400
 msgid "Ви вже залишили відгук на цей товар."
 msgstr "Již jste na tento produkt napsali recenzi."
 
-#: store/views.py:375
+#: store/views.py:421
 msgid "Відгук на товар"
 msgstr "Recenze produktu"
 
-#: store/views.py:378
+#: store/views.py:424
 #, python-format
 msgid "Дякуємо! Ваш відгук успішно додано. Вам нараховано %(points)s балів!"
 msgstr ""
 "Děkujeme! Vaše recenze byla úspěšně přidána. Získali jste %(points)s bodů!"
 
-#: store/views.py:407 templates/base.html:37
+#: store/views.py:453 templates/base.html:37
 #: templates/store/product/detail.html:94
 msgid "Будь ласка, оберіть розмір!"
 msgstr "Vyberte prosím velikost!"
 
-#: store/views.py:413
+#: store/views.py:459
 msgid "Товар відсутній на складі!"
 msgstr ""
 
-#: store/views.py:422
+#: store/views.py:468
 msgid "Досягнуто максимальну кількість цього товару!"
 msgstr "Bylo dosaženo maximálního množství tohoto produktu!"
 
-#: store/views.py:484
+#: store/views.py:530
 msgid "Цей промокод належить іншому користувачу."
 msgstr "Tento slevový kód patří jinému uživateli."
 
-#: store/views.py:492
+#: store/views.py:538
 msgid "Промокод успішно застосовано!"
 msgstr "Slevový kód byl úspěšně uplatněn!"
 
-#: store/views.py:495
+#: store/views.py:541
 msgid "Недійсний промокод."
 msgstr "Neplatný slevový kód."
 
-#: store/views.py:502
+#: store/views.py:548
 msgid "Промокод видалено."
 msgstr "Slevový kód byl odstraněn."
 
-#: store/views.py:719
+#: store/views.py:768
 msgid "Невірний варіант конвертації."
 msgstr "Neplatná možnost konverze."
 
-#: store/views.py:730
+#: store/views.py:779
 msgid "Недостатньо балів для конвертації."
 msgstr "Nemáte dostatek bodů pro konverzi."
 
-#: store/views.py:762
+#: store/views.py:811
 #, python-format
 msgid "Успішно конвертовано! Ваш промокод: %(code)s"
 msgstr ""
@@ -996,7 +1106,7 @@ msgstr "Sledovat objednávku"
 
 #: templates/emails/order_confirmation.html:191
 #: templates/emails/order_status_update.html:108
-#: templates/emails/welcome.html:143 templates/includes/footer.html:64
+#: templates/emails/welcome.html:143 templates/includes/footer.html:65
 msgid "Всі права захищені."
 msgstr "Všechna práva vyhrazena."
 
@@ -1072,8 +1182,8 @@ msgid ""
 "Найкращий преміум одяг та кросівки в Україні. Тільки оригінальна якість та "
 "преміальний сервіс."
 msgstr ""
-"Nejlepší prémiové oblečení a tenisky na Ukrajině. Pouze originální kvalita a "
-"prémiový servis."
+"Nejlepší prémiové oblečení a tenisky na Ukrajině. Pouze originální kvalita a"
+" prémiový servis."
 
 #: templates/includes/footer.html:10
 msgid "Підпишіться на новини"
@@ -1286,23 +1396,43 @@ msgstr "Vyberte možnost..."
 
 #: templates/store/accounts/loyalty.html:35
 #, python-format
-msgid "250 балів = знижка 5%%"
-msgstr "250 bodů = sleva 5%%"
+#| msgid "250 балів = знижка 5%%"
+msgid "200 балів = знижка 5%%"
+msgstr "200 bodů = sleva 5%%"
 
 #: templates/store/accounts/loyalty.html:38
 #, python-format
-msgid "600 балів = знижка 10%%"
-msgstr "600 bodů = sleva 10%%"
+#| msgid "250 балів = знижка 5%%"
+msgid "500 балів = знижка 7%%"
+msgstr "500 bodů = sleva 7%%"
 
-#: templates/store/accounts/loyalty.html:42
+#: templates/store/accounts/loyalty.html:41
+#, python-format
+#| msgid "600 балів = знижка 10%%"
+msgid "1000 балів = знижка 10%%"
+msgstr "1000 bodů = sleva 10%%"
+
+#: templates/store/accounts/loyalty.html:44
+#, python-format
+#| msgid "600 балів = знижка 10%%"
+msgid "2000 балів = знижка 12%%"
+msgstr "2000 bodů = sleva 12%%"
+
+#: templates/store/accounts/loyalty.html:47
+#, python-format
+#| msgid "250 балів = знижка 5%%"
+msgid "5000 балів = знижка 15%%"
+msgstr "5000 bodů = sleva 15%%"
+
+#: templates/store/accounts/loyalty.html:52
 msgid "Конвертувати"
 msgstr "Konvertovat"
 
-#: templates/store/accounts/loyalty.html:51
+#: templates/store/accounts/loyalty.html:61
 msgid "Історія балів"
 msgstr "Historie bodů"
 
-#: templates/store/accounts/loyalty.html:80
+#: templates/store/accounts/loyalty.html:90
 msgid "У вас поки немає історії балів."
 msgstr "Zatím nemáte žádnou historii bodů."
 
@@ -1399,31 +1529,40 @@ msgstr "Propojeno"
 msgid "Прив'язати"
 msgstr "Propojit"
 
-#: templates/store/accounts/profile.html:88
-msgid "Ваш рівень лояльності"
-msgstr "Vaše úroveň věrnosti"
+#: templates/store/accounts/profile.html:99
+msgid "Ще"
+msgstr "Ještě"
 
-#: templates/store/accounts/profile.html:91
-msgid "Зберіть ще"
-msgstr "Nasbírejte ještě"
+#: templates/store/accounts/profile.html:99
+msgid "балів до"
+msgstr "bodů do"
 
-#: templates/store/accounts/profile.html:91
-msgid "балів для знижки"
-msgstr "bodů pro slevu"
+#: templates/store/accounts/profile.html:103
+msgid "Максимальний рівень!"
+msgstr "Maximální úroveň!"
 
-#: templates/store/accounts/profile.html:95
-msgid "Ви досягли максимального рівня знижки!"
-msgstr "Dosáhli jste maximální úrovně slevy!"
+#: templates/store/accounts/profile.html:156
+msgid "Поточна знижка"
+msgstr "Aktuální sleva"
 
-#: templates/store/accounts/profile.html:122
+#: templates/store/accounts/profile.html:165
+#: templates/store/accounts/telegram.html:181
+msgid "Бонуси"
+msgstr "Bonusy"
+
+#: templates/store/accounts/profile.html:167
+msgid "Обміняти"
+msgstr "Vyměnit"
+
+#: templates/store/accounts/profile.html:238
 msgid "Остання активність"
 msgstr "Poslední aktivita"
 
-#: templates/store/accounts/profile.html:156
+#: templates/store/accounts/profile.html:272
 msgid "У вас поки немає активності. Почніть шопінг вже зараз!"
 msgstr "Zatím nemáte žádnou aktivitu. Začněte nakupovat právě teď!"
 
-#: templates/store/accounts/profile.html:157
+#: templates/store/accounts/profile.html:273
 #: templates/store/cart/detail.html:256 templates/store/wishlist.html:52
 msgid "Перейти до покупок"
 msgstr "Přejít k nakupování"
@@ -1598,8 +1737,8 @@ msgid ""
 "Прив'яжіть Telegram для отримання сповіщень про замовлення та керування "
 "акаунтом прямо в месенджері."
 msgstr ""
-"Propojte svůj Telegram a získávejte oznámení o objednávkách a spravujte svůj "
-"účet přímo v messengeru."
+"Propojte svůj Telegram a získávejte oznámení o objednávkách a spravujte svůj"
+" účet přímo v messengeru."
 
 #: templates/store/accounts/telegram.html:40
 msgid "Telegram під'єднано!"
@@ -1635,7 +1774,6 @@ msgid "Відкрити бота"
 msgstr "Otevřít bota"
 
 #: templates/store/accounts/telegram.html:73
-#, fuzzy
 #| msgid "Ви впевнені, що хочете від'єднати Telegram?"
 msgid "Ви впевнені, що хочете від\\'єднати Telegram?"
 msgstr "Opravdu chcete odpojit Telegram?"
@@ -1718,10 +1856,6 @@ msgstr "Aktualizace stavu objednávky"
 #: templates/store/accounts/telegram.html:177
 msgid "Перегляд усіх замовлень через /orders"
 msgstr "Zobrazit objednávku"
-
-#: templates/store/accounts/telegram.html:181
-msgid "Бонуси"
-msgstr ""
 
 #: templates/store/accounts/telegram.html:182
 msgid "Баланс балів і прогрес до наступного рівня"
@@ -2225,6 +2359,15 @@ msgstr "Váš seznam přání je prázdný"
 #: templates/store/wishlist.html:51
 msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
 msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."
+
+#~ msgid "Ваш рівень лояльності"
+#~ msgstr "Vaše úroveň věrnosti"
+
+#~ msgid "Зберіть ще"
+#~ msgstr "Nasbírejte ještě"
+
+#~ msgid "Ви досягли максимального рівня знижки!"
+#~ msgstr "Dosáhli jste maximální úrovně slevy!"
 
 #~ msgid "Навігація"
 #~ msgstr "Navigace"

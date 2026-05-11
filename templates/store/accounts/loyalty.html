@@ -31,12 +31,22 @@
                         <label class="mb-2 small text-muted">{% trans "Оберіть купон" %}</label>
                         <select name="tier" class="form-control" required style="width: 100%; padding: 0.85rem; border-radius: 12px; border: 1px solid var(--border-color); background: var(--card-bg-alt); color: var(--text-main);">
                             <option value="">{% trans "Оберіть варіант..." %}</option>
-                            <option value="5" {% if request.user.profile.points < 250 %}disabled{% endif %}>
-                                {% blocktrans %}250 балів = знижка 5%{% endblocktrans %}
+                            <option value="5" {% if request.user.profile.points < 200 %}disabled{% endif %}>
+                                {% blocktrans %}200 балів = знижка 5%{% endblocktrans %}
                             </option>
-                            <option value="10" {% if request.user.profile.points < 600 %}disabled{% endif %}>
-                                {% blocktrans %}600 балів = знижка 10%{% endblocktrans %}
+                            <option value="7" {% if request.user.profile.points < 500 %}disabled{% endif %}>
+                                {% blocktrans %}500 балів = знижка 7%{% endblocktrans %}
                             </option>
+                            <option value="10" {% if request.user.profile.points < 1000 %}disabled{% endif %}>
+                                {% blocktrans %}1000 балів = знижка 10%{% endblocktrans %}
+                            </option>
+                            <option value="12" {% if request.user.profile.points < 2000 %}disabled{% endif %}>
+                                {% blocktrans %}2000 балів = знижка 12%{% endblocktrans %}
+                            </option>
+                            <option value="15" {% if request.user.profile.points < 5000 %}disabled{% endif %}>
+                                {% blocktrans %}5000 балів = знижка 15%{% endblocktrans %}
+                            </option>
+
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary hover-scale" style="width: 100%; border-radius: 12px; padding: 0.85rem; font-weight: 700;">{% trans "Конвертувати" %}</button>

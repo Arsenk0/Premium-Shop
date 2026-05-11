@@ -107,44 +107,76 @@ def profile(request):
     # Bug #8 fix: fetch only 5 directly instead of 10 then slicing in template
     loyalty_transactions = LoyaltyTransaction.objects.filter(user=request.user)[:5]
 
+LOYALTY_TIERS = [
+    {'threshold': 0, 'name': _('Bronze'), 'discount': 0, 'color': '#cd7f32', 'icon': 'fas fa-shield-alt'},
+    {'threshold': 200, 'name': _('Silver'), 'discount': 5, 'color': '#c0c0c0', 'icon': 'fas fa-medal'},
+    {'threshold': 500, 'name': _('Gold'), 'discount': 7, 'color': '#ffd700', 'icon': 'fas fa-crown'},
+    {'threshold': 1000, 'name': _('Platinum'), 'discount': 10, 'color': '#e5e4e2', 'icon': 'fas fa-gem'},
+    {'threshold': 2000, 'name': _('Diamond'), 'discount': 12, 'color': '#b9f2ff', 'icon': 'fas fa-gem'},
+    {'threshold': 5000, 'name': _('Elite'), 'discount': 15, 'color': '#ffffff', 'icon': 'fas fa-fire'},
+]
+
+@login_required
+def profile(request):
+    stats = dashboard_service.get_user_dashboard_stats(request.user)
+    activities = dashboard_service.get_recent_activity(request.user)
+    loyalty_transactions = LoyaltyTransaction.objects.filter(user=request.user)[:5]
+
     # Loyalty progress calculation
     points = request.user.profile.points
-    # Loyalty progress calculation (6-tier system)
-    points = request.user.profile.points
-    if points < 200:
-        next_tier = 200
-        discount = 0
-        progress_percent = (points / 200) * 100
-    elif points < 500:
-        next_tier = 500
-        discount = 5
-        progress_percent = ((points - 200) / (500 - 200)) * 100
-    elif points < 1000:
-        next_tier = 1000
-        discount = 7
-        progress_percent = ((points - 500) / (1000 - 500)) * 100
-    elif points < 2000:
-        next_tier = 2000
-        discount = 10
-        progress_percent = ((points - 1000) / (2000 - 1000)) * 100
-    elif points < 5000:
-        next_tier = 5000
-        discount = 12
-        progress_percent = ((points - 2000) / (5000 - 2000)) * 100
+    
+    current_tier_idx = 0
+    next_tier = None
+    
+    for i, tier in enumerate(LOYALTY_TIERS):
+        if points >= tier['threshold']:
+            current_tier_idx = i
+            if i + 1 < len(LOYALTY_TIERS):
+                next_tier = LOYALTY_TIERS[i+1]
+        else:
+            break
+            
+    current_tier = LOYALTY_TIERS[current_tier_idx]
+
+    # Equal-spacing progress calculation
+    num_tiers = len(LOYALTY_TIERS)
+    if next_tier:
+        # Progress within current segment
+        threshold_start = current_tier['threshold']
+        threshold_end = next_tier['threshold']
+        segment_progress = (points - threshold_start) / (threshold_end - threshold_start)
+        # Total progress = (index + segment_progress) / (total_gaps)
+        overall_progress = ((current_tier_idx + segment_progress) / (num_tiers - 1)) * 100
     else:
-        next_tier = None
-        discount = 15
-        progress_percent = 100
+        overall_progress = 100
+
+    # Enrich tiers with progress percentage for rendering milestones (equally spaced)
+    enriched_tiers = []
+    for i, tier in enumerate(LOYALTY_TIERS):
+        t_copy = tier.copy()
+        t_copy['percent'] = (i / (num_tiers - 1)) * 100
+        t_copy['is_reached'] = points >= tier['threshold']
+        t_copy['is_current'] = (tier['name'] == current_tier['name'])
+        enriched_tiers.append(t_copy)
+
+
+    points_to_next = next_tier['threshold'] - points if next_tier else 0
 
     return render(request, 'store/accounts/profile.html', {
         'stats': stats,
         'activities': activities,
         'loyalty_transactions': loyalty_transactions,
-        'loyalty_next_tier': next_tier,
-        'loyalty_discount': discount,
-        'loyalty_progress': progress_percent,
+        'loyalty_tiers': enriched_tiers,
+        'current_tier': current_tier,
+        'next_tier': next_tier,
+        'points_to_next': points_to_next,
+        'loyalty_progress': overall_progress,
         'loyalty_points': points,
     })
+
+
+
+
 
 @login_required
 def loyalty_details(request):
