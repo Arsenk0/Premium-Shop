@@ -127,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'uk'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kyiv'
 
 USE_I18N = True
 USE_TZ = True
@@ -251,7 +251,7 @@ JAZZMIN_SETTINGS = {
     "site_title": "Premium Shop Admin",
     "site_header": "Premium Shop",
     "site_brand": "Premium Shop",
-    "welcome_sign": "Вітаємо в панелі управління Premium Shop",
+    "welcome_sign": "Welcome to Premium Shop Admin Panel",
     "copyright": "Premium Shop",
     "search_model": ["auth.User", "store.Order", "store.Product"],
     "user_avatar": None,
