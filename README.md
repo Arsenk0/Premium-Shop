@@ -4,30 +4,36 @@ A modern, high-performance Django e-commerce platform designed for selling premi
 
 ## 🚀 Key Features
 
-*   **Premium UI/UX**: Designed with a focus on aesthetics, featuring glassmorphism, smooth animations, and a responsive layout.
-*   **Telegram Bot Integration**: Real-time order status notifications and secure account linking via OTP.
-*   **Gamified Loyalty Program**: Earn points for registration, reviews, and purchases. Includes a dedicated spending analytics dashboard.
-*   **Professional Admin Panel**: Powered by `django-jazzmin` with a custom analytics dashboard, English-only interface, and streamlined management.
-*   **Multi-language Support**: Full localization for **Ukrainian**, **English**, and **Czech** languages.
+*   **Premium UI/UX**: Designed with a focus on aesthetics, featuring glassmorphism, smooth animations, and a responsive layout with full **Dark/Light mode** support.
+*   **Advanced Telegram Bot**: Interactive bot with persistent menu, account linking via OTP, profile management, and real-time order tracking.
+*   **6-Tier Loyalty Program**: A sophisticated gamified system with 6 tiers (**Bronze** to **Elite**), point accrual for purchases and reviews, and a conversion system for discount coupons.
+*   **Professional Admin Panel**: Powered by `django-jazzmin` with a custom analytics dashboard for streamlined management.
+*   **Multi-language Support**: Full localization for **Ukrainian (uk)**, **English (en)**, and **Czech (cs)**.
 *   **Real-time Search & Filtering**: Instant product search with autocomplete and non-reloading AJAX filtering.
 *   **Nova Poshta Integration**: Automatic city search (autocomplete) and dynamic warehouse selection for reliable shipping.
 *   **Smart Cart & Wishlist**: Real-time cart updates with a sleek sidebar and personal wishlist for authenticated users.
-*   **Secure Checkout**: Implementation of the PRG (Post/Redirect/Get) pattern to prevent duplicate orders.
+*   **Dynamic Order Tracking**: Interactive success page with real-time status updates from the database.
 *   **Async Task Processing**: Celery & Redis integration for background tasks like order confirmation and welcome emails.
 
 ## 🤖 Telegram Bot Features
 
 The integrated Telegram bot (@PremiumShopBot) provides:
+- **Persistent Keyboard**: Easy navigation between Profile, Loyalty info, and Support.
 - **Order Tracking**: Get instant updates when your order status changes.
 - **Account Linking**: Securely link your website account using a one-time password (OTP).
-- **Interactive Commands**: `/start`, `/help`, and status checks directly from Telegram.
+- **Interactive Commands**: `/start`, `/profile`, `/loyalty`, and status checks directly from Telegram.
 
-## 📊 Loyalty & Analytics
+## 📊 Loyalty & Rewards
 
-Our custom loyalty system rewards active customers:
-- **Point Accrual**: Earn points for every action (buying, reviewing, registering).
-- **Spending Dashboard**: Visualize your shopping habits with glassmorphism-styled charts and stats.
-- **Tiered Benefits**: Unlock exclusive discounts as you accumulate points.
+Our custom loyalty system rewards active customers through 6 tiers:
+1.  **🥉 Bronze**: Entry level (0+ points)
+2.  **🥈 Silver**: 5% discount (200+ points)
+3.  **🥇 Gold**: 7% discount (500+ points)
+4.  **💎 Platinum**: 10% discount (1000+ points)
+5.  **💠 Diamond**: 12% discount (2000+ points)
+6.  **👑 Elite**: 15% discount (5000+ points)
+
+*Points are earned for registration, purchases, and writing product reviews.*
 
 ## 🛠️ Tech Stack
 
@@ -61,7 +67,7 @@ Our custom loyalty system rewards active customers:
     ```
 
 4.  **Configure Environment**:
-    Create a `.env` file in the root directory:
+    Create a `.env` file in the root directory (see `.env.example`):
     ```env
     DJANGO_SECRET_KEY=your_secret_key
     NOVA_POSHTA_API_KEY=your_api_key
