@@ -10,18 +10,10 @@
     </h2>
     <p class="results-count">
         {% if products.paginator %}
-            {% blocktrans count counter=products.paginator.count trimmed %}
-                Found {{ counter }} product
-            {% plural %}
-                Found {{ counter }} products
-            {% endblocktrans %}
+            {% blocktrans count counter=products.paginator.count %}Found {{ counter }} product{% plural %}Found {{ counter }} products{% endblocktrans %}
         {% else %}
             {% with total_count=products|length %}
-                {% blocktrans count counter=total_count trimmed %}
-                    Found {{ counter }} product
-                {% plural %}
-                    Found {{ counter }} products
-                {% endblocktrans %}
+                {% blocktrans count counter=total_count %}Found {{ counter }} product{% plural %}Found {{ counter }} products{% endblocktrans %}
             {% endwith %}
         {% endif %}
     </p>

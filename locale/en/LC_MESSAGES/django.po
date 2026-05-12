@@ -4,7 +4,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-11 14:01+0300\n"
-"Language: \n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -2525,3 +2526,18 @@ msgstr "Add items you like so you don't lose them."
 
 #~ msgid "шт."
 #~ msgstr "pcs."
+
+msgid "PREMIUM SELECTION"
+msgstr "PREMIUM SELECTION"
+
+msgid "ONLY ORIGINAL"
+msgstr "ONLY ORIGINAL"
+
+msgid "Тільки найкращі бренди та преміальна якість для вашого стилю."
+msgstr "Only the best brands and premium quality for your style."
+
+msgid "Found {{ counter }} product"
+msgid_plural "Found {{ counter }} products"
+msgstr[0] "Found {{ counter }} product"
+msgstr[1] "Found {{ counter }} products"
+
