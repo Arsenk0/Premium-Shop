@@ -3,6 +3,7 @@
     --primary-hover: #222;
     --secondary: #fff;
     --accent: #ff4d4d;
+    --accent-rgb: 255, 77, 77;
     --accent-text: #ffffff;
     --bg-color: #f4f4f4;
     --card-bg: #fff;
@@ -24,6 +25,7 @@
     --primary-hover: #ddd;
     --secondary: #000;
     --accent: #00ffcc;
+    --accent-rgb: 0, 255, 204;
     --accent-text: #000000;
     --bg-color: #0a0a0a;
     --card-bg: #1a1a1a;

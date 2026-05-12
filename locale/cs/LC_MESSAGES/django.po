@@ -3,10 +3,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 17:22+0300\n"
-"Language: \n"
+"POT-Creation-Date: 2026-05-12 10:52+0300\n"
+"Language: cs\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: shop_project/settings.py:136
 msgid "Ukrainian"
@@ -163,7 +164,7 @@ msgstr "Zadejte slevový kód"
 msgid "Категорія"
 msgstr "Kategorie"
 
-#: store/models.py:13 templates/store/product/list.html:65
+#: store/models.py:13 templates/store/product/list.html:70
 msgid "Категорії"
 msgstr "Kategorie"
 
@@ -185,7 +186,7 @@ msgstr "Pořadí řazení"
 
 #: store/models.py:35 store/models.py:167
 #: templates/store/product/detail.html:332
-#: templates/store/product/list.html:100
+#: templates/store/product/list.html:105
 msgid "Розмір"
 msgstr "Velikost"
 
@@ -1728,8 +1729,12 @@ msgid "Гру"
 msgstr "Pro"
 
 #: templates/store/accounts/telegram.html:10
-msgid "Link your Telegram to receive order notifications and manage your account directly in the messenger."
-msgstr "Propojte svůj Telegram a dostávejte oznámení o objednávkách a spravujte svůj účet přímo v messengeru."
+msgid ""
+"Link your Telegram to receive order notifications and manage your account "
+"directly in the messenger."
+msgstr ""
+"Propojte svůj Telegram a dostávejte oznámení o objednávkách a spravujte svůj "
+"účet přímo v messengeru."
 
 #: templates/store/accounts/telegram.html:40
 msgid "Telegram під'єднано!"
@@ -1891,7 +1896,7 @@ msgstr "Váš košík"
 msgid "Кількість"
 msgstr "Množství"
 
-#: templates/store/cart/detail.html:132 templates/store/product/list.html:87
+#: templates/store/cart/detail.html:132 templates/store/product/list.html:92
 msgid "Ціна"
 msgstr "Cena"
 
@@ -1900,7 +1905,7 @@ msgid "Усього"
 msgstr "Celkem"
 
 #: templates/store/cart/detail.html:149
-#: templates/store/product/product_list_fragment.html:51
+#: templates/store/product/product_list_fragment.html:43
 #: templates/store/product/search.html:26
 msgid "Арт:"
 msgstr "SKU:"
@@ -1909,7 +1914,7 @@ msgstr "SKU:"
 msgid "Видалити"
 msgstr "Odstranit"
 
-#: templates/store/cart/detail.html:188 templates/store/product/list.html:128
+#: templates/store/cart/detail.html:188 templates/store/product/list.html:133
 msgid "Застосувати"
 msgstr "Použít"
 
@@ -2229,77 +2234,78 @@ msgstr ""
 msgid "Каталог одягу та кросівок"
 msgstr "Katalog oblečení a tenisek"
 
-#: templates/store/product/list.html:15
-msgid "SEASON 2026"
-msgstr ""
+#: templates/store/product/list.html:20
+msgid "PREMIUM SELECTION"
+msgstr "PRÉMIOVÝ VÝBĚR"
 
-#: templates/store/product/list.html:16
-msgid "Нова Колекція"
-msgstr "Nová Kolekce"
+#: templates/store/product/list.html:21
+msgid "ONLY ORIGINAL"
+msgstr "POUZE ORIGINÁL"
 
-#: templates/store/product/list.html:17
-msgid "Знайди свій ідеальний стиль сьогодні"
-msgstr "Najděte svůj dokonalý styl ještě dnes"
+#: templates/store/product/list.html:22
+msgid "Тільки найкращі бренди та преміальна якість для вашого стилю."
+msgstr "Pouze ty nejlepší značky a prémiová kvalita pro váš styl."
 
-#: templates/store/product/list.html:37
+#: templates/store/product/list.html:42
 msgid "Сортування"
 msgstr "Třídění"
 
-#: templates/store/product/list.html:42
+#: templates/store/product/list.html:47
 msgid "Новинки"
 msgstr "Nejnovější"
 
-#: templates/store/product/list.html:46
+#: templates/store/product/list.html:51
 msgid "Найдешевші"
 msgstr "Od nejlevnějšího"
 
-#: templates/store/product/list.html:50
+#: templates/store/product/list.html:55
 msgid "Найдорожчі"
 msgstr "Od nejdražšího"
 
-#: templates/store/product/list.html:54
+#: templates/store/product/list.html:59
 msgid "За назвою (A-Z)"
 msgstr "Dle názvu (A-Z)"
 
-#: templates/store/product/list.html:58
+#: templates/store/product/list.html:63
 msgid "За назвою (Z-A)"
 msgstr "Dle názvu (Z-A)"
 
-#: templates/store/product/list.html:71
+#: templates/store/product/list.html:76
 #: templates/store/product/product_list_fragment.html:8
 msgid "Всі товари"
 msgstr "Všechny produkty"
 
-#: templates/store/product/list.html:90
+#: templates/store/product/list.html:95
 msgid "Від"
 msgstr "Od"
 
-#: templates/store/product/list.html:93
+#: templates/store/product/list.html:98
 msgid "До"
 msgstr "Do"
 
-#: templates/store/product/list.html:121
+#: templates/store/product/list.html:126
 msgid "Тільки в наявності"
 msgstr "Pouze skladem"
 
-#: templates/store/product/list.html:134
+#: templates/store/product/list.html:139
 msgid "Очистити"
 msgstr "Vyčistit"
 
 #: templates/store/product/product_list_fragment.html:13
-#: templates/store/product/product_list_fragment.html:20
+#: templates/store/product/product_list_fragment.html:16
 #, python-format
 msgid "Found %(counter)s product"
 msgid_plural "Found %(counter)s products"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Nalezen %(counter)s produkt"
+msgstr[1] "Nalezeny %(counter)s produkty"
+msgstr[2] "Nalezeno %(counter)s produktů"
 
-#: templates/store/product/product_list_fragment.html:60
+#: templates/store/product/product_list_fragment.html:52
 #: templates/store/product/search.html:31
 msgid "Більше"
 msgstr "Více"
 
-#: templates/store/product/product_list_fragment.html:68
+#: templates/store/product/product_list_fragment.html:60
 msgid "Товарів не знайдено за вашими критеріями."
 msgstr "Podle vašich kritérií nebyly nalezeny žádné produkty."
 
@@ -2329,7 +2335,8 @@ msgstr "Zákaznické recenze"
 
 #: templates/store/reviews.html:12
 msgid "We value every customer and your feedback means the world to us."
-msgstr "Vážíme si každého zákazníka a vaše zpětná vazba pro nás znamená celý svět."
+msgstr ""
+"Vážíme si každého zákazníka a vaše zpětná vazba pro nás znamená celý svět."
 
 #: templates/store/reviews.html:54
 msgid "Verified Purchase"
@@ -2354,6 +2361,12 @@ msgstr "Váš seznam přání je prázdný"
 #: templates/store/wishlist.html:51
 msgid "Додайте товари, які вам сподобалися, щоб не загубити їх."
 msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."
+
+#~ msgid "Нова Колекція"
+#~ msgstr "Nová Kolekce"
+
+#~ msgid "Знайди свій ідеальний стиль сьогодні"
+#~ msgstr "Najděte svůj dokonalý styl ještě dnes"
 
 #~ msgid "Про"
 #~ msgstr "O"
@@ -2430,3 +2443,9 @@ msgstr "Přidejte si produkty, které se vám líbí, abyste je neztratili."
 
 #~ msgid "Соцмережі"
 #~ msgstr "Sociální sítě"
+
+#~ msgid "Found {{ counter }} product"
+#~ msgid_plural "Found {{ counter }} products"
+#~ msgstr[0] "Nalezen {{ counter }} produkt"
+#~ msgstr[1] "Nalezeny {{ counter }} produkty"
+#~ msgstr[2] "Nalezeno {{ counter }} produktů"

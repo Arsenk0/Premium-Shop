@@ -10,11 +10,16 @@
 {% if not request.GET.q %}
 {% if not current_filters.min_price and not current_filters.max_price and not current_filters.size %}
 
-<section class="hero fade-in">
+<section class="hero">
+    <div class="hero-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
     <div class="hero-content">
-        <p class="hero-subtitle">{% trans "SEASON 2026" %}</p>
-        <h1>{% trans "Нова Колекція" %}</h1>
-        <p class="hero-description">{% trans "Знайди свій ідеальний стиль сьогодні" %}</p>
+        <p class="hero-subtitle">{% trans "PREMIUM SELECTION" %}</p>
+        <h1>{% trans "ONLY ORIGINAL" %}</h1>
+        <p class="hero-description">{% trans "Тільки найкращі бренди та преміальна якість для вашого стилю." %}</p>
     </div>
 </section>
 {% endif %}
