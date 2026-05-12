@@ -8,8 +8,12 @@
         <a href="{% url 'store:reviews_page' %}" class="link-underline">{% trans "Відгуки" %}</a>
         <a href="{% url 'store:contact' %}" class="link-underline">{% trans "Контакти" %}</a>
         <form action="{% url 'store:product_search' %}" method="get" class="search-bar">
-            <input type="text" name="q" placeholder="{% trans 'Пошук...' %}" value="{{ request.GET.q }}">
-            <button type="submit"><i class="fas fa-search"></i></button>
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" name="q" placeholder="{% trans 'Пошук...' %}" value="{{ request.GET.q }}" autocomplete="off">
+            <div class="search-actions">
+                <button type="button" class="search-clear" title="{% trans 'Очистити' %}"><i class="fas fa-times"></i></button>
+                <div class="search-spinner"></div>
+            </div>
         </form>
         {% if user.is_authenticated %}
         <a href="{% url 'store:profile' %}" class="nav-auth-link link-underline"><i class="fas fa-user"></i> {% trans "Кабінет" %}</a>

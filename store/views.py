@@ -434,8 +434,13 @@ def product_search(request):
     query = request.GET.get('q')
     results = []
     if query:
+        # Search in article and all translated name fields
+        search_query = Q(article__icontains=query)
+        for lang_code, _ in settings.LANGUAGES:
+            search_query |= Q(**{f'name_{lang_code}__icontains': query})
+            
         results = Product.objects.filter(
-            Q(name__icontains=query) | Q(article__icontains=query),
+            search_query,
             available=True
         )
     return render(request, 'store/product/search.html', {'products': results, 'query': query})
@@ -637,7 +642,7 @@ def order_success(request, order_id):
     return render(request, 'store/order/success.html', {'order': order})
 
 
-@rate_limit('np_api', 30, 60)
+@rate_limit('np_api', 60, 60)
 def nova_poshta_cities(request):
     query = request.GET.get('q', '')
     if len(query) < 2:
@@ -646,7 +651,7 @@ def nova_poshta_cities(request):
     return JsonResponse({'data': cities})
 
 
-@rate_limit('np_api', 30, 60)
+@rate_limit('np_api', 60, 60)
 def nova_poshta_warehouses(request):
     city_ref = request.GET.get('city_ref', '')
     if not city_ref:
@@ -668,23 +673,51 @@ def contact(request):
     return render(request, 'store/contact.html')
 
 
-@rate_limit('search_api', 20, 60)
+@rate_limit('search_api', 100, 60)
 def search_autocomplete(request):
     query = request.GET.get('q', '')
     if len(query) < 2:
         return JsonResponse({'results': []})
+        
+    # Search in article and all translated name fields
+    search_query = Q(article__icontains=query)
+    for lang_code, _ in settings.LANGUAGES:
+        search_query |= Q(**{f'name_{lang_code}__icontains': query})
+        
     products = Product.objects.filter(
-        Q(name__icontains=query) | Q(article__icontains=query),
+        search_query,
         available=True
     )[:5]
 
+    # Resolve currency
+    selected_currency = request.session.get('currency')
+    if not selected_currency:
+        language = translation.get_language()
+        currency_settings = settings.CURRENCIES.get(language, settings.CURRENCIES.get('uk'))
+    else:
+        currency_settings = next(
+            (v for v in settings.CURRENCIES.values() if v['code'] == selected_currency), None
+        )
+        if not currency_settings:
+            language = translation.get_language()
+            currency_settings = settings.CURRENCIES.get(language, settings.CURRENCIES.get('uk'))
+
+    rate = Decimal(str(currency_settings['rate']))
+    symbol = currency_settings['symbol']
+
     results = []
     for product in products:
+        converted_price = (product.price * rate).quantize(Decimal('0.01'), rounding=decimal.ROUND_HALF_UP)
+        if symbol == 'грн' or symbol == 'Kč':
+            price_str = f"{converted_price} {symbol}"
+        else:
+            price_str = f"{symbol}{converted_price}"
+
         results.append({
             'name': product.name,
             'url': product.get_absolute_url(),
             'image': product.image.url if product.image else '/static/img/no-image.png',
-            'price': str(product.price)
+            'price': price_str
         })
     return JsonResponse({'results': results})
 

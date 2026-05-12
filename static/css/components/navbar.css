@@ -103,38 +103,95 @@
 
 .search-bar {
     display: flex;
-    background: var(--border-color);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
+    align-items: center;
+    background: var(--bg-color-alt);
+    padding: 0.4rem 1rem;
+    border-radius: 24px;
     position: relative;
+    border: 1px solid var(--border-color);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 220px;
+}
+
+.search-bar:focus-within {
+    width: 320px;
+    background: var(--card-bg);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.1);
+}
+
+.search-icon {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+}
+
+.search-bar:focus-within .search-icon {
+    color: var(--accent);
 }
 
 .search-bar input {
     background: transparent;
     border: none;
     outline: none;
-    padding-left: 10px;
+    padding: 0 10px;
     color: var(--text-main);
     flex: 1;
+    font-size: 0.9rem;
+    width: 100%;
 }
 
 .search-bar input::placeholder {
     color: var(--text-muted);
+    transition: opacity 0.3s ease;
 }
 
-.search-bar button {
+.search-bar:focus-within input::placeholder {
+    opacity: 0.5;
+}
+
+.search-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-clear {
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--text-main);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    padding: 4px;
+    display: none; /* Shown via JS */
     transition: var(--transition-fast);
+    opacity: 0.6;
 }
 
-.search-bar button:hover {
+.search-clear:hover {
     color: var(--accent);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.search-spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(var(--accent-rgb), 0.1);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    display: none; /* Shown via JS */
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1200px) {
+    .search-bar, .search-bar:focus-within {
+        width: 200px;
+    }
 }
 
 /* Cart & Badge */
