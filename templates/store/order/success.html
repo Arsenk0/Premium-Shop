@@ -4,66 +4,167 @@
 {% block title %}{% trans "Замовлення підтверджено!" %}{% endblock %}
 
 {% block content %}
-<div class="container fade-in" style="max-width: 600px; text-align: center; padding-top: 3rem; padding-bottom: 3rem;">
-    <div style="background: var(--card-bg); padding: 2.5rem; border-radius: 24px; box-shadow: var(--shadow);">
-        <div style="font-size: 6rem; margin-bottom: 2rem; color: var(--accent);"><i class="fa-solid fa-circle-check"></i></div>
-        <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">{% trans "Дякуємо за замовлення!" %}</h1>
-        <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2.5rem;">
-            {% blocktrans with order_id=order.id contact_method=order.contact_method %}Ваше замовлення <strong>#{{ order_id }}</strong> успішно прийнято в обробку. Ми зв'яжемося з вами через <strong>{{ contact_method }}</strong> найближчим часом.{% endblocktrans %}
+<div class="container fade-in" style="max-width: 500px; text-align: center; padding: 4rem 1rem;">
+    <div class="success-card" style="background: var(--card-bg); padding: 3rem 2rem; border-radius: 32px; box-shadow: var(--shadow); position: relative; overflow: hidden; border: 1px solid var(--border-color);">
+        
+        <!-- Animated Background Ornament -->
+        <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--accent); opacity: 0.05; filter: blur(40px); border-radius: 50%;"></div>
+
+        <!-- Success Header -->
+        <div class="success-icon-wrapper" style="margin-bottom: 1.5rem; position: relative; display: inline-block;">
+            <div class="main-icon" style="font-size: 5.5rem; color: var(--accent); position: relative; z-index: 2; filter: drop-shadow(0 0 15px rgba(var(--accent-rgb), 0.3));">
+                {% if order.status == 'Canceled' %}
+                <i class="fa-solid fa-circle-xmark" style="color: #ff4d4d;"></i>
+                {% else %}
+                <i class="fa-solid fa-circle-check"></i>
+                {% endif %}
+            </div>
+            <div class="pulse-ring" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 130px; height: 130px; border: 2px solid var(--accent); opacity: 0.2; border-radius: 50%; animation: pulse-ring 2.5s infinite;"></div>
+        </div>
+
+        <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.8px; color: var(--text-main);">
+            {% if order.status == 'Canceled' %}{% trans "Замовлення скасовано" %}{% else %}{% trans "Дякуємо!" %}{% endif %}
+        </h1>
+        <p style="font-size: 1.05rem; color: var(--text-muted); margin-bottom: 2.5rem; font-weight: 500;">
+            {% if order.status == 'New' %}
+                {% trans "Ваше замовлення успішно зареєстровано" %}
+            {% elif order.status == 'Processing' %}
+                {% trans "Ваше замовлення успішно прийнято в обробку" %}
+            {% elif order.status == 'Shipped' %}
+                {% trans "Ваше замовлення вже передано кур'єрській службі" %}
+            {% elif order.status == 'Completed' %}
+                {% trans "Замовлення успішно доставлено та отримано" %}
+            {% elif order.status == 'Canceled' %}
+                {% trans "Ваше замовлення було скасовано" %}
+            {% endif %}
         </p>
 
-        <div style="text-align: left; background: var(--card-bg-alt); color: var(--text-main); padding: 1.5rem; border-radius: 16px; margin-bottom: 2.5rem;">
-            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">{% trans "Деталі замовлення:" %}</h3>
-            <p style="margin-bottom: 0.5rem;"><strong>{% trans "Отримувач:" %}</strong> {{ order.first_name }} {{ order.last_name }}</p>
-            <p style="margin-bottom: 0.5rem;"><strong>{% trans "Місто:" %}</strong> {{ order.city }}</p>
-            <p style="margin-bottom: 0.5rem;"><strong>{% trans "Відділення:" %}</strong> {{ order.warehouse }}</p>
-            
-            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">{% trans "Ваше замовлення:" %}</h3>
-                <div class="order-items-list" style="display: flex; flex-direction: column; gap: 1rem;">
-                    {% for item in order.items.all %}
-                    <div class="order-item-row" style="display: flex; align-items: center; gap: 1rem;">
-                        <div class="item-thumb" style="width: 60px; height: 60px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); background: #fff; flex-shrink: 0;">
-                            {% if item.product.image %}
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                            {% else %}
-                            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted);"><i class="fas fa-image"></i></div>
-                            {% endif %}
-                        </div>
-                        <div class="item-details" style="flex: 1;">
-                            <h4 style="margin: 0; font-size: 0.95rem; font-weight: 600;">{{ item.product.name }}</h4>
-                            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">
-                                {% if item.size %}{% trans "Розмір:" %} {{ item.size }} | {% endif %}{{ item.quantity }} × {{ item.price|currency:selected_currency }}
-                            </p>
-                        </div>
-                        <div class="item-total" style="font-weight: 600; font-size: 0.95rem;">
-                            {{ item.get_cost|currency:selected_currency }}
-                        </div>
-                    </div>
-                    {% endfor %}
+        <!-- Next Steps Timeline (Dynamic) -->
+        <div class="steps-timeline" style="text-align: left; margin-bottom: 3rem; padding: 0 0.5rem;">
+            <!-- Step 1: Received -->
+            <div class="step-item {% if order.status != 'Canceled' %}active{% endif %}" style="display: flex; gap: 1.2rem; position: relative; padding-bottom: 1.5rem;">
+                <div class="step-line" style="position: absolute; left: 14px; top: 30px; bottom: 0; width: 2px; background: {% if order.status == 'Processing' or order.status == 'Shipped' or order.status == 'Completed' %}var(--accent){% else %}var(--border-color-dark){% endif %}; z-index: 1;"></div>
+                <div class="step-dot" style="width: 30px; height: 30px; border-radius: 50%; background: {% if order.status != 'Canceled' %}var(--accent){% else %}var(--card-bg-alt){% endif %}; display: flex; align-items: center; justify-content: center; z-index: 2; color: {% if order.status != 'Canceled' %}var(--accent-text){% else %}var(--text-muted){% endif %}; font-size: 0.8rem; box-shadow: {% if order.status != 'Canceled' %}0 0 10px rgba(var(--accent-rgb), 0.4){% else %}none{% endif %}; border: {% if order.status != 'Canceled' %}none{% else %}2px solid var(--border-color){% endif %};">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="step-content">
+                    <h4 style="font-size: 1rem; margin: 0; font-weight: 700;">{% trans "Замовлення отримано" %}</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 2px 0 0 0;">{% trans "Ми вже почали його обробку" %}</p>
                 </div>
             </div>
 
-            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-                {% if order.discount_amount > 0 %}
-                <p style="margin-bottom: 0.5rem; color: var(--accent); font-weight: 600;">
-                    <strong>{% trans "Знижка:" %}</strong> -{{ order.discount_amount|currency:selected_currency }}
-                </p>
-                {% endif %}
-                <p style="font-size: 1.2rem; font-weight: 800; color: var(--accent); margin-bottom: 0;">
-                    <strong>{% trans "Усього до оплати:" %}</strong> {{ order.get_total_cost|currency:selected_currency }}
-                </p>
+            <!-- Step 2: Processing -->
+            <div class="step-item {% if order.status == 'Processing' or order.status == 'Shipped' or order.status == 'Completed' %}active{% endif %}" style="display: flex; gap: 1.2rem; position: relative; padding-bottom: 1.5rem;">
+                <div class="step-line" style="position: absolute; left: 14px; top: 30px; bottom: 0; width: 2px; background: {% if order.status == 'Shipped' or order.status == 'Completed' %}var(--accent){% else %}var(--border-color-dark){% endif %}; z-index: 1;"></div>
+                <div class="step-dot" style="width: 30px; height: 30px; border-radius: 50%; background: {% if order.status == 'Processing' or order.status == 'Shipped' or order.status == 'Completed' %}var(--accent){% else %}var(--card-bg-alt){% endif %}; border: {% if order.status == 'Processing' or order.status == 'Shipped' or order.status == 'Completed' %}none{% else %}2px solid var(--border-color-dark){% endif %}; display: flex; align-items: center; justify-content: center; z-index: 2; color: {% if order.status == 'Processing' or order.status == 'Shipped' or order.status == 'Completed' %}var(--accent-text){% else %}var(--text-muted){% endif %}; font-size: 0.8rem;">
+                    {% if order.status == 'Shipped' or order.status == 'Completed' %}<i class="fas fa-check"></i>{% else %}<i class="fas fa-phone"></i>{% endif %}
+                </div>
+                <div class="step-content">
+                    <h4 style="font-size: 1rem; margin: 0; font-weight: 600; color: var(--text-main);">{% trans "Зв'язок з менеджером" %}</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 2px 0 0 0;">
+                        {% if order.status == 'Processing' %}{% trans "Менеджер скоро напише вам" %}{% elif order.status == 'Shipped' or order.status == 'Completed' %}{% trans "Ми з вами зв'язалися" %}{% else %}{% blocktrans with method=order.contact_method %}Очікуйте повідомлення у <strong>{{ method }}</strong>{% endblocktrans %}{% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 3: Shipping -->
+            <div class="step-item {% if order.status == 'Shipped' or order.status == 'Completed' %}active{% endif %}" style="display: flex; gap: 1.2rem; position: relative;">
+                <div class="step-dot" style="width: 30px; height: 30px; border-radius: 50%; background: {% if order.status == 'Shipped' or order.status == 'Completed' %}var(--accent){% else %}var(--card-bg-alt){% endif %}; border: {% if order.status == 'Shipped' or order.status == 'Completed' %}none{% else %}2px solid var(--border-color-dark){% endif %}; display: flex; align-items: center; justify-content: center; z-index: 2; color: {% if order.status == 'Shipped' or order.status == 'Completed' %}var(--accent-text){% else %}var(--text-muted){% endif %}; font-size: 0.8rem;">
+                    {% if order.status == 'Completed' %}<i class="fas fa-check"></i>{% else %}<i class="fas fa-truck"></i>{% endif %}
+                </div>
+                <div class="step-content">
+                    <h4 style="font-size: 1rem; margin: 0; font-weight: 600; color: var(--text-main);">{% if order.status == 'Completed' %}{% trans "Доставлено" %}{% else %}{% trans "Відправка" %}{% endif %}</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 2px 0 0 0;">{% if order.status == 'Completed' %}{% trans "Товар успішно отримано!" %}{% elif order.status == 'Shipped' %}{% trans "Замовлення вже в дорозі" %}{% else %}{% trans "Надішлемо номер ТТН після відправки" %}{% endif %}</p>
+                </div>
             </div>
         </div>
 
+        <!-- Order Summary Card -->
+        <div class="summary-box" style="background: var(--card-bg-alt); border-radius: 24px; padding: 1.8rem; margin-bottom: 2.5rem; text-align: left; border: 1px solid var(--border-color); position: relative;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; align-items: center;">
+                <h3 style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin: 0;">{% trans "Деталі замовлення" %}</h3>
+                <span style="font-size: 0.85rem; font-weight: 700; background: var(--card-bg); padding: 5px 12px; border-radius: 10px; border: 1px solid var(--border-color); color: var(--text-main);">#{{ order.id }}</span>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 1.5rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 1.5rem;">
+                {% for item in order.items.all %}
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 52px; height: 52px; border-radius: 14px; overflow: hidden; background: var(--card-bg); border: 1px solid var(--border-color); flex-shrink: 0;">
+                        {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.8rem;"><i class="fas fa-image"></i></div>
+                        {% endif %}
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <h4 style="margin: 0; font-size: 0.95rem; font-weight: 700; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ item.product.name }}</h4>
+                        <p style="margin: 3px 0 0 0; font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">
+                            {% if item.size %}{{ item.size }} | {% endif %}{{ item.quantity }} × {{ item.price|currency:selected_currency }}
+                        </p>
+                    </div>
+                    <div style="font-weight: 700; font-size: 1rem; color: var(--text-main);">
+                        {{ item.get_cost|currency:selected_currency }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 1rem; font-weight: 700; color: var(--text-main);">{% trans "Разом до оплати" %}</span>
+                <span style="font-size: 1.5rem; font-weight: 900; color: var(--accent); letter-spacing: -0.5px;">{{ order.get_total_cost|currency:selected_currency }}</span>
+            </div>
+        </div>
+
+        <!-- Actions -->
         <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <a href="{% url 'store:product_list' %}" class="btn btn-primary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                {% trans "Повернутися до каталогу" %} <i class="fas fa-shopping-bag"></i>
+            <a href="{% url 'store:product_list' %}" class="btn btn-primary" style="padding: 1.2rem; border-radius: 20px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 0.8rem; box-shadow: 0 10px 25px rgba(var(--accent-rgb), 0.25); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px;">
+                {% trans "Повернутися до покупок" %} <i class="fas fa-shopping-bag"></i>
             </a>
-            <p style="font-size: 0.9rem; color: var(--text-muted);">
-                {% trans "Виникли питання? Напишіть нам у підтримку." %}
-            </p>
+            <a href="#" style="font-size: 0.9rem; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.6rem; font-weight: 600;" class="link-underline">
+                <i class="fab fa-telegram-plane"></i> {% trans "Потрібна допомога?" %}
+            </a>
         </div>
     </div>
 </div>
+
+<style>
+    @keyframes pulse-ring {
+        0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.3; }
+        50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.1; }
+        100% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.3; }
+    }
+    
+    .success-card {
+        animation: cardSlideUp 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    
+    @keyframes cardSlideUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-item {
+        animation: stepFadeIn 0.5s ease-out forwards;
+        opacity: 0;
+    }
+
+    .step-item:nth-child(1) { animation-delay: 0.4s; }
+    .step-item:nth-child(2) { animation-delay: 0.6s; }
+    .step-item:nth-child(3) { animation-delay: 0.8s; }
+
+    @keyframes stepFadeIn {
+        from { opacity: 0; transform: translateX(-10px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    .summary-box {
+        animation: boxFadeIn 0.6s ease-out 1s forwards;
+        opacity: 0;
+    }
+
+    @keyframes boxFadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+</style>
 {% endblock %}
